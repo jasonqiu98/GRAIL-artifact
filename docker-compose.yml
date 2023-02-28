@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  test:
+    build: .
+    container_name: arango-test
+    environment:
+      - ARANGO_NO_AUTH=1
+    volumes:
+      - ./:/root/project/
+    networks:
+      - graph-checker-network
+  
+  starter:
+    image: arangodb:3.9.2
+    container_name: arango-starter
+    environment:
+      - ARANGO_NO_AUTH=1
+    volumes:
+      - ./nodes/:/var/lib/arangodb3
+      - ./logs/:/arangodb-logs
+    command: arangod
+      --server.endpoint tcp://0.0.0.0:8529
+      --database.directory /var/lib/arangodb3
+      --log.time-format timestamp-micros
+      --log.level queries=trace
+      --log.level replication=trace
+      --log.level requests=trace
+      --log.output queries=file:///arangodb-logs/queries.log
+      --log.output replication=file:///arangodb-logs/replication.log
+      --log.output requests=file:///arangodb-logs/requests.log
+    ports:
+      - "8000:8529"
+    networks:
+      - graph-checker-network
+
+networks:
+  graph-checker-network:
+    driver: bridge

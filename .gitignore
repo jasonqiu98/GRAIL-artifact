@@ -1,0 +1,13 @@
+# clojure extension relevant
+/.clj-kondo
+/.lsp
+
+# vscode
+/.vscode
+
+# ArangoDB
+/nodes
+/logs
+
+# Go Profiling
+/profs
