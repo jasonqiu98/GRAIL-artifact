@@ -61,8 +61,7 @@ func CheckSERV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				IN %d..%d
 				OUTBOUND start._id
 				GRAPH %s
-				PRUNE cond = edge._to == start._id
-				FILTER cond
+				FILTER edge._to == start._id
 				RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -96,7 +95,7 @@ func CheckSERV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 func CheckSERV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
 	minStep := 2
 	maxStep := 5
-	/* e.g.
+	/* An alternative version (with PRUNE keyword)
 	FOR start IN txn
 		FOR vertex, edge, path
 			IN 2..5
@@ -111,8 +110,7 @@ func CheckSERV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				IN %d..%d
 				OUTBOUND @start
 				GRAPH %s
-				PRUNE cond = edge._to == @start
-				FILTER cond
+				FILTER edge._to == @start
 				RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -232,4 +230,112 @@ func CheckSERPregel(db driver.Database, dbConsts DBConsts, metadata map[string]i
 			log.Fatalf("Pregel SCC algorithm was canceled: %v\n", err)
 		}
 	}
+}
+
+func CheckSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+	minStep := 2
+	maxStep := 5
+	/*
+		FOR start IN txn
+			FOR vertex, edge, path IN 2..5
+			OUTBOUND start._id
+			GRAPH txn_g
+			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
+			RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+	*/
+	query := fmt.Sprintf(`
+		FOR start IN txn
+			FOR vertex, edge, path IN %d..%d
+			OUTBOUND start._id
+			GRAPH %s
+			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
+			RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+		`, minStep, maxStep, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check SI: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	for {
+		var cycle string
+		_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if output {
+				fmt.Println("Cycle Detected by V1.")
+				fmt.Println(cycle)
+			}
+			return false
+		}
+	}
+
+	return true
+}
+
+func CheckSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+	minStep := 2
+	maxStep := 5
+	/* e.g.
+	FOR start IN txn
+		FOR vertex, edge, path IN 2..5
+		OUTBOUND start._id
+		GRAPH txn_g
+		FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
+		RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+	*/
+	query := fmt.Sprintf(`
+			FOR vertex, edge, path
+				IN %d..%d
+				OUTBOUND @start
+				GRAPH %s
+				FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == @start
+				RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+		`, minStep, maxStep, dbConsts.TxnGraph)
+
+	totalTxns := metadata["txns"]
+	starts := make([]int, totalTxns)
+	for i := 0; i < totalTxns; i++ {
+		starts[i] = i
+	}
+	// iterate randomly after shuffling the index array slice
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(totalTxns, func(i, j int) { starts[i], starts[j] = starts[j], starts[i] })
+
+	bindVars := make(map[string]interface{})
+	for _, start := range starts {
+		bindVars["start"] = fmt.Sprintf("txn/%d", start)
+		cursor, err := db.Query(context.Background(), query, bindVars)
+		if err != nil {
+			log.Fatalf("Failed to check SER: %v\n", err)
+		}
+
+		defer cursor.Close()
+
+		for {
+			var cycle string
+			_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+			if driver.IsNoMoreDocuments(err) {
+				break
+			} else if err != nil {
+				log.Fatalf("Cannot read return values: %v\n", err)
+			} else {
+				if output {
+					fmt.Println("Cycle Detected by V2.")
+					fmt.Println(cycle)
+				}
+				// will early stop once a cycle is detected
+				return false
+			}
+		}
+	}
+
+	return true
 }
