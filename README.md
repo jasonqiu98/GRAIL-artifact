@@ -45,6 +45,7 @@ Use the following command to profile different approaches.
 ```shell
 go test -v -timeout 300s -run ^TestProfilingSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 go test -v -timeout 360s -run ^TestProfilingSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+go test -v -timeout 360s -run ^TestProfilingPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 ```
 
 ### 3. Stop and remove the containers

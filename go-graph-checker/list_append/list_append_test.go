@@ -95,7 +95,48 @@ func TestProfilingSI(t *testing.T) {
 		avgCheckTimeV1 := Profile(db, dbConsts, metadata, CheckSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, metadata, CheckSIV2, false)
 
-		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v2: %d ms\n",
+		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2)
+		fmt.Println("-----------------------------------")
+	}
+}
+
+func TestProfilingPSI(t *testing.T) {
+	dbConsts := DBConsts{
+		"starter",    // Host
+		8529,         // Port
+		"checker_db", // DB
+		"txn_g",      // TxnGraph
+		"evt_g",      // EvtGraph
+		"txn",        // TxnNode
+		"a_evt",      // AppendEvtNode
+		"r_evt",      // ReadEvtNode
+		"dep",        // TxnDepEdge
+		"evt_dep",    // EvtDepEdge
+	}
+	fmt.Println("-----------------------------------")
+	for d := 10; d <= 200; d += 10 {
+		fileName := fmt.Sprintf("../histories/%d.edn", d)
+		prompt := fmt.Sprintf("Checking %s...", fileName)
+		fmt.Println(prompt)
+		content, err := os.ReadFile(fileName)
+		if err != nil {
+			t.Fail()
+		}
+		history, err := core.ParseHistory(string(content))
+		if err != nil {
+			t.Fail()
+		}
+		t1 := time.Now()
+		db, metadata := ConstructGraph(txn.Opts{}, history, dbConsts)
+		t2 := time.Now()
+		constructTime := t2.Sub(t1).Nanoseconds() / 1e6
+		fmt.Printf("constructing graph: %d ms\n", constructTime)
+
+		avgCheckTimeV1 := Profile(db, dbConsts, metadata, CheckPSIV1, false)
+		avgCheckTimeV2 := Profile(db, dbConsts, metadata, CheckPSIV2, false)
+
+		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n",
 			avgCheckTimeV1, avgCheckTimeV2)
 		fmt.Println("-----------------------------------")
 	}
@@ -114,7 +155,7 @@ func TestListAppendSER(t *testing.T) {
 		"dep",        // TxnDepEdge
 		"evt_dep",    // EvtDepEdge
 	}
-	content, err := os.ReadFile("../histories/list-append.edn")
+	content, err := os.ReadFile("../histories/120.edn")
 	if err != nil {
 		t.Fail()
 	}
