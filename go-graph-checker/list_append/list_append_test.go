@@ -18,6 +18,7 @@ checking serializability:
   - v2: break with Golang
   - Pregel: use Pregel SCC algorithm
 */
+
 func TestProfilingSER(t *testing.T) {
 	dbConsts := DBConsts{
 		"starter",    // Host
@@ -33,7 +34,7 @@ func TestProfilingSER(t *testing.T) {
 	}
 	fmt.Println("-----------------------------------")
 	for d := 10; d <= 200; d += 10 {
-		fileName := fmt.Sprintf("../histories/%d.edn", d)
+		fileName := fmt.Sprintf("../histories/list-append/%d.edn", d)
 		prompt := fmt.Sprintf("Checking %s...", fileName)
 		fmt.Println(prompt)
 		content, err := os.ReadFile(fileName)
@@ -75,7 +76,7 @@ func TestProfilingSI(t *testing.T) {
 	}
 	fmt.Println("-----------------------------------")
 	for d := 10; d <= 200; d += 10 {
-		fileName := fmt.Sprintf("../histories/%d.edn", d)
+		fileName := fmt.Sprintf("../histories/list-append/%d.edn", d)
 		prompt := fmt.Sprintf("Checking %s...", fileName)
 		fmt.Println(prompt)
 		content, err := os.ReadFile(fileName)
@@ -116,7 +117,7 @@ func TestProfilingPSI(t *testing.T) {
 	}
 	fmt.Println("-----------------------------------")
 	for d := 10; d <= 200; d += 10 {
-		fileName := fmt.Sprintf("../histories/%d.edn", d)
+		fileName := fmt.Sprintf("../histories/list-append/%d.edn", d)
 		prompt := fmt.Sprintf("Checking %s...", fileName)
 		fmt.Println(prompt)
 		content, err := os.ReadFile(fileName)
@@ -155,7 +156,7 @@ func TestListAppendSER(t *testing.T) {
 		"dep",        // TxnDepEdge
 		"evt_dep",    // EvtDepEdge
 	}
-	content, err := os.ReadFile("../histories/120.edn")
+	content, err := os.ReadFile("../histories/list-append/120.edn")
 	if err != nil {
 		t.Fail()
 	}

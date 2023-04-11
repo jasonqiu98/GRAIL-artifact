@@ -1,0 +1,196 @@
+{:la {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 851 3]
+                                              [:append 854 1]
+                                              [:r 851 [1 2 3]]
+                                              [:r 854 [1]]
+                                              [:r 850 []]],
+                                      :time 117739452116,
+                                      :process 14,
+                                      :index 2015}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 853 2]
+                                              [:append 850 1]
+                                              [:append 853 3]
+                                              [:r 838 [1]]
+                                              [:r 838 [1]]
+                                              [:append 838 3]
+                                              [:r 854 []]],
+                                      :time 117738331267,
+                                      :process 9,
+                                      :index 2014}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 851 3]
+                                              [:append 854 1]
+                                              [:r 851 [1 2 3]]
+                                              [:r 854 [1]]
+                                              [:r 850 []]],
+                                      :time 117739452116,
+                                      :process 14,
+                                      :index 2015}],
+                             :steps ({:type :rw,
+                                      :key 850,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 4,
+                                      :b-mop-index 1}
+                                     {:type :rw,
+                                      :key 854,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 6,
+                                      :b-mop-index 1}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 868 3]
+                                              [:r 872 []]
+                                              [:append 879 1]
+                                              [:append 879 2]],
+                                      :time 119387219397,
+                                      :process 10,
+                                      :index 2062}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 872 1]
+                                              [:r 877 [1]]
+                                              [:append 877 2]
+                                              [:append 878 1]
+                                              [:append 877 3]
+                                              [:r 876 [1]]
+                                              [:append 872 2]
+                                              [:r 879 []]],
+                                      :time 119387409888,
+                                      :process 6,
+                                      :index 2063}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 868 3]
+                                              [:r 872 []]
+                                              [:append 879 1]
+                                              [:append 879 2]],
+                                      :time 119387219397,
+                                      :process 10,
+                                      :index 2062}],
+                             :steps ({:type :rw,
+                                      :key 872,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 1,
+                                      :b-mop-index 0}
+                                     {:type :rw,
+                                      :key 879,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 7,
+                                      :b-mop-index 2}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r 351 [1 2 3]]
+                                              [:r 351 [1 2 3]]
+                                              [:append 354 1]
+                                              [:r 353 []]
+                                              [:r 349 [1]]
+                                              [:append 354 2]
+                                              [:r 353 []]],
+                                      :time 61053294376,
+                                      :process 7,
+                                      :index 847}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 349 2]
+                                              [:r 349 [1 2]]
+                                              [:r 354 []]
+                                              [:r 353 []]
+                                              [:r 354 []]],
+                                      :time 61047802019,
+                                      :process 0,
+                                      :index 846}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 351 [1 2 3]]
+                                              [:r 351 [1 2 3]]
+                                              [:append 354 1]
+                                              [:r 353 []]
+                                              [:r 349 [1]]
+                                              [:append 354 2]
+                                              [:r 353 []]],
+                                      :time 61053294376,
+                                      :process 7,
+                                      :index 847}],
+                             :steps ({:type :rw,
+                                      :key 349,
+                                      :value 1,
+                                      :value' 2,
+                                      :a-mop-index 4,
+                                      :b-mop-index 0}
+                                     {:type :rw,
+                                      :key 354,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 2,
+                                      :b-mop-index 2}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r 553 []]
+                                              [:append 552 3]
+                                              [:r 552 [1 2 3]]
+                                              [:append 557 1]
+                                              [:r 553 []]
+                                              [:r 557 [1]]
+                                              [:append 557 2]
+                                              [:append 557 3]],
+                                      :time 82995158225,
+                                      :process 12,
+                                      :index 1309}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 553 1]
+                                              [:append 555 3]
+                                              [:r 555 [1 2 3]]
+                                              [:r 557 []]
+                                              [:r 553 [1]]],
+                                      :time 82985463451,
+                                      :process 11,
+                                      :index 1308}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 553 []]
+                                              [:append 552 3]
+                                              [:r 552 [1 2 3]]
+                                              [:append 557 1]
+                                              [:r 553 []]
+                                              [:r 557 [1]]
+                                              [:append 557 2]
+                                              [:append 557 3]],
+                                      :time 82995158225,
+                                      :process 12,
+                                      :index 1309}],
+                             :steps ({:type :rw,
+                                      :key 553,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 0,
+                                      :b-mop-index 0}
+                                     {:type :rw,
+                                      :key 557,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 3,
+                                      :b-mop-index 3}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

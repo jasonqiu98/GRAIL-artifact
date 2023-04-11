@@ -1,0 +1,190 @@
+{:rw {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [#jepsen.history.Op{:index 1210,
+                                                        :time 78359193474,
+                                                        :type :ok,
+                                                        :process 17,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 523
+                                                                 nil]
+                                                                [:r
+                                                                 526
+                                                                 nil]
+                                                                [:r
+                                                                 522
+                                                                 1]
+                                                                [:w
+                                                                 523
+                                                                 3]
+                                                                [:w
+                                                                 501
+                                                                 2]
+                                                                [:w
+                                                                 522
+                                                                 2]]}
+                                     #jepsen.history.Op{:index 1211,
+                                                        :time 78359889858,
+                                                        :type :ok,
+                                                        :process 16,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 524
+                                                                 1]
+                                                                [:r
+                                                                 523
+                                                                 nil]
+                                                                [:w
+                                                                 526
+                                                                 1]
+                                                                [:w
+                                                                 526
+                                                                 2]
+                                                                [:w
+                                                                 526
+                                                                 3]
+                                                                [:r
+                                                                 526
+                                                                 3]]}
+                                     #jepsen.history.Op{:index 1210,
+                                                        :time 78359193474,
+                                                        :type :ok,
+                                                        :process 17,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 523
+                                                                 nil]
+                                                                [:r
+                                                                 526
+                                                                 nil]
+                                                                [:r
+                                                                 522
+                                                                 1]
+                                                                [:w
+                                                                 523
+                                                                 3]
+                                                                [:w
+                                                                 501
+                                                                 2]
+                                                                [:w
+                                                                 522
+                                                                 2]]}],
+                             :steps ({:key 526,
+                                      :value nil,
+                                      :value' 3,
+                                      :type :rw,
+                                      :a-mop-index 1,
+                                      :b-mop-index 4}
+                                     {:key 523,
+                                      :value nil,
+                                      :value' 3,
+                                      :type :rw,
+                                      :a-mop-index 1,
+                                      :b-mop-index 3}),
+                             :type :G2-item}
+                            {:cycle [#jepsen.history.Op{:index 3040,
+                                                        :time 171625705626,
+                                                        :type :ok,
+                                                        :process 7,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 1325
+                                                                 nil]
+                                                                [:w
+                                                                 1325
+                                                                 1]
+                                                                [:r
+                                                                 1326
+                                                                 3]
+                                                                [:r
+                                                                 1316
+                                                                 nil]
+                                                                [:r
+                                                                 1325
+                                                                 1]
+                                                                [:r
+                                                                 1327
+                                                                 nil]
+                                                                [:r
+                                                                 1325
+                                                                 1]
+                                                                [:r
+                                                                 1328
+                                                                 nil]]}
+                                     #jepsen.history.Op{:index 3041,
+                                                        :time 171627241080,
+                                                        :type :ok,
+                                                        :process 8,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 1328
+                                                                 nil]
+                                                                [:w
+                                                                 1328
+                                                                 1]
+                                                                [:w
+                                                                 1328
+                                                                 2]
+                                                                [:r
+                                                                 1325
+                                                                 nil]
+                                                                [:r
+                                                                 1328
+                                                                 2]
+                                                                [:w
+                                                                 1327
+                                                                 1]
+                                                                [:r
+                                                                 1328
+                                                                 2]]}
+                                     #jepsen.history.Op{:index 3040,
+                                                        :time 171625705626,
+                                                        :type :ok,
+                                                        :process 7,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 1325
+                                                                 nil]
+                                                                [:w
+                                                                 1325
+                                                                 1]
+                                                                [:r
+                                                                 1326
+                                                                 3]
+                                                                [:r
+                                                                 1316
+                                                                 nil]
+                                                                [:r
+                                                                 1325
+                                                                 1]
+                                                                [:r
+                                                                 1327
+                                                                 nil]
+                                                                [:r
+                                                                 1325
+                                                                 1]
+                                                                [:r
+                                                                 1328
+                                                                 nil]]}],
+                             :steps ({:key 1327,
+                                      :value nil,
+                                      :value' 1,
+                                      :type :rw,
+                                      :a-mop-index 5,
+                                      :b-mop-index 5}
+                                     {:key 1325,
+                                      :value nil,
+                                      :value' 1,
+                                      :type :rw,
+                                      :a-mop-index 3,
+                                      :b-mop-index 1}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

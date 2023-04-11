@@ -1,0 +1,18 @@
+G2-item #0
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:append 445 2] [:append 445 3] [:append 446 1] [:append 446 2] [:r 441 [1]] [:append 446 3]], :time 69912027425, :process 17, :index 1008}
+  T2 = {:type :ok, :f :txn, :value [[:r 445 [1]] [:append 441 2] [:r 434 [1 2]] [:r 447 []]], :time 69913419127, :process 14, :index 1009}
+
+Then:
+  - T1 < T2, because T1 did not observe T2's append of 2 to 441.
+  - However, T2 < T1, because T2 did not observe T1's append of 2 to 445: a contradiction!
+
+
+G2-item #1
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:r 398 []] [:r 395 [1]] [:r 396 [1]] [:append 398 1] [:r 398 [1]] [:append 398 2] [:append 393 3]], :time 64730055837, :process 3, :index 895}
+  T2 = {:type :ok, :f :txn, :value [[:r 393 [1 2]] [:r 397 [1 2]] [:append 396 2] [:append 396 3] [:append 397 3] [:r 397 [1 2 3]]], :time 64728580951, :process 11, :index 894}
+
+Then:
+  - T1 < T2, because T1 did not observe T2's append of 2 to 396.
+  - However, T2 < T1, because T2 did not observe T1's append of 3 to 393: a contradiction!

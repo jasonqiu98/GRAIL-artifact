@@ -1,0 +1,672 @@
+2023-04-11 08:52:21 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T08:52:21Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T08:52:21Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T08:52:21Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T08:52:21Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T08:52:21Z |INFO| Serving as master with ID '636029c1' on 10.0.2.15:8528... component=arangodb
+2023-04-11T08:52:21Z |INFO| Starting service... component=arangodb
+2023-04-11T08:52:21Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T08:52:21Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T08:52:21Z |INFO| single started routine component=arangodb type=single
+2023-04-11T08:52:21Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T08:52:21Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T08:52:21Z |INFO| server started component=arangodb pid=2587 type=single
+2023-04-11T08:52:25Z |INFO| single up and running (version 3.9.10). component=arangodb pid=2587 type=single
+2023-04-11T08:52:25Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=2587 type=single
+2023-04-11T08:52:25Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=2587 type=single
+2023-04-11 08:52:59 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T08:52:59Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T08:52:59Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T08:52:59Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T08:52:59Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T08:52:59Z |INFO| Serving as master with ID '907395e9' on 10.0.2.15:8528... component=arangodb
+2023-04-11T08:52:59Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T08:52:59Z |INFO| Starting service... component=arangodb
+2023-04-11T08:52:59Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T08:52:59Z |INFO| single started routine component=arangodb type=single
+2023-04-11T08:52:59Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T08:52:59Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T08:52:59Z |INFO| server started component=arangodb pid=2728 type=single
+2023-04-11T08:53:02Z |INFO| single up and running (version 3.9.10). component=arangodb pid=2728 type=single
+2023-04-11T08:53:02Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=2728 type=single
+2023-04-11T08:53:02Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=2728 type=single
+2023-04-11 08:53:47 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T08:53:47Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T08:53:47Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T08:53:47Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T08:53:47Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T08:53:47Z |INFO| Serving as master with ID 'ebb6e583' on 10.0.2.15:8528... component=arangodb
+2023-04-11T08:53:47Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T08:53:47Z |INFO| Starting service... component=arangodb
+2023-04-11T08:53:47Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T08:53:47Z |INFO| single started routine component=arangodb type=single
+2023-04-11T08:53:47Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T08:53:47Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T08:53:47Z |INFO| server started component=arangodb pid=2870 type=single
+2023-04-11T08:53:51Z |INFO| single up and running (version 3.9.10). component=arangodb pid=2870 type=single
+2023-04-11T08:53:51Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=2870 type=single
+2023-04-11T08:53:51Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=2870 type=single
+2023-04-11 08:54:45 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T08:54:45Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T08:54:45Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T08:54:45Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T08:54:45Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T08:54:45Z |INFO| Serving as master with ID '78629a49' on 10.0.2.15:8528... component=arangodb
+2023-04-11T08:54:45Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T08:54:45Z |INFO| Starting service... component=arangodb
+2023-04-11T08:54:45Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T08:54:45Z |INFO| single started routine component=arangodb type=single
+2023-04-11T08:54:45Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T08:54:45Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T08:54:45Z |INFO| server started component=arangodb pid=3014 type=single
+2023-04-11T08:54:46Z |INFO| single up and running (version 3.9.10). component=arangodb pid=3014 type=single
+2023-04-11T08:54:46Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=3014 type=single
+2023-04-11T08:54:46Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=3014 type=single
+2023-04-11 08:55:52 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T08:55:52Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T08:55:52Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T08:55:52Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T08:55:52Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T08:55:52Z |INFO| Serving as master with ID 'c51373c5' on 10.0.2.15:8528... component=arangodb
+2023-04-11T08:55:52Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T08:55:52Z |INFO| Starting service... component=arangodb
+2023-04-11T08:55:52Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T08:55:52Z |INFO| single started routine component=arangodb type=single
+2023-04-11T08:55:52Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T08:55:52Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T08:55:52Z |INFO| server started component=arangodb pid=3157 type=single
+2023-04-11T08:55:53Z |INFO| single up and running (version 3.9.10). component=arangodb pid=3157 type=single
+2023-04-11T08:55:53Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=3157 type=single
+2023-04-11T08:55:53Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=3157 type=single
+2023-04-11 08:57:10 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T08:57:10Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T08:57:10Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T08:57:10Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T08:57:10Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T08:57:10Z |INFO| Serving as master with ID 'ed91872d' on 10.0.2.15:8528... component=arangodb
+2023-04-11T08:57:10Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T08:57:10Z |INFO| Starting service... component=arangodb
+2023-04-11T08:57:10Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T08:57:10Z |INFO| single started routine component=arangodb type=single
+2023-04-11T08:57:10Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T08:57:10Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T08:57:10Z |INFO| server started component=arangodb pid=3298 type=single
+2023-04-11T08:57:11Z |INFO| single up and running (version 3.9.10). component=arangodb pid=3298 type=single
+2023-04-11T08:57:11Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=3298 type=single
+2023-04-11T08:57:11Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=3298 type=single
+2023-04-11 08:58:38 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T08:58:38Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T08:58:38Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T08:58:38Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T08:58:38Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T08:58:38Z |INFO| Serving as master with ID '6a89534a' on 10.0.2.15:8528... component=arangodb
+2023-04-11T08:58:38Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T08:58:38Z |INFO| Starting service... component=arangodb
+2023-04-11T08:58:38Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T08:58:38Z |INFO| single started routine component=arangodb type=single
+2023-04-11T08:58:38Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T08:58:38Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T08:58:38Z |INFO| server started component=arangodb pid=3439 type=single
+2023-04-11T08:58:39Z |INFO| single up and running (version 3.9.10). component=arangodb pid=3439 type=single
+2023-04-11T08:58:39Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=3439 type=single
+2023-04-11T08:58:39Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=3439 type=single
+2023-04-11 09:00:17 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:00:17Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:00:17Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:00:17Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:00:17Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:00:17Z |INFO| Serving as master with ID '1451b04f' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:00:17Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:00:17Z |INFO| Starting service... component=arangodb
+2023-04-11T09:00:17Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:00:17Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:00:17Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:00:17Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:00:17Z |INFO| server started component=arangodb pid=3582 type=single
+2023-04-11T09:00:18Z |INFO| single up and running (version 3.9.10). component=arangodb pid=3582 type=single
+2023-04-11T09:00:18Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=3582 type=single
+2023-04-11T09:00:18Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=3582 type=single
+2023-04-11 09:02:05 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:02:05Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:02:05Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:02:05Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:02:05Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:02:05Z |INFO| Serving as master with ID 'ae582b6d' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:02:05Z |INFO| Starting service... component=arangodb
+2023-04-11T09:02:05Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:02:05Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:02:05Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:02:05Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:02:05Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:02:05Z |INFO| server started component=arangodb pid=3726 type=single
+2023-04-11T09:02:06Z |INFO| single up and running (version 3.9.10). component=arangodb pid=3726 type=single
+2023-04-11T09:02:06Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=3726 type=single
+2023-04-11T09:02:06Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=3726 type=single
+2023-04-11 09:04:04 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:04:04Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:04:04Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:04:04Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:04:04Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:04:04Z |INFO| Serving as master with ID 'a28f231e' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:04:04Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:04:04Z |INFO| Starting service... component=arangodb
+2023-04-11T09:04:04Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:04:04Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:04:04Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:04:04Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:04:04Z |INFO| server started component=arangodb pid=3867 type=single
+2023-04-11T09:04:05Z |INFO| single up and running (version 3.9.10). component=arangodb pid=3867 type=single
+2023-04-11T09:04:05Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=3867 type=single
+2023-04-11T09:04:05Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=3867 type=single
+2023-04-11 09:06:13 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:06:13Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:06:13Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:06:13Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:06:13Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:06:13Z |INFO| Serving as master with ID '53e102c1' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:06:13Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:06:13Z |INFO| Starting service... component=arangodb
+2023-04-11T09:06:13Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:06:13Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:06:13Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:06:13Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:06:13Z |INFO| server started component=arangodb pid=4013 type=single
+2023-04-11T09:06:14Z |INFO| single up and running (version 3.9.10). component=arangodb pid=4013 type=single
+2023-04-11T09:06:14Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=4013 type=single
+2023-04-11T09:06:14Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=4013 type=single
+2023-04-11 09:08:31 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:08:31Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:08:31Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:08:31Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:08:31Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:08:31Z |INFO| Serving as master with ID '3074cd44' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:08:31Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:08:31Z |INFO| Starting service... component=arangodb
+2023-04-11T09:08:31Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:08:31Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:08:31Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:08:31Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:08:31Z |INFO| server started component=arangodb pid=4154 type=single
+2023-04-11T09:08:32Z |INFO| single up and running (version 3.9.10). component=arangodb pid=4154 type=single
+2023-04-11T09:08:32Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=4154 type=single
+2023-04-11T09:08:32Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=4154 type=single
+2023-04-11 09:11:00 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:11:00Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:11:00Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:11:00Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:11:00Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:11:00Z |INFO| Serving as master with ID '97c9b0c0' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:11:00Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:11:00Z |INFO| Starting service... component=arangodb
+2023-04-11T09:11:00Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:11:00Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:11:00Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:11:00Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:11:00Z |INFO| server started component=arangodb pid=4296 type=single
+2023-04-11T09:11:01Z |INFO| single up and running (version 3.9.10). component=arangodb pid=4296 type=single
+2023-04-11T09:11:01Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=4296 type=single
+2023-04-11T09:11:01Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=4296 type=single
+2023-04-11 09:13:39 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:13:39Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:13:39Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:13:39Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:13:39Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:13:39Z |INFO| Serving as master with ID '912bd719' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:13:39Z |INFO| Starting service... component=arangodb
+2023-04-11T09:13:39Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:13:39Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:13:39Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:13:39Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:13:39Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:13:39Z |INFO| server started component=arangodb pid=4442 type=single
+2023-04-11T09:13:40Z |INFO| single up and running (version 3.9.10). component=arangodb pid=4442 type=single
+2023-04-11T09:13:40Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=4442 type=single
+2023-04-11T09:13:40Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=4442 type=single
+2023-04-11 09:16:27 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:16:27Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:16:27Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:16:27Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:16:27Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:16:27Z |INFO| Serving as master with ID 'ceadbb3d' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:16:27Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:16:27Z |INFO| Starting service... component=arangodb
+2023-04-11T09:16:27Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:16:27Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:16:27Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:16:27Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:16:27Z |INFO| server started component=arangodb pid=4584 type=single
+2023-04-11T09:16:28Z |INFO| single up and running (version 3.9.10). component=arangodb pid=4584 type=single
+2023-04-11T09:16:28Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=4584 type=single
+2023-04-11T09:16:28Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=4584 type=single
+2023-04-11 09:19:26 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:19:26Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:19:26Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:19:26Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:19:26Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:19:26Z |INFO| Serving as master with ID '168ccbab' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:19:26Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:19:26Z |INFO| Starting service... component=arangodb
+2023-04-11T09:19:26Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:19:26Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:19:26Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:19:26Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:19:26Z |INFO| server started component=arangodb pid=4732 type=single
+2023-04-11T09:19:27Z |INFO| single up and running (version 3.9.10). component=arangodb pid=4732 type=single
+2023-04-11T09:19:27Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=4732 type=single
+2023-04-11T09:19:27Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=4732 type=single
+2023-04-11 09:22:35 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:22:35Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:22:35Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:22:35Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:22:35Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:22:35Z |INFO| Serving as master with ID '4422ca99' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:22:35Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:22:35Z |INFO| Starting service... component=arangodb
+2023-04-11T09:22:35Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:22:35Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:22:35Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:22:35Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:22:35Z |INFO| server started component=arangodb pid=4875 type=single
+2023-04-11T09:22:36Z |INFO| single up and running (version 3.9.10). component=arangodb pid=4875 type=single
+2023-04-11T09:22:36Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=4875 type=single
+2023-04-11T09:22:36Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=4875 type=single
+2023-04-11 09:25:56 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:25:56Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:25:56Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:25:56Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:25:57Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:25:57Z |INFO| Serving as master with ID '6d919a8f' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:25:57Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:25:57Z |INFO| Starting service... component=arangodb
+2023-04-11T09:25:57Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:25:57Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:25:57Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:25:57Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:25:57Z |INFO| server started component=arangodb pid=5036 type=single
+2023-04-11T09:26:00Z |INFO| single up and running (version 3.9.10). component=arangodb pid=5036 type=single
+2023-04-11T09:26:00Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=5036 type=single
+2023-04-11T09:26:00Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=5036 type=single
+2023-04-11 09:29:28 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:29:28Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:29:28Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:29:28Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:29:28Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:29:28Z |INFO| Serving as master with ID 'b9edf29d' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:29:28Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:29:28Z |INFO| Starting service... component=arangodb
+2023-04-11T09:29:28Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:29:28Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:29:28Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:29:28Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:29:28Z |INFO| server started component=arangodb pid=5179 type=single
+2023-04-11T09:29:29Z |INFO| single up and running (version 3.9.10). component=arangodb pid=5179 type=single
+2023-04-11T09:29:29Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=5179 type=single
+2023-04-11T09:29:29Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=5179 type=single
+2023-04-11 09:33:09 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:33:09Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:33:09Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:33:09Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:33:09Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:33:09Z |INFO| Serving as master with ID 'c4c1a1b9' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:33:09Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:33:09Z |INFO| Starting service... component=arangodb
+2023-04-11T09:33:09Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:33:09Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:33:09Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:33:09Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:33:09Z |INFO| server started component=arangodb pid=5340 type=single
+2023-04-11T09:33:10Z |INFO| single up and running (version 3.9.10). component=arangodb pid=5340 type=single
+2023-04-11T09:33:10Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=5340 type=single
+2023-04-11T09:33:10Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=5340 type=single
+2023-04-11 09:57:10 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:57:10Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:57:10Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:57:10Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:57:10Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:57:10Z |INFO| Serving as master with ID '98253273' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:57:10Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:57:10Z |INFO| Starting service... component=arangodb
+2023-04-11T09:57:10Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:57:10Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:57:10Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:57:10Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:57:10Z |INFO| server started component=arangodb pid=5502 type=single
+2023-04-11T09:57:11Z |INFO| single up and running (version 3.9.10). component=arangodb pid=5502 type=single
+2023-04-11T09:57:11Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=5502 type=single
+2023-04-11T09:57:11Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=5502 type=single
+2023-04-11 09:57:48 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:57:48Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:57:48Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:57:48Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:57:48Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:57:48Z |INFO| Serving as master with ID '317f7994' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:57:48Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:57:48Z |INFO| Starting service... component=arangodb
+2023-04-11T09:57:48Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:57:48Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:57:48Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:57:48Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:57:48Z |INFO| server started component=arangodb pid=5637 type=single
+2023-04-11T09:57:49Z |INFO| single up and running (version 3.9.10). component=arangodb pid=5637 type=single
+2023-04-11T09:57:49Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=5637 type=single
+2023-04-11T09:57:49Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=5637 type=single
+2023-04-11 09:58:36 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:58:36Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:58:36Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:58:36Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:58:36Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:58:36Z |INFO| Serving as master with ID '96b25e1a' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:58:36Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:58:36Z |INFO| Starting service... component=arangodb
+2023-04-11T09:58:36Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:58:36Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:58:36Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:58:36Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:58:36Z |INFO| server started component=arangodb pid=5777 type=single
+2023-04-11T09:58:37Z |INFO| single up and running (version 3.9.10). component=arangodb pid=5777 type=single
+2023-04-11T09:58:37Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=5777 type=single
+2023-04-11T09:58:37Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=5777 type=single
+2023-04-11 09:59:35 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T09:59:35Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T09:59:35Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T09:59:35Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T09:59:35Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T09:59:35Z |INFO| Serving as master with ID '1f88146a' on 10.0.2.15:8528... component=arangodb
+2023-04-11T09:59:35Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T09:59:35Z |INFO| Starting service... component=arangodb
+2023-04-11T09:59:35Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T09:59:35Z |INFO| single started routine component=arangodb type=single
+2023-04-11T09:59:35Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T09:59:35Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T09:59:35Z |INFO| server started component=arangodb pid=5919 type=single
+2023-04-11T09:59:37Z |INFO| single up and running (version 3.9.10). component=arangodb pid=5919 type=single
+2023-04-11T09:59:37Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=5919 type=single
+2023-04-11T09:59:37Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=5919 type=single
+2023-04-11 10:00:43 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:00:43Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:00:43Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:00:43Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:00:43Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:00:43Z |INFO| Serving as master with ID 'e5c400cb' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:00:43Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:00:43Z |INFO| Starting service... component=arangodb
+2023-04-11T10:00:43Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:00:43Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:00:43Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:00:43Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:00:43Z |INFO| server started component=arangodb pid=6060 type=single
+2023-04-11T10:00:44Z |INFO| single up and running (version 3.9.10). component=arangodb pid=6060 type=single
+2023-04-11T10:00:44Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=6060 type=single
+2023-04-11T10:00:44Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=6060 type=single
+2023-04-11 10:02:02 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:02:02Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:02:02Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:02:02Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:02:02Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:02:02Z |INFO| Serving as master with ID '1bf3c860' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:02:02Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:02:02Z |INFO| Starting service... component=arangodb
+2023-04-11T10:02:02Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:02:02Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:02:02Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:02:02Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:02:02Z |INFO| server started component=arangodb pid=6201 type=single
+2023-04-11T10:02:04Z |INFO| single up and running (version 3.9.10). component=arangodb pid=6201 type=single
+2023-04-11T10:02:04Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=6201 type=single
+2023-04-11T10:02:04Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=6201 type=single
+2023-04-11 10:03:31 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:03:31Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:03:31Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:03:31Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:03:31Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:03:31Z |INFO| Serving as master with ID '4f87135f' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:03:31Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:03:31Z |INFO| Starting service... component=arangodb
+2023-04-11T10:03:31Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:03:31Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:03:31Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:03:31Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:03:31Z |INFO| server started component=arangodb pid=6346 type=single
+2023-04-11T10:03:32Z |INFO| single up and running (version 3.9.10). component=arangodb pid=6346 type=single
+2023-04-11T10:03:32Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=6346 type=single
+2023-04-11T10:03:32Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=6346 type=single
+2023-04-11 10:05:09 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:05:09Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:05:09Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:05:09Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:05:09Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:05:09Z |INFO| Serving as master with ID '62574db9' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:05:09Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:05:09Z |INFO| Starting service... component=arangodb
+2023-04-11T10:05:09Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:05:09Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:05:09Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:05:09Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:05:09Z |INFO| server started component=arangodb pid=6487 type=single
+2023-04-11T10:05:13Z |INFO| single up and running (version 3.9.10). component=arangodb pid=6487 type=single
+2023-04-11T10:05:13Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=6487 type=single
+2023-04-11T10:05:13Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=6487 type=single
+2023-04-11 10:06:58 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:06:58Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:06:58Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:06:58Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:06:58Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:06:58Z |INFO| Serving as master with ID '68273855' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:06:58Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:06:58Z |INFO| Starting service... component=arangodb
+2023-04-11T10:06:58Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:06:58Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:06:58Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:06:58Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:06:58Z |INFO| server started component=arangodb pid=6628 type=single
+2023-04-11T10:06:59Z |INFO| single up and running (version 3.9.10). component=arangodb pid=6628 type=single
+2023-04-11T10:06:59Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=6628 type=single
+2023-04-11T10:06:59Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=6628 type=single
+2023-04-11 10:08:56 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:08:57Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:08:57Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:08:57Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:08:57Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:08:57Z |INFO| Serving as master with ID '6fb35cc4' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:08:57Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:08:57Z |INFO| Starting service... component=arangodb
+2023-04-11T10:08:57Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:08:57Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:08:57Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:08:57Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:08:57Z |INFO| server started component=arangodb pid=6773 type=single
+2023-04-11T10:08:58Z |INFO| single up and running (version 3.9.10). component=arangodb pid=6773 type=single
+2023-04-11T10:08:58Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=6773 type=single
+2023-04-11T10:08:58Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=6773 type=single
+2023-04-11 10:11:05 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:11:05Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:11:05Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:11:05Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:11:05Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:11:05Z |INFO| Serving as master with ID '31698cfd' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:11:05Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:11:05Z |INFO| Starting service... component=arangodb
+2023-04-11T10:11:05Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:11:05Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:11:05Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:11:05Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:11:05Z |INFO| server started component=arangodb pid=6914 type=single
+2023-04-11T10:11:06Z |INFO| single up and running (version 3.9.10). component=arangodb pid=6914 type=single
+2023-04-11T10:11:06Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=6914 type=single
+2023-04-11T10:11:06Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=6914 type=single
+2023-04-11 10:13:24 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:13:24Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:13:24Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:13:24Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:13:24Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:13:24Z |INFO| Serving as master with ID 'ac9d1ed1' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:13:24Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:13:24Z |INFO| Starting service... component=arangodb
+2023-04-11T10:13:24Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:13:24Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:13:24Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:13:24Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:13:24Z |INFO| server started component=arangodb pid=7056 type=single
+2023-04-11T10:13:25Z |INFO| single up and running (version 3.9.10). component=arangodb pid=7056 type=single
+2023-04-11T10:13:25Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=7056 type=single
+2023-04-11T10:13:25Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=7056 type=single
+2023-04-11 10:15:53 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:15:53Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:15:53Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:15:53Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:15:53Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:15:53Z |INFO| Serving as master with ID 'f8858dec' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:15:53Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:15:53Z |INFO| Starting service... component=arangodb
+2023-04-11T10:15:53Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:15:53Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:15:53Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:15:53Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:15:53Z |INFO| server started component=arangodb pid=7199 type=single
+2023-04-11T10:15:54Z |INFO| single up and running (version 3.9.10). component=arangodb pid=7199 type=single
+2023-04-11T10:15:54Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=7199 type=single
+2023-04-11T10:15:54Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=7199 type=single
+2023-04-11 10:18:31 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:18:31Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:18:31Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:18:31Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:18:31Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:18:31Z |INFO| Serving as master with ID '8cab2501' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:18:31Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:18:31Z |INFO| Starting service... component=arangodb
+2023-04-11T10:18:31Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:18:31Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:18:31Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:18:31Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:18:31Z |INFO| server started component=arangodb pid=7345 type=single
+2023-04-11T10:18:32Z |INFO| single up and running (version 3.9.10). component=arangodb pid=7345 type=single
+2023-04-11T10:18:32Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=7345 type=single
+2023-04-11T10:18:32Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=7345 type=single
+2023-04-11 10:21:20 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:21:20Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:21:20Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:21:20Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:21:20Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:21:20Z |INFO| Serving as master with ID '40abe809' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:21:20Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:21:20Z |INFO| Starting service... component=arangodb
+2023-04-11T10:21:20Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:21:20Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:21:20Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:21:20Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:21:20Z |INFO| server started component=arangodb pid=7490 type=single
+2023-04-11T10:21:21Z |INFO| single up and running (version 3.9.10). component=arangodb pid=7490 type=single
+2023-04-11T10:21:21Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=7490 type=single
+2023-04-11T10:21:21Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=7490 type=single
+2023-04-11 10:24:18 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:24:18Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:24:19Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:24:19Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:24:19Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:24:19Z |INFO| Serving as master with ID 'c3c77f9c' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:24:19Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:24:19Z |INFO| Starting service... component=arangodb
+2023-04-11T10:24:19Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:24:19Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:24:19Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:24:19Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:24:19Z |INFO| server started component=arangodb pid=7631 type=single
+2023-04-11T10:24:20Z |INFO| single up and running (version 3.9.10). component=arangodb pid=7631 type=single
+2023-04-11T10:24:20Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=7631 type=single
+2023-04-11T10:24:20Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=7631 type=single
+2023-04-11 10:27:27 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:27:27Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:27:27Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:27:27Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:27:27Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:27:27Z |INFO| Serving as master with ID '94b87366' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:27:27Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:27:27Z |INFO| Starting service... component=arangodb
+2023-04-11T10:27:27Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:27:27Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:27:27Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:27:27Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:27:27Z |INFO| server started component=arangodb pid=7777 type=single
+2023-04-11T10:27:28Z |INFO| single up and running (version 3.9.10). component=arangodb pid=7777 type=single
+2023-04-11T10:27:28Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=7777 type=single
+2023-04-11T10:27:28Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=7777 type=single
+2023-04-11 10:30:46 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:30:46Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:30:46Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:30:46Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:30:46Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:30:46Z |INFO| Serving as master with ID '72171b76' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:30:46Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:30:46Z |INFO| Starting service... component=arangodb
+2023-04-11T10:30:46Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:30:46Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:30:46Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:30:46Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:30:46Z |INFO| server started component=arangodb pid=7919 type=single
+2023-04-11T10:30:47Z |INFO| single up and running (version 3.9.10). component=arangodb pid=7919 type=single
+2023-04-11T10:30:47Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=7919 type=single
+2023-04-11T10:30:47Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=7919 type=single
+2023-04-11 10:34:14 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:34:14Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:34:14Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:34:14Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:34:14Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:34:14Z |INFO| Serving as master with ID '1ab82163' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:34:14Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:34:14Z |INFO| Starting service... component=arangodb
+2023-04-11T10:34:14Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:34:14Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:34:14Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:34:14Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:34:14Z |INFO| server started component=arangodb pid=8064 type=single
+2023-04-11T10:34:15Z |INFO| single up and running (version 3.9.10). component=arangodb pid=8064 type=single
+2023-04-11T10:34:15Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=8064 type=single
+2023-04-11T10:34:15Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=8064 type=single
+2023-04-11 10:37:53 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:37:53Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:37:53Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:37:53Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:37:53Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:37:53Z |INFO| Serving as master with ID '2fe8c7c0' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:37:53Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:37:53Z |INFO| Starting service... component=arangodb
+2023-04-11T10:37:53Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:37:53Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:37:53Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:37:53Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:37:53Z |INFO| server started component=arangodb pid=8206 type=single
+2023-04-11T10:37:54Z |INFO| single up and running (version 3.9.10). component=arangodb pid=8206 type=single
+2023-04-11T10:37:54Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=8206 type=single
+2023-04-11T10:37:54Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=8206 type=single
+2023-04-11 10:45:12 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:45:12Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:45:12Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:45:12Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:45:12Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:45:12Z |INFO| Serving as master with ID '76179561' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:45:12Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:45:12Z |INFO| Starting service... component=arangodb
+2023-04-11T10:45:12Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:45:12Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:45:12Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:45:12Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:45:12Z |INFO| server started component=arangodb pid=8369 type=single
+2023-04-11T10:45:13Z |INFO| single up and running (version 3.9.10). component=arangodb pid=8369 type=single
+2023-04-11T10:45:13Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=8369 type=single
+2023-04-11T10:45:13Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=8369 type=single
+2023-04-11 10:46:46 Jepsen starting  arangodb --starter.mode=single --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data
+2023-04-11T10:46:46Z |INFO| Starting arangodb version 0.15.7, build 0cd0439 component=arangodb
+2023-04-11T10:46:46Z |INFO| Failed to read configuration file "/opt/arangodb/bin/data/setup.json" error="open /opt/arangodb/bin/data/setup.json: no such file or directory" component=arangodb
+2023-04-11T10:46:46Z |INFO| Using auto-detected starter.address: 10.0.2.15 component=arangodb
+2023-04-11T10:46:46Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-04-11T10:46:46Z |INFO| Serving as master with ID '132456e8' on 10.0.2.15:8528... component=arangodb
+2023-04-11T10:46:46Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (10.0.2.15:8528) component=arangodb
+2023-04-11T10:46:46Z |INFO| Starting service... component=arangodb
+2023-04-11T10:46:46Z |INFO| single starting routine component=arangodb type=single
+2023-04-11T10:46:46Z |INFO| single started routine component=arangodb type=single
+2023-04-11T10:46:46Z |INFO| Looking for a running instance of single on port 8529 component=arangodb type=single
+2023-04-11T10:46:46Z |INFO| Starting single on port 8529 component=arangodb type=single
+2023-04-11T10:46:46Z |INFO| server started component=arangodb pid=8529 type=single
+2023-04-11T10:46:47Z |INFO| single up and running (version 3.9.10). component=arangodb pid=8529 type=single
+2023-04-11T10:46:47Z |INFO| Your single server can now be accessed with a browser at `http://10.0.2.15:8529` or component=arangodb pid=8529 type=single
+2023-04-11T10:46:47Z |INFO| using `arangosh --server.endpoint tcp://10.0.2.15:8529`. component=arangodb pid=8529 type=single

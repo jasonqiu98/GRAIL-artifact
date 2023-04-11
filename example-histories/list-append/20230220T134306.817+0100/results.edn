@@ -1,0 +1,380 @@
+{:la {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r 1287 []]
+                                              [:r 1288 []]
+                                              [:append 1288 1]
+                                              [:r 1288 [1]]
+                                              [:r 1288 [1]]],
+                                      :time 172927635020,
+                                      :process 6,
+                                      :index 3073}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1285 2]
+                                              [:append 1281 3]
+                                              [:append 1287 1]
+                                              [:r 1288 []]
+                                              [:r 1281 [1 2 3]]],
+                                      :time 172919534548,
+                                      :process 2,
+                                      :index 3072}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 1287 []]
+                                              [:r 1288 []]
+                                              [:append 1288 1]
+                                              [:r 1288 [1]]
+                                              [:r 1288 [1]]],
+                                      :time 172927635020,
+                                      :process 6,
+                                      :index 3073}],
+                             :steps ({:type :rw,
+                                      :key 1287,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 0,
+                                      :b-mop-index 2}
+                                     {:type :rw,
+                                      :key 1288,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 3,
+                                      :b-mop-index 2}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 120 1]
+                                              [:r 120 [1]]
+                                              [:r 120 [1]]
+                                              [:r 116 [1]]
+                                              [:r 118 [1]]
+                                              [:append 120 2]
+                                              [:append 120 3]
+                                              [:r 120 [1 2 3]]],
+                                      :time 32972338879,
+                                      :process 11,
+                                      :index 302}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 118 2]
+                                              [:append 118 3]
+                                              [:append 116 2]
+                                              [:r 120 []]
+                                              [:r 118 [1 2 3]]],
+                                      :time 32977008744,
+                                      :process 12,
+                                      :index 303}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 120 1]
+                                              [:r 120 [1]]
+                                              [:r 120 [1]]
+                                              [:r 116 [1]]
+                                              [:r 118 [1]]
+                                              [:append 120 2]
+                                              [:append 120 3]
+                                              [:r 120 [1 2 3]]],
+                                      :time 32972338879,
+                                      :process 11,
+                                      :index 302}],
+                             :steps ({:type :rw,
+                                      :key 118,
+                                      :value 1,
+                                      :value' 2,
+                                      :a-mop-index 4,
+                                      :b-mop-index 0}
+                                     {:type :rw,
+                                      :key 120,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 3,
+                                      :b-mop-index 0}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 604 2]
+                                              [:r 602 [1 2]]
+                                              [:append 604 3]
+                                              [:append 603 1]],
+                                      :time 90595027203,
+                                      :process 16,
+                                      :index 1444}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 603 []]
+                                              [:r 602 [1 2]]
+                                              [:append 602 3]
+                                              [:r 605 []]
+                                              [:r 604 [1]]
+                                              [:r 603 []]
+                                              [:append 605 1]],
+                                      :time 90606558369,
+                                      :process 12,
+                                      :index 1445}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 604 2]
+                                              [:r 602 [1 2]]
+                                              [:append 604 3]
+                                              [:append 603 1]],
+                                      :time 90595027203,
+                                      :process 16,
+                                      :index 1444}],
+                             :steps ({:type :rw,
+                                      :key 602,
+                                      :value 2,
+                                      :value' 3,
+                                      :a-mop-index 1,
+                                      :b-mop-index 2}
+                                     {:type :rw,
+                                      :key 604,
+                                      :value 1,
+                                      :value' 2,
+                                      :a-mop-index 4,
+                                      :b-mop-index 0}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r 470 [1]]
+                                              [:append 471 3]
+                                              [:r 475 []]
+                                              [:append 475 1]
+                                              [:r 463 [1]]
+                                              [:r 475 [1]]
+                                              [:append 475 2]],
+                                      :time 74867044815,
+                                      :process 14,
+                                      :index 1131}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 473 [1 2]]
+                                              [:r 471 [1]]
+                                              [:append 473 3]
+                                              [:append 470 3]],
+                                      :time 74859995191,
+                                      :process 7,
+                                      :index 1130}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 470 [1]]
+                                              [:append 471 3]
+                                              [:r 475 []]
+                                              [:append 475 1]
+                                              [:r 463 [1]]
+                                              [:r 475 [1]]
+                                              [:append 475 2]],
+                                      :time 74867044815,
+                                      :process 14,
+                                      :index 1131}],
+                             :steps ({:type :rw,
+                                      :key 470,
+                                      :value 1,
+                                      :value' 3,
+                                      :a-mop-index 0,
+                                      :b-mop-index 3}
+                                     {:type :rw,
+                                      :key 471,
+                                      :value 1,
+                                      :value' 3,
+                                      :a-mop-index 1,
+                                      :b-mop-index 1}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1256 1]
+                                              [:append 1256 2]
+                                              [:r 1256 [1 2]]
+                                              [:r 1257 [1]]
+                                              [:r 1258 []]],
+                                      :time 169285624400,
+                                      :process 2,
+                                      :index 3010}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1258 1]
+                                              [:append 1258 2]
+                                              [:append 1258 3]
+                                              [:r 1256 []]],
+                                      :time 169289034842,
+                                      :process 15,
+                                      :index 3011}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1256 1]
+                                              [:append 1256 2]
+                                              [:r 1256 [1 2]]
+                                              [:r 1257 [1]]
+                                              [:r 1258 []]],
+                                      :time 169285624400,
+                                      :process 2,
+                                      :index 3010}],
+                             :steps ({:type :rw,
+                                      :key 1258,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 4,
+                                      :b-mop-index 0}
+                                     {:type :rw,
+                                      :key 1256,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 3,
+                                      :b-mop-index 0}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1000 1]
+                                              [:r 998 []]
+                                              [:append 1000 2]
+                                              [:r 993 [1 2 3]]
+                                              [:append 1000 3]
+                                              [:r 998 []]
+                                              [:r 1000 [1 2 3]]
+                                              [:append 983 3]],
+                                      :time 137390300035,
+                                      :process 14,
+                                      :index 2392}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1001 1]
+                                              [:r 1000 []]
+                                              [:r 1000 []]
+                                              [:append 998 1]
+                                              [:append 1001 2]
+                                              [:r 1001 [1 2]]
+                                              [:append 1001 3]
+                                              [:r 998 [1]]],
+                                      :time 137404311356,
+                                      :process 11,
+                                      :index 2393}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1000 1]
+                                              [:r 998 []]
+                                              [:append 1000 2]
+                                              [:r 993 [1 2 3]]
+                                              [:append 1000 3]
+                                              [:r 998 []]
+                                              [:r 1000 [1 2 3]]
+                                              [:append 983 3]],
+                                      :time 137390300035,
+                                      :process 14,
+                                      :index 2392}],
+                             :steps ({:type :rw,
+                                      :key 998,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 1,
+                                      :b-mop-index 3}
+                                     {:type :rw,
+                                      :key 1000,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 1,
+                                      :b-mop-index 0}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1233 1]
+                                              [:r 1233 [1]]
+                                              [:r 1232 [1 2]]
+                                              [:r 1232 [1 2]]],
+                                      :time 166978081373,
+                                      :process 6,
+                                      :index 2957}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 1231 [1 2]]
+                                              [:append 1226 3]
+                                              [:append 1231 3]
+                                              [:append 1232 3]
+                                              [:r 1231 [1 2 3]]
+                                              [:r 1232 [1 2 3]]
+                                              [:r 1233 []]],
+                                      :time 166973856122,
+                                      :process 17,
+                                      :index 2956}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 1233 1]
+                                              [:r 1233 [1]]
+                                              [:r 1232 [1 2]]
+                                              [:r 1232 [1 2]]],
+                                      :time 166978081373,
+                                      :process 6,
+                                      :index 2957}],
+                             :steps ({:type :rw,
+                                      :key 1232,
+                                      :value 2,
+                                      :value' 3,
+                                      :a-mop-index 2,
+                                      :b-mop-index 3}
+                                     {:type :rw,
+                                      :key 1233,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 6,
+                                      :b-mop-index 0}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r 1030 [1]]
+                                              [:r 1020 [1]]
+                                              [:r 1026 [1 2 3]]
+                                              [:append 1030 2]
+                                              [:r 1030 [1 2]]
+                                              [:append 1030 3]
+                                              [:r 1026 [1 2 3]]
+                                              [:r 1030 [1 2 3]]],
+                                      :time 141280843351,
+                                      :process 18,
+                                      :index 2460}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 1030 [1]]
+                                              [:r 1026 [1 2 3]]
+                                              [:r 1026 [1 2 3]]
+                                              [:append 1020 2]
+                                              [:r 1032 []]
+                                              [:r 1032 []]
+                                              [:append 1031 1]],
+                                      :time 141287467275,
+                                      :process 12,
+                                      :index 2461}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 1030 [1]]
+                                              [:r 1020 [1]]
+                                              [:r 1026 [1 2 3]]
+                                              [:append 1030 2]
+                                              [:r 1030 [1 2]]
+                                              [:append 1030 3]
+                                              [:r 1026 [1 2 3]]
+                                              [:r 1030 [1 2 3]]],
+                                      :time 141280843351,
+                                      :process 18,
+                                      :index 2460}],
+                             :steps ({:type :rw,
+                                      :key 1020,
+                                      :value 1,
+                                      :value' 2,
+                                      :a-mop-index 1,
+                                      :b-mop-index 3}
+                                     {:type :rw,
+                                      :key 1030,
+                                      :value 1,
+                                      :value' 2,
+                                      :a-mop-index 0,
+                                      :b-mop-index 3}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

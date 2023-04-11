@@ -1,0 +1,327 @@
+2023-02-20 12:02:37 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:02:37Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:02:37Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:02:37Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:02:37Z |INFO| Found ID '2a68e65f' from peer, looking for '50edc830' component=arangodb
+2023-02-20T12:02:37Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:02:37Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:02:37Z |INFO| Serving as slave with ID '50edc830' on :8528... component=arangodb
+2023-02-20T12:02:37Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:02:37Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:02:37Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:02:37Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:02:37Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:02:37Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:02:37Z |INFO| server started component=arangodb pid=11418 type=agent
+2023-02-20T12:02:38Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=11418 type=agent
+2023-02-20T12:02:38Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:02:38Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:02:38Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:02:38Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:02:38Z |INFO| server started component=arangodb pid=11464 type=dbserver
+2023-02-20T12:02:39Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:02:39Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:02:39Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:02:39Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:02:39Z |INFO| server started component=arangodb pid=11474 type=coordinator
+2023-02-20T12:02:42Z |INFO| Just became master component=arangodb
+2023-02-20T12:02:42Z |INFO| Added new peer 'e72674fd': 192.168.56.105, portOffset: 0 component=arangodb
+2023-02-20T12:02:42Z |INFO| Added new peer 'f8547149': 192.168.56.103, portOffset: 0 component=arangodb
+2023-02-20T12:02:46Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=11464 type=dbserver
+2023-02-20T12:02:47Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=11474 type=coordinator
+2023-02-20T12:02:47Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=11474 type=coordinator
+2023-02-20T12:02:47Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=11474 type=coordinator
+2023-02-20 12:15:39 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:15:39Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:15:39Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:15:39Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:15:39Z |INFO| Found ID 'a3b02fc0' from peer, looking for '863b46c4' component=arangodb
+2023-02-20T12:15:39Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:15:39Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:15:39Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:15:40Z |INFO| Serving as slave with ID '863b46c4' on :8528... component=arangodb
+2023-02-20T12:15:40Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:15:40Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:15:40Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:15:40Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:15:40Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:15:40Z |INFO| server started component=arangodb pid=11685 type=agent
+2023-02-20T12:15:41Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=11685 type=agent
+2023-02-20T12:15:41Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:15:41Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:15:41Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:15:41Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:15:41Z |INFO| server started component=arangodb pid=11730 type=dbserver
+2023-02-20T12:15:42Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:15:42Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:15:42Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:15:42Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:15:42Z |INFO| server started component=arangodb pid=11769 type=coordinator
+2023-02-20T12:15:48Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=11730 type=dbserver
+2023-02-20T12:15:49Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=11769 type=coordinator
+2023-02-20T12:15:49Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=11769 type=coordinator
+2023-02-20T12:15:49Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=11769 type=coordinator
+2023-02-20 12:16:19 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:16:19Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:16:19Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:16:19Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:16:19Z |INFO| Found ID '450f406b' from peer, looking for 'a4fee25e' component=arangodb
+2023-02-20T12:16:19Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:16:19Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:16:19Z |INFO| Serving as slave with ID 'a4fee25e' on :8528... component=arangodb
+2023-02-20T12:16:19Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:16:19Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:16:19Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:16:19Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:16:19Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:16:19Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:16:19Z |INFO| server started component=arangodb pid=11929 type=agent
+2023-02-20T12:16:20Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=11929 type=agent
+2023-02-20T12:16:20Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:16:20Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:16:20Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:16:20Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:16:20Z |INFO| server started component=arangodb pid=11974 type=dbserver
+2023-02-20T12:16:21Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:16:21Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:16:21Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:16:21Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:16:21Z |INFO| server started component=arangodb pid=11984 type=coordinator
+2023-02-20T12:16:28Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=11974 type=dbserver
+2023-02-20T12:16:30Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=11984 type=coordinator
+2023-02-20T12:16:30Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=11984 type=coordinator
+2023-02-20T12:16:30Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=11984 type=coordinator
+2023-02-20 12:17:09 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:17:09Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:17:09Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:17:09Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:17:09Z |INFO| Found ID '84048db0' from peer, looking for '555b7a6a' component=arangodb
+2023-02-20T12:17:09Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:17:09Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:17:09Z |INFO| Serving as slave with ID '555b7a6a' on :8528... component=arangodb
+2023-02-20T12:17:09Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:17:09Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:17:09Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:17:09Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:17:09Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:17:09Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:17:09Z |INFO| server started component=arangodb pid=12174 type=agent
+2023-02-20T12:17:10Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=12174 type=agent
+2023-02-20T12:17:10Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:17:10Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:17:10Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:17:10Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:17:10Z |INFO| server started component=arangodb pid=12220 type=dbserver
+2023-02-20T12:17:11Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:17:11Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:17:11Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:17:11Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:17:11Z |INFO| server started component=arangodb pid=12230 type=coordinator
+2023-02-20T12:17:14Z |INFO| Just became master component=arangodb
+2023-02-20T12:17:22Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=12220 type=dbserver
+2023-02-20T12:17:23Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=12230 type=coordinator
+2023-02-20T12:17:23Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=12230 type=coordinator
+2023-02-20T12:17:23Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=12230 type=coordinator
+2023-02-20 12:18:09 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:18:09Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:18:09Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:18:09Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:18:09Z |INFO| Found ID 'd0e57f02' from peer, looking for '17c87e2f' component=arangodb
+2023-02-20T12:18:09Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:18:09Z |INFO| Cannot start because service not found component=arangodb
+2023-02-20T12:18:10Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:18:10Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:18:10Z |INFO| Serving as slave with ID '17c87e2f' on :8528... component=arangodb
+2023-02-20T12:18:10Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:18:10Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:18:10Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:18:10Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:18:10Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:18:10Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:18:10Z |INFO| server started component=arangodb pid=12423 type=agent
+2023-02-20T12:18:11Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=12423 type=agent
+2023-02-20T12:18:11Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:18:11Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:18:11Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:18:11Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:18:11Z |INFO| server started component=arangodb pid=12468 type=dbserver
+2023-02-20T12:18:12Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:18:12Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:18:12Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:18:12Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:18:12Z |INFO| server started component=arangodb pid=12479 type=coordinator
+2023-02-20T12:18:20Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=12468 type=dbserver
+2023-02-20T12:18:21Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=12479 type=coordinator
+2023-02-20T12:18:21Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=12479 type=coordinator
+2023-02-20T12:18:21Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=12479 type=coordinator
+2023-02-20 12:19:19 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:19:19Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:19:19Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:19:19Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:19:19Z |INFO| Found ID '37234317' from peer, looking for '7519ce16' component=arangodb
+2023-02-20T12:19:19Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:19:19Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:19:19Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:19:20Z |INFO| Serving as slave with ID '7519ce16' on :8528... component=arangodb
+2023-02-20T12:19:20Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:19:20Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:19:20Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:19:20Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:19:20Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:19:20Z |INFO| server started component=arangodb pid=12666 type=agent
+2023-02-20T12:19:21Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=12666 type=agent
+2023-02-20T12:19:21Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:19:21Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:19:21Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:19:21Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:19:21Z |INFO| server started component=arangodb pid=12712 type=dbserver
+2023-02-20T12:19:22Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:19:22Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:19:22Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:19:22Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:19:22Z |INFO| server started component=arangodb pid=12723 type=coordinator
+2023-02-20T12:19:28Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=12712 type=dbserver
+2023-02-20T12:19:29Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=12723 type=coordinator
+2023-02-20T12:19:29Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=12723 type=coordinator
+2023-02-20T12:19:29Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=12723 type=coordinator
+2023-02-20 12:20:39 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:20:39Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:20:39Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:20:39Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:20:39Z |INFO| Found ID '6052c08e' from peer, looking for '83f74024' component=arangodb
+2023-02-20T12:20:39Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:20:39Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:20:39Z |INFO| Serving as slave with ID '83f74024' on :8528... component=arangodb
+2023-02-20T12:20:39Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:20:39Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:20:39Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:20:39Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:20:39Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:20:39Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:20:39Z |INFO| server started component=arangodb pid=12915 type=agent
+2023-02-20T12:20:40Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=12915 type=agent
+2023-02-20T12:20:40Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:20:40Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:20:40Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:20:40Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:20:40Z |INFO| server started component=arangodb pid=12961 type=dbserver
+2023-02-20T12:20:41Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:20:41Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:20:41Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:20:41Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:20:41Z |INFO| server started component=arangodb pid=12971 type=coordinator
+2023-02-20T12:20:44Z |INFO| Just became master component=arangodb
+2023-02-20T12:20:50Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=12961 type=dbserver
+2023-02-20T12:20:51Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=12971 type=coordinator
+2023-02-20T12:20:51Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=12971 type=coordinator
+2023-02-20T12:20:51Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=12971 type=coordinator
+2023-02-20 12:22:09 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:22:09Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:22:09Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:22:09Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:22:10Z |INFO| Found ID '45821bb0' from peer, looking for 'a26e3149' component=arangodb
+2023-02-20T12:22:10Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:22:10Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:22:10Z |INFO| Serving as slave with ID 'a26e3149' on :8528... component=arangodb
+2023-02-20T12:22:10Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:22:10Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:22:10Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:22:10Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:22:10Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:22:10Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:22:10Z |INFO| server started component=arangodb pid=13162 type=agent
+2023-02-20T12:22:10Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=13162 type=agent
+2023-02-20T12:22:11Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:22:11Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:22:11Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:22:11Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:22:11Z |INFO| server started component=arangodb pid=13209 type=dbserver
+2023-02-20T12:22:12Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:22:12Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:22:12Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:22:12Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:22:12Z |INFO| server started component=arangodb pid=13218 type=coordinator
+2023-02-20T12:22:14Z |INFO| Just became master component=arangodb
+2023-02-20T12:22:21Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=13218 type=coordinator
+2023-02-20T12:22:21Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=13209 type=dbserver
+2023-02-20T12:22:21Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=13218 type=coordinator
+2023-02-20T12:22:21Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=13218 type=coordinator
+2023-02-20 12:23:50 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:23:50Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:23:50Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:23:50Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:23:50Z |INFO| Found ID '0db6f5ad' from peer, looking for '4c04225d' component=arangodb
+2023-02-20T12:23:50Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:23:50Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:23:50Z |INFO| Serving as slave with ID '4c04225d' on :8528... component=arangodb
+2023-02-20T12:23:50Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:23:50Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:23:50Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:23:50Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:23:50Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:23:50Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:23:50Z |INFO| server started component=arangodb pid=13408 type=dbserver
+2023-02-20T12:23:51Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:23:51Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:23:51Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:23:51Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:23:51Z |INFO| server started component=arangodb pid=13417 type=coordinator
+2023-02-20T12:24:00Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=13408 type=dbserver
+2023-02-20T12:24:02Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=13417 type=coordinator
+2023-02-20T12:24:02Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=13417 type=coordinator
+2023-02-20T12:24:02Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=13417 type=coordinator
+2023-02-20 12:25:40 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:25:40Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:25:40Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:25:40Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:25:40Z |INFO| Found ID 'ccfecf23' from peer, looking for '2368cca0' component=arangodb
+2023-02-20T12:25:40Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:25:40Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:25:40Z |INFO| Serving as slave with ID '2368cca0' on :8528... component=arangodb
+2023-02-20T12:25:40Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:25:40Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:25:40Z |INFO| agent starting routine component=arangodb type=agent
+2023-02-20T12:25:40Z |INFO| agent started routine component=arangodb type=agent
+2023-02-20T12:25:40Z |INFO| Looking for a running instance of agent on port 8531 component=arangodb type=agent
+2023-02-20T12:25:40Z |INFO| Starting agent on port 8531 component=arangodb type=agent
+2023-02-20T12:25:40Z |INFO| server started component=arangodb pid=13609 type=agent
+2023-02-20T12:25:40Z |INFO| agent up and running (version 3.9.1). component=arangodb pid=13609 type=agent
+2023-02-20T12:25:41Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:25:41Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:25:41Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:25:41Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:25:41Z |INFO| server started component=arangodb pid=13655 type=dbserver
+2023-02-20T12:25:42Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:25:42Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:25:42Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:25:42Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:25:42Z |INFO| server started component=arangodb pid=13665 type=coordinator
+2023-02-20T12:25:49Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=13655 type=dbserver
+2023-02-20T12:25:51Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=13665 type=coordinator
+2023-02-20T12:25:51Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=13665 type=coordinator
+2023-02-20T12:25:51Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=13665 type=coordinator
+2023-02-20 12:27:40 Jepsen starting  arangodb --server.storage-engine=rocksdb --auth.jwt-secret=/home/vagrant/arangodb.secret --starter.data-dir=/opt/arangodb/bin/data --starter.join=192.168.56.101,192.168.56.102,192.168.56.103,192.168.56.104,192.168.56.105
+2023-02-20T12:27:40Z |INFO| Starting arangodb version 0.15.4, build ed743d2 component=arangodb
+2023-02-20T12:27:40Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:27:40Z |INFO| Found ID from localhost peer component=arangodb
+2023-02-20T12:27:40Z |INFO| Found ID 'a3bb56de' from peer, looking for 'fbaed9cb' component=arangodb
+2023-02-20T12:27:40Z |INFO| Contacting master http://192.168.56.101:8528... component=arangodb
+2023-02-20T12:27:40Z |INFO| Waiting for 3 servers to show up... component=arangodb
+2023-02-20T12:27:40Z |INFO| Serving as slave with ID 'fbaed9cb' on :8528... component=arangodb
+2023-02-20T12:27:40Z |INFO| Using storage engine 'rocksdb' component=arangodb
+2023-02-20T12:27:40Z |INFO| ArangoDB Starter listening on 0.0.0.0:8528 (:8528) component=arangodb
+2023-02-20T12:27:40Z |INFO| dbserver starting routine component=arangodb type=dbserver
+2023-02-20T12:27:40Z |INFO| dbserver started routine component=arangodb type=dbserver
+2023-02-20T12:27:40Z |INFO| Looking for a running instance of dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:27:40Z |INFO| Starting dbserver on port 8530 component=arangodb type=dbserver
+2023-02-20T12:27:40Z |INFO| server started component=arangodb pid=13858 type=dbserver
+2023-02-20T12:27:41Z |INFO| coordinator starting routine component=arangodb type=coordinator
+2023-02-20T12:27:41Z |INFO| coordinator started routine component=arangodb type=coordinator
+2023-02-20T12:27:41Z |INFO| Looking for a running instance of coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:27:41Z |INFO| Starting coordinator on port 8529 component=arangodb type=coordinator
+2023-02-20T12:27:41Z |INFO| server started component=arangodb pid=13867 type=coordinator
+2023-02-20T12:27:43Z |INFO| Just became master component=arangodb
+2023-02-20T12:27:50Z |INFO| dbserver up and running (version 3.9.1). component=arangodb pid=13858 type=dbserver
+2023-02-20T12:27:51Z |INFO| coordinator up and running (version 3.9.1). component=arangodb pid=13867 type=coordinator
+2023-02-20T12:27:51Z |INFO| Your cluster can now be accessed with a browser at `http://192.168.56.104:8529` or component=arangodb pid=13867 type=coordinator
+2023-02-20T12:27:51Z |INFO| using `arangosh --server.endpoint tcp://192.168.56.104:8529`. component=arangodb pid=13867 type=coordinator

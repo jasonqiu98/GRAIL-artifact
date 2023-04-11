@@ -1,0 +1,93 @@
+{:rw {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [#jepsen.history.Op{:index 1425,
+                                                        :time 85529936292,
+                                                        :type :ok,
+                                                        :process 19,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 595
+                                                                 nil]
+                                                                [:w
+                                                                 597
+                                                                 1]
+                                                                [:r
+                                                                 593
+                                                                 2]
+                                                                [:r
+                                                                 597
+                                                                 1]
+                                                                [:w
+                                                                 598
+                                                                 1]]}
+                                     #jepsen.history.Op{:index 1424,
+                                                        :time 85527537046,
+                                                        :type :ok,
+                                                        :process 18,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 594
+                                                                 2]
+                                                                [:w
+                                                                 594
+                                                                 3]
+                                                                [:w
+                                                                 593
+                                                                 3]
+                                                                [:r
+                                                                 595
+                                                                 nil]
+                                                                [:w
+                                                                 595
+                                                                 1]
+                                                                [:w
+                                                                 596
+                                                                 1]
+                                                                [:r
+                                                                 598
+                                                                 nil]
+                                                                [:r
+                                                                 598
+                                                                 nil]]}
+                                     #jepsen.history.Op{:index 1425,
+                                                        :time 85529936292,
+                                                        :type :ok,
+                                                        :process 19,
+                                                        :f :txn,
+                                                        :value [[:r
+                                                                 595
+                                                                 nil]
+                                                                [:w
+                                                                 597
+                                                                 1]
+                                                                [:r
+                                                                 593
+                                                                 2]
+                                                                [:r
+                                                                 597
+                                                                 1]
+                                                                [:w
+                                                                 598
+                                                                 1]]}],
+                             :steps ({:key 595,
+                                      :value nil,
+                                      :value' 1,
+                                      :type :rw,
+                                      :a-mop-index 0,
+                                      :b-mop-index 4}
+                                     {:key 598,
+                                      :value nil,
+                                      :value' 1,
+                                      :type :rw,
+                                      :a-mop-index 6,
+                                      :b-mop-index 4}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

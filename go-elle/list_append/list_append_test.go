@@ -1075,7 +1075,7 @@ func TestCheck(t *testing.T) {
 }
 
 func TestHugeScc(t *testing.T) {
-	content, err := ioutil.ReadFile("../histories/huge-scc.edn")
+	content, err := ioutil.ReadFile("../histories/list-append/huge-scc.edn")
 	if err != nil {
 		t.Fail()
 	}
