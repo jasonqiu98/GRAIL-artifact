@@ -1,4 +1,4 @@
-package listappend
+package rwregister
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"log"
 	"strconv"
 
-	driver "github.com/arangodb/go-driver"
+	"github.com/arangodb/go-driver"
 	"github.com/arangodb/go-driver/http"
 	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
 )
@@ -27,7 +27,7 @@ Key is the key for the evt in the checker database
 Obj is the original key of the history
 */
 
-type AppendEvt struct {
+type WriteEvt struct {
 	Key   string `json:"_key"`
 	Obj   string `json:"obj"`
 	Arg   int    `json:"arg"`
@@ -37,21 +37,21 @@ type AppendEvt struct {
 type ReadEvt struct {
 	Key   string `json:"_key"`
 	Obj   string `json:"obj"`
-	V     []int  `json:"v"`
+	V     int    `json:"v"`     // 0 ~ nil, >=1 ~ possible values
 	Index int    `json:"index"` // 0 first read
 }
 
 type DBConsts struct {
-	Host          string
-	Port          int
-	DB            string
-	TxnGraph      string
-	EvtGraph      string
-	TxnNode       string
-	AppendEvtNode string
-	ReadEvtNode   string
-	TxnDepEdge    string
-	EvtDepEdge    string
+	Host         string
+	Port         int
+	DB           string
+	TxnGraph     string
+	EvtGraph     string
+	TxnNode      string
+	WriteEvtNode string
+	ReadEvtNode  string
+	TxnDepEdge   string
+	EvtDepEdge   string
 }
 
 /*
@@ -122,8 +122,8 @@ func createGraph(client driver.Client, dbConsts DBConsts) (driver.Database, driv
 
 	evtDepEdgeDef := driver.EdgeDefinition{
 		Collection: dbConsts.EvtDepEdge,
-		From:       []string{dbConsts.AppendEvtNode, dbConsts.ReadEvtNode},
-		To:         []string{dbConsts.AppendEvtNode, dbConsts.ReadEvtNode},
+		From:       []string{dbConsts.WriteEvtNode, dbConsts.ReadEvtNode},
+		To:         []string{dbConsts.WriteEvtNode, dbConsts.ReadEvtNode},
 	}
 
 	_, err := db.CreateCollection(context.Background(), dbConsts.TxnDepEdge, &driver.CreateCollectionOptions{
@@ -154,7 +154,7 @@ func createGraph(client driver.Client, dbConsts DBConsts) (driver.Database, driv
 		log.Fatalf("Failed to create collection: %v\n", err)
 	}
 
-	_, err = db.CreateCollection(context.Background(), dbConsts.AppendEvtNode, &driver.CreateCollectionOptions{
+	_, err = db.CreateCollection(context.Background(), dbConsts.WriteEvtNode, &driver.CreateCollectionOptions{
 		NumberOfShards: 1,
 	})
 
@@ -196,12 +196,12 @@ func createGraph(client driver.Client, dbConsts DBConsts) (driver.Database, driv
 }
 
 /*
-create nodes: txns, appendEvts & readEvts
+create nodes: txns, writeEvts & readEvts
 */
 func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts) map[string]int {
 	txns := make([]TxnNode, 0, len(okHistory))
-	// init by assuming each txn has one append, two reads on avg
-	appendEvts := make([]AppendEvt, 0, len(okHistory))
+	// init by assuming each txn has one write, two reads on avg
+	writeEvts := make([]WriteEvt, 0, len(okHistory))
 	readEvts := make([]ReadEvt, 0, len(okHistory)*2)
 	for i, h := range okHistory {
 		txns = append(txns, TxnNode{
@@ -209,39 +209,40 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 			h.Index.MustGet(), // will panic if not found
 		})
 
-		appendIdxCounter := make(map[string]int)
-		lastAppendMap := make(map[string]int)
+		writeIdxCounter := make(map[string]int)
+		lastWriteMap := make(map[string]int)
 		readIdxCounter := make(map[string]int)
 
 		for j, v := range *h.Value {
 			if v.IsRead() {
 				readVal := v.GetValue()
+				// we use zero-value as the default "start" value here
 				if readVal == nil {
-					readVal = make([]int, 0)
+					readVal = 0
 				}
 				// mark those "first reads" with index 0
 				readEvts = append(readEvts, ReadEvt{
 					evtKey(i, j),
 					v.GetKey(),
-					readVal.([]int),
+					readVal.(int),
 					readIdxCounter[v.GetKey()],
 				})
 				readIdxCounter[v.GetKey()]++
-			} else if v.IsAppend() {
-				appendEvts = append(appendEvts, AppendEvt{
+			} else if v.IsWrite() {
+				writeEvts = append(writeEvts, WriteEvt{
 					evtKey(i, j),
 					v.GetKey(),
 					v.GetValue().(int),
-					appendIdxCounter[v.GetKey()],
+					writeIdxCounter[v.GetKey()],
 				})
-				appendIdxCounter[v.GetKey()]++
-				lastAppendMap[v.GetKey()] = len(appendEvts) - 1
+				writeIdxCounter[v.GetKey()]++
+				lastWriteMap[v.GetKey()] = len(writeEvts) - 1
 			}
 		}
 
-		// mark those "last appends" with index - 1
-		for _, k := range lastAppendMap {
-			appendEvts[k].Index = -1
+		// mark those "last writes" with index - 1
+		for _, k := range lastWriteMap {
+			writeEvts[k].Index = -1
 		}
 	}
 
@@ -255,12 +256,12 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 		log.Fatalf("Failed to create nodes: %v\n", err)
 	}
 
-	appendEvtNodes, err := evtGraph.VertexCollection(context.Background(), dbConsts.AppendEvtNode)
+	writeEvtNodes, err := evtGraph.VertexCollection(context.Background(), dbConsts.WriteEvtNode)
 	if err != nil {
 		log.Fatalf("Failed to get node collection: %v\n", err)
 	}
 
-	_, _, err = appendEvtNodes.CreateDocuments(context.Background(), appendEvts)
+	_, _, err = writeEvtNodes.CreateDocuments(context.Background(), writeEvts)
 	if err != nil {
 		log.Fatalf("Failed to create nodes: %v\n", err)
 	}
@@ -277,13 +278,11 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 
 	// metadata
 	return map[string]int{
-		"txns":       len(txns),
-		"appendEvts": len(appendEvts),
-		"readEvts":   len(readEvts),
+		"txns":      len(txns),
+		"writeEvts": len(writeEvts),
+		"readEvts":  len(readEvts),
 	}
 }
-
-// types of query results
 
 type ReadEvtsInfo struct {
 	Obj    string          `json:"obj"`
@@ -291,7 +290,7 @@ type ReadEvtsInfo struct {
 }
 
 type ReadEvtsTrace struct {
-	Val []int    `json:"val"`
+	Val int      `json:"val"`
 	Ids []string `json:"ids"`
 }
 
@@ -305,18 +304,17 @@ FOR e1 IN r_evt
 	RETURN { obj, traces: (
 		FOR e2 in objs[*].e1
 			COLLECT val = e2.v INTO vals
-			SORT LENGTH(val) DESC
 			RETURN { val, ids: vals[*].e2._id}
 	)}
 */
-func queryReadEvts(db driver.Database, dbConsts DBConsts) (arr []ReadEvtsInfo) {
+
+func queryReadEvts(db driver.Database, dbConsts DBConsts) map[string]map[int][]string {
 	query := fmt.Sprintf(`
 		FOR e1 IN %s
 			COLLECT obj = e1.obj INTO objs
 			RETURN { obj, traces: (
 				FOR e2 in objs[*].e1
 					COLLECT val = e2.v INTO vals
-					SORT LENGTH(val) DESC
 					RETURN { val, ids: vals[*].e2._id}
 			)}
 	`, dbConsts.ReadEvtNode)
@@ -329,6 +327,8 @@ func queryReadEvts(db driver.Database, dbConsts DBConsts) (arr []ReadEvtsInfo) {
 
 	defer cursor.Close()
 
+	readMap := make(map[string]map[int][]string)
+
 	for {
 		var info ReadEvtsInfo
 		_, err := cursor.ReadDocument(context.Background(), &info)
@@ -338,26 +338,32 @@ func queryReadEvts(db driver.Database, dbConsts DBConsts) (arr []ReadEvtsInfo) {
 		} else if err != nil {
 			log.Fatalf("Cannot read return values: %v\n", err)
 		} else {
-			arr = append(arr, info)
+			obj := info.Obj
+			if _, ok := readMap[obj]; !ok {
+				readMap[obj] = make(map[int][]string)
+			}
+			for _, trace := range info.Traces {
+				readMap[obj][trace.Val] = trace.Ids
+			}
 		}
 	}
-	return
+	return readMap
 }
 
-type AppendEvtsInfo struct {
-	Obj  string              `json:"obj"`
-	Evts []AppendEvtsElement `json:"evts"`
+type WriteEvtsInfo struct {
+	Obj  string             `json:"obj"`
+	Evts []WriteEvtsElement `json:"evts"`
 }
 
-type AppendEvtsElement struct {
+type WriteEvtsElement struct {
 	Element int      `json:"element"`
 	Ids     []string `json:"ids"`
 }
 
 /*
-returns an append map {obj1: {key1: id1, key2: id2, ...}, ...}
+returns a write map {obj1: {key1: id1, key2: id2, ...}, ...}
 */
-func queryAppendEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]string {
+func queryWriteEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]string {
 	query := fmt.Sprintf(`
 		FOR e1 IN %s
 			COLLECT obj = e1.obj into objs
@@ -366,7 +372,7 @@ func queryAppendEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]s
 					COLLECT element = e2.arg INTO elements
 					RETURN { element, ids: elements[*].e2._id }
 			)}
-	`, dbConsts.AppendEvtNode)
+	`, dbConsts.WriteEvtNode)
 
 	cursor, err := db.Query(context.Background(), query, nil)
 
@@ -376,10 +382,10 @@ func queryAppendEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]s
 
 	defer cursor.Close()
 
-	appendMap := make(map[string]map[int]string)
+	writeMap := make(map[string]map[int]string)
 
 	for {
-		var info AppendEvtsInfo
+		var info WriteEvtsInfo
 		_, err := cursor.ReadDocument(context.Background(), &info)
 
 		if driver.IsNoMoreDocuments(err) {
@@ -388,12 +394,12 @@ func queryAppendEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]s
 			log.Fatalf("Cannot read return values: %v\n", err)
 		} else {
 			obj := info.Obj
-			if _, ok := appendMap[obj]; !ok {
-				appendMap[obj] = make(map[int]string)
+			if _, ok := writeMap[obj]; !ok {
+				writeMap[obj] = make(map[int]string)
 			}
 			for _, evt := range info.Evts {
 				if len(evt.Ids) == 1 {
-					appendMap[obj][evt.Element] = evt.Ids[0]
+					writeMap[obj][evt.Element] = evt.Ids[0]
 				} else {
 					log.Fatalf("Anomaly 1: Multiple events %v write %v to the same object %v\n",
 						evt.Ids, evt.Element, obj)
@@ -401,7 +407,7 @@ func queryAppendEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]s
 			}
 		}
 	}
-	return appendMap
+	return writeMap
 }
 
 type EvtDepEdge struct {
@@ -411,181 +417,35 @@ type EvtDepEdge struct {
 	Type string `json:"type"`
 }
 
-func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
-	readEvtsInfoArr := queryReadEvts(db, dbConsts)
-	appendMap := queryAppendEvts(db, dbConsts)
+func getEvtDepEdges(db driver.Database, wm WALWriteMap, dbConsts DBConsts) []EvtDepEdge {
+	readsInfoMap := queryReadEvts(db, dbConsts)
+	writesInfoMap := queryWriteEvts(db, dbConsts)
 
-	evtDepEdges := make([]EvtDepEdge, 0, len(readEvtsInfoArr)*3)
-	evtDepEdgeId := 0
+	evtDepEdges := make([]EvtDepEdge, 0, len(readsInfoMap)*3)
 
-	// iterate over the array of read-events info.
-	for _, info := range readEvtsInfoArr {
-		obj := info.Obj
-		objAppendMap, ok := appendMap[obj]
-		traces := info.Traces
-		if len(traces) == 0 {
-			// no traces found, so no edges could be interpreted
-			continue
-		}
-
-		if !ok {
-			// the objects are not written by any known events
-			// the read values must be the initial value (i.e. an empty array)
-			if len(traces) == 1 && len(traces[0].Val) == 0 {
-				// a valid trace, so we just ignore
-				continue
-			} else {
-				for _, trace := range traces {
-					if len(trace.Val) > 0 {
-						log.Fatalf("Anomaly 2: The object %v has no append events, but reads %v\n",
-							obj, trace.Val)
-					}
-				}
-				// for some reason this info has an empty trace but still valid
-				// normally the code won't reach here
-				continue
+	for obj, versions := range wm {
+		readSubMap, writeSubMap := readsInfoMap[obj], writesInfoMap[obj]
+		prev := 0
+		// rw, update, ww, wr, reads
+		for _, cur := range versions {
+			// rw: prev r's -> cur w
+			w := writeSubMap[cur]
+			for _, r := range readSubMap[prev] {
+				evtDepEdges = append(evtDepEdges, EvtDepEdge{r, w, obj, "rw"})
 			}
-		}
-
-		// the first trace
-		longerVal := traces[0].Val
-		if len(longerVal) == 0 {
-			// no new appends are read, so we cannot interpret any edges
-			continue
-		}
-		numOfVals := len(longerVal)
-		longerAppended := longerVal[len(longerVal)-1]
-		longerAid, ok := objAppendMap[longerAppended]
-		if !ok {
-			log.Fatalf("Anomaly 3.1: The object %v has no %v in its append events, but reads %v\n",
-				obj, longerAppended, longerVal)
-		}
-		longerRidArr := traces[0].Ids
-		// wr
-		for _, rid := range longerRidArr {
-			evtDepEdges = append(evtDepEdges, EvtDepEdge{
-				longerAid,
-				rid,
-				obj,
-				"wr",
-			})
-			evtDepEdgeId++
-			numOfVals--
-		}
-
-		for i := 1; i < len(traces); i++ {
-			trace := traces[i]
-			val := trace.Val
-			ridArr := trace.Ids
-
-			// e.g. we have val: (i_1, i_2, ..., i_m)
-			// and longerVal: (i_m+1, i_m+2, ..., i_n)
-
-			if isPrefix(val, longerVal) {
-				numOfVals -= len(longerVal) - len(val)
-				// rw
-				// nextAid: the exact next append after val, i.e., i_m ->(rw) i_m+1
-				nextAppended := longerVal[len(val)]
-				nextAid, ok := objAppendMap[nextAppended]
-				if !ok {
-					log.Fatalf("Anomaly 3.2: The object %v has no %v in its append events, but reads %v\n",
-						obj, nextAppended, longerVal)
-				}
-				for _, rid := range ridArr {
-					evtDepEdges = append(evtDepEdges, EvtDepEdge{
-						rid,
-						nextAid,
-						obj,
-						"rw",
-					})
-					evtDepEdgeId++
-				}
-
-				if len(val) > 0 {
-					// ww
-					// i_j -> i_j+1, j = m, m+1, .., n-1
-					// nextAid updated from n to m+1
-					nextAid := longerAid
-					for j := len(longerVal) - 2; j >= len(val)-1; j-- {
-						appended := longerVal[j]
-						aid, ok := objAppendMap[appended]
-						if !ok {
-							log.Fatalf("Anomaly 3.3: The object %v has no %v in its append events, but reads %v\n",
-								obj, appended, longerVal)
-						}
-						evtDepEdges = append(evtDepEdges, EvtDepEdge{
-							aid,
-							nextAid,
-							obj,
-							"ww",
-						})
-						evtDepEdgeId++
-						nextAid = aid
-					}
-
-					appended := val[len(val)-1]
-					aid := objAppendMap[appended] // must read, as already verified in the ww step
-
-					// wr
-					for _, rid := range ridArr {
-						evtDepEdges = append(evtDepEdges, EvtDepEdge{
-							aid,
-							rid,
-							obj,
-							"wr",
-						})
-						evtDepEdgeId++
-					}
-
-					// update pointers
-					longerVal = val
-					longerAid = aid
-				} else {
-					// reaches the empty array
-					// the break clause can also be neglected
-					break
-				}
-
-			} else {
-				log.Fatalf("Anomaly 4: %v is not a prefix of %v (inconsistent read events under object %v)",
-					val, longerVal, obj)
+			// ww: prev w -> cur w
+			if prev > 0 {
+				evtDepEdges = append(evtDepEdges, EvtDepEdge{writeSubMap[prev], w, obj, "ww"})
 			}
-		}
-
-		// add missing "ww" edges
-		for i := numOfVals - 1; i >= 0; i-- {
-			appended := longerVal[i]
-			aid, ok := objAppendMap[appended]
-			if !ok {
-				log.Fatalf("Anomaly 3.3: The object %v has no %v in its append events, but reads %v\n",
-					obj, appended, longerVal)
+			// wr: cur w -> cur r's
+			for _, r := range readSubMap[cur] {
+				evtDepEdges = append(evtDepEdges, EvtDepEdge{w, r, obj, "wr"})
 			}
-			evtDepEdges = append(evtDepEdges, EvtDepEdge{
-				aid,
-				longerAid,
-				obj,
-				"ww",
-			})
-			evtDepEdgeId++
-			longerAid = aid
+			prev = cur
 		}
 	}
 
 	return evtDepEdges
-}
-
-func isPrefix(v1 []int, v2 []int) bool {
-	if len(v1) >= len(v2) {
-		return false
-	}
-
-	for i := 0; i < len(v1); i++ {
-		if v1[i] != v2[i] {
-			return false
-		}
-	}
-
-	return true
 }
 
 type TxnDepEdge struct {

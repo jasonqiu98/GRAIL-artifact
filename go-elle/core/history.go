@@ -18,7 +18,7 @@ var (
 	opProcessPattern = regexp.MustCompile(`:process\s+([0-9]+|:nemesis)`)
 	opTypePattern    = regexp.MustCompile(`:type\s+(:[a-zA-Z]+)`)
 	opValuePattern   = regexp.MustCompile(`:value\s+\[(.*)\]`)
-	mopPattern       = regexp.MustCompile(`(\[:(append|r)\s+(\w+)\s+(\[.*?\]|.*?)\])+`)
+	mopPattern       = regexp.MustCompile(`(\[:(append|r|w)\s+(\w+)\s+(\[.*?\]|.*?)\])+`)
 	mopValuePattern  = regexp.MustCompile(`\[(.*)\]`)
 )
 
@@ -176,6 +176,17 @@ func Append(key string, value int) Mop {
 	}
 }
 
+// Write implements Mop (for R-W registers)
+func Write(key string, value int) Mop {
+	return Mop{
+		T: MopTypeWrite,
+		M: map[string]interface{}{
+			"key":   key,
+			"value": value,
+		},
+	}
+}
+
 // Read ...
 func Read(key string, values []int) Mop {
 	if values == nil {
@@ -192,6 +203,26 @@ func Read(key string, values []int) Mop {
 		M: map[string]interface{}{
 			"key":   key,
 			"value": values,
+		},
+	}
+}
+
+// Read ... (for R-W registers)
+func ReadRW(key string, value int) Mop {
+	if value == 0 {
+		return Mop{
+			T: MopTypeRead,
+			M: map[string]interface{}{
+				"key":   key,
+				"value": nil,
+			},
+		}
+	}
+	return Mop{
+		T: MopTypeRead,
+		M: map[string]interface{}{
+			"key":   key,
+			"value": value,
 		},
 	}
 }
@@ -432,6 +463,147 @@ func ParseOp(opString string) (Op, error) {
 						mop = Read(key, value.([]int))
 					} else {
 						mop = Read(key, nil)
+					}
+				default:
+					panic("unreachable")
+				}
+				if op.Value == nil {
+					destArray := make([]Mop, 0)
+					op.Value = &destArray
+				}
+				*op.Value = append(*op.Value, mop)
+			}
+		}
+	}
+
+	return op, nil
+}
+
+// ParseHistory parse history from elle's row text
+func ParseHistoryRW(content string) (History, error) {
+	var history History
+	for _, line := range strings.Split(content, "\n") {
+		if line == "" {
+			continue
+		}
+		op, err := ParseOpRW(strings.Trim(line, " "))
+		if err != nil {
+			return nil, err
+		}
+		history = append(history, op)
+	}
+	return history, nil
+}
+
+// ParseOp parse operation from elle's row text
+// TODO: parse process and time field (they are optional)
+func ParseOpRW(opString string) (Op, error) {
+	var (
+		empty Op
+		op    Op
+	)
+	operationMatch := operationPattern.FindStringSubmatch(opString)
+	if len(operationMatch) != 2 {
+		return empty, errors.New("operation should surrounded by {}")
+	}
+
+	opIndexMatch := opIndexPattern.FindStringSubmatch(operationMatch[1])
+	if len(opIndexMatch) == 2 {
+		opIndex, err := strconv.Atoi(strings.Trim(opIndexMatch[1], " "))
+		if err != nil {
+			return empty, err
+		}
+		op.Index = IntOptional{opIndex}
+	}
+
+	opTimeMatch := opTimePattern.FindStringSubmatch(operationMatch[1])
+	if len(opTimeMatch) == 2 {
+		opTime, err := strconv.Atoi(strings.Trim(opTimeMatch[1], " "))
+		if err != nil {
+			return empty, err
+		}
+		op.Time = time.Unix(0, int64(opTime))
+	}
+
+	opProcessMatch := opProcessPattern.FindStringSubmatch(operationMatch[1])
+	if len(opProcessMatch) == 2 {
+		if opProcessMatch[1] == ":nemesis" {
+			op.Process.Set(NemesisProcessMagicNumber)
+		} else {
+			opProcess, err := strconv.Atoi(strings.Trim(opProcessMatch[1], " "))
+			if err != nil {
+				return empty, err
+			}
+			op.Process.Set(opProcess)
+		}
+	}
+
+	opTypeMatch := opTypePattern.FindStringSubmatch(operationMatch[1])
+	if len(opTypeMatch) != 2 {
+		return empty, errors.New("operation should have :type field")
+	}
+	switch opTypeMatch[1] {
+	case ":invoke":
+		op.Type = OpTypeInvoke
+	case ":ok":
+		op.Type = OpTypeOk
+	case ":fail":
+		op.Type = OpTypeFail
+	case ":info":
+		op.Type = OpTypeInfo
+	default:
+		return empty, errors.Errorf("invalid type, %s", opTypeMatch[1])
+	}
+
+	opValueMatch := opValuePattern.FindStringSubmatch(operationMatch[1])
+	// can values be empty?
+	if len(opValueMatch) == 2 {
+		mopContent := strings.Trim(opValueMatch[1], " ")
+		if mopContent != "" {
+			mopMatches := mopPattern.FindAllStringSubmatch(mopContent, -1)
+			for _, mopMatch := range mopMatches {
+				if len(mopMatch) != 5 {
+					break
+				}
+				key := strings.Trim(mopMatch[3], " ")
+				var value MopValueType
+				mopValueMatches := mopValuePattern.FindStringSubmatch(mopMatch[4])
+				if len(mopValueMatches) == 2 {
+					values := []int{}
+					trimVal := strings.Trim(mopValueMatches[1], "[")
+					trimVal = strings.Trim(trimVal, "]")
+					if trimVal != "" {
+						for _, valStr := range strings.Split(trimVal, " ") {
+							val, err := strconv.Atoi(valStr)
+							if err != nil {
+								return empty, err
+							}
+							values = append(values, val)
+						}
+					}
+					value = values
+				} else {
+					trimVal := strings.Trim(mopMatch[4], " ")
+					if trimVal == "nil" {
+						value = nil
+					} else {
+						val, err := strconv.Atoi(trimVal)
+						if err != nil {
+							return empty, err
+						}
+						value = val
+					}
+				}
+
+				var mop Mop
+				switch mopMatch[2] {
+				case "w":
+					mop = Write(key, value.(int))
+				case "r":
+					if value != nil {
+						mop = ReadRW(key, value.(int))
+					} else {
+						mop = ReadRW(key, 0)
 					}
 				default:
 					panic("unreachable")
