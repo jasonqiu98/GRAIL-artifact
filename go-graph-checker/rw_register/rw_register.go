@@ -159,6 +159,87 @@ func CheckSERV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 	return true
 }
 
+func printShortestCyclePath(cycle []TxnDepEdge) string {
+	if len(cycle) == 0 {
+		log.Fatalf("Failed to print shortest cycle path\n")
+	}
+	var pathBuilder strings.Builder
+	pathBuilder.WriteString(cycle[len(cycle)-1].To)
+	pathBuilder.WriteString("->")
+	pathBuilder.WriteString(cycle[0].From)
+	for _, e := range cycle {
+		pathBuilder.WriteString("->")
+		pathBuilder.WriteString(e.To)
+	}
+	return pathBuilder.String()
+}
+
+/*
+query using BFS-based shortest path + parsing the cycle results
+
+	FOR edge IN dep
+		FOR v, e IN OUTBOUND SHORTEST_PATH
+			edge._to TO edge._from
+			GRAPH txn_g
+			RETURN e
+*/
+func CheckSERV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+	query := fmt.Sprintf(`
+		FOR edge IN %s
+			FOR v, e IN OUTBOUND SHORTEST_PATH
+				edge._to TO edge._from
+				GRAPH %s
+				RETURN e
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check SER: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	cycles := [][]TxnDepEdge{}
+	var emptyEdge TxnDepEdge
+	counter := -1
+
+	for {
+		var edge TxnDepEdge
+		_, err := cursor.ReadDocument(context.Background(), &edge)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if edge == emptyEdge {
+				// counter: -1 -> 0, 0 -> 1
+				if counter <= 0 {
+					counter++
+					cycles = append(cycles, []TxnDepEdge{})
+				} else {
+					// counter == 1 now
+					// meaning we already have one cycle
+					break
+				}
+			} else {
+				cycles[counter] = append(cycles[counter], edge)
+			}
+		}
+	}
+
+	// check cycles
+	// case 1: [nil edge1] -> cycle1
+	// case 2 (will early stop): [[nil edge1] [nil edge2 edge3] ...] -> [cycle1 cycle2 cycle3]
+	if counter > 0 {
+		fmt.Println("Cycle Detected by V3.")
+		fmt.Println(printShortestCyclePath(cycles[0]))
+		return false
+	}
+
+	return true
+}
+
 /*
 Pregel
 
