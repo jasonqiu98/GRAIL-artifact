@@ -13,7 +13,7 @@ import (
 	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
 )
 
-func ConstructGraph(opts txn.Opts, history core.History, dbConsts DBConsts) (driver.Database, map[string]int) {
+func ConstructGraph(opts txn.Opts, history core.History, dbConsts DBConsts) (driver.Database, []int) {
 	// collect ok histories
 	history = preProcessHistory(history)
 	okHistory := core.FilterOkHistory(history)
@@ -23,19 +23,31 @@ func ConstructGraph(opts txn.Opts, history core.History, dbConsts DBConsts) (dri
 	db, txnGraph, evtGraph := createGraph(client, dbConsts)
 
 	// create nodes
-	metadata := createNodes(txnGraph, evtGraph, okHistory, dbConsts)
+	txnIds := createNodes(txnGraph, evtGraph, okHistory, dbConsts)
 
 	// create evt and txn dependency edges
 	evtDepEdges := getEvtDepEdges(db, dbConsts)
 	addDepEdges(db, txnGraph, evtGraph, dbConsts, evtDepEdges)
 
-	return db, metadata
+	return db, txnIds
 }
 
-func CheckSERV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func cycleToStr(cycle []TxnDepEdge) string {
+	if len(cycle) == 0 {
+		log.Fatalf("Failed to convert cycle to string\n")
+	}
+	var pathBuilder strings.Builder
+	pathBuilder.WriteString(fmt.Sprintf("T%s", strings.Split(cycle[0].From, "/")[1]))
+	for _, e := range cycle {
+		pathBuilder.WriteString(fmt.Sprintf(" (%s) T%s", e.Type, strings.Split(e.To, "/")[1]))
+	}
+	return pathBuilder.String()
+}
+
+func CheckSERV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	minStep := 2
 	maxStep := 5
-	/* e.g.
+	/* alternative queries (that perform worse) e.g.
 	FOR start IN txn
 		FOR vertex, edge, path
 			IN 2..5
@@ -43,7 +55,7 @@ func CheckSERV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 			GRAPH txn_g
 			PRUNE cond = edge._to == start._id
 			FILTER cond
-			RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+			RETURN path.edges
 	*/
 
 	/*
@@ -54,7 +66,7 @@ func CheckSERV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				GRAPH txn_g
 				PRUNE cond = POP(path.vertices[*]._id) ANY == vertex._id
 				FILTER cond
-				RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+				RETURN path.edges
 	*/
 	query := fmt.Sprintf(`
 		FOR start IN %s
@@ -63,7 +75,7 @@ func CheckSERV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				OUTBOUND start._id
 				GRAPH %s
 				FILTER edge._to == start._id
-				RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+				RETURN path.edges
 		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
 
 	cursor, err := db.Query(context.Background(), query, nil)
@@ -74,7 +86,7 @@ func CheckSERV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 	defer cursor.Close()
 
 	for {
-		var cycle string
+		var cycle []TxnDepEdge
 		_, err := cursor.ReadDocument(context.Background(), &cycle)
 
 		if driver.IsNoMoreDocuments(err) {
@@ -83,17 +95,17 @@ func CheckSERV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 			log.Fatalf("Cannot read return values: %v\n", err)
 		} else {
 			if output {
-				fmt.Println("Cycle Detected by V1.")
-				fmt.Println(cycle)
+				fmt.Println("Cycle Detected by SER V1.")
+				fmt.Println(cycleToStr(cycle))
 			}
-			return false
+			return false, cycle
 		}
 	}
 
-	return true
+	return true, nil
 }
 
-func CheckSERV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckSERV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	minStep := 2
 	maxStep := 5
 	/* An alternative version (with PRUNE keyword)
@@ -104,7 +116,7 @@ func CheckSERV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 			GRAPH txn_g
 			PRUNE cond = edge._to == start._id
 			FILTER cond
-			RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+			RETURN path.edges
 	*/
 	query := fmt.Sprintf(`
 			FOR vertex, edge, path
@@ -112,17 +124,13 @@ func CheckSERV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				OUTBOUND @start
 				GRAPH %s
 				FILTER edge._to == @start
-				RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
-	totalTxns := metadata["txns"]
-	starts := make([]int, totalTxns)
-	for i := 0; i < totalTxns; i++ {
-		starts[i] = i
-	}
+	starts := txnIds
 	// iterate randomly after shuffling the index array slice
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(totalTxns, func(i, j int) { starts[i], starts[j] = starts[j], starts[i] })
+	rand.Shuffle(len(txnIds), func(i, j int) { starts[i], starts[j] = starts[j], starts[i] })
 
 	bindVars := make(map[string]interface{})
 	for _, start := range starts {
@@ -135,7 +143,7 @@ func CheckSERV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 		defer cursor.Close()
 
 		for {
-			var cycle string
+			var cycle []TxnDepEdge
 			_, err := cursor.ReadDocument(context.Background(), &cycle)
 
 			if driver.IsNoMoreDocuments(err) {
@@ -144,31 +152,16 @@ func CheckSERV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				log.Fatalf("Cannot read return values: %v\n", err)
 			} else {
 				if output {
-					fmt.Println("Cycle Detected by V2.")
-					fmt.Println(cycle)
+					fmt.Println("Cycle Detected by SER V2.")
+					fmt.Println(cycleToStr(cycle))
 				}
 				// will early stop once a cycle is detected
-				return false
+				return false, cycle
 			}
 		}
 	}
 
-	return true
-}
-
-func printShortestCyclePath(cycle []TxnDepEdge) string {
-	if len(cycle) == 0 {
-		log.Fatalf("Failed to print shortest cycle path\n")
-	}
-	var pathBuilder strings.Builder
-	pathBuilder.WriteString(cycle[0].From)
-	for _, e := range cycle {
-		pathBuilder.WriteString(" -(")
-		pathBuilder.WriteString(e.Type)
-		pathBuilder.WriteString(")> ")
-		pathBuilder.WriteString(e.To)
-	}
-	return pathBuilder.String()
+	return true, nil
 }
 
 /*
@@ -180,7 +173,7 @@ query using BFS-based shortest path + parsing the cycle results
 			GRAPH txn_g
 			RETURN [edge, e]
 */
-func CheckSERV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckSERV3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	query := fmt.Sprintf(`
 		FOR edge IN %s
 			FOR v, e IN OUTBOUND SHORTEST_PATH
@@ -225,24 +218,24 @@ func CheckSERV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 	// if only one anti-pattern, do the final check
 	if antiPatternFound || len(cycles) > 0 {
 		if output {
-			fmt.Println("Cycle Detected by V3.")
-			fmt.Println(printShortestCyclePath(cycles[0]))
+			fmt.Println("Cycle Detected by SER V3.")
+			fmt.Println(cycleToStr(cycles[len(cycles)-1]))
 		}
-		return false
+		return false, cycles[0]
 	}
 
-	return true
+	return true, nil
 }
 
 /*
-Pregel
+Pregel - will not output any cycle, just for the API uniformity
 
 	FOR t IN txn
 		COLLECT cycle = t.scc INTO cycles
 		FILTER LENGTH(cycles) > 1
 		RETURN cycles[*].t._id
 */
-func CheckSERPregel(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckSERPregel(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	jobId, err := db.StartJob(context.Background(), driver.PregelJobOptions{
 		Algorithm: driver.PregelAlgorithmStronglyConnectedComponents,
 		GraphName: dbConsts.TxnGraph,
@@ -304,7 +297,7 @@ func CheckSERPregel(db driver.Database, dbConsts DBConsts, metadata map[string]i
 				}
 
 				if driver.IsNoMoreDocuments(err) {
-					return true
+					return true, nil
 				} else if err != nil {
 					log.Fatalf("Cannot read return values: %v\n", err)
 				} else {
@@ -312,7 +305,7 @@ func CheckSERPregel(db driver.Database, dbConsts DBConsts, metadata map[string]i
 						fmt.Println("Cycle Detected by Pregel.")
 						fmt.Println(cycle)
 					}
-					return false
+					return false, nil
 				}
 			}
 		} else if job.State == driver.PregelJobStateCanceled {
@@ -321,7 +314,7 @@ func CheckSERPregel(db driver.Database, dbConsts DBConsts, metadata map[string]i
 	}
 }
 
-func CheckSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	minStep := 2
 	maxStep := 5
 	/*
@@ -330,7 +323,7 @@ func CheckSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 			OUTBOUND start._id
 			GRAPH txn_g
 			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
-			RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+			RETURN path.edges
 	*/
 	query := fmt.Sprintf(`
 		FOR start IN %s
@@ -338,7 +331,7 @@ func CheckSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 			OUTBOUND start._id
 			GRAPH %s
 			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
-			RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+			RETURN path.edges
 		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
 
 	cursor, err := db.Query(context.Background(), query, nil)
@@ -349,7 +342,7 @@ func CheckSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 	defer cursor.Close()
 
 	for {
-		var cycle string
+		var cycle []TxnDepEdge
 		_, err := cursor.ReadDocument(context.Background(), &cycle)
 
 		if driver.IsNoMoreDocuments(err) {
@@ -358,17 +351,17 @@ func CheckSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 			log.Fatalf("Cannot read return values: %v\n", err)
 		} else {
 			if output {
-				fmt.Println("Cycle Detected by V1.")
-				fmt.Println(cycle)
+				fmt.Println("Cycle Detected by SI V1.")
+				fmt.Println(cycleToStr(cycle))
 			}
-			return false
+			return false, cycle
 		}
 	}
 
-	return true
+	return true, nil
 }
 
-func CheckSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	minStep := 2
 	maxStep := 5
 	/*
@@ -376,7 +369,7 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 			OUTBOUND start._id
 			GRAPH txn_g
 			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
-			RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+			RETURN path.edges
 	*/
 	query := fmt.Sprintf(`
 			FOR vertex, edge, path
@@ -384,17 +377,13 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 				OUTBOUND @start
 				GRAPH %s
 				FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == @start
-				RETURN CONCAT_SEPARATOR("->", path.vertices[*]._key)
+				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
-	totalTxns := metadata["txns"]
-	starts := make([]int, totalTxns)
-	for i := 0; i < totalTxns; i++ {
-		starts[i] = i
-	}
+	starts := txnIds
 	// iterate randomly after shuffling the index array slice
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(totalTxns, func(i, j int) { starts[i], starts[j] = starts[j], starts[i] })
+	rand.Shuffle(len(txnIds), func(i, j int) { starts[i], starts[j] = starts[j], starts[i] })
 
 	bindVars := make(map[string]interface{})
 	for _, start := range starts {
@@ -407,7 +396,7 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 		defer cursor.Close()
 
 		for {
-			var cycle string
+			var cycle []TxnDepEdge
 			_, err := cursor.ReadDocument(context.Background(), &cycle)
 
 			if driver.IsNoMoreDocuments(err) {
@@ -416,16 +405,16 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 				log.Fatalf("Cannot read return values: %v\n", err)
 			} else {
 				if output {
-					fmt.Println("Cycle Detected by V2.")
-					fmt.Println(cycle)
+					fmt.Println("Cycle Detected by SI V2.")
+					fmt.Println(cycleToStr(cycle))
 				}
 				// will early stop once a cycle is detected
-				return false
+				return false, cycle
 			}
 		}
 	}
 
-	return true
+	return true, nil
 }
 
 // any cycle without at least two consecutive RW edges
@@ -447,7 +436,7 @@ query using BFS-based shortest path + parsing the cycle results
 			GRAPH txn_g
 			RETURN [edge, e]
 */
-func CheckSIV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckSIV3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	query := fmt.Sprintf(`
 		FOR edge IN %s
 			FOR v, e IN OUTBOUND SHORTEST_PATH
@@ -492,16 +481,16 @@ func CheckSIV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 	// if only one anti-pattern, do the final check
 	if antiPatternFound || (len(cycles) > 0 && isAntiPatternSI(cycles[len(cycles)-1])) {
 		if output {
-			fmt.Println("Cycle Detected by V3.")
-			fmt.Println(printShortestCyclePath(cycles[len(cycles)-1]))
+			fmt.Println("Cycle Detected by SI V3.")
+			fmt.Println(cycleToStr(cycles[len(cycles)-1]))
 		}
-		return false
+		return false, cycles[len(cycles)-1]
 	}
 
-	return true
+	return true, nil
 }
 
-func CheckPSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckPSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	minStep := 2
 	maxStep := 5
 	/*
@@ -510,7 +499,7 @@ func CheckPSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				OUTBOUND start._id
 				GRAPH txn_g
 				FILTER edge._to == start._id
-				RETURN path.edges[*]
+				RETURN path.edges
 	*/
 	query := fmt.Sprintf(`
 		FOR start IN %s
@@ -518,7 +507,7 @@ func CheckPSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				OUTBOUND start._id
 				GRAPH %s
 				FILTER edge._to == start._id
-				RETURN path.edges[*]
+				RETURN path.edges
 		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
 
 	cursor, err := db.Query(context.Background(), query, nil)
@@ -545,24 +534,18 @@ func CheckPSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 			}
 			if rwCount < 2 {
 				if output {
-					fmt.Println("Cycle Detected by V1.")
-					var pathBuilder strings.Builder
-					pathBuilder.WriteString(cycle[0].From)
-					for _, e := range cycle {
-						pathBuilder.WriteString("->")
-						pathBuilder.WriteString(e.To)
-					}
-					fmt.Println(pathBuilder.String())
+					fmt.Println("Cycle Detected by PSI V1.")
+					fmt.Println(cycleToStr(cycle))
 				}
-				return false
+				return false, cycle
 			}
 		}
 	}
 
-	return true
+	return true, nil
 }
 
-func CheckPSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckPSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	minStep := 2
 	maxStep := 5
 	/*
@@ -570,24 +553,20 @@ func CheckPSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 			OUTBOUND start._id
 			GRAPH txn_g
 			FILTER edge._to == start._id
-			RETURN path.edges[*]
+			RETURN path.edges
 	*/
 	query := fmt.Sprintf(`
 			FOR vertex, edge, path IN %d..%d
 				OUTBOUND @start
 				GRAPH %s
 				FILTER edge._to == @start
-				RETURN path.edges[*]
+				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
-	totalTxns := metadata["txns"]
-	starts := make([]int, totalTxns)
-	for i := 0; i < totalTxns; i++ {
-		starts[i] = i
-	}
+	starts := txnIds
 	// iterate randomly after shuffling the index array slice
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(totalTxns, func(i, j int) { starts[i], starts[j] = starts[j], starts[i] })
+	rand.Shuffle(len(txnIds), func(i, j int) { starts[i], starts[j] = starts[j], starts[i] })
 
 	bindVars := make(map[string]interface{})
 	for _, start := range starts {
@@ -616,22 +595,16 @@ func CheckPSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				}
 				if rwCount < 2 {
 					if output {
-						fmt.Println("Cycle Detected by V1.")
-						var pathBuilder strings.Builder
-						pathBuilder.WriteString(cycle[0].From)
-						for _, e := range cycle {
-							pathBuilder.WriteString("->")
-							pathBuilder.WriteString(e.To)
-						}
-						fmt.Println(pathBuilder.String())
+						fmt.Println("Cycle Detected by PSI V2.")
+						fmt.Println(cycleToStr(cycle))
 					}
-					return false
+					return false, cycle
 				}
 			}
 		}
 	}
 
-	return true
+	return true, nil
 }
 
 // any cycle without at least two RW edges
@@ -657,7 +630,7 @@ query using BFS-based shortest path + parsing the cycle results
 			GRAPH txn_g
 			RETURN [edge, e]
 */
-func CheckPSIV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+func CheckPSIV3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	query := fmt.Sprintf(`
 		FOR edge IN %s
 			FOR v, e IN OUTBOUND SHORTEST_PATH
@@ -702,11 +675,11 @@ func CheckPSIV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 	// if only one anti-pattern, do the final check
 	if antiPatternFound || (len(cycles) > 0 && isAntiPatternPSI(cycles[len(cycles)-1])) {
 		if output {
-			fmt.Println("Cycle Detected by V3.")
-			fmt.Println(printShortestCyclePath(cycles[len(cycles)-1]))
+			fmt.Println("Cycle Detected by PSI V3.")
+			fmt.Println(cycleToStr(cycles[len(cycles)-1]))
 		}
-		return false
+		return false, cycles[len(cycles)-1]
 	}
 
-	return true
+	return true, nil
 }

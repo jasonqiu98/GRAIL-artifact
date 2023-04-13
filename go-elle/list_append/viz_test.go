@@ -1,6 +1,7 @@
 package listappend
 
 import (
+	"io/ioutil"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -23,6 +24,21 @@ func TestPlotAnalysis(t *testing.T) {
 
 	analyzer := core.Combine(graph, core.RealtimeGraph)
 	checkResult := core.Check(analyzer, h)
+	require.Equal(t, nil, plotAnalysis(checkResult, "/tmp"))
+}
+
+func TestListAppendPlotAnalysis(t *testing.T) {
+	content, err := ioutil.ReadFile("../histories/list-append/list-append.edn")
+	if err != nil {
+		t.Fail()
+	}
+	history, err := core.ParseHistory(string(content))
+	if err != nil {
+		t.Fail()
+	}
+	history = preProcessHistory(history)
+	analyzer := core.Combine(graph, core.RealtimeGraph)
+	checkResult := core.Check(analyzer, history)
 	require.Equal(t, nil, plotAnalysis(checkResult, "/tmp"))
 }
 

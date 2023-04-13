@@ -17,7 +17,7 @@ func printLine() {
 	fmt.Println("-----------------------------------")
 }
 
-func constructGraph(fileName string, t *testing.T) (driver.Database, map[string]int, DBConsts) {
+func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int, DBConsts, core.History) {
 	dbConsts := DBConsts{
 		"starter",    // Host
 		8529,         // Port
@@ -58,12 +58,12 @@ func constructGraph(fileName string, t *testing.T) (driver.Database, map[string]
 	}
 
 	t1 := time.Now()
-	db, metadata := ConstructGraph(txn.Opts{}, history, wal, dbConsts)
+	db, txnIds := ConstructGraph(txn.Opts{}, history, wal, dbConsts)
 	t2 := time.Now()
 	constructTime := t2.Sub(t1).Nanoseconds() / 1e6
 	fmt.Printf("constructing graph: %d ms\n", constructTime)
 
-	return db, metadata, dbConsts
+	return db, txnIds, dbConsts, history
 }
 
 /*
@@ -76,10 +76,10 @@ checking serializability:
 func TestProfilingSER(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, metadata, dbConsts := constructGraph(strconv.Itoa(d), t)
-		avgCheckTimeV1 := Profile(db, dbConsts, metadata, CheckSERV1, false)
-		avgCheckTimeV2 := Profile(db, dbConsts, metadata, CheckSERV2, false)
-		avgCheckTimeV3 := Profile(db, dbConsts, metadata, CheckSERV3, false)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSERV1, false)
+		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSERV2, false)
+		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSERV3, false)
 		avgCheckTimePregel := Profile(db, dbConsts, nil, CheckSERPregel, false)
 
 		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - pregel: %d ms\n",
@@ -91,11 +91,11 @@ func TestProfilingSER(t *testing.T) {
 func TestProfilingSI(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, metadata, dbConsts := constructGraph(strconv.Itoa(d), t)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
 
-		avgCheckTimeV1 := Profile(db, dbConsts, metadata, CheckSIV1, false)
-		avgCheckTimeV2 := Profile(db, dbConsts, metadata, CheckSIV2, false)
-		avgCheckTimeV3 := Profile(db, dbConsts, metadata, CheckSIV3, false)
+		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSIV1, false)
+		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSIV2, false)
+		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSIV3, false)
 
 		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n",
 			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3)
@@ -106,11 +106,11 @@ func TestProfilingSI(t *testing.T) {
 func TestProfilingPSI(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, metadata, dbConsts := constructGraph(strconv.Itoa(d), t)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
 
-		avgCheckTimeV1 := Profile(db, dbConsts, metadata, CheckPSIV1, false)
-		avgCheckTimeV2 := Profile(db, dbConsts, metadata, CheckPSIV2, false)
-		avgCheckTimeV3 := Profile(db, dbConsts, metadata, CheckPSIV3, false)
+		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPSIV1, false)
+		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPSIV2, false)
+		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPSIV3, false)
 
 		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n",
 			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3)
@@ -120,32 +120,41 @@ func TestProfilingPSI(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestRWRegisterSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestRWRegisterSER(t *testing.T) {
-	db, metadata, dbConsts := constructGraph("rw-register", t)
-	valid := CheckSERV3(db, dbConsts, metadata, true)
+	db, txnIds, dbConsts, history := constructArangoGraph("170", t)
+	valid, cycle := CheckSERV1(db, dbConsts, txnIds, true)
 	if !valid {
 		fmt.Println("Not Serializable!")
+		PlotCycle(history, cycle, "../images", "rw-ser", true)
+	} else {
+		fmt.Println("Anti-Patterns Not Detected.")
 	}
 }
 
 func TestRWRegisterSERPregel(t *testing.T) {
-	db, _, dbConsts := constructGraph("rw-register", t)
+	db, _, dbConsts, _ := constructArangoGraph("rw-register", t)
 	CheckSERPregel(db, dbConsts, nil, true)
 }
 
 // go test -v -timeout 30s -run ^TestRWRegisterSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestRWRegisterSI(t *testing.T) {
-	db, metadata, dbConsts := constructGraph("rw-register", t)
-	valid := CheckSIV3(db, dbConsts, metadata, true)
+	db, txnIds, dbConsts, history := constructArangoGraph("rw-register", t)
+	valid, cycle := CheckSIV1(db, dbConsts, txnIds, true)
 	if !valid {
-		fmt.Println("Not Serializable!")
+		fmt.Println("Not Snapshot Isolation!")
+		PlotCycle(history, cycle, "../images", "rw-si", true)
+	} else {
+		fmt.Println("Anti-Patterns Not Detected.")
 	}
 }
 
 // go test -v -timeout 30s -run ^TestRWRegisterPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestRWRegisterPSI(t *testing.T) {
-	db, metadata, dbConsts := constructGraph("rw-register", t)
-	valid := CheckPSIV2(db, dbConsts, metadata, true)
+	db, txnIds, dbConsts, history := constructArangoGraph("rw-register", t)
+	valid, cycle := CheckPSIV2(db, dbConsts, txnIds, true)
 	if !valid {
-		fmt.Println("Not Serializable!")
+		fmt.Println("Not Parallel Snapshot Isolation!")
+		PlotCycle(history, cycle, "../images", "rw-psi", true)
+	} else {
+		fmt.Println("Anti-Patterns Not Detected.")
 	}
 }

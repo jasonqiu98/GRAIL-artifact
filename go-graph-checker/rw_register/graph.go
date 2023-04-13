@@ -16,8 +16,7 @@ Key: "i", reflecting the order
 Index: index attached, coming with the history
 */
 type TxnNode struct {
-	Key   string `json:"_key"`
-	Index int    `json:"index"`
+	Key string `json:"_key"`
 }
 
 /*
@@ -28,17 +27,15 @@ Obj is the original key of the history
 */
 
 type WriteEvt struct {
-	Key   string `json:"_key"`
-	Obj   string `json:"obj"`
-	Arg   int    `json:"arg"`
-	Index int    `json:"index"` // -1 last append
+	Key string `json:"_key"`
+	Obj string `json:"obj"`
+	Arg int    `json:"arg"`
 }
 
 type ReadEvt struct {
-	Key   string `json:"_key"`
-	Obj   string `json:"obj"`
-	V     int    `json:"v"`     // 0 ~ nil, >=1 ~ possible values
-	Index int    `json:"index"` // 0 first read
+	Key string `json:"_key"`
+	Obj string `json:"obj"`
+	V   int    `json:"v"` // 0 ~ nil, >=1 ~ possible values
 }
 
 type DBConsts struct {
@@ -198,22 +195,20 @@ func createGraph(client driver.Client, dbConsts DBConsts) (driver.Database, driv
 /*
 create nodes: txns, writeEvts & readEvts
 */
-func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts) map[string]int {
+func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts) []int {
 	txns := make([]TxnNode, 0, len(okHistory))
+	txnIds := make([]int, 0, len(okHistory))
 	// init by assuming each txn has one write, two reads on avg
 	writeEvts := make([]WriteEvt, 0, len(okHistory))
 	readEvts := make([]ReadEvt, 0, len(okHistory)*2)
-	for i, h := range okHistory {
+	for _, op := range okHistory {
+		txnId := op.Index.MustGet()
+		txnIds = append(txnIds, txnId)
 		txns = append(txns, TxnNode{
-			strconv.Itoa(i),
-			h.Index.MustGet(), // will panic if not found
+			strconv.Itoa(txnId), // will panic if not found
 		})
 
-		writeIdxCounter := make(map[string]int)
-		lastWriteMap := make(map[string]int)
-		readIdxCounter := make(map[string]int)
-
-		for j, v := range *h.Value {
+		for j, v := range *op.Value {
 			if v.IsRead() {
 				readVal := v.GetValue()
 				// we use zero-value as the default "start" value here
@@ -222,27 +217,17 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 				}
 				// mark those "first reads" with index 0
 				readEvts = append(readEvts, ReadEvt{
-					evtKey(i, j),
+					evtKey(txnId, j),
 					v.GetKey(),
 					readVal.(int),
-					readIdxCounter[v.GetKey()],
 				})
-				readIdxCounter[v.GetKey()]++
 			} else if v.IsWrite() {
 				writeEvts = append(writeEvts, WriteEvt{
-					evtKey(i, j),
+					evtKey(txnId, j),
 					v.GetKey(),
 					v.GetValue().(int),
-					writeIdxCounter[v.GetKey()],
 				})
-				writeIdxCounter[v.GetKey()]++
-				lastWriteMap[v.GetKey()] = len(writeEvts) - 1
 			}
-		}
-
-		// mark those "last writes" with index - 1
-		for _, k := range lastWriteMap {
-			writeEvts[k].Index = -1
 		}
 	}
 
@@ -276,12 +261,7 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 		log.Fatalf("Failed to create nodes: %v\n", err)
 	}
 
-	// metadata
-	return map[string]int{
-		"txns":      len(txns),
-		"writeEvts": len(writeEvts),
-		"readEvts":  len(readEvts),
-	}
+	return txnIds
 }
 
 type ReadEvtsInfo struct {
@@ -304,7 +284,7 @@ FOR e1 IN r_evt
 	RETURN { obj, traces: (
 		FOR e2 in objs[*].e1
 			COLLECT val = e2.v INTO vals
-			RETURN { val, ids: vals[*].e2._id}
+			RETURN { val, ids: vals[*].e2._id }
 	)}
 */
 
@@ -315,7 +295,7 @@ func queryReadEvts(db driver.Database, dbConsts DBConsts) map[string]map[int][]s
 			RETURN { obj, traces: (
 				FOR e2 in objs[*].e1
 					COLLECT val = e2.v INTO vals
-					RETURN { val, ids: vals[*].e2._id}
+					RETURN { val, ids: vals[*].e2._id }
 			)}
 	`, dbConsts.ReadEvtNode)
 

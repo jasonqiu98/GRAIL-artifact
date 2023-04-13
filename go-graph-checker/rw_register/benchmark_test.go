@@ -44,18 +44,18 @@ func Benchmark(b *testing.B) {
 		b.Fail()
 	}
 
-	db, metadata := ConstructGraph(txn.Opts{}, history, wal, dbConsts)
+	db, txnIds := ConstructGraph(txn.Opts{}, history, wal, dbConsts)
 
 	// ignore the cost to construct the dependency graph
 	b.ResetTimer()
 	// only benchmark the checking process
-	benchmarkWrapper(db, dbConsts, metadata, CheckSIV1, false, b)
+	benchmarkWrapper(db, dbConsts, txnIds, CheckSIV1, false, b)
 }
 
-func benchmarkWrapper(db driver.Database, dbConsts DBConsts, metadata map[string]int,
-	f func(driver.Database, DBConsts, map[string]int, bool) bool,
+func benchmarkWrapper(db driver.Database, dbConsts DBConsts, txnIds []int,
+	f func(driver.Database, DBConsts, []int, bool) (bool, []TxnDepEdge),
 	output bool, b *testing.B) {
 	for n := 0; n < b.N; n++ {
-		f(db, dbConsts, metadata, output)
+		f(db, dbConsts, txnIds, output)
 	}
 }

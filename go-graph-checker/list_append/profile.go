@@ -7,15 +7,18 @@ import (
 	"github.com/arangodb/go-driver"
 )
 
-func Profile(db driver.Database, dbConsts DBConsts, metadata map[string]int,
-	f func(driver.Database, DBConsts, map[string]int, bool) bool, output bool) int64 {
+/*
+repeating 10 times, calculate the avg. runtime without the longest and shortest ones
+*/
+func Profile(db driver.Database, dbConsts DBConsts, txnIds []int,
+	f func(driver.Database, DBConsts, []int, bool) (bool, []TxnDepEdge), output bool) int64 {
 	repeatingTimes := 10
 	minTime := int64(math.MaxInt64)
 	maxTime := int64(math.MinInt64)
 	var totalTime int64
 	for i := 0; i < repeatingTimes; i++ {
 		start := time.Now()
-		f(db, dbConsts, metadata, output)
+		f(db, dbConsts, txnIds, output)
 		end := time.Now()
 		temp := end.Sub(start).Nanoseconds() / 1e6
 		totalTime += temp
