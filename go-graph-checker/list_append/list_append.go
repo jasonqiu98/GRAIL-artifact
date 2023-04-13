@@ -161,11 +161,11 @@ func printShortestCyclePath(cycle []TxnDepEdge) string {
 		log.Fatalf("Failed to print shortest cycle path\n")
 	}
 	var pathBuilder strings.Builder
-	pathBuilder.WriteString(cycle[len(cycle)-1].To)
-	pathBuilder.WriteString("->")
 	pathBuilder.WriteString(cycle[0].From)
 	for _, e := range cycle {
-		pathBuilder.WriteString("->")
+		pathBuilder.WriteString(" -(")
+		pathBuilder.WriteString(e.Type)
+		pathBuilder.WriteString(")> ")
 		pathBuilder.WriteString(e.To)
 	}
 	return pathBuilder.String()
@@ -178,7 +178,7 @@ query using BFS-based shortest path + parsing the cycle results
 		FOR v, e IN OUTBOUND SHORTEST_PATH
 			edge._to TO edge._from
 			GRAPH txn_g
-			RETURN e
+			RETURN [edge, e]
 */
 func CheckSERV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
 	query := fmt.Sprintf(`
@@ -186,7 +186,7 @@ func CheckSERV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 			FOR v, e IN OUTBOUND SHORTEST_PATH
 				edge._to TO edge._from
 				GRAPH %s
-				RETURN e
+				RETURN [edge, e]
 		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
 
 	cursor, err := db.Query(context.Background(), query, nil)
@@ -198,10 +198,10 @@ func CheckSERV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 
 	cycles := [][]TxnDepEdge{}
 	var emptyEdge TxnDepEdge
-	counter := -1
+	antiPatternFound := false
 
 	for {
-		var edge TxnDepEdge
+		var edge []TxnDepEdge
 		_, err := cursor.ReadDocument(context.Background(), &edge)
 
 		if driver.IsNoMoreDocuments(err) {
@@ -209,28 +209,25 @@ func CheckSERV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 		} else if err != nil {
 			log.Fatalf("Cannot read return values: %v\n", err)
 		} else {
-			if edge == emptyEdge {
-				// counter: -1 -> 0, 0 -> 1
-				if counter <= 0 {
-					counter++
-					cycles = append(cycles, []TxnDepEdge{})
-				} else {
-					// counter == 1 now
-					// meaning we already have one cycle
+			if edge[1] == emptyEdge {
+				if len(cycles) > 0 {
+					// found one anti-pattern
+					antiPatternFound = true
 					break
 				}
+				cycles = append(cycles, []TxnDepEdge{edge[0]})
 			} else {
-				cycles[counter] = append(cycles[counter], edge)
+				cycles[len(cycles)-1] = append(cycles[len(cycles)-1], edge[1])
 			}
 		}
 	}
 
-	// check cycles
-	// case 1: [nil edge1] -> cycle1
-	// case 2 (will early stop): [[nil edge1] [nil edge2 edge3] ...] -> [cycle1 cycle2 cycle3]
-	if counter > 0 {
-		fmt.Println("Cycle Detected by V3.")
-		fmt.Println(printShortestCyclePath(cycles[0]))
+	// if only one anti-pattern, do the final check
+	if antiPatternFound || len(cycles) > 0 {
+		if output {
+			fmt.Println("Cycle Detected by V3.")
+			fmt.Println(printShortestCyclePath(cycles[0]))
+		}
 		return false
 	}
 
@@ -431,6 +428,79 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, o
 	return true
 }
 
+// any cycle without at least two consecutive RW edges
+func isAntiPatternSI(cycle []TxnDepEdge) bool {
+	for i, edge := range cycle {
+		if edge.Type == "rw" && cycle[(i+1)%len(cycle)].Type == "rw" {
+			return false
+		}
+	}
+	return true
+}
+
+/*
+query using BFS-based shortest path + parsing the cycle results
+
+	FOR edge IN dep
+		FOR v, e IN OUTBOUND SHORTEST_PATH
+			edge._to TO edge._from
+			GRAPH txn_g
+			RETURN [edge, e]
+*/
+func CheckSIV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+	query := fmt.Sprintf(`
+		FOR edge IN %s
+			FOR v, e IN OUTBOUND SHORTEST_PATH
+				edge._to TO edge._from
+				GRAPH %s
+				RETURN [edge, e]
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check SI: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	cycles := [][]TxnDepEdge{}
+	var emptyEdge TxnDepEdge
+	antiPatternFound := false
+
+	for {
+		var edge []TxnDepEdge
+		_, err := cursor.ReadDocument(context.Background(), &edge)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if edge[1] == emptyEdge {
+				if len(cycles) > 0 && isAntiPatternSI(cycles[len(cycles)-1]) {
+					// found one anti-pattern
+					antiPatternFound = true
+					break
+				}
+				cycles = append(cycles, []TxnDepEdge{edge[0]})
+			} else {
+				cycles[len(cycles)-1] = append(cycles[len(cycles)-1], edge[1])
+			}
+		}
+	}
+
+	// if only one anti-pattern, do the final check
+	if antiPatternFound || (len(cycles) > 0 && isAntiPatternSI(cycles[len(cycles)-1])) {
+		if output {
+			fmt.Println("Cycle Detected by V3.")
+			fmt.Println(printShortestCyclePath(cycles[len(cycles)-1]))
+		}
+		return false
+	}
+
+	return true
+}
+
 func CheckPSIV1(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
 	minStep := 2
 	maxStep := 5
@@ -559,6 +629,83 @@ func CheckPSIV2(db driver.Database, dbConsts DBConsts, metadata map[string]int, 
 				}
 			}
 		}
+	}
+
+	return true
+}
+
+// any cycle without at least two RW edges
+func isAntiPatternPSI(cycle []TxnDepEdge) bool {
+	counter := 0
+	for _, edge := range cycle {
+		if edge.Type == "rw" {
+			counter++
+			if counter == 2 {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+/*
+query using BFS-based shortest path + parsing the cycle results
+
+	FOR edge IN dep
+		FOR v, e IN OUTBOUND SHORTEST_PATH
+			edge._to TO edge._from
+			GRAPH txn_g
+			RETURN [edge, e]
+*/
+func CheckPSIV3(db driver.Database, dbConsts DBConsts, metadata map[string]int, output bool) bool {
+	query := fmt.Sprintf(`
+		FOR edge IN %s
+			FOR v, e IN OUTBOUND SHORTEST_PATH
+				edge._to TO edge._from
+				GRAPH %s
+				RETURN [edge, e]
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check PSI: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	cycles := [][]TxnDepEdge{}
+	var emptyEdge TxnDepEdge
+	antiPatternFound := false
+
+	for {
+		var edge []TxnDepEdge
+		_, err := cursor.ReadDocument(context.Background(), &edge)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if edge[1] == emptyEdge {
+				if len(cycles) > 0 && isAntiPatternPSI(cycles[len(cycles)-1]) {
+					// found one anti-pattern
+					antiPatternFound = true
+					break
+				}
+				cycles = append(cycles, []TxnDepEdge{edge[0]})
+			} else {
+				cycles[len(cycles)-1] = append(cycles[len(cycles)-1], edge[1])
+			}
+		}
+	}
+
+	// if only one anti-pattern, do the final check
+	if antiPatternFound || (len(cycles) > 0 && isAntiPatternPSI(cycles[len(cycles)-1])) {
+		if output {
+			fmt.Println("Cycle Detected by V3.")
+			fmt.Println(printShortestCyclePath(cycles[len(cycles)-1]))
+		}
+		return false
 	}
 
 	return true

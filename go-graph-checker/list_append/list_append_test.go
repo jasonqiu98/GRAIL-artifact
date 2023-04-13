@@ -35,10 +35,12 @@ func constructGraph(fileName string, t *testing.T) (driver.Database, map[string]
 	fmt.Println(prompt)
 	content, err := os.ReadFile(ednFileName)
 	if err != nil {
+		log.Fatalf("Cannot read edn file %s", ednFileName)
 		t.Fail()
 	}
 	history, err := core.ParseHistory(string(content))
 	if err != nil {
+		log.Fatalf("Cannot parse edn file %s", ednFileName)
 		t.Fail()
 	}
 	t1 := time.Now()
@@ -63,10 +65,11 @@ func TestProfilingSER(t *testing.T) {
 		db, metadata, dbConsts := constructGraph(strconv.Itoa(d), t)
 		avgCheckTimeV1 := Profile(db, dbConsts, metadata, CheckSERV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, metadata, CheckSERV2, false)
+		avgCheckTimeV3 := Profile(db, dbConsts, metadata, CheckSERV3, false)
 		avgCheckTimePregel := Profile(db, dbConsts, nil, CheckSERPregel, false)
 
-		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v2: %d ms\n - pregel: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimePregel)
+		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - pregel: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimePregel)
 		printLine()
 	}
 }
@@ -78,9 +81,10 @@ func TestProfilingSI(t *testing.T) {
 
 		avgCheckTimeV1 := Profile(db, dbConsts, metadata, CheckSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, metadata, CheckSIV2, false)
+		avgCheckTimeV3 := Profile(db, dbConsts, metadata, CheckSIV3, false)
 
-		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2)
+		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3)
 		printLine()
 	}
 }
@@ -92,9 +96,10 @@ func TestProfilingPSI(t *testing.T) {
 
 		avgCheckTimeV1 := Profile(db, dbConsts, metadata, CheckPSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, metadata, CheckPSIV2, false)
+		avgCheckTimeV3 := Profile(db, dbConsts, metadata, CheckPSIV3, false)
 
-		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2)
+		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3)
 		printLine()
 	}
 }
@@ -106,8 +111,29 @@ func TestListAppendSER(t *testing.T) {
 	if !valid {
 		fmt.Println("Not Serializable!")
 	}
-	// db, _ := ConstructGraph(txn.Opts{}, history, wal, dbConsts)
-	// CheckSERPregel(db, dbConsts, nil, true)
+}
+
+func TestListAppendSERPregel(t *testing.T) {
+	db, _, dbConsts := constructGraph("list-append", t)
+	CheckSERPregel(db, dbConsts, nil, true)
+}
+
+// go test -v -timeout 30s -run ^TestListAppendSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+func TestListAppendSI(t *testing.T) {
+	db, metadata, dbConsts := constructGraph("list-append", t)
+	valid := CheckSIV3(db, dbConsts, metadata, true)
+	if !valid {
+		fmt.Println("Not Serializable!")
+	}
+}
+
+// go test -v -timeout 30s -run ^TestListAppendPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+func TestListAppendPSI(t *testing.T) {
+	db, metadata, dbConsts := constructGraph("list-append", t)
+	valid := CheckPSIV2(db, dbConsts, metadata, true)
+	if !valid {
+		fmt.Println("Not Serializable!")
+	}
 }
 
 func TestExample(t *testing.T) {
