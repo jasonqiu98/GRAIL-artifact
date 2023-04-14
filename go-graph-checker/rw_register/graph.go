@@ -195,7 +195,7 @@ func createGraph(client driver.Client, dbConsts DBConsts) (driver.Database, driv
 /*
 create nodes: txns, writeEvts & readEvts
 */
-func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts) []int {
+func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts, ignoreReads bool) []int {
 	txns := make([]TxnNode, 0, len(okHistory))
 	txnIds := make([]int, 0, len(okHistory))
 	// init by assuming each txn has one write, two reads on avg
@@ -210,17 +210,19 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 
 		for j, v := range *op.Value {
 			if v.IsRead() {
-				readVal := v.GetValue()
-				// we use zero-value as the default "start" value here
-				if readVal == nil {
-					readVal = 0
+				if !ignoreReads {
+					readVal := v.GetValue()
+					// we use zero-value as the default "start" value here
+					if readVal == nil {
+						readVal = 0
+					}
+					// mark those "first reads" with index 0
+					readEvts = append(readEvts, ReadEvt{
+						evtKey(txnId, j),
+						v.GetKey(),
+						readVal.(int),
+					})
 				}
-				// mark those "first reads" with index 0
-				readEvts = append(readEvts, ReadEvt{
-					evtKey(txnId, j),
-					v.GetKey(),
-					readVal.(int),
-				})
 			} else if v.IsWrite() {
 				writeEvts = append(writeEvts, WriteEvt{
 					evtKey(txnId, j),

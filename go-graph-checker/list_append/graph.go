@@ -195,7 +195,7 @@ func createGraph(client driver.Client, dbConsts DBConsts) (driver.Database, driv
 /*
 create nodes: txns, appendEvts & readEvts
 */
-func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts) []int {
+func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts, ignoreReads bool) []int {
 	txns := make([]TxnNode, 0, len(okHistory))
 	txnIds := make([]int, 0, len(okHistory))
 	// init by assuming each txn has one append, two reads on avg
@@ -210,16 +210,18 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 
 		for j, v := range *op.Value {
 			if v.IsRead() {
-				readVal := v.GetValue()
-				if readVal == nil {
-					readVal = make([]int, 0)
+				if !ignoreReads {
+					readVal := v.GetValue()
+					if readVal == nil {
+						readVal = make([]int, 0)
+					}
+					// mark those "first reads" with index 0
+					readEvts = append(readEvts, ReadEvt{
+						evtKey(txnId, j),
+						v.GetKey(),
+						readVal.([]int),
+					})
 				}
-				// mark those "first reads" with index 0
-				readEvts = append(readEvts, ReadEvt{
-					evtKey(txnId, j),
-					v.GetKey(),
-					readVal.([]int),
-				})
 			} else if v.IsAppend() {
 				appendEvts = append(appendEvts, AppendEvt{
 					evtKey(txnId, j),
@@ -417,8 +419,8 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 			} else {
 				for _, trace := range traces {
 					if len(trace.Val) > 0 {
-						log.Fatalf("Anomaly 2: The object %v has no append events, but reads %v\n",
-							obj, trace.Val)
+						log.Fatalf("Anomaly 2: The object %v has no append events, but reads %v in events %v\n",
+							obj, trace.Val, trace.Ids)
 					}
 				}
 				// for some reason this info has an empty trace but still valid
@@ -436,11 +438,11 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 		numOfVals := len(longerVal)
 		longerAppended := longerVal[len(longerVal)-1]
 		longerAid, ok := objAppendMap[longerAppended]
-		if !ok {
-			log.Fatalf("Anomaly 3.1: The object %v has no %v in its append events, but reads %v\n",
-				obj, longerAppended, longerVal)
-		}
 		longerRidArr := traces[0].Ids
+		if !ok {
+			log.Fatalf("Anomaly 3.1: The object %v has no %v in its append events, but reads %v in events %v\n",
+				obj, longerAppended, longerVal, longerRidArr)
+		}
 		// wr
 		for _, rid := range longerRidArr {
 			evtDepEdges = append(evtDepEdges, EvtDepEdge{
@@ -468,8 +470,8 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 				nextAppended := longerVal[len(val)]
 				nextAid, ok := objAppendMap[nextAppended]
 				if !ok {
-					log.Fatalf("Anomaly 3.2: The object %v has no %v in its append events, but reads %v\n",
-						obj, nextAppended, longerVal)
+					log.Fatalf("Anomaly 3.2: The object %v has no %v in its append events, but reads %v in events %v\n",
+						obj, nextAppended, longerVal, longerRidArr)
 				}
 				for _, rid := range ridArr {
 					evtDepEdges = append(evtDepEdges, EvtDepEdge{
@@ -490,8 +492,8 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 						appended := longerVal[j]
 						aid, ok := objAppendMap[appended]
 						if !ok {
-							log.Fatalf("Anomaly 3.3: The object %v has no %v in its append events, but reads %v\n",
-								obj, appended, longerVal)
+							log.Fatalf("Anomaly 3.3: The object %v has no %v in its append events, but reads %v in events %v\n",
+								obj, appended, longerVal, longerRidArr)
 						}
 						evtDepEdges = append(evtDepEdges, EvtDepEdge{
 							aid,
@@ -519,6 +521,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 
 					// update pointers
 					longerVal = val
+					longerRidArr = ridArr
 					longerAid = aid
 				} else {
 					// reaches the empty array
@@ -527,8 +530,8 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 				}
 
 			} else {
-				log.Fatalf("Anomaly 4: %v is not a prefix of %v (inconsistent read events under object %v)",
-					val, longerVal, obj)
+				log.Fatalf("Anomaly 4: %v in events %v is not a prefix of %v in events %v (inconsistent read events under object %v)",
+					val, ridArr, longerVal, longerRidArr, obj)
 			}
 		}
 
@@ -537,8 +540,8 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 			appended := longerVal[i]
 			aid, ok := objAppendMap[appended]
 			if !ok {
-				log.Fatalf("Anomaly 3.3: The object %v has no %v in its append events, but reads %v\n",
-					obj, appended, longerVal)
+				log.Fatalf("Anomaly 3.3: The object %v has no %v in its append events, but reads %v in events %v\n",
+					obj, appended, longerVal, longerRidArr)
 			}
 			evtDepEdges = append(evtDepEdges, EvtDepEdge{
 				aid,

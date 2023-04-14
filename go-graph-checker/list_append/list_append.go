@@ -13,7 +13,7 @@ import (
 	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
 )
 
-func ConstructGraph(opts txn.Opts, history core.History, dbConsts DBConsts) (driver.Database, []int) {
+func ConstructGraph(opts txn.Opts, history core.History, dbConsts DBConsts, ignoreReads bool) (driver.Database, []int) {
 	// collect ok histories
 	history = preProcessHistory(history)
 	okHistory := core.FilterOkHistory(history)
@@ -23,7 +23,7 @@ func ConstructGraph(opts txn.Opts, history core.History, dbConsts DBConsts) (dri
 	db, txnGraph, evtGraph := createGraph(client, dbConsts)
 
 	// create nodes
-	txnIds := createNodes(txnGraph, evtGraph, okHistory, dbConsts)
+	txnIds := createNodes(txnGraph, evtGraph, okHistory, dbConsts, ignoreReads)
 
 	// create evt and txn dependency edges
 	evtDepEdges := getEvtDepEdges(db, dbConsts)
@@ -44,6 +44,9 @@ func cycleToStr(cycle []TxnDepEdge) string {
 	return pathBuilder.String()
 }
 
+/*
+any cycle would violate SER / PL-3
+*/
 func CheckSERV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	minStep := 2
 	maxStep := 5
@@ -682,4 +685,216 @@ func CheckPSIV3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 	}
 
 	return true, nil
+}
+
+/*
+G2: Anti-dependency Cycles [cycles with at least one RW edge]
+FOR start IN txn
+   FOR vertex, edge, path
+       IN 2..5
+       OUTBOUND start._id
+       GRAPH dep
+       FILTER path.edges[*].type ANY == "rw" AND edge._to == start._id
+       RETURN path.edges
+
+G1c: Circular Information Flow [cycles with only WW or WR edges]
+FOR start IN txn
+   FOR vertex, edge, path
+       IN 2..5
+       OUTBOUND start._id
+       GRAPH dep
+       FILTER path.edges[*].type NONE == "rw" AND edge._to == start._id
+       RETURN path.edges
+
+G0: Write Cycles [cycles with only WW edges]
+Requires a new graph with only WW cycles
+
+FOR start IN txn
+    FOR vertex, edge, path
+        IN 2..5
+        OUTBOUND start._id
+        GRAPH dep
+        RETURN path.edges
+*/
+
+/*
+the anti-pattern of PL-2 is G1 (G1a, G1b, G1c)
+only G1c will be checked as G1a and G1b are ensured not to happen during graph construction
+*/
+func CheckPL2V1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	minStep := 2
+	maxStep := 5
+	query := fmt.Sprintf(`
+		FOR start IN %s
+			FOR vertex, edge, path
+				IN %d..%d
+				OUTBOUND start._id
+				GRAPH %s
+				FILTER path.edges[*].type NONE == "rw" AND edge._to == start._id
+				RETURN path.edges
+		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check PL-2: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	for {
+		var cycle []TxnDepEdge
+		_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if output {
+				fmt.Println("Cycle Detected by PL-2 V1.")
+				fmt.Println(cycleToStr(cycle))
+			}
+			return false, cycle
+		}
+	}
+
+	return true, nil
+}
+
+func CheckPL2V2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	minStep := 2
+	maxStep := 5
+	query := fmt.Sprintf(`
+			FOR vertex, edge, path
+				IN %d..%d
+				OUTBOUND @start
+				GRAPH %s
+				FILTER path.edges[*].type NONE == "rw" and edge._to == @start
+				RETURN path.edges
+		`, minStep, maxStep, dbConsts.TxnGraph)
+
+	starts := txnIds
+	// iterate randomly after shuffling the index array slice
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(txnIds), func(i, j int) { starts[i], starts[j] = starts[j], starts[i] })
+
+	bindVars := make(map[string]interface{})
+	for _, start := range starts {
+		bindVars["start"] = fmt.Sprintf("txn/%d", start)
+		cursor, err := db.Query(context.Background(), query, bindVars)
+		if err != nil {
+			log.Fatalf("Failed to check PL-2: %v\n", err)
+		}
+
+		defer cursor.Close()
+
+		for {
+			var cycle []TxnDepEdge
+			_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+			if driver.IsNoMoreDocuments(err) {
+				break
+			} else if err != nil {
+				log.Fatalf("Cannot read return values: %v\n", err)
+			} else {
+				if output {
+					fmt.Println("Cycle Detected by PL-2 V2.")
+					fmt.Println(cycleToStr(cycle))
+				}
+				// will early stop once a cycle is detected
+				return false, cycle
+			}
+		}
+	}
+
+	return true, nil
+}
+
+// G1c: any cycle without rw edges
+func isAntiPatternPL2(cycle []TxnDepEdge) bool {
+	for _, edge := range cycle {
+		if edge.Type == "rw" {
+			return false
+		}
+	}
+	return true
+}
+
+/*
+query using BFS-based shortest path + parsing the cycle results
+
+	FOR edge IN dep
+		FOR v, e IN OUTBOUND SHORTEST_PATH
+			edge._to TO edge._from
+			GRAPH txn_g
+			RETURN [edge, e]
+*/
+func CheckPL2V3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	query := fmt.Sprintf(`
+		FOR edge IN %s
+			FOR v, e IN OUTBOUND SHORTEST_PATH
+				edge._to TO edge._from
+				GRAPH %s
+				RETURN [edge, e]
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check PL-2: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	cycles := [][]TxnDepEdge{}
+	var emptyEdge TxnDepEdge
+	antiPatternFound := false
+
+	for {
+		var edge []TxnDepEdge
+		_, err := cursor.ReadDocument(context.Background(), &edge)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if edge[1] == emptyEdge {
+				if len(cycles) > 0 && isAntiPatternPL2(cycles[len(cycles)-1]) {
+					// found one anti-pattern
+					antiPatternFound = true
+					break
+				}
+				cycles = append(cycles, []TxnDepEdge{edge[0]})
+			} else {
+				cycles[len(cycles)-1] = append(cycles[len(cycles)-1], edge[1])
+			}
+		}
+	}
+
+	// if only one anti-pattern, do the final check
+	if antiPatternFound || (len(cycles) > 0 && isAntiPatternPL2(cycles[len(cycles)-1])) {
+		if output {
+			fmt.Println("Cycle Detected by PL-2 V3.")
+			fmt.Println(cycleToStr(cycles[len(cycles)-1]))
+		}
+		return false, cycles[len(cycles)-1]
+	}
+
+	return true, nil
+}
+
+/*
+with a new graph consisting of only WW edges
+any cycle would violate PL-1
+*/
+func CheckPL1V1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	return CheckSERV1(db, dbConsts, txnIds, output)
+}
+
+func CheckPL1V2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	return CheckSERV2(db, dbConsts, txnIds, output)
+}
+
+func CheckPL1V3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	return CheckSERV3(db, dbConsts, txnIds, output)
 }

@@ -32,7 +32,8 @@ func Benchmark(b *testing.B) {
 	if err != nil {
 		b.Fail()
 	}
-	db, txnIds := ConstructGraph(txn.Opts{}, history, dbConsts)
+	// ignoreReads set to true only when checking PL-1
+	db, txnIds := ConstructGraph(txn.Opts{}, history, dbConsts, false)
 
 	// ignore the cost to construct the dependency graph
 	b.ResetTimer()

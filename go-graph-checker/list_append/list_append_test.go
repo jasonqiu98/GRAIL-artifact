@@ -17,7 +17,7 @@ func printLine() {
 	fmt.Println("-----------------------------------")
 }
 
-func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int, DBConsts, core.History) {
+func constructArangoGraph(fileName string, ignoreReads bool, t *testing.T) (driver.Database, []int, DBConsts, core.History) {
 	dbConsts := DBConsts{
 		"starter",    // Host
 		8529,         // Port
@@ -44,7 +44,7 @@ func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int
 		t.Fail()
 	}
 	t1 := time.Now()
-	db, txnIds := ConstructGraph(txn.Opts{}, history, dbConsts)
+	db, txnIds := ConstructGraph(txn.Opts{}, history, dbConsts, ignoreReads)
 	t2 := time.Now()
 	constructTime := t2.Sub(t1).Nanoseconds() / 1e6
 	fmt.Printf("constructing graph: %d ms\n", constructTime)
@@ -62,7 +62,7 @@ checking serializability:
 func TestProfilingSER(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), false, t)
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSERV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSERV2, false)
 		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSERV3, false)
@@ -77,7 +77,7 @@ func TestProfilingSER(t *testing.T) {
 func TestProfilingSI(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), false, t)
 
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSIV2, false)
@@ -92,7 +92,7 @@ func TestProfilingSI(t *testing.T) {
 func TestProfilingPSI(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), false, t)
 
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPSIV2, false)
@@ -106,7 +106,7 @@ func TestProfilingPSI(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSER(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("170", t)
+	db, txnIds, dbConsts, history := constructArangoGraph("170", false, t)
 	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
 	if !valid {
 		fmt.Println("Not Serializable!")
@@ -117,13 +117,13 @@ func TestListAppendSER(t *testing.T) {
 }
 
 func TestListAppendSERPregel(t *testing.T) {
-	db, _, dbConsts, _ := constructArangoGraph("list-append", t)
+	db, _, dbConsts, _ := constructArangoGraph("list-append", false, t)
 	CheckSERPregel(db, dbConsts, nil, true)
 }
 
 // go test -v -timeout 30s -run ^TestListAppendSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSI(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("list-append", t)
+	db, txnIds, dbConsts, history := constructArangoGraph("list-append", false, t)
 	valid, cycle := CheckSIV1(db, dbConsts, txnIds, true)
 	if !valid {
 		fmt.Println("Not Snapshot Isolation!")
@@ -135,7 +135,7 @@ func TestListAppendSI(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestListAppendPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendPSI(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("list-append", t)
+	db, txnIds, dbConsts, history := constructArangoGraph("list-append", false, t)
 	valid, cycle := CheckPSIV2(db, dbConsts, txnIds, true)
 	if !valid {
 		fmt.Println("Not Parallel Snapshot Isolation!")
@@ -171,7 +171,7 @@ func TestExample(t *testing.T) {
 	t5p := mustParseOp(`{:index 9, :type :ok, :value [[:r z nil] [:append x 2]]}`)
 	h := []core.Op{t3, t3p, t1, t1p, t2, t2p, t4, t4p, t5, t5p}
 
-	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts)
+	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, false)
 	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
 	if !valid {
 		fmt.Println("Not Serializable!")
@@ -187,4 +187,150 @@ func mustParseOp(opString string) core.Op {
 		log.Fatalf("expect no error, got %v", err)
 	}
 	return op
+}
+
+/*
+G1a aborted read
+*/
+func TestG1aCases(t *testing.T) {
+	dbConsts := DBConsts{
+		"starter",    // Host
+		8529,         // Port
+		"checker_db", // DB
+		"txn_g",      // TxnGraph
+		"evt_g",      // EvtGraph
+		"txn",        // TxnNode
+		"a_evt",      // AppendEvtNode
+		"r_evt",      // ReadEvtNode
+		"dep",        // TxnDepEdge
+		"evt_dep",    // EvtDepEdge
+	}
+
+	t1 := mustParseOp(`{:type :fail, :value [[:append x 1]]}`)
+	t2 := mustParseOp(`{:type :ok, :value [[:r x [1]] [:append x 2]]}`)
+	t3 := mustParseOp(`{:type :ok, :value [[:r x [1 2]] [:r y [3]]]}`)
+
+	h := []core.Op{t2, t3, t1}
+
+	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, false)
+	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
+	if !valid {
+		fmt.Println("Not Serializable!")
+		PlotCycle(h, cycle, "../images", "la-ser", true)
+	} else {
+		fmt.Println("Anti-Patterns Not Detected.")
+	}
+}
+
+/*
+G1b intermediate read
+*/
+func TestG1bCases(t *testing.T) {
+	dbConsts := DBConsts{
+		"starter",    // Host
+		8529,         // Port
+		"checker_db", // DB
+		"txn_g",      // TxnGraph
+		"evt_g",      // EvtGraph
+		"txn",        // TxnNode
+		"a_evt",      // AppendEvtNode
+		"r_evt",      // ReadEvtNode
+		"dep",        // TxnDepEdge
+		"evt_dep",    // EvtDepEdge
+	}
+	t1 := mustParseOp(`{:type :ok, :value [[:append x 1] [:append x 2]]}`)
+	t2 := mustParseOp(`{:type :ok, :value [[:r x [1]]]}`)
+	t3 := mustParseOp(`{:type :ok, :value [[:r x [1 2]] [:r y [3]]]}`)
+	t4 := mustParseOp(`{:type :ok, :value [[:r x [1 2 3]]]}`)
+
+	h := []core.Op{t2, t3, t1, t4}
+
+	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, false)
+	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
+	if !valid {
+		fmt.Println("Not Serializable!")
+		PlotCycle(h, cycle, "../images", "la-ser", true)
+	} else {
+		fmt.Println("Anti-Patterns Not Detected.")
+	}
+}
+
+/*
+PL-2 with anti-pattern G1c (circular information flow)
+*/
+func TestPL2Cases(t *testing.T) {
+	dbConsts := DBConsts{
+		"starter",    // Host
+		8529,         // Port
+		"checker_db", // DB
+		"txn_g",      // TxnGraph
+		"evt_g",      // EvtGraph
+		"txn",        // TxnNode
+		"a_evt",      // AppendEvtNode
+		"r_evt",      // ReadEvtNode
+		"dep",        // TxnDepEdge
+		"evt_dep",    // EvtDepEdge
+	}
+	// borrowed from ../../go-elle/list_append/viz_test.go
+	t1 := mustParseOp(`{:index 2, :type :invoke, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
+	t1p := mustParseOp(`{:index 3, :type :ok, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
+	t2 := mustParseOp(`{:index 4, :type :invoke, :value [[:append z 1]]}`)
+	t2p := mustParseOp(`{:index 5, :type :ok, :value [[:append z 1]]}`)
+	t3 := mustParseOp(`{:index 0, :type :invoke, :value [[:r x [1 2]] [:r z [1]]]}`)
+	t3p := mustParseOp(`{:index 1, :type :ok, :value [[:r x [1 2]] [:r z [1]]]}`)
+	t4 := mustParseOp(`{:index 6, :type :invoke, :value [[:append z 2] [:append y 1]]}`)
+	t4p := mustParseOp(`{:index 7, :type :ok, :value [[:append z 2] [:append y 1]]}`)
+	t5 := mustParseOp(`{:index 8, :type :invoke, :value [[:r z nil] [:append x 2]]}`)
+	t5p := mustParseOp(`{:index 9, :type :ok, :value [[:r z nil] [:append x 2]]}`)
+	h := []core.Op{t3, t3p, t1, t1p, t2, t2p, t4, t4p, t5, t5p}
+
+	// ignoreReads set to true: ignore all read events when constructing the graph
+	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, false)
+	valid, cycle := CheckPL2V1(db, dbConsts, txnIds, true)
+	if !valid {
+		fmt.Println("Not PL-2!")
+		PlotCycle(h, cycle, "../images", "la-pl1", true)
+	} else {
+		fmt.Println("Anti-Patterns Not Detected.")
+	}
+}
+
+/*
+PL-1 with anti-pattern G0 (write cycles)
+*/
+func TestPL1Cases(t *testing.T) {
+	dbConsts := DBConsts{
+		"starter",    // Host
+		8529,         // Port
+		"checker_db", // DB
+		"txn_g",      // TxnGraph
+		"evt_g",      // EvtGraph
+		"txn",        // TxnNode
+		"a_evt",      // AppendEvtNode
+		"r_evt",      // ReadEvtNode
+		"dep",        // TxnDepEdge
+		"evt_dep",    // EvtDepEdge
+	}
+	// borrowed from ../../go-elle/list_append/viz_test.go
+	t1 := mustParseOp(`{:index 2, :type :invoke, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
+	t1p := mustParseOp(`{:index 3, :type :ok, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
+	t2 := mustParseOp(`{:index 4, :type :invoke, :value [[:append z 1]]}`)
+	t2p := mustParseOp(`{:index 5, :type :ok, :value [[:append z 1]]}`)
+	t3 := mustParseOp(`{:index 0, :type :invoke, :value [[:r x [1 2]] [:r z [1]]]}`)
+	t3p := mustParseOp(`{:index 1, :type :ok, :value [[:r x [1 2]] [:r z [1]]]}`)
+	t4 := mustParseOp(`{:index 6, :type :invoke, :value [[:append z 2] [:append y 1]]}`)
+	t4p := mustParseOp(`{:index 7, :type :ok, :value [[:append z 2] [:append y 1]]}`)
+	t5 := mustParseOp(`{:index 8, :type :invoke, :value [[:r z nil] [:append x 2]]}`)
+	t5p := mustParseOp(`{:index 9, :type :ok, :value [[:r z nil] [:append x 2]]}`)
+	h := []core.Op{t3, t3p, t1, t1p, t2, t2p, t4, t4p, t5, t5p}
+
+	// ignoreReads set to true: ignore all read events when constructing the graph
+	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, true)
+	valid, cycle := CheckPL1V1(db, dbConsts, txnIds, true)
+	if !valid {
+		fmt.Println("Not PL-1!")
+		PlotCycle(h, cycle, "../images", "la-pl1", true)
+	} else {
+		fmt.Println("Anti-Patterns Not Detected.")
+	}
 }
