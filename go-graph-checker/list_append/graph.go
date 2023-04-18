@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	driver "github.com/arangodb/go-driver"
 	"github.com/arangodb/go-driver/http"
@@ -27,9 +28,10 @@ Obj is the original key of the history
 */
 
 type AppendEvt struct {
-	Key string `json:"_key"`
-	Obj string `json:"obj"`
-	Arg int    `json:"arg"`
+	Key   string `json:"_key"`
+	Obj   string `json:"obj"`
+	Arg   int    `json:"arg"`
+	Index int    `json:"index"` // -1 means last append
 }
 
 type ReadEvt struct {
@@ -85,7 +87,7 @@ get db if db already exists, otherwise create db
 */
 func getOrCreateDB(client driver.Client, dbName string) driver.Database {
 	if dbExists, _ := client.DatabaseExists(context.Background(), dbName); dbExists {
-		fmt.Println("db exists already and will be dropped first...")
+		log.Println("db exists already and will be dropped first...")
 		db, err := client.Database(context.Background(), dbName)
 		if err != nil {
 			log.Fatalf("Failed to open existing database: %v\n", err)
@@ -195,7 +197,7 @@ func createGraph(client driver.Client, dbConsts DBConsts) (driver.Database, driv
 /*
 create nodes: txns, appendEvts & readEvts
 */
-func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts, ignoreReads bool) []int {
+func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts) []int {
 	txns := make([]TxnNode, 0, len(okHistory))
 	txnIds := make([]int, 0, len(okHistory))
 	// init by assuming each txn has one append, two reads on avg
@@ -208,27 +210,36 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 			strconv.Itoa(txnId), // will panic if not found
 		})
 
+		appendIdxCounter := make(map[string]int)
+		lastAppendMap := make(map[string]int)
+
 		for j, v := range *op.Value {
 			if v.IsRead() {
-				if !ignoreReads {
-					readVal := v.GetValue()
-					if readVal == nil {
-						readVal = make([]int, 0)
-					}
-					// mark those "first reads" with index 0
-					readEvts = append(readEvts, ReadEvt{
-						evtKey(txnId, j),
-						v.GetKey(),
-						readVal.([]int),
-					})
+				readVal := v.GetValue()
+				if readVal == nil {
+					readVal = make([]int, 0)
 				}
+				// mark those "first reads" with index 0
+				readEvts = append(readEvts, ReadEvt{
+					evtKey(txnId, j),
+					v.GetKey(),
+					readVal.([]int),
+				})
 			} else if v.IsAppend() {
 				appendEvts = append(appendEvts, AppendEvt{
 					evtKey(txnId, j),
 					v.GetKey(),
 					v.GetValue().(int),
+					appendIdxCounter[v.GetKey()],
 				})
+				appendIdxCounter[v.GetKey()]++
+				lastAppendMap[v.GetKey()] = len(appendEvts) - 1
 			}
+		}
+
+		// mark those "last appends" with index - 1
+		for _, k := range lastAppendMap {
+			appendEvts[k].Index = -1
 		}
 	}
 
@@ -332,21 +343,22 @@ type AppendEvtsInfo struct {
 }
 
 type AppendEvtsElement struct {
-	Element int      `json:"element"`
-	Ids     []string `json:"ids"`
+	Element   int      `json:"element"`
+	Ids       []string `json:"ids"`
+	AppendIdx []int    `json:"append_idx"`
 }
 
 /*
 returns an append map {obj1: {key1: id1, key2: id2, ...}, ...}
 */
-func queryAppendEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]string {
+func queryAppendEvts(db driver.Database, dbConsts DBConsts) (map[string]map[int]string, map[string]map[int]bool) {
 	query := fmt.Sprintf(`
 		FOR e1 IN %s
 			COLLECT obj = e1.obj into objs
 			RETURN { obj, evts: (
 				FOR e2 in objs[*].e1
 					COLLECT element = e2.arg INTO elements
-					RETURN { element, ids: elements[*].e2._id }
+					RETURN { element, ids: elements[*].e2._id, append_idx: elements[*].e2.index }
 			)}
 	`, dbConsts.AppendEvtNode)
 
@@ -359,6 +371,8 @@ func queryAppendEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]s
 	defer cursor.Close()
 
 	appendMap := make(map[string]map[int]string)
+	// intermediate appends or not: with index != -1, intermediate appends
+	itmdMap := make(map[string]map[int]bool)
 
 	for {
 		var info AppendEvtsInfo
@@ -372,18 +386,22 @@ func queryAppendEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]s
 			obj := info.Obj
 			if _, ok := appendMap[obj]; !ok {
 				appendMap[obj] = make(map[int]string)
+				itmdMap[obj] = make(map[int]bool)
 			}
 			for _, evt := range info.Evts {
 				if len(evt.Ids) == 1 {
 					appendMap[obj][evt.Element] = evt.Ids[0]
+					if evt.AppendIdx[0] != -1 {
+						itmdMap[obj][evt.Element] = true
+					}
 				} else {
-					log.Fatalf("Anomaly 1: Multiple events %v write %v to the same object %v\n",
+					log.Fatalf("Anomaly: Multiple events %v append the same value %v to the same object %v. Non-recoverable.\n",
 						evt.Ids, evt.Element, obj)
 				}
 			}
 		}
 	}
-	return appendMap
+	return appendMap, itmdMap
 }
 
 type EvtDepEdge struct {
@@ -393,12 +411,49 @@ type EvtDepEdge struct {
 	Type string `json:"type"`
 }
 
-func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
+type G1Anomalies struct {
+	G1a bool
+	G1b bool
+}
+
+// get txnId and EvtId
+func parseEvtId(id string) (int, int, error) {
+	idstrs := strings.Split(id, ",")
+	txnIdStr, evtIdStr := strings.Split(idstrs[0], "/")[1], idstrs[1]
+	txnId, err := strconv.Atoi(txnIdStr)
+	if err != nil {
+		return -1, -1, err
+	}
+	evtId, err := strconv.Atoi(evtIdStr)
+	if err != nil {
+		return -1, -1, err
+	}
+	return txnId, evtId, nil
+}
+
+// happen before within the same txn
+func happenBefore(id1 string, id2 string) bool {
+	txnId1, evtId1, err := parseEvtId(id1)
+	if err != nil {
+		return false
+	}
+
+	txnId2, evtId2, err := parseEvtId(id2)
+	if err != nil {
+		return false
+	}
+
+	return txnId1 == txnId2 && evtId1 < evtId2
+}
+
+func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anomalies) {
 	readEvtsInfoArr := queryReadEvts(db, dbConsts)
-	appendMap := queryAppendEvts(db, dbConsts)
+	appendMap, itmdMap := queryAppendEvts(db, dbConsts)
 
 	evtDepEdges := make([]EvtDepEdge, 0, len(readEvtsInfoArr)*3)
 	evtDepEdgeId := 0
+
+	g1 := G1Anomalies{}
 
 	// iterate over the array of read-events info.
 	for _, info := range readEvtsInfoArr {
@@ -419,7 +474,8 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 			} else {
 				for _, trace := range traces {
 					if len(trace.Val) > 0 {
-						log.Fatalf("Anomaly 2: The object %v has no append events, but reads %v in events %v\n",
+						g1.G1a = true
+						log.Printf("G1a.1: The object %v has no append events (possibly aborted), but reads %v in events %v\n",
 							obj, trace.Val, trace.Ids)
 					}
 				}
@@ -429,30 +485,105 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 			}
 		}
 
+		// must get, as both maps were created at the same time
+		objItmdMap := itmdMap[obj]
+
 		// the first trace
 		longerVal := traces[0].Val
+		longerRidArr := traces[0].Ids
 		if len(longerVal) == 0 {
-			// no new appends are read, so we cannot interpret any edges
+			// no new appends are read
+			// however, there may exist further appends
+			// add rw edges
+			for _, laterAid := range objAppendMap {
+				// rw
+				// we need to construct rw dependencies
+				// between longerAppended and the values appended later
+				for _, rid := range longerRidArr {
+					if !happenBefore(rid, laterAid) {
+						evtDepEdges = append(evtDepEdges, EvtDepEdge{
+							rid,
+							laterAid,
+							obj,
+							"rw",
+						})
+						evtDepEdgeId++
+					}
+				}
+			}
+			// skip further steps
 			continue
 		}
 		numOfVals := len(longerVal)
 		longerAppended := longerVal[len(longerVal)-1]
-		longerAid, ok := objAppendMap[longerAppended]
-		longerRidArr := traces[0].Ids
-		if !ok {
-			log.Fatalf("Anomaly 3.1: The object %v has no %v in its append events, but reads %v in events %v\n",
+		longerAid, longerAidOk := objAppendMap[longerAppended]
+
+		if !longerAidOk {
+			g1.G1a = true
+			log.Printf("G1a.2: The object %v has no %v in its append events (possibly aborted), but reads %v in events %v\n",
 				obj, longerAppended, longerVal, longerRidArr)
 		}
+
+		valueSet := make(map[int]interface{})
+		for _, v := range longerVal {
+			valueSet[v] = nil
+		}
+		laterAidMap := make(map[string]bool) // rid has a laterAid
+		for laterAppended, laterAid := range objAppendMap {
+			// rw
+			// we need to construct rw dependencies
+			// between longerAppended and the values appended later
+			if _, ok := valueSet[laterAppended]; !ok {
+				for _, rid := range longerRidArr {
+					if !happenBefore(rid, laterAid) {
+						evtDepEdges = append(evtDepEdges, EvtDepEdge{
+							rid,
+							laterAid,
+							obj,
+							"rw",
+						})
+						evtDepEdgeId++
+					} else {
+						laterAidMap[rid] = true
+					}
+				}
+				// ww
+				// between longerAppended and the values appended later
+				if longerAidOk && !happenBefore(longerAid, laterAid) {
+					evtDepEdges = append(evtDepEdges, EvtDepEdge{
+						longerAid,
+						laterAid,
+						obj,
+						"ww",
+					})
+					evtDepEdgeId++
+				}
+			}
+		}
 		// wr
-		for _, rid := range longerRidArr {
-			evtDepEdges = append(evtDepEdges, EvtDepEdge{
-				longerAid,
-				rid,
-				obj,
-				"wr",
-			})
-			evtDepEdgeId++
-			numOfVals--
+		// only when longerAid is ok
+
+		if longerAidOk {
+			for _, rid := range longerRidArr {
+				// only longerAid < rid < laterAid is allowed
+				allowed := happenBefore(longerAid, rid) && laterAidMap[rid]
+				if longerItmd := objItmdMap[longerAppended]; longerItmd && !allowed {
+					g1.G1b = true
+					log.Printf("G1b.1: The object %v has an intermediate append %v in event %v and reads %v in events %v\n",
+						obj, longerAppended, longerAid, longerVal, longerRidArr)
+				} else {
+					if !happenBefore(longerAid, rid) {
+						evtDepEdges = append(evtDepEdges, EvtDepEdge{
+							longerAid,
+							rid,
+							obj,
+							"wr",
+						})
+						evtDepEdgeId++
+					}
+				}
+
+			}
 		}
 
 		for i := 1; i < len(traces); i++ {
@@ -468,61 +599,86 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 				// rw
 				// nextAid: the exact next append after val, i.e., i_m ->(rw) i_m+1
 				nextAppended := longerVal[len(val)]
-				nextAid, ok := objAppendMap[nextAppended]
-				if !ok {
-					log.Fatalf("Anomaly 3.2: The object %v has no %v in its append events, but reads %v in events %v\n",
+				nextAid, nextAidOk := objAppendMap[nextAppended]
+				if !nextAidOk {
+					g1.G1a = true
+					log.Printf("G1a.3: The object %v has no %v in its append events (possibly aborted), but reads %v in events %v\n",
 						obj, nextAppended, longerVal, longerRidArr)
-				}
-				for _, rid := range ridArr {
-					evtDepEdges = append(evtDepEdges, EvtDepEdge{
-						rid,
-						nextAid,
-						obj,
-						"rw",
-					})
-					evtDepEdgeId++
+				} else {
+					for _, rid := range ridArr {
+						if !happenBefore(rid, nextAid) {
+							evtDepEdges = append(evtDepEdges, EvtDepEdge{
+								rid,
+								nextAid,
+								obj,
+								"rw",
+							})
+							evtDepEdgeId++
+						}
+					}
 				}
 
 				if len(val) > 0 {
 					// ww
 					// i_j -> i_j+1, j = m, m+1, .., n-1
 					// nextAid updated from n to m+1
-					nextAid := longerAid
+					nextAid, nextAidOk := longerAid, longerAidOk
 					for j := len(longerVal) - 2; j >= len(val)-1; j-- {
 						appended := longerVal[j]
-						aid, ok := objAppendMap[appended]
-						if !ok {
-							log.Fatalf("Anomaly 3.3: The object %v has no %v in its append events, but reads %v in events %v\n",
+						aid, aidOk := objAppendMap[appended]
+						if !aidOk {
+							g1.G1a = true
+							log.Printf("G1a.4: The object %v has no %v in its append events (possibly aborted), but reads %v in events %v\n",
 								obj, appended, longerVal, longerRidArr)
+						} else {
+							// aid ok, but nextAid might not be okay
+							if nextAidOk && !happenBefore(aid, nextAid) {
+								evtDepEdges = append(evtDepEdges, EvtDepEdge{
+									aid,
+									nextAid,
+									obj,
+									"ww",
+								})
+								evtDepEdgeId++
+							}
 						}
-						evtDepEdges = append(evtDepEdges, EvtDepEdge{
-							aid,
-							nextAid,
-							obj,
-							"ww",
-						})
-						evtDepEdgeId++
-						nextAid = aid
+
+						nextAid, nextAidOk = aid, aidOk
 					}
 
 					appended := val[len(val)-1]
-					aid := objAppendMap[appended] // must read, as already verified in the ww step
+					// might not successfully read
+					// but G1a check has already been done in the ww step
+					aid, aidOk := objAppendMap[appended]
+					nextAid, nextAidOk = objAppendMap[longerVal[len(val)]]
 
-					// wr
-					for _, rid := range ridArr {
-						evtDepEdges = append(evtDepEdges, EvtDepEdge{
-							aid,
-							rid,
-							obj,
-							"wr",
-						})
-						evtDepEdgeId++
+					if aidOk && nextAidOk {
+						// wr
+						for _, rid := range ridArr {
+							// only aid < rid < nextAid is allowed
+							allowed := happenBefore(aid, rid) && happenBefore(rid, nextAid)
+							if itmd := objItmdMap[appended]; itmd && !allowed {
+								g1.G1b = true
+								log.Printf("G1b.2: The object %v has an intermediate append %v in event %v and reads %v in events %v\n",
+									obj, appended, aid, val, ridArr)
+							} else {
+								if !happenBefore(aid, rid) {
+									evtDepEdges = append(evtDepEdges, EvtDepEdge{
+										aid,
+										rid,
+										obj,
+										"wr",
+									})
+									evtDepEdgeId++
+								}
+							}
+						}
 					}
 
 					// update pointers
 					longerVal = val
 					longerRidArr = ridArr
-					longerAid = aid
+					longerAid, longerAidOk = aid, aidOk
 				} else {
 					// reaches the empty array
 					// the break clause can also be neglected
@@ -530,31 +686,36 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) []EvtDepEdge {
 				}
 
 			} else {
-				log.Fatalf("Anomaly 4: %v in events %v is not a prefix of %v in events %v (inconsistent read events under object %v)",
+				log.Fatalf("Anomaly 2: %v read by events %v is not a prefix of %v read by events %v (inconsistent read events under object %v). Non-traceable.\n",
 					val, ridArr, longerVal, longerRidArr, obj)
 			}
 		}
 
 		// add missing "ww" edges
-		for i := numOfVals - 1; i >= 0; i-- {
+		for i := numOfVals - 2; i >= 0; i-- {
 			appended := longerVal[i]
-			aid, ok := objAppendMap[appended]
-			if !ok {
-				log.Fatalf("Anomaly 3.3: The object %v has no %v in its append events, but reads %v in events %v\n",
+			aid, aidOk := objAppendMap[appended]
+			if !aidOk {
+				g1.G1a = true
+				log.Printf("G1a.5: The object %v has no %v in its append events (possibly aborted), but reads %v in events %v\n",
 					obj, appended, longerVal, longerRidArr)
+			} else {
+				if longerAidOk && !happenBefore(aid, longerAid) {
+					evtDepEdges = append(evtDepEdges, EvtDepEdge{
+						aid,
+						longerAid,
+						obj,
+						"ww",
+					})
+					evtDepEdgeId++
+				}
 			}
-			evtDepEdges = append(evtDepEdges, EvtDepEdge{
-				aid,
-				longerAid,
-				obj,
-				"ww",
-			})
-			evtDepEdgeId++
-			longerAid = aid
+
+			longerAid, longerAidOk = aid, aidOk
 		}
 	}
 
-	return evtDepEdges
+	return evtDepEdges, g1
 }
 
 func isPrefix(v1 []int, v2 []int) bool {

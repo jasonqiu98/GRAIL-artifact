@@ -2,6 +2,7 @@ package listappend
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 
@@ -131,10 +132,10 @@ func renderCycle(history core.History, cycle []TxnDepEdge, output bool) (string,
 	tpl = append(tpl, "}")
 
 	if output {
-		fmt.Println("-----------------------------------")
-		fmt.Println("graphviz code:")
-		fmt.Println(strings.Join(tpl, "\n"))
-		fmt.Println("-----------------------------------")
+		log.Println("-----------------------------------")
+		log.Println("graphviz code:")
+		log.Println(strings.Join(tpl, "\n"))
+		log.Println("-----------------------------------")
 	}
 
 	return strings.Join(tpl, "\n"), nil

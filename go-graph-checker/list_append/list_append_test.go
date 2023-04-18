@@ -11,13 +11,14 @@ import (
 	driver "github.com/arangodb/go-driver"
 	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
 	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
+	"github.com/stretchr/testify/require"
 )
 
 func printLine() {
-	fmt.Println("-----------------------------------")
+	log.Println("-----------------------------------")
 }
 
-func constructArangoGraph(fileName string, ignoreReads bool, t *testing.T) (driver.Database, []int, DBConsts, core.History) {
+func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int, DBConsts, core.History) {
 	dbConsts := DBConsts{
 		"starter",    // Host
 		8529,         // Port
@@ -32,7 +33,7 @@ func constructArangoGraph(fileName string, ignoreReads bool, t *testing.T) (driv
 	}
 	ednFileName := fmt.Sprintf("../histories/list-append/%s.edn", fileName)
 	prompt := fmt.Sprintf("Checking %s...", ednFileName)
-	fmt.Println(prompt)
+	log.Println(prompt)
 	content, err := os.ReadFile(ednFileName)
 	if err != nil {
 		log.Fatalf("Cannot read edn file %s", ednFileName)
@@ -44,12 +45,22 @@ func constructArangoGraph(fileName string, ignoreReads bool, t *testing.T) (driv
 		t.Fail()
 	}
 	t1 := time.Now()
-	db, txnIds := ConstructGraph(txn.Opts{}, history, dbConsts, ignoreReads)
+	db, txnIds, g1 := ConstructGraph(txn.Opts{}, history, dbConsts)
+	require.Equal(t, g1.G1a, false)
+	require.Equal(t, g1.G1b, false)
 	t2 := time.Now()
 	constructTime := t2.Sub(t1).Nanoseconds() / 1e6
 	fmt.Printf("constructing graph: %d ms\n", constructTime)
 
 	return db, txnIds, dbConsts, history
+}
+
+func mustParseOp(opString string) core.Op {
+	op, err := core.ParseOp(opString)
+	if err != nil {
+		log.Fatalf("expect no error, got %v", err)
+	}
+	return op
 }
 
 /*
@@ -62,7 +73,7 @@ checking serializability:
 func TestProfilingSER(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), false, t)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSERV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSERV2, false)
 		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSERV3, false)
@@ -77,7 +88,7 @@ func TestProfilingSER(t *testing.T) {
 func TestProfilingSI(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), false, t)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
 
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSIV2, false)
@@ -92,7 +103,7 @@ func TestProfilingSI(t *testing.T) {
 func TestProfilingPSI(t *testing.T) {
 	printLine()
 	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), false, t)
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
 
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPSIV2, false)
@@ -106,105 +117,246 @@ func TestProfilingPSI(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSER(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("170", false, t)
+	db, txnIds, dbConsts, history := constructArangoGraph("170", t)
 	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
 	if !valid {
-		fmt.Println("Not Serializable!")
+		log.Println("Not Serializable!")
 		PlotCycle(history, cycle, "../images", "la-ser", true)
 	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
+		log.Println("Anti-Patterns Not Detected.")
 	}
 }
 
 func TestListAppendSERPregel(t *testing.T) {
-	db, _, dbConsts, _ := constructArangoGraph("list-append", false, t)
+	db, _, dbConsts, _ := constructArangoGraph("list-append", t)
 	CheckSERPregel(db, dbConsts, nil, true)
 }
 
 // go test -v -timeout 30s -run ^TestListAppendSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSI(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("list-append", false, t)
+	db, txnIds, dbConsts, history := constructArangoGraph("list-append", t)
 	valid, cycle := CheckSIV1(db, dbConsts, txnIds, true)
 	if !valid {
-		fmt.Println("Not Snapshot Isolation!")
+		log.Println("Not Snapshot Isolation!")
 		PlotCycle(history, cycle, "../images", "la-si", true)
 	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
+		log.Println("Anti-Patterns Not Detected.")
 	}
 }
 
 // go test -v -timeout 30s -run ^TestListAppendPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendPSI(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("list-append", false, t)
+	db, txnIds, dbConsts, history := constructArangoGraph("list-append", t)
 	valid, cycle := CheckPSIV2(db, dbConsts, txnIds, true)
 	if !valid {
-		fmt.Println("Not Parallel Snapshot Isolation!")
+		log.Println("Not Parallel Snapshot Isolation!")
 		PlotCycle(history, cycle, "../images", "la-psi", true)
 	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
+		log.Println("Anti-Patterns Not Detected.")
 	}
 }
 
-func TestExample(t *testing.T) {
-	dbConsts := DBConsts{
-		"starter",    // Host
-		8529,         // Port
-		"checker_db", // DB
-		"txn_g",      // TxnGraph
-		"evt_g",      // EvtGraph
-		"txn",        // TxnNode
-		"a_evt",      // AppendEvtNode
-		"r_evt",      // ReadEvtNode
-		"dep",        // TxnDepEdge
-		"evt_dep",    // EvtDepEdge
-	}
-	// borrowed from ../../go-elle/list_append/viz_test.go
-	t1 := mustParseOp(`{:index 2, :type :invoke, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
-	t1p := mustParseOp(`{:index 3, :type :ok, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
-	t2 := mustParseOp(`{:index 4, :type :invoke, :value [[:append z 1]]}`)
-	t2p := mustParseOp(`{:index 5, :type :ok, :value [[:append z 1]]}`)
-	t3 := mustParseOp(`{:index 0, :type :invoke, :value [[:r x [1 2]] [:r z [1]]]}`)
-	t3p := mustParseOp(`{:index 1, :type :ok, :value [[:r x [1 2]] [:r z [1]]]}`)
-	t4 := mustParseOp(`{:index 6, :type :invoke, :value [[:append z 2] [:append y 1]]}`)
-	t4p := mustParseOp(`{:index 7, :type :ok, :value [[:append z 2] [:append y 1]]}`)
-	t5 := mustParseOp(`{:index 8, :type :invoke, :value [[:r z nil] [:append x 2]]}`)
-	t5p := mustParseOp(`{:index 9, :type :ok, :value [[:r z nil] [:append x 2]]}`)
-	h := []core.Op{t3, t3p, t1, t1p, t2, t2p, t4, t4p, t5, t5p}
+// Tests for correctness, following TDD principles
 
-	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, false)
-	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
-	if !valid {
-		fmt.Println("Not Serializable!")
-		PlotCycle(h, cycle, "../images", "la-ser", true)
-	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
-	}
+func testPL1(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
+	valid, _ := CheckPL1V1(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPL1V2(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPL1V3(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
 }
 
-func mustParseOp(opString string) core.Op {
-	op, err := core.ParseOp(opString)
-	if err != nil {
-		log.Fatalf("expect no error, got %v", err)
+func testPL2(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
+	valid, _ := CheckPL2V1(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPL2V2(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPL2V3(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+}
+
+func testPSI(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
+	valid, _ := CheckPSIV1(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPSIV2(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPSIV3(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+}
+
+func testSI(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
+	valid, _ := CheckSIV1(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckSIV2(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckSIV3(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+}
+
+func testSER(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
+	valid, _ := CheckSERV1(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckSERV2(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckSERV3(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckSERPregel(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+}
+
+func TestChecker(t *testing.T) {
+	dbConsts := DBConsts{"starter", 8529, "checker_db", "txn_g", "evt_g", "txn", "a_evt", "r_evt", "dep", "evt_dep"}
+
+	{
+		// G0 (write cycles) ~ violates PL-1
+		log.Println("Checking G0...")
+		t1 := mustParseOp(`{:type :ok, :value [[:append x 1] [:append y 1]]}`)
+		t2 := mustParseOp(`{:type :ok, :value [[:append x 2] [:append y 2]]}`)
+		t3 := mustParseOp(`{:type :ok, :value [[:r x [1 2]] [:r y [2 1]]]}`)
+		h := []core.Op{t1, t2, t3}
+
+		// if we only test PL-1, we ignore read operations
+		db, txnIds, _ := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+		// expect the result to be false
+		testPL1(t, h, db, dbConsts, txnIds, false)
 	}
-	return op
+
+	{
+		// G1c (circular information flow) ~ violates PL-2 but not PL-1
+		log.Println("Checking G1c...")
+		t1 := mustParseOp(`{:type :ok, :value [[:append x 1] [:r y [1]]]}`)
+		t2 := mustParseOp(`{:type :ok, :value [[:append x 2] [:append y 1]]}`)
+		t3 := mustParseOp(`{:type :ok, :value [[:r x [1 2]] [:r y [1]]]}`)
+		h := []core.Op{t1, t2, t3}
+
+		db, txnIds, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+		require.Equal(t, g1.G1a, false)
+		require.Equal(t, g1.G1b, false)
+
+		// expect the result to be false
+		testPL2(t, h, db, dbConsts, txnIds, false)
+		testPL1(t, h, db, dbConsts, txnIds, true)
+	}
+
+	// from paper: Transactional storage for geo-replicated systems
+
+	{
+		// dirty read (G1b) ~ violates SER, SI and PSI
+		log.Println("Checking dirty read...")
+		t1 := mustParseOp(`{:type :ok, :value [[:r x []] [:append x 1] [:append x 2]]}`)
+		t2 := mustParseOp(`{:type :ok, :value [[:r x [1]]]}`)
+		h := []core.Op{t1, t2}
+
+		_, _, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+		require.Equal(t, g1.G1b, true)
+	}
+
+	{
+		// non-repeatable read ~ violates SER, SI and PSI
+		log.Println("Checking non-repeatable read...")
+		t1 := mustParseOp(`{:type :ok, :value [[:r x []] [:append x 1]]}`)
+		t2 := mustParseOp(`{:type :ok, :value [[:r x []] [:r x [1]]]}`)
+		h := []core.Op{t1, t2}
+
+		db, txnIds, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+		require.Equal(t, g1.G1a, false)
+		require.Equal(t, g1.G1b, false)
+
+		testSER(t, h, db, dbConsts, txnIds, false)
+		testSI(t, h, db, dbConsts, txnIds, false)
+		testPSI(t, h, db, dbConsts, txnIds, false)
+	}
+
+	{
+		// lost update ~ violates SER, SI and PSI
+		log.Println("Checking lost update...")
+		t1 := mustParseOp(`{:type :ok, :value [[:r x []] [:append x 1]]}`)
+		t2 := mustParseOp(`{:type :ok, :value [[:r x []] [:append x 2]]}`)
+		t3 := mustParseOp(`{:type :ok, :value [[:r x [2]]]}`)
+		h := []core.Op{t1, t2, t3}
+
+		db, txnIds, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+		require.Equal(t, g1.G1a, false)
+		require.Equal(t, g1.G1b, false)
+
+		testSER(t, h, db, dbConsts, txnIds, false)
+		testSI(t, h, db, dbConsts, txnIds, false)
+		testPSI(t, h, db, dbConsts, txnIds, false)
+	}
+
+	// conflicting fork ~ violates SER, SI and PSI
+	// doesn't satisfy the assumption that each object only has one append per value
+	// will throw "non-recoverable" anomaly
+	// {
+	// 	log.Println("Checking conflicting fork...")
+	// 	t1 := mustParseOp(`{:type :ok, :value [[:r x []] [:append x 1]]}`)
+	// 	t2 := mustParseOp(`{:type :ok, :value [[:append x 1]]}`)
+	// 	t3 := mustParseOp(`{:type :ok, :value [[:r x [1 2]]]}`)
+	// 	h := []core.Op{t1, t2, t3}
+
+	// 	ConstructGraph(txn.Opts{}, h, dbConsts)
+	// }
+
+	{
+		// long fork ~ violates SER and SI but not PSI
+		log.Println("Checking long fork...")
+		t1 := mustParseOp(`{:type :ok, :value [[:r x []] [:r y []] [:append x 1]]}`)
+		t2 := mustParseOp(`{:type :ok, :value [[:r x [1]] [:r y []]]}`)
+		t3 := mustParseOp(`{:type :ok, :value [[:r x []] [:r y []] [:append y 1]]}`)
+		t4 := mustParseOp(`{:type :ok, :value [[:r x []] [:r y [1]]]}`)
+		h := []core.Op{t1, t2, t3, t4}
+
+		db, txnIds, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+		require.Equal(t, g1.G1a, false)
+		require.Equal(t, g1.G1b, false)
+
+		testSER(t, h, db, dbConsts, txnIds, false)
+		testSI(t, h, db, dbConsts, txnIds, false)
+		testPSI(t, h, db, dbConsts, txnIds, true)
+	}
+
+	{
+		// write skew / short fork ~ violates SER but not SI nor PSI
+		log.Println("Checking write skew...")
+		t1 := mustParseOp(`{:type :ok, :value [[:r x []] [:r y []] [:append x 1]]}`)
+		t2 := mustParseOp(`{:type :ok, :value [[:r x []] [:r y []] [:append y 1]]}`)
+		h := []core.Op{t1, t2}
+
+		db, txnIds, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+		require.Equal(t, g1.G1a, false)
+		require.Equal(t, g1.G1b, false)
+
+		testSER(t, h, db, dbConsts, txnIds, false)
+		testSI(t, h, db, dbConsts, txnIds, true)
+		testPSI(t, h, db, dbConsts, txnIds, true)
+	}
+
 }
 
 /*
 G1a aborted read
 */
 func TestG1aCases(t *testing.T) {
-	dbConsts := DBConsts{
-		"starter",    // Host
-		8529,         // Port
-		"checker_db", // DB
-		"txn_g",      // TxnGraph
-		"evt_g",      // EvtGraph
-		"txn",        // TxnNode
-		"a_evt",      // AppendEvtNode
-		"r_evt",      // ReadEvtNode
-		"dep",        // TxnDepEdge
-		"evt_dep",    // EvtDepEdge
-	}
+	dbConsts := DBConsts{"starter", 8529, "checker_db", "txn_g", "evt_g", "txn", "a_evt", "r_evt", "dep", "evt_dep"}
 
 	t1 := mustParseOp(`{:type :fail, :value [[:append x 1]]}`)
 	t2 := mustParseOp(`{:type :ok, :value [[:r x [1]] [:append x 2]]}`)
@@ -212,125 +364,72 @@ func TestG1aCases(t *testing.T) {
 
 	h := []core.Op{t2, t3, t1}
 
-	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, false)
-	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
-	if !valid {
-		fmt.Println("Not Serializable!")
-		PlotCycle(h, cycle, "../images", "la-ser", true)
-	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
-	}
+	_, _, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+	require.Equal(t, g1.G1a, true) // G1a detected
 }
 
 /*
 G1b intermediate read
 */
 func TestG1bCases(t *testing.T) {
-	dbConsts := DBConsts{
-		"starter",    // Host
-		8529,         // Port
-		"checker_db", // DB
-		"txn_g",      // TxnGraph
-		"evt_g",      // EvtGraph
-		"txn",        // TxnNode
-		"a_evt",      // AppendEvtNode
-		"r_evt",      // ReadEvtNode
-		"dep",        // TxnDepEdge
-		"evt_dep",    // EvtDepEdge
-	}
-	t1 := mustParseOp(`{:type :ok, :value [[:append x 1] [:append x 2]]}`)
-	t2 := mustParseOp(`{:type :ok, :value [[:r x [1]]]}`)
-	t3 := mustParseOp(`{:type :ok, :value [[:r x [1 2]] [:r y [3]]]}`)
-	t4 := mustParseOp(`{:type :ok, :value [[:r x [1 2 3]]]}`)
+	dbConsts := DBConsts{"starter", 8529, "checker_db", "txn_g", "evt_g", "txn", "a_evt", "r_evt", "dep", "evt_dep"}
 
-	h := []core.Op{t2, t3, t1, t4}
-
-	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, false)
-	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
-	if !valid {
-		fmt.Println("Not Serializable!")
-		PlotCycle(h, cycle, "../images", "la-ser", true)
-	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
+	h := []core.Op{
+		mustParseOp(`{:type :ok, :value [[:append x 1] [:append x 2]]}`),
+		mustParseOp(`{:type :ok, :value [[:r x [1]]]}`),
 	}
-}
 
-/*
-PL-2 with anti-pattern G1c (circular information flow)
-*/
-func TestPL2Cases(t *testing.T) {
-	dbConsts := DBConsts{
-		"starter",    // Host
-		8529,         // Port
-		"checker_db", // DB
-		"txn_g",      // TxnGraph
-		"evt_g",      // EvtGraph
-		"txn",        // TxnNode
-		"a_evt",      // AppendEvtNode
-		"r_evt",      // ReadEvtNode
-		"dep",        // TxnDepEdge
-		"evt_dep",    // EvtDepEdge
-	}
-	// borrowed from ../../go-elle/list_append/viz_test.go
-	t1 := mustParseOp(`{:index 2, :type :invoke, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
-	t1p := mustParseOp(`{:index 3, :type :ok, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
-	t2 := mustParseOp(`{:index 4, :type :invoke, :value [[:append z 1]]}`)
-	t2p := mustParseOp(`{:index 5, :type :ok, :value [[:append z 1]]}`)
-	t3 := mustParseOp(`{:index 0, :type :invoke, :value [[:r x [1 2]] [:r z [1]]]}`)
-	t3p := mustParseOp(`{:index 1, :type :ok, :value [[:r x [1 2]] [:r z [1]]]}`)
-	t4 := mustParseOp(`{:index 6, :type :invoke, :value [[:append z 2] [:append y 1]]}`)
-	t4p := mustParseOp(`{:index 7, :type :ok, :value [[:append z 2] [:append y 1]]}`)
-	t5 := mustParseOp(`{:index 8, :type :invoke, :value [[:r z nil] [:append x 2]]}`)
-	t5p := mustParseOp(`{:index 9, :type :ok, :value [[:r z nil] [:append x 2]]}`)
-	h := []core.Op{t3, t3p, t1, t1p, t2, t2p, t4, t4p, t5, t5p}
+	_, _, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
 
-	// ignoreReads set to true: ignore all read events when constructing the graph
-	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, false)
-	valid, cycle := CheckPL2V1(db, dbConsts, txnIds, true)
-	if !valid {
-		fmt.Println("Not PL-2!")
-		PlotCycle(h, cycle, "../images", "la-pl1", true)
-	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
-	}
-}
+	require.Equal(t, g1.G1b, true) // G1b detected
 
-/*
-PL-1 with anti-pattern G0 (write cycles)
-*/
-func TestPL1Cases(t *testing.T) {
-	dbConsts := DBConsts{
-		"starter",    // Host
-		8529,         // Port
-		"checker_db", // DB
-		"txn_g",      // TxnGraph
-		"evt_g",      // EvtGraph
-		"txn",        // TxnNode
-		"a_evt",      // AppendEvtNode
-		"r_evt",      // ReadEvtNode
-		"dep",        // TxnDepEdge
-		"evt_dep",    // EvtDepEdge
+	h = []core.Op{
+		mustParseOp(`{:type :ok, :value [[:append x 1]]}`),
+		mustParseOp(`{:type :ok, :value [[:append x 2] [:append x 3] [:r x [1 2]]]}`),
 	}
-	// borrowed from ../../go-elle/list_append/viz_test.go
-	t1 := mustParseOp(`{:index 2, :type :invoke, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
-	t1p := mustParseOp(`{:index 3, :type :ok, :value [[:append x 1] [:r y [1]] [:r z [1 2]]]} `)
-	t2 := mustParseOp(`{:index 4, :type :invoke, :value [[:append z 1]]}`)
-	t2p := mustParseOp(`{:index 5, :type :ok, :value [[:append z 1]]}`)
-	t3 := mustParseOp(`{:index 0, :type :invoke, :value [[:r x [1 2]] [:r z [1]]]}`)
-	t3p := mustParseOp(`{:index 1, :type :ok, :value [[:r x [1 2]] [:r z [1]]]}`)
-	t4 := mustParseOp(`{:index 6, :type :invoke, :value [[:append z 2] [:append y 1]]}`)
-	t4p := mustParseOp(`{:index 7, :type :ok, :value [[:append z 2] [:append y 1]]}`)
-	t5 := mustParseOp(`{:index 8, :type :invoke, :value [[:r z nil] [:append x 2]]}`)
-	t5p := mustParseOp(`{:index 9, :type :ok, :value [[:r z nil] [:append x 2]]}`)
-	h := []core.Op{t3, t3p, t1, t1p, t2, t2p, t4, t4p, t5, t5p}
 
-	// ignoreReads set to true: ignore all read events when constructing the graph
-	db, txnIds := ConstructGraph(txn.Opts{}, h, dbConsts, true)
-	valid, cycle := CheckPL1V1(db, dbConsts, txnIds, true)
-	if !valid {
-		fmt.Println("Not PL-1!")
-		PlotCycle(h, cycle, "../images", "la-pl1", true)
-	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
+	_, _, g1 = ConstructGraph(txn.Opts{}, h, dbConsts)
+
+	require.Equal(t, g1.G1b, true) // G1b detected
+
+	h = []core.Op{
+		mustParseOp(`{:type :ok, :value [[:append x 1]]}`),
+		mustParseOp(`{:type :ok, :value [[:append x 2] [:append x 3] [:r x [1 2]]]}`),
+		mustParseOp(`{:type :ok, :value [[:r x [1 2 3]]]}`),
 	}
+
+	_, _, g1 = ConstructGraph(txn.Opts{}, h, dbConsts)
+
+	require.Equal(t, g1.G1b, true) // G1b detected
+
+	h = []core.Op{
+		mustParseOp(`{:type :ok, :value [[:append x 1]]}`),
+		mustParseOp(`{:type :ok, :value [[:append x 2] [:r x [1 2]] [:append x 3]]}`),
+	}
+
+	_, _, g1 = ConstructGraph(txn.Opts{}, h, dbConsts)
+
+	require.Equal(t, g1.G1b, false) // G1b not detected
+
+	h = []core.Op{
+		mustParseOp(`{:type :ok, :value [[:append x 1] [:append x 2]]}`),
+		mustParseOp(`{:type :ok, :value [[:append x 3]]}`),
+		mustParseOp(`{:type :ok, :value [[:r x [1 2 3]]]}`),
+	}
+
+	_, _, g1 = ConstructGraph(txn.Opts{}, h, dbConsts)
+
+	require.Equal(t, g1.G1b, false) // G1b not detected
+
+	h = []core.Op{
+		mustParseOp(`{:type :ok, :value [[:append x 1] [:append x 2]]}`),
+		mustParseOp(`{:type :ok, :value [[:append x 3]]}`),
+		mustParseOp(`{:type :ok, :value [[:r x [1 2]]]}`),
+	}
+
+	_, _, g1 = ConstructGraph(txn.Opts{}, h, dbConsts)
+
+	require.Equal(t, g1.G1b, false) // G1b not detected
+
 }
