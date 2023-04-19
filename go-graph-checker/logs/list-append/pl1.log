@@ -1,0 +1,188 @@
+Starting: /root/go/bin/dlv dap --listen=127.0.0.1:39401 --log-dest=3 from /root/project/go-graph-checker/list_append
+DAP server listening at: 127.0.0.1:39401
+Type 'dlv help' for list of commands.
+2023/04/19 21:39:07 -----------------------------------
+2023/04/19 21:39:07 Checking ../histories/list-append/10.edn...
+2023/04/19 21:39:07 db exists already and will be dropped first...
+constructing graph: 464 ms
+checking PL-1 (on avg.):
+ - v1: 1 ms
+ - v2: 95 ms
+ - v3: 1 ms
+ - v4: 1 ms
+2023/04/19 21:39:09 -----------------------------------
+2023/04/19 21:39:09 Checking ../histories/list-append/20.edn...
+2023/04/19 21:39:09 db exists already and will be dropped first...
+constructing graph: 903 ms
+checking PL-1 (on avg.):
+ - v1: 3 ms
+ - v2: 197 ms
+ - v3: 4 ms
+ - v4: 5 ms
+2023/04/19 21:39:12 -----------------------------------
+2023/04/19 21:39:12 Checking ../histories/list-append/30.edn...
+2023/04/19 21:39:12 db exists already and will be dropped first...
+constructing graph: 1595 ms
+checking PL-1 (on avg.):
+ - v1: 4 ms
+ - v2: 333 ms
+ - v3: 10 ms
+ - v4: 10 ms
+2023/04/19 21:39:17 -----------------------------------
+2023/04/19 21:39:17 Checking ../histories/list-append/40.edn...
+2023/04/19 21:39:17 db exists already and will be dropped first...
+constructing graph: 2415 ms
+checking PL-1 (on avg.):
+ - v1: 7 ms
+ - v2: 538 ms
+ - v3: 16 ms
+ - v4: 15 ms
+2023/04/19 21:39:25 -----------------------------------
+2023/04/19 21:39:25 Checking ../histories/list-append/50.edn...
+2023/04/19 21:39:25 db exists already and will be dropped first...
+constructing graph: 3062 ms
+checking PL-1 (on avg.):
+ - v1: 8 ms
+ - v2: 613 ms
+ - v3: 31 ms
+ - v4: 31 ms
+2023/04/19 21:39:35 -----------------------------------
+2023/04/19 21:39:35 Checking ../histories/list-append/60.edn...
+2023/04/19 21:39:35 db exists already and will be dropped first...
+constructing graph: 3322 ms
+checking PL-1 (on avg.):
+ - v1: 10 ms
+ - v2: 752 ms
+ - v3: 31 ms
+ - v4: 32 ms
+2023/04/19 21:39:47 -----------------------------------
+2023/04/19 21:39:47 Checking ../histories/list-append/70.edn...
+2023/04/19 21:39:47 db exists already and will be dropped first...
+constructing graph: 4045 ms
+checking PL-1 (on avg.):
+ - v1: 10 ms
+ - v2: 894 ms
+ - v3: 111 ms
+ - v4: 110 ms
+2023/04/19 21:40:03 -----------------------------------
+2023/04/19 21:40:03 Checking ../histories/list-append/80.edn...
+2023/04/19 21:40:03 db exists already and will be dropped first...
+constructing graph: 5335 ms
+checking PL-1 (on avg.):
+ - v1: 14 ms
+ - v2: 978 ms
+ - v3: 49 ms
+ - v4: 50 ms
+2023/04/19 21:40:19 -----------------------------------
+2023/04/19 21:40:19 Checking ../histories/list-append/90.edn...
+2023/04/19 21:40:19 db exists already and will be dropped first...
+constructing graph: 5208 ms
+checking PL-1 (on avg.):
+ - v1: 15 ms
+ - v2: 1182 ms
+ - v3: 68 ms
+ - v4: 68 ms
+2023/04/19 21:40:38 -----------------------------------
+2023/04/19 21:40:38 Checking ../histories/list-append/100.edn...
+2023/04/19 21:40:38 db exists already and will be dropped first...
+constructing graph: 6783 ms
+checking PL-1 (on avg.):
+ - v1: 16 ms
+ - v2: 1239 ms
+ - v3: 154 ms
+ - v4: 155 ms
+2023/04/19 21:41:00 -----------------------------------
+2023/04/19 21:41:00 Checking ../histories/list-append/110.edn...
+2023/04/19 21:41:00 db exists already and will be dropped first...
+constructing graph: 6594 ms
+checking PL-1 (on avg.):
+ - v1: 15 ms
+ - v2: 1327 ms
+ - v3: 75 ms
+ - v4: 75 ms
+2023/04/19 21:41:22 -----------------------------------
+2023/04/19 21:41:22 Checking ../histories/list-append/120.edn...
+2023/04/19 21:41:22 db exists already and will be dropped first...
+constructing graph: 6772 ms
+checking PL-1 (on avg.):
+ - v1: 16 ms
+ - v2: 1484 ms
+ - v3: 73 ms
+ - v4: 73 ms
+2023/04/19 21:41:45 -----------------------------------
+2023/04/19 21:41:45 Checking ../histories/list-append/130.edn...
+2023/04/19 21:41:46 db exists already and will be dropped first...
+constructing graph: 8012 ms
+checking PL-1 (on avg.):
+ - v1: 19 ms
+ - v2: 1757 ms
+ - v3: 122 ms
+ - v4: 122 ms
+2023/04/19 21:42:14 -----------------------------------
+2023/04/19 21:42:14 Checking ../histories/list-append/140.edn...
+2023/04/19 21:42:14 db exists already and will be dropped first...
+constructing graph: 8907 ms
+checking PL-1 (on avg.):
+ - v1: 18 ms
+ - v2: 1598 ms
+ - v3: 192 ms
+ - v4: 192 ms
+2023/04/19 21:42:43 -----------------------------------
+2023/04/19 21:42:43 Checking ../histories/list-append/150.edn...
+2023/04/19 21:42:43 db exists already and will be dropped first...
+constructing graph: 10155 ms
+checking PL-1 (on avg.):
+ - v1: 22 ms
+ - v2: 1885 ms
+ - v3: 149 ms
+ - v4: 150 ms
+2023/04/19 21:43:15 -----------------------------------
+2023/04/19 21:43:15 Checking ../histories/list-append/160.edn...
+2023/04/19 21:43:16 db exists already and will be dropped first...
+constructing graph: 9025 ms
+checking PL-1 (on avg.):
+ - v1: 22 ms
+ - v2: 1925 ms
+ - v3: 186 ms
+ - v4: 186 ms
+2023/04/19 21:43:48 -----------------------------------
+2023/04/19 21:43:48 Checking ../histories/list-append/170.edn...
+2023/04/19 21:43:48 db exists already and will be dropped first...
+constructing graph: 9933 ms
+checking PL-1 (on avg.):
+ - v1: 23 ms
+ - v2: 2209 ms
+ - v3: 129 ms
+ - v4: 129 ms
+2023/04/19 21:44:23 -----------------------------------
+2023/04/19 21:44:23 Checking ../histories/list-append/180.edn...
+2023/04/19 21:44:23 db exists already and will be dropped first...
+constructing graph: 10761 ms
+checking PL-1 (on avg.):
+ - v1: 22 ms
+ - v2: 2247 ms
+ - v3: 88 ms
+ - v4: 87 ms
+2023/04/19 21:44:59 -----------------------------------
+2023/04/19 21:44:59 Checking ../histories/list-append/190.edn...
+2023/04/19 21:44:59 db exists already and will be dropped first...
+constructing graph: 12848 ms
+checking PL-1 (on avg.):
+ - v1: 25 ms
+ - v2: 2441 ms
+ - v3: 145 ms
+ - v4: 145 ms
+2023/04/19 21:45:39 -----------------------------------
+2023/04/19 21:45:39 Checking ../histories/list-append/200.edn...
+2023/04/19 21:45:39 db exists already and will be dropped first...
+constructing graph: 12474 ms
+checking PL-1 (on avg.):
+ - v1: 26 ms
+ - v2: 2398 ms
+ - v3: 300 ms
+ - v4: 300 ms
+PASS
+2023/04/19 21:46:22 -----------------------------------
+Process 98020 has exited with status 0
+Detaching
+dlv dap (97739) exited with code: 0

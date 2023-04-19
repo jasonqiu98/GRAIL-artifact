@@ -1,0 +1,188 @@
+Starting: /root/go/bin/dlv dap --listen=127.0.0.1:42949 --log-dest=3 from /root/project/go-graph-checker/rw_register
+DAP server listening at: 127.0.0.1:42949
+Type 'dlv help' for list of commands.
+-----------------------------------
+Checking ../histories/rw-register/10.edn...
+2023/04/19 22:50:21 db exists already and will be dropped first...
+constructing graph: 484 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 34 ms
+ - v2: 166 ms
+ - v3: 6 ms
+ - v4: 6 ms
+-----------------------------------
+Checking ../histories/rw-register/20.edn...
+2023/04/19 22:50:23 db exists already and will be dropped first...
+constructing graph: 959 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 108 ms
+ - v2: 375 ms
+ - v3: 21 ms
+ - v4: 21 ms
+-----------------------------------
+Checking ../histories/rw-register/30.edn...
+2023/04/19 22:50:30 db exists already and will be dropped first...
+constructing graph: 1916 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 135 ms
+ - v2: 531 ms
+ - v3: 52 ms
+ - v4: 52 ms
+-----------------------------------
+Checking ../histories/rw-register/40.edn...
+2023/04/19 22:50:39 db exists already and will be dropped first...
+constructing graph: 2398 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 189 ms
+ - v2: 690 ms
+ - v3: 91 ms
+ - v4: 91 ms
+-----------------------------------
+Checking ../histories/rw-register/50.edn...
+2023/04/19 22:50:53 db exists already and will be dropped first...
+constructing graph: 2951 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 262 ms
+ - v2: 960 ms
+ - v3: 342 ms
+ - v4: 338 ms
+-----------------------------------
+Checking ../histories/rw-register/60.edn...
+2023/04/19 22:51:15 db exists already and will be dropped first...
+constructing graph: 3416 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 246 ms
+ - v2: 1047 ms
+ - v3: 73 ms
+ - v4: 74 ms
+-----------------------------------
+Checking ../histories/rw-register/70.edn...
+2023/04/19 22:51:33 db exists already and will be dropped first...
+constructing graph: 4365 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 333 ms
+ - v2: 1275 ms
+ - v3: 310 ms
+ - v4: 310 ms
+-----------------------------------
+Checking ../histories/rw-register/80.edn...
+2023/04/19 22:52:00 db exists already and will be dropped first...
+constructing graph: 4752 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 314 ms
+ - v2: 1434 ms
+ - v3: 446 ms
+ - v4: 431 ms
+-----------------------------------
+Checking ../histories/rw-register/90.edn...
+2023/04/19 22:52:31 db exists already and will be dropped first...
+constructing graph: 5071 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 440 ms
+ - v2: 1736 ms
+ - v3: 549 ms
+ - v4: 551 ms
+-----------------------------------
+Checking ../histories/rw-register/100.edn...
+2023/04/19 22:53:10 db exists already and will be dropped first...
+constructing graph: 6272 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 406 ms
+ - v2: 1719 ms
+ - v3: 938 ms
+ - v4: 940 ms
+-----------------------------------
+Checking ../histories/rw-register/110.edn...
+2023/04/19 22:53:56 db exists already and will be dropped first...
+constructing graph: 6733 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 531 ms
+ - v2: 1950 ms
+ - v3: 389 ms
+ - v4: 391 ms
+-----------------------------------
+Checking ../histories/rw-register/120.edn...
+2023/04/19 22:54:36 db exists already and will be dropped first...
+constructing graph: 7522 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 532 ms
+ - v2: 2131 ms
+ - v3: 992 ms
+ - v4: 990 ms
+-----------------------------------
+Checking ../histories/rw-register/130.edn...
+2023/04/19 22:55:30 db exists already and will be dropped first...
+constructing graph: 8041 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 529 ms
+ - v2: 2609 ms
+ - v3: 592 ms
+ - v4: 589 ms
+-----------------------------------
+Checking ../histories/rw-register/140.edn...
+2023/04/19 22:56:23 db exists already and will be dropped first...
+constructing graph: 9009 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 719 ms
+ - v2: 2518 ms
+ - v3: 978 ms
+ - v4: 976 ms
+-----------------------------------
+Checking ../histories/rw-register/150.edn...
+2023/04/19 22:57:24 db exists already and will be dropped first...
+constructing graph: 8352 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 644 ms
+ - v2: 2732 ms
+ - v3: 2338 ms
+ - v4: 2310 ms
+-----------------------------------
+Checking ../histories/rw-register/160.edn...
+2023/04/19 22:58:54 db exists already and will be dropped first...
+constructing graph: 9565 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 676 ms
+ - v2: 2791 ms
+ - v3: 968 ms
+ - v4: 972 ms
+-----------------------------------
+Checking ../histories/rw-register/170.edn...
+2023/04/19 22:59:58 db exists already and will be dropped first...
+constructing graph: 10021 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 747 ms
+ - v2: 2990 ms
+ - v3: 1757 ms
+ - v4: 1751 ms
+-----------------------------------
+Checking ../histories/rw-register/180.edn...
+2023/04/19 23:01:21 db exists already and will be dropped first...
+constructing graph: 11290 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 935 ms
+ - v2: 3384 ms
+ - v3: 2287 ms
+ - v4: 2282 ms
+-----------------------------------
+Checking ../histories/rw-register/190.edn...
+2023/04/19 23:03:02 db exists already and will be dropped first...
+constructing graph: 11004 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 794 ms
+ - v2: 3238 ms
+ - v3: 2573 ms
+ - v4: 2596 ms
+-----------------------------------
+Checking ../histories/rw-register/200.edn...
+2023/04/19 23:04:45 db exists already and will be dropped first...
+constructing graph: 12007 ms
+checking parallel snapshot isolation (on avg.):
+ - v1: 850 ms
+ - v2: 3460 ms
+ - v3: 1431 ms
+ - v4: 1405 ms
+-----------------------------------
+PASS
+Process 143581 has exited with status 0
+Detaching
+dlv dap (143325) exited with code: 0

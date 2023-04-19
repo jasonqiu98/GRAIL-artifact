@@ -1,0 +1,188 @@
+Starting: /root/go/bin/dlv dap --listen=127.0.0.1:39955 --log-dest=3 from /root/project/go-graph-checker/list_append
+DAP server listening at: 127.0.0.1:39955
+Type 'dlv help' for list of commands.
+2023/04/19 22:15:24 -----------------------------------
+2023/04/19 22:15:24 Checking ../histories/list-append/10.edn...
+2023/04/19 22:15:24 db exists already and will be dropped first...
+constructing graph: 489 ms
+checking snapshot isolation (on avg.):
+ - v1: 44 ms
+ - v2: 127 ms
+ - v3: 5 ms
+ - v4: 5 ms
+2023/04/19 22:15:27 -----------------------------------
+2023/04/19 22:15:27 Checking ../histories/list-append/20.edn...
+2023/04/19 22:15:27 db exists already and will be dropped first...
+constructing graph: 1058 ms
+checking snapshot isolation (on avg.):
+ - v1: 93 ms
+ - v2: 247 ms
+ - v3: 15 ms
+ - v4: 15 ms
+2023/04/19 22:15:32 -----------------------------------
+2023/04/19 22:15:32 Checking ../histories/list-append/30.edn...
+2023/04/19 22:15:32 db exists already and will be dropped first...
+constructing graph: 1672 ms
+checking snapshot isolation (on avg.):
+ - v1: 97 ms
+ - v2: 428 ms
+ - v3: 33 ms
+ - v4: 33 ms
+2023/04/19 22:15:39 -----------------------------------
+2023/04/19 22:15:39 Checking ../histories/list-append/40.edn...
+2023/04/19 22:15:39 db exists already and will be dropped first...
+constructing graph: 2499 ms
+checking snapshot isolation (on avg.):
+ - v1: 163 ms
+ - v2: 543 ms
+ - v3: 57 ms
+ - v4: 57 ms
+2023/04/19 22:15:50 -----------------------------------
+2023/04/19 22:15:50 Checking ../histories/list-append/50.edn...
+2023/04/19 22:15:50 db exists already and will be dropped first...
+constructing graph: 3237 ms
+checking snapshot isolation (on avg.):
+ - v1: 226 ms
+ - v2: 695 ms
+ - v3: 114 ms
+ - v4: 114 ms
+2023/04/19 22:16:05 -----------------------------------
+2023/04/19 22:16:05 Checking ../histories/list-append/60.edn...
+2023/04/19 22:16:05 db exists already and will be dropped first...
+constructing graph: 3754 ms
+checking snapshot isolation (on avg.):
+ - v1: 243 ms
+ - v2: 769 ms
+ - v3: 114 ms
+ - v4: 114 ms
+2023/04/19 22:16:21 -----------------------------------
+2023/04/19 22:16:21 Checking ../histories/list-append/70.edn...
+2023/04/19 22:16:21 db exists already and will be dropped first...
+constructing graph: 4030 ms
+checking snapshot isolation (on avg.):
+ - v1: 279 ms
+ - v2: 957 ms
+ - v3: 404 ms
+ - v4: 404 ms
+2023/04/19 22:16:46 -----------------------------------
+2023/04/19 22:16:46 Checking ../histories/list-append/80.edn...
+2023/04/19 22:16:46 db exists already and will be dropped first...
+constructing graph: 5020 ms
+checking snapshot isolation (on avg.):
+ - v1: 341 ms
+ - v2: 1067 ms
+ - v3: 176 ms
+ - v4: 177 ms
+2023/04/19 22:17:09 -----------------------------------
+2023/04/19 22:17:09 Checking ../histories/list-append/90.edn...
+2023/04/19 22:17:09 db exists already and will be dropped first...
+constructing graph: 5652 ms
+checking snapshot isolation (on avg.):
+ - v1: 348 ms
+ - v2: 1318 ms
+ - v3: 243 ms
+ - v4: 242 ms
+2023/04/19 22:17:36 -----------------------------------
+2023/04/19 22:17:36 Checking ../histories/list-append/100.edn...
+2023/04/19 22:17:37 db exists already and will be dropped first...
+constructing graph: 6209 ms
+checking snapshot isolation (on avg.):
+ - v1: 477 ms
+ - v2: 1331 ms
+ - v3: 568 ms
+ - v4: 566 ms
+2023/04/19 22:18:12 -----------------------------------
+2023/04/19 22:18:12 Checking ../histories/list-append/110.edn...
+2023/04/19 22:18:12 db exists already and will be dropped first...
+constructing graph: 6436 ms
+checking snapshot isolation (on avg.):
+ - v1: 440 ms
+ - v2: 1459 ms
+ - v3: 286 ms
+ - v4: 280 ms
+2023/04/19 22:18:44 -----------------------------------
+2023/04/19 22:18:44 Checking ../histories/list-append/120.edn...
+2023/04/19 22:18:44 db exists already and will be dropped first...
+constructing graph: 7310 ms
+checking snapshot isolation (on avg.):
+ - v1: 478 ms
+ - v2: 1573 ms
+ - v3: 271 ms
+ - v4: 273 ms
+2023/04/19 22:19:17 -----------------------------------
+2023/04/19 22:19:17 Checking ../histories/list-append/130.edn...
+2023/04/19 22:19:17 db exists already and will be dropped first...
+constructing graph: 8369 ms
+checking snapshot isolation (on avg.):
+ - v1: 660 ms
+ - v2: 1808 ms
+ - v3: 470 ms
+ - v4: 473 ms
+2023/04/19 22:20:00 -----------------------------------
+2023/04/19 22:20:00 Checking ../histories/list-append/140.edn...
+2023/04/19 22:20:00 db exists already and will be dropped first...
+constructing graph: 8288 ms
+checking snapshot isolation (on avg.):
+ - v1: 462 ms
+ - v2: 1876 ms
+ - v3: 713 ms
+ - v4: 703 ms
+2023/04/19 22:20:46 -----------------------------------
+2023/04/19 22:20:46 Checking ../histories/list-append/150.edn...
+2023/04/19 22:20:47 db exists already and will be dropped first...
+constructing graph: 9401 ms
+checking snapshot isolation (on avg.):
+ - v1: 556 ms
+ - v2: 2017 ms
+ - v3: 575 ms
+ - v4: 569 ms
+2023/04/19 22:21:34 -----------------------------------
+2023/04/19 22:21:34 Checking ../histories/list-append/160.edn...
+2023/04/19 22:21:34 db exists already and will be dropped first...
+constructing graph: 10185 ms
+checking snapshot isolation (on avg.):
+ - v1: 601 ms
+ - v2: 2059 ms
+ - v3: 694 ms
+ - v4: 674 ms
+2023/04/19 22:22:24 -----------------------------------
+2023/04/19 22:22:24 Checking ../histories/list-append/170.edn...
+2023/04/19 22:22:25 db exists already and will be dropped first...
+constructing graph: 10986 ms
+checking snapshot isolation (on avg.):
+ - v1: 754 ms
+ - v2: 2250 ms
+ - v3: 497 ms
+ - v4: 490 ms
+2023/04/19 22:23:16 -----------------------------------
+2023/04/19 22:23:16 Checking ../histories/list-append/180.edn...
+2023/04/19 22:23:16 db exists already and will be dropped first...
+constructing graph: 10578 ms
+checking snapshot isolation (on avg.):
+ - v1: 733 ms
+ - v2: 2586 ms
+ - v3: 319 ms
+ - v4: 311 ms
+2023/04/19 22:24:07 -----------------------------------
+2023/04/19 22:24:07 Checking ../histories/list-append/190.edn...
+2023/04/19 22:24:07 db exists already and will be dropped first...
+constructing graph: 11824 ms
+checking snapshot isolation (on avg.):
+ - v1: 772 ms
+ - v2: 2402 ms
+ - v3: 523 ms
+ - v4: 528 ms
+2023/04/19 22:25:02 -----------------------------------
+2023/04/19 22:25:02 Checking ../histories/list-append/200.edn...
+2023/04/19 22:25:02 db exists already and will be dropped first...
+constructing graph: 12524 ms
+checking snapshot isolation (on avg.):
+ - v1: 698 ms
+ - v2: 2723 ms
+ - v3: 1132 ms
+ - v4: 1135 ms
+PASS
+2023/04/19 22:26:12 -----------------------------------
+Process 121284 has exited with status 0
+Detaching
+dlv dap (121060) exited with code: 0

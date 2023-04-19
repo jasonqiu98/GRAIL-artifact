@@ -1,0 +1,208 @@
+Starting: /root/go/bin/dlv dap --listen=127.0.0.1:36207 --log-dest=3 from /root/project/go-graph-checker/list_append
+DAP server listening at: 127.0.0.1:36207
+Type 'dlv help' for list of commands.
+2023/04/19 22:09:02 -----------------------------------
+2023/04/19 22:09:02 Checking ../histories/list-append/10.edn...
+2023/04/19 22:09:02 db exists already and will be dropped first...
+constructing graph: 522 ms
+checking serializability (on avg.):
+ - v1: 40 ms
+ - v2: 119 ms
+ - v3: 4 ms
+ - v4: 5 ms
+ - pregel: 66 ms
+2023/04/19 22:09:05 -----------------------------------
+2023/04/19 22:09:05 Checking ../histories/list-append/20.edn...
+2023/04/19 22:09:05 db exists already and will be dropped first...
+constructing graph: 929 ms
+checking serializability (on avg.):
+ - v1: 76 ms
+ - v2: 234 ms
+ - v3: 13 ms
+ - v4: 15 ms
+ - pregel: 96 ms
+2023/04/19 22:09:10 -----------------------------------
+2023/04/19 22:09:10 Checking ../histories/list-append/30.edn...
+2023/04/19 22:09:10 db exists already and will be dropped first...
+constructing graph: 1496 ms
+checking serializability (on avg.):
+ - v1: 89 ms
+ - v2: 386 ms
+ - v3: 29 ms
+ - v4: 33 ms
+ - pregel: 113 ms
+2023/04/19 22:09:18 -----------------------------------
+2023/04/19 22:09:18 Checking ../histories/list-append/40.edn...
+2023/04/19 22:09:19 db exists already and will be dropped first...
+constructing graph: 2728 ms
+checking serializability (on avg.):
+ - v1: 164 ms
+ - v2: 497 ms
+ - v3: 46 ms
+ - v4: 57 ms
+ - pregel: 141 ms
+2023/04/19 22:09:30 -----------------------------------
+2023/04/19 22:09:30 Checking ../histories/list-append/50.edn...
+2023/04/19 22:09:30 db exists already and will be dropped first...
+constructing graph: 3184 ms
+checking serializability (on avg.):
+ - v1: 213 ms
+ - v2: 76 ms
+ - v3: 83 ms
+ - v4: 26 ms
+ - pregel: 142 ms
+2023/04/19 22:09:39 -----------------------------------
+2023/04/19 22:09:39 Checking ../histories/list-append/60.edn...
+2023/04/19 22:09:39 db exists already and will be dropped first...
+constructing graph: 3655 ms
+checking serializability (on avg.):
+ - v1: 223 ms
+ - v2: 149 ms
+ - v3: 83 ms
+ - v4: 1 ms
+ - pregel: 159 ms
+2023/04/19 22:09:49 -----------------------------------
+2023/04/19 22:09:49 Checking ../histories/list-append/70.edn...
+2023/04/19 22:09:49 db exists already and will be dropped first...
+constructing graph: 4200 ms
+checking serializability (on avg.):
+ - v1: 283 ms
+ - v2: 40 ms
+ - v3: 218 ms
+ - v4: 50 ms
+ - pregel: 224 ms
+2023/04/19 22:10:02 -----------------------------------
+2023/04/19 22:10:02 Checking ../histories/list-append/80.edn...
+2023/04/19 22:10:02 db exists already and will be dropped first...
+constructing graph: 4669 ms
+checking serializability (on avg.):
+ - v1: 342 ms
+ - v2: 226 ms
+ - v3: 136 ms
+ - v4: 70 ms
+ - pregel: 183 ms
+2023/04/19 22:10:16 -----------------------------------
+2023/04/19 22:10:16 Checking ../histories/list-append/90.edn...
+2023/04/19 22:10:16 db exists already and will be dropped first...
+constructing graph: 5831 ms
+checking serializability (on avg.):
+ - v1: 314 ms
+ - v2: 69 ms
+ - v3: 180 ms
+ - v4: 16 ms
+ - pregel: 192 ms
+2023/04/19 22:10:30 -----------------------------------
+2023/04/19 22:10:30 Checking ../histories/list-append/100.edn...
+2023/04/19 22:10:30 db exists already and will be dropped first...
+constructing graph: 5768 ms
+checking serializability (on avg.):
+ - v1: 428 ms
+ - v2: 118 ms
+ - v3: 333 ms
+ - v4: 147 ms
+ - pregel: 240 ms
+2023/04/19 22:10:49 -----------------------------------
+2023/04/19 22:10:49 Checking ../histories/list-append/110.edn...
+2023/04/19 22:10:49 db exists already and will be dropped first...
+constructing graph: 6218 ms
+checking serializability (on avg.):
+ - v1: 406 ms
+ - v2: 62 ms
+ - v3: 164 ms
+ - v4: 74 ms
+ - pregel: 245 ms
+2023/04/19 22:11:05 -----------------------------------
+2023/04/19 22:11:05 Checking ../histories/list-append/120.edn...
+2023/04/19 22:11:05 db exists already and will be dropped first...
+constructing graph: 7466 ms
+checking serializability (on avg.):
+ - v1: 478 ms
+ - v2: 85 ms
+ - v3: 206 ms
+ - v4: 96 ms
+ - pregel: 278 ms
+2023/04/19 22:11:24 -----------------------------------
+2023/04/19 22:11:24 Checking ../histories/list-append/130.edn...
+2023/04/19 22:11:24 db exists already and will be dropped first...
+constructing graph: 8477 ms
+checking serializability (on avg.):
+ - v1: 613 ms
+ - v2: 68 ms
+ - v3: 332 ms
+ - v4: 41 ms
+ - pregel: 298 ms
+2023/04/19 22:11:46 -----------------------------------
+2023/04/19 22:11:46 Checking ../histories/list-append/140.edn...
+2023/04/19 22:11:47 db exists already and will be dropped first...
+constructing graph: 8293 ms
+checking serializability (on avg.):
+ - v1: 562 ms
+ - v2: 403 ms
+ - v3: 605 ms
+ - v4: 431 ms
+ - pregel: 324 ms
+2023/04/19 22:12:18 -----------------------------------
+2023/04/19 22:12:18 Checking ../histories/list-append/150.edn...
+2023/04/19 22:12:19 db exists already and will be dropped first...
+constructing graph: 9644 ms
+checking serializability (on avg.):
+ - v1: 588 ms
+ - v2: 54 ms
+ - v3: 433 ms
+ - v4: 49 ms
+ - pregel: 330 ms
+2023/04/19 22:12:43 -----------------------------------
+2023/04/19 22:12:43 Checking ../histories/list-append/160.edn...
+2023/04/19 22:12:43 db exists already and will be dropped first...
+constructing graph: 10053 ms
+checking serializability (on avg.):
+ - v1: 553 ms
+ - v2: 81 ms
+ - v3: 442 ms
+ - v4: 56 ms
+ - pregel: 338 ms
+2023/04/19 22:13:08 -----------------------------------
+2023/04/19 22:13:08 Checking ../histories/list-append/170.edn...
+2023/04/19 22:13:08 db exists already and will be dropped first...
+constructing graph: 11028 ms
+checking serializability (on avg.):
+ - v1: 721 ms
+ - v2: 89 ms
+ - v3: 379 ms
+ - v4: 10 ms
+ - pregel: 357 ms
+2023/04/19 22:13:35 -----------------------------------
+2023/04/19 22:13:35 Checking ../histories/list-append/180.edn...
+2023/04/19 22:13:35 db exists already and will be dropped first...
+constructing graph: 10988 ms
+checking serializability (on avg.):
+ - v1: 824 ms
+ - v2: 101 ms
+ - v3: 262 ms
+ - v4: 7 ms
+ - pregel: 362 ms
+2023/04/19 22:14:02 -----------------------------------
+2023/04/19 22:14:02 Checking ../histories/list-append/190.edn...
+2023/04/19 22:14:02 db exists already and will be dropped first...
+constructing graph: 11822 ms
+checking serializability (on avg.):
+ - v1: 790 ms
+ - v2: 210 ms
+ - v3: 385 ms
+ - v4: 8 ms
+ - pregel: 408 ms
+2023/04/19 22:14:32 -----------------------------------
+2023/04/19 22:14:32 Checking ../histories/list-append/200.edn...
+2023/04/19 22:14:33 db exists already and will be dropped first...
+constructing graph: 11841 ms
+checking serializability (on avg.):
+ - v1: 786 ms
+ - v2: 139 ms
+ - v3: 949 ms
+ - v4: 338 ms
+ - pregel: 426 ms
+PASS
+2023/04/19 22:15:11 -----------------------------------
+Process 117142 has exited with status 0
+Detaching
+dlv dap (116899) exited with code: 0

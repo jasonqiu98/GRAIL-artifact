@@ -1,0 +1,188 @@
+Starting: /root/go/bin/dlv dap --listen=127.0.0.1:46061 --log-dest=3 from /root/project/go-graph-checker/rw_register
+DAP server listening at: 127.0.0.1:46061
+Type 'dlv help' for list of commands.
+-----------------------------------
+Checking ../histories/rw-register/10.edn...
+2023/04/19 22:26:33 db exists already and will be dropped first...
+constructing graph: 504 ms
+checking PL-1 (on avg.):
+ - v1: 2 ms
+ - v2: 101 ms
+ - v3: 2 ms
+ - v4: 2 ms
+-----------------------------------
+Checking ../histories/rw-register/20.edn...
+2023/04/19 22:26:35 db exists already and will be dropped first...
+constructing graph: 1155 ms
+checking PL-1 (on avg.):
+ - v1: 5 ms
+ - v2: 272 ms
+ - v3: 9 ms
+ - v4: 7 ms
+-----------------------------------
+Checking ../histories/rw-register/30.edn...
+2023/04/19 22:26:39 db exists already and will be dropped first...
+constructing graph: 1765 ms
+checking PL-1 (on avg.):
+ - v1: 8 ms
+ - v2: 392 ms
+ - v3: 18 ms
+ - v4: 17 ms
+-----------------------------------
+Checking ../histories/rw-register/40.edn...
+2023/04/19 22:26:45 db exists already and will be dropped first...
+constructing graph: 2170 ms
+checking PL-1 (on avg.):
+ - v1: 11 ms
+ - v2: 481 ms
+ - v3: 30 ms
+ - v4: 30 ms
+-----------------------------------
+Checking ../histories/rw-register/50.edn...
+2023/04/19 22:26:53 db exists already and will be dropped first...
+constructing graph: 3113 ms
+checking PL-1 (on avg.):
+ - v1: 13 ms
+ - v2: 617 ms
+ - v3: 111 ms
+ - v4: 110 ms
+-----------------------------------
+Checking ../histories/rw-register/60.edn...
+2023/04/19 22:27:05 db exists already and will be dropped first...
+constructing graph: 3244 ms
+checking PL-1 (on avg.):
+ - v1: 14 ms
+ - v2: 710 ms
+ - v3: 24 ms
+ - v4: 23 ms
+-----------------------------------
+Checking ../histories/rw-register/70.edn...
+2023/04/19 22:27:16 db exists already and will be dropped first...
+constructing graph: 4166 ms
+checking PL-1 (on avg.):
+ - v1: 15 ms
+ - v2: 833 ms
+ - v3: 98 ms
+ - v4: 98 ms
+-----------------------------------
+Checking ../histories/rw-register/80.edn...
+2023/04/19 22:27:31 db exists already and will be dropped first...
+constructing graph: 5454 ms
+checking PL-1 (on avg.):
+ - v1: 16 ms
+ - v2: 1001 ms
+ - v3: 144 ms
+ - v4: 142 ms
+-----------------------------------
+Checking ../histories/rw-register/90.edn...
+2023/04/19 22:27:49 db exists already and will be dropped first...
+constructing graph: 5603 ms
+checking PL-1 (on avg.):
+ - v1: 19 ms
+ - v2: 1091 ms
+ - v3: 165 ms
+ - v4: 165 ms
+-----------------------------------
+Checking ../histories/rw-register/100.edn...
+2023/04/19 22:28:09 db exists already and will be dropped first...
+constructing graph: 5818 ms
+checking PL-1 (on avg.):
+ - v1: 27 ms
+ - v2: 1356 ms
+ - v3: 302 ms
+ - v4: 304 ms
+-----------------------------------
+Checking ../histories/rw-register/110.edn...
+2023/04/19 22:28:35 db exists already and will be dropped first...
+constructing graph: 6993 ms
+checking PL-1 (on avg.):
+ - v1: 22 ms
+ - v2: 1343 ms
+ - v3: 124 ms
+ - v4: 123 ms
+-----------------------------------
+Checking ../histories/rw-register/120.edn...
+2023/04/19 22:28:59 db exists already and will be dropped first...
+constructing graph: 7938 ms
+checking PL-1 (on avg.):
+ - v1: 21 ms
+ - v2: 1564 ms
+ - v3: 310 ms
+ - v4: 313 ms
+-----------------------------------
+Checking ../histories/rw-register/130.edn...
+2023/04/19 22:29:29 db exists already and will be dropped first...
+constructing graph: 8565 ms
+checking PL-1 (on avg.):
+ - v1: 27 ms
+ - v2: 1693 ms
+ - v3: 190 ms
+ - v4: 191 ms
+-----------------------------------
+Checking ../histories/rw-register/140.edn...
+2023/04/19 22:29:59 db exists already and will be dropped first...
+constructing graph: 9025 ms
+checking PL-1 (on avg.):
+ - v1: 31 ms
+ - v2: 1719 ms
+ - v3: 315 ms
+ - v4: 317 ms
+-----------------------------------
+Checking ../histories/rw-register/150.edn...
+2023/04/19 22:30:32 db exists already and will be dropped first...
+constructing graph: 9465 ms
+checking PL-1 (on avg.):
+ - v1: 26 ms
+ - v2: 1872 ms
+ - v3: 734 ms
+ - v4: 731 ms
+-----------------------------------
+Checking ../histories/rw-register/160.edn...
+2023/04/19 22:31:15 db exists already and will be dropped first...
+constructing graph: 10143 ms
+checking PL-1 (on avg.):
+ - v1: 32 ms
+ - v2: 1968 ms
+ - v3: 301 ms
+ - v4: 302 ms
+-----------------------------------
+Checking ../histories/rw-register/170.edn...
+2023/04/19 22:31:52 db exists already and will be dropped first...
+constructing graph: 10071 ms
+checking PL-1 (on avg.):
+ - v1: 32 ms
+ - v2: 2220 ms
+ - v3: 547 ms
+ - v4: 550 ms
+-----------------------------------
+Checking ../histories/rw-register/180.edn...
+2023/04/19 22:32:36 db exists already and will be dropped first...
+constructing graph: 11636 ms
+checking PL-1 (on avg.):
+ - v1: 35 ms
+ - v2: 2133 ms
+ - v3: 714 ms
+ - v4: 716 ms
+-----------------------------------
+Checking ../histories/rw-register/190.edn...
+2023/04/19 22:33:24 db exists already and will be dropped first...
+constructing graph: 11705 ms
+checking PL-1 (on avg.):
+ - v1: 32 ms
+ - v2: 2167 ms
+ - v3: 820 ms
+ - v4: 820 ms
+-----------------------------------
+Checking ../histories/rw-register/200.edn...
+2023/04/19 22:34:15 db exists already and will be dropped first...
+constructing graph: 12662 ms
+checking PL-1 (on avg.):
+ - v1: 38 ms
+ - v2: 2592 ms
+ - v3: 467 ms
+ - v4: 468 ms
+-----------------------------------
+PASS
+Process 128485 has exited with status 0
+Detaching
+dlv dap (128161) exited with code: 0

@@ -78,6 +78,7 @@ func CheckSERV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 				OUTBOUND start._id
 				GRAPH %s
 				FILTER edge._to == start._id
+				LIMIT 1
 				RETURN path.edges
 		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -127,6 +128,7 @@ func CheckSERV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 				OUTBOUND @start
 				GRAPH %s
 				FILTER edge._to == @start
+				LIMIT 1
 				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -225,6 +227,48 @@ func CheckSERV3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 			log.Println(cycleToStr(cycles[len(cycles)-1]))
 		}
 		return false, cycles[0]
+	}
+
+	return true, nil
+}
+
+/*
+direct query a type of cycle and return in ArangoDB format
+*/
+func CheckSERV4(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	query := fmt.Sprintf(`
+		FOR edge IN %v
+			FOR p IN OUTBOUND K_SHORTEST_PATHS
+				edge._to TO edge._from
+				GRAPH %v
+				LIMIT 1
+				RETURN {edges: UNSHIFT(p.edges, edge), vertices: UNSHIFT(p.vertices, p.vertices[LENGTH(p.vertices) - 1])}
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check SER: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	for {
+		var cycle ArangoPath
+		_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if len(cycle.Edges) > 0 {
+				if output {
+					log.Println("Cycle Detected by SER V4.")
+					log.Println(cycleToStr(cycle.Edges))
+				}
+				return false, cycle.Edges
+			}
+		}
 	}
 
 	return true, nil
@@ -334,6 +378,7 @@ func CheckSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 			OUTBOUND start._id
 			GRAPH %s
 			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
+			LIMIT 1
 			RETURN path.edges
 		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -380,6 +425,7 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 				OUTBOUND @start
 				GRAPH %s
 				FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == @start
+				LIMIT 1
 				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -393,7 +439,7 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 		bindVars["start"] = fmt.Sprintf("txn/%d", start)
 		cursor, err := db.Query(context.Background(), query, bindVars)
 		if err != nil {
-			log.Fatalf("Failed to check SER: %v\n", err)
+			log.Fatalf("Failed to check SI: %v\n", err)
 		}
 
 		defer cursor.Close()
@@ -489,29 +535,76 @@ func CheckSIV3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 	return true, nil
 }
 
-func CheckPSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
-	minStep := 2
-	maxStep := 5
-	/*
-		FOR start IN txn
-			FOR vertex, edge, path IN 2..5
-				OUTBOUND start._id
-				GRAPH txn_g
-				FILTER edge._to == start._id
-				RETURN path.edges
-	*/
+type ArangoPath struct {
+	Edges    []TxnDepEdge `json:"edges"`
+	Vertices []TxnNode    `json:"vertices"`
+}
+
+/*
+direct query a type of cycle and return in ArangoDB format
+*/
+func CheckSIV4(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	query := fmt.Sprintf(`
-		FOR start IN %s
-			FOR vertex, edge, path IN %d..%d
-				OUTBOUND start._id
-				GRAPH %s
-				FILTER edge._to == start._id
-				RETURN path.edges
-		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
+		LET cycles = (
+			FOR edge IN %v
+				FOR p IN OUTBOUND K_SHORTEST_PATHS
+					edge._to TO edge._from
+					GRAPH %v
+					RETURN {edges: UNSHIFT(p.edges, edge), vertices: UNSHIFT(p.vertices, p.vertices[LENGTH(p.vertices) - 1])}
+		)
+		
+		FOR cycle IN cycles
+			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", cycle.edges[*].type), "rw rw")
+			LIMIT 1
+			RETURN cycle
+		
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
 
 	cursor, err := db.Query(context.Background(), query, nil)
 	if err != nil {
 		log.Fatalf("Failed to check SI: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	for {
+		var cycle ArangoPath
+		_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if len(cycle.Edges) > 0 {
+				if output {
+					log.Println("Cycle Detected by SI V4.")
+					log.Println(cycleToStr(cycle.Edges))
+				}
+				return false, cycle.Edges
+			}
+		}
+	}
+
+	return true, nil
+}
+
+func CheckPSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	minStep := 2
+	maxStep := 5
+	query := fmt.Sprintf(`
+		FOR start IN %s
+			FOR vertex, edge, path IN %d..%d
+			OUTBOUND start._id
+			GRAPH %s
+			FILTER LENGTH(FOR e IN path.edges FILTER e.type == "rw" RETURN e) < 2 AND edge._to == start._id
+			LIMIT 1
+			RETURN path.edges
+		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check PSI: %v\n", err)
 	}
 
 	defer cursor.Close()
@@ -525,19 +618,11 @@ func CheckPSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 		} else if err != nil {
 			log.Fatalf("Cannot read return values: %v\n", err)
 		} else {
-			rwCount := 0
-			for _, e := range cycle {
-				if e.Type == "rw" {
-					rwCount++
-				}
+			if output {
+				log.Println("Cycle Detected by PSI V1.")
+				log.Println(cycleToStr(cycle))
 			}
-			if rwCount < 2 {
-				if output {
-					log.Println("Cycle Detected by PSI V1.")
-					log.Println(cycleToStr(cycle))
-				}
-				return false, cycle
-			}
+			return false, cycle
 		}
 	}
 
@@ -547,18 +632,13 @@ func CheckPSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 func CheckPSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	minStep := 2
 	maxStep := 5
-	/*
-		FOR vertex, edge, path IN 2..5
-			OUTBOUND start._id
-			GRAPH txn_g
-			FILTER edge._to == start._id
-			RETURN path.edges
-	*/
 	query := fmt.Sprintf(`
-			FOR vertex, edge, path IN %d..%d
+			FOR vertex, edge, path
+				IN %d..%d
 				OUTBOUND @start
 				GRAPH %s
-				FILTER edge._to == @start
+				FILTER LENGTH(FOR e IN path.edges FILTER e.type == "rw" RETURN e) < 2 AND edge._to == @start
+				LIMIT 1
 				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -572,7 +652,7 @@ func CheckPSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 		bindVars["start"] = fmt.Sprintf("txn/%d", start)
 		cursor, err := db.Query(context.Background(), query, bindVars)
 		if err != nil {
-			log.Fatalf("Failed to check SER: %v\n", err)
+			log.Fatalf("Failed to check PSI: %v\n", err)
 		}
 
 		defer cursor.Close()
@@ -586,19 +666,12 @@ func CheckPSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 			} else if err != nil {
 				log.Fatalf("Cannot read return values: %v\n", err)
 			} else {
-				rwCount := 0
-				for _, e := range cycle {
-					if e.Type == "rw" {
-						rwCount++
-					}
+				if output {
+					log.Println("Cycle Detected by PSI V2.")
+					log.Println(cycleToStr(cycle))
 				}
-				if rwCount < 2 {
-					if output {
-						log.Println("Cycle Detected by PSI V2.")
-						log.Println(cycleToStr(cycle))
-					}
-					return false, cycle
-				}
+				// will early stop once a cycle is detected
+				return false, cycle
 			}
 		}
 	}
@@ -679,6 +752,54 @@ func CheckPSIV3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 }
 
 /*
+direct query a type of cycle and return in ArangoDB format
+*/
+func CheckPSIV4(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	query := fmt.Sprintf(`
+		LET cycles = (
+			FOR edge IN %v
+				FOR p IN OUTBOUND K_SHORTEST_PATHS
+					edge._to TO edge._from
+					GRAPH %v
+					RETURN {edges: UNSHIFT(p.edges, edge), vertices: UNSHIFT(p.vertices, p.vertices[LENGTH(p.vertices) - 1])}
+		)
+		
+		FOR cycle IN cycles
+			FILTER LENGTH(FOR e IN cycle.edges FILTER e.type == "rw" RETURN e) < 2
+			LIMIT 1
+			RETURN cycle
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check PSI: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	for {
+		var cycle ArangoPath
+		_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if len(cycle.Edges) > 0 {
+				if output {
+					log.Println("Cycle Detected by PSI V4.")
+					log.Println(cycleToStr(cycle.Edges))
+				}
+				return false, cycle.Edges
+			}
+		}
+	}
+
+	return true, nil
+}
+
+/*
 G2: Anti-dependency Cycles [cycles with at least one RW edge]
 FOR start IN txn
    FOR vertex, edge, path
@@ -722,6 +843,7 @@ func CheckPL2V1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 				OUTBOUND start._id
 				GRAPH %s
 				FILTER path.edges[*].type NONE == "rw" AND edge._to == start._id
+				LIMIT 1
 				RETURN path.edges
 		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -761,6 +883,7 @@ func CheckPL2V2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 				OUTBOUND @start
 				GRAPH %s
 				FILTER path.edges[*].type NONE == "rw" and edge._to == @start
+				LIMIT 1
 				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -824,6 +947,7 @@ query using BFS-based shortest path + parsing the cycle results
 func CheckPL2V3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	query := fmt.Sprintf(`
 		FOR edge IN %s
+			FILTER edge != "rw"
 			FOR p IN OUTBOUND K_SHORTEST_PATHS
 				edge._to TO edge._from
 				GRAPH %s
@@ -871,6 +995,55 @@ func CheckPL2V3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 }
 
 /*
+direct query a type of cycle and return in ArangoDB format
+*/
+func CheckPL2V4(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	query := fmt.Sprintf(`
+		LET cycles = (
+			FOR edge IN %v
+				FILTER edge != "rw"
+				FOR p IN OUTBOUND K_SHORTEST_PATHS
+					edge._to TO edge._from
+					GRAPH %v
+					RETURN {edges: UNSHIFT(p.edges, edge), vertices: UNSHIFT(p.vertices, p.vertices[LENGTH(p.vertices) - 1])}
+		)
+		
+		FOR cycle IN cycles
+			FILTER cycle.edges[*].type NONE == "rw"
+			LIMIT 1
+			RETURN cycle
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check PL-2: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	for {
+		var cycle ArangoPath
+		_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if len(cycle.Edges) > 0 {
+				if output {
+					log.Println("Cycle Detected by PL-2 V4.")
+					log.Println(cycleToStr(cycle.Edges))
+				}
+				return false, cycle.Edges
+			}
+		}
+	}
+
+	return true, nil
+}
+
+/*
 with a new graph consisting of only WW edges
 any cycle would violate PL-1
 */
@@ -884,6 +1057,7 @@ func CheckPL1V1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 				OUTBOUND start._id
 				GRAPH %s
 				FILTER path.edges[*].type ALL == "ww" AND edge._to == start._id
+				LIMIT 1
 				RETURN path.edges
 		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -923,6 +1097,7 @@ func CheckPL1V2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 				OUTBOUND @start
 				GRAPH %s
 				FILTER path.edges[*].type ALL == "ww" AND edge._to == @start
+				LIMIT 1
 				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
 
@@ -986,6 +1161,7 @@ query using BFS-based shortest path + parsing the cycle results
 func CheckPL1V3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
 	query := fmt.Sprintf(`
 		FOR edge IN %s
+			FILTER edge.type == "ww"
 			FOR p IN OUTBOUND K_SHORTEST_PATHS
 				edge._to TO edge._from
 				GRAPH %s
@@ -1027,6 +1203,55 @@ func CheckPL1V3(db driver.Database, dbConsts DBConsts, txnIds []int, output bool
 			log.Println(cycleToStr(cycles[len(cycles)-1]))
 		}
 		return false, cycles[len(cycles)-1]
+	}
+
+	return true, nil
+}
+
+/*
+direct query a type of cycle and return in ArangoDB format
+*/
+func CheckPL1V4(db driver.Database, dbConsts DBConsts, txnIds []int, output bool) (bool, []TxnDepEdge) {
+	query := fmt.Sprintf(`
+		LET cycles = (
+			FOR edge IN %v
+				FILTER edge.type == "ww"
+				FOR p IN OUTBOUND K_SHORTEST_PATHS
+					edge._to TO edge._from
+					GRAPH %v
+					RETURN {edges: UNSHIFT(p.edges, edge), vertices: UNSHIFT(p.vertices, p.vertices[LENGTH(p.vertices) - 1])}
+		)
+		
+		FOR cycle IN cycles
+			FILTER cycle.edges[*].type ALL == "ww"
+			LIMIT 1
+			RETURN cycle
+		`, dbConsts.TxnDepEdge, dbConsts.TxnGraph)
+
+	cursor, err := db.Query(context.Background(), query, nil)
+	if err != nil {
+		log.Fatalf("Failed to check PL-1: %v\n", err)
+	}
+
+	defer cursor.Close()
+
+	for {
+		var cycle ArangoPath
+		_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+		if driver.IsNoMoreDocuments(err) {
+			break
+		} else if err != nil {
+			log.Fatalf("Cannot read return values: %v\n", err)
+		} else {
+			if len(cycle.Edges) > 0 {
+				if output {
+					log.Println("Cycle Detected by PL-1 V4.")
+					log.Println(cycleToStr(cycle.Edges))
+				}
+				return false, cycle.Edges
+			}
+		}
 	}
 
 	return true, nil

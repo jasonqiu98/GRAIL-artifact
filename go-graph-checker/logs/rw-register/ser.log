@@ -1,0 +1,208 @@
+Starting: /root/go/bin/dlv dap --listen=127.0.0.1:44829 --log-dest=3 from /root/project/go-graph-checker/rw_register
+DAP server listening at: 127.0.0.1:44829
+Type 'dlv help' for list of commands.
+-----------------------------------
+Checking ../histories/rw-register/10.edn...
+2023/04/19 23:06:22 db exists already and will be dropped first...
+constructing graph: 533 ms
+checking serializability (on avg.):
+ - v1: 31 ms
+ - v2: 36 ms
+ - v3: 4 ms
+ - v4: 2 ms
+ - pregel: 73 ms
+-----------------------------------
+Checking ../histories/rw-register/20.edn...
+2023/04/19 23:06:24 db exists already and will be dropped first...
+constructing graph: 1185 ms
+checking serializability (on avg.):
+ - v1: 89 ms
+ - v2: 255 ms
+ - v3: 17 ms
+ - v4: 21 ms
+ - pregel: 104 ms
+-----------------------------------
+Checking ../histories/rw-register/30.edn...
+2023/04/19 23:06:30 db exists already and will be dropped first...
+constructing graph: 1724 ms
+checking serializability (on avg.):
+ - v1: 116 ms
+ - v2: 493 ms
+ - v3: 41 ms
+ - v4: 51 ms
+ - pregel: 136 ms
+-----------------------------------
+Checking ../histories/rw-register/40.edn...
+2023/04/19 23:06:40 db exists already and will be dropped first...
+constructing graph: 2233 ms
+checking serializability (on avg.):
+ - v1: 183 ms
+ - v2: 100 ms
+ - v3: 80 ms
+ - v4: 17 ms
+ - pregel: 161 ms
+-----------------------------------
+Checking ../histories/rw-register/50.edn...
+2023/04/19 23:06:48 db exists already and will be dropped first...
+constructing graph: 3234 ms
+checking serializability (on avg.):
+ - v1: 252 ms
+ - v2: 288 ms
+ - v3: 257 ms
+ - v4: 112 ms
+ - pregel: 178 ms
+-----------------------------------
+Checking ../histories/rw-register/60.edn...
+2023/04/19 23:07:03 db exists already and will be dropped first...
+constructing graph: 3313 ms
+checking serializability (on avg.):
+ - v1: 230 ms
+ - v2: 105 ms
+ - v3: 57 ms
+ - v4: 3 ms
+ - pregel: 162 ms
+-----------------------------------
+Checking ../histories/rw-register/70.edn...
+2023/04/19 23:07:12 db exists already and will be dropped first...
+constructing graph: 3923 ms
+checking serializability (on avg.):
+ - v1: 272 ms
+ - v2: 326 ms
+ - v3: 199 ms
+ - v4: 161 ms
+ - pregel: 208 ms
+-----------------------------------
+Checking ../histories/rw-register/80.edn...
+2023/04/19 23:07:28 db exists already and will be dropped first...
+constructing graph: 4781 ms
+checking serializability (on avg.):
+ - v1: 306 ms
+ - v2: 1019 ms
+ - v3: 311 ms
+ - v4: 435 ms
+ - pregel: 260 ms
+-----------------------------------
+Checking ../histories/rw-register/90.edn...
+2023/04/19 23:07:56 db exists already and will be dropped first...
+constructing graph: 5804 ms
+checking serializability (on avg.):
+ - v1: 510 ms
+ - v2: 250 ms
+ - v3: 372 ms
+ - v4: 77 ms
+ - pregel: 278 ms
+-----------------------------------
+Checking ../histories/rw-register/100.edn...
+2023/04/19 23:08:17 db exists already and will be dropped first...
+constructing graph: 6419 ms
+checking serializability (on avg.):
+ - v1: 427 ms
+ - v2: 186 ms
+ - v3: 835 ms
+ - v4: 225 ms
+ - pregel: 271 ms
+-----------------------------------
+Checking ../histories/rw-register/110.edn...
+2023/04/19 23:08:43 db exists already and will be dropped first...
+constructing graph: 6828 ms
+checking serializability (on avg.):
+ - v1: 549 ms
+ - v2: 341 ms
+ - v3: 256 ms
+ - v4: 162 ms
+ - pregel: 277 ms
+-----------------------------------
+Checking ../histories/rw-register/120.edn...
+2023/04/19 23:09:06 db exists already and will be dropped first...
+constructing graph: 7349 ms
+checking serializability (on avg.):
+ - v1: 519 ms
+ - v2: 178 ms
+ - v3: 598 ms
+ - v4: 72 ms
+ - pregel: 330 ms
+-----------------------------------
+Checking ../histories/rw-register/130.edn...
+2023/04/19 23:09:31 db exists already and will be dropped first...
+constructing graph: 7962 ms
+checking serializability (on avg.):
+ - v1: 490 ms
+ - v2: 199 ms
+ - v3: 455 ms
+ - v4: 147 ms
+ - pregel: 330 ms
+-----------------------------------
+Checking ../histories/rw-register/140.edn...
+2023/04/19 23:09:56 db exists already and will be dropped first...
+constructing graph: 8474 ms
+checking serializability (on avg.):
+ - v1: 665 ms
+ - v2: 617 ms
+ - v3: 907 ms
+ - v4: 885 ms
+ - pregel: 380 ms
+-----------------------------------
+Checking ../histories/rw-register/150.edn...
+2023/04/19 23:10:40 db exists already and will be dropped first...
+constructing graph: 8600 ms
+checking serializability (on avg.):
+ - v1: 612 ms
+ - v2: 2021 ms
+ - v3: 1569 ms
+ - v4: 2287 ms
+ - pregel: 400 ms
+-----------------------------------
+Checking ../histories/rw-register/160.edn...
+2023/04/19 23:11:58 db exists already and will be dropped first...
+constructing graph: 10254 ms
+checking serializability (on avg.):
+ - v1: 650 ms
+ - v2: 108 ms
+ - v3: 717 ms
+ - v4: 161 ms
+ - pregel: 379 ms
+-----------------------------------
+Checking ../histories/rw-register/170.edn...
+2023/04/19 23:12:29 db exists already and will be dropped first...
+constructing graph: 10589 ms
+checking serializability (on avg.):
+ - v1: 828 ms
+ - v2: 317 ms
+ - v3: 1013 ms
+ - v4: 1121 ms
+ - pregel: 429 ms
+-----------------------------------
+Checking ../histories/rw-register/180.edn...
+2023/04/19 23:13:17 db exists already and will be dropped first...
+constructing graph: 11349 ms
+checking serializability (on avg.):
+ - v1: 938 ms
+ - v2: 2565 ms
+ - v3: 1871 ms
+ - v4: 2274 ms
+ - pregel: 456 ms
+-----------------------------------
+Checking ../histories/rw-register/190.edn...
+2023/04/19 23:14:50 db exists already and will be dropped first...
+constructing graph: 12342 ms
+checking serializability (on avg.):
+ - v1: 802 ms
+ - v2: 301 ms
+ - v3: 1694 ms
+ - v4: 255 ms
+ - pregel: 445 ms
+-----------------------------------
+Checking ../histories/rw-register/200.edn...
+2023/04/19 23:15:38 db exists already and will be dropped first...
+constructing graph: 12446 ms
+checking serializability (on avg.):
+ - v1: 832 ms
+ - v2: 206 ms
+ - v3: 992 ms
+ - v4: 83 ms
+ - pregel: 469 ms
+-----------------------------------
+PASS
+Process 153651 has exited with status 0
+Detaching
+dlv dap (153406) exited with code: 0

@@ -77,10 +77,11 @@ func TestProfilingSER(t *testing.T) {
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSERV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSERV2, false)
 		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSERV3, false)
+		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckSERV4, false)
 		avgCheckTimePregel := Profile(db, dbConsts, nil, CheckSERPregel, false)
 
-		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - pregel: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimePregel)
+		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n - pregel: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4, avgCheckTimePregel)
 		printLine()
 	}
 }
@@ -93,9 +94,10 @@ func TestProfilingSI(t *testing.T) {
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSIV2, false)
 		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSIV3, false)
+		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckSIV4, false)
 
-		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3)
+		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
 		printLine()
 	}
 }
@@ -108,9 +110,42 @@ func TestProfilingPSI(t *testing.T) {
 		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPSIV1, false)
 		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPSIV2, false)
 		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPSIV3, false)
+		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPSIV4, false)
 
-		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3)
+		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
+		printLine()
+	}
+}
+
+func TestProfilingPL2(t *testing.T) {
+	printLine()
+	for d := 10; d <= 200; d += 10 {
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+
+		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPL2V1, false)
+		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPL2V2, false)
+		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPL2V3, false)
+		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPL2V4, false)
+
+		fmt.Printf("checking PL-2 (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
+		printLine()
+	}
+}
+
+func TestProfilingPL1(t *testing.T) {
+	printLine()
+	for d := 10; d <= 200; d += 10 {
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+
+		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPL1V1, false)
+		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPL1V2, false)
+		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPL1V3, false)
+		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPL1V4, false)
+
+		fmt.Printf("checking PL-1 (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
 		printLine()
 	}
 }
@@ -135,7 +170,7 @@ func TestListAppendSERPregel(t *testing.T) {
 // go test -v -timeout 30s -run ^TestListAppendSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSI(t *testing.T) {
 	db, txnIds, dbConsts, history := constructArangoGraph("list-append", t)
-	valid, cycle := CheckSIV1(db, dbConsts, txnIds, true)
+	valid, cycle := CheckSIV4(db, dbConsts, txnIds, true)
 	if !valid {
 		log.Println("Not Snapshot Isolation!")
 		PlotCycle(history, cycle, "../images", "la-si", true)
@@ -167,6 +202,9 @@ func testPL1(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts
 
 	valid, _ = CheckPL1V3(db, dbConsts, txnIds, false)
 	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPL1V4(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
 }
 
 func testPL2(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
@@ -177,6 +215,9 @@ func testPL2(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts
 	require.Equal(t, expected, valid)
 
 	valid, _ = CheckPL2V3(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPL2V4(db, dbConsts, txnIds, false)
 	require.Equal(t, expected, valid)
 }
 
@@ -189,6 +230,9 @@ func testPSI(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts
 
 	valid, _ = CheckPSIV3(db, dbConsts, txnIds, false)
 	require.Equal(t, expected, valid)
+
+	valid, _ = CheckPSIV4(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
 }
 
 func testSI(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
@@ -200,6 +244,9 @@ func testSI(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts,
 
 	valid, _ = CheckSIV3(db, dbConsts, txnIds, false)
 	require.Equal(t, expected, valid)
+
+	valid, _ = CheckSIV4(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
 }
 
 func testSER(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
@@ -210,6 +257,9 @@ func testSER(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts
 	require.Equal(t, expected, valid)
 
 	valid, _ = CheckSERV3(db, dbConsts, txnIds, false)
+	require.Equal(t, expected, valid)
+
+	valid, _ = CheckSERV4(db, dbConsts, txnIds, false)
 	require.Equal(t, expected, valid)
 
 	valid, _ = CheckSERPregel(db, dbConsts, txnIds, false)
