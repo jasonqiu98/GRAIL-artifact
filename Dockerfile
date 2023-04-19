@@ -1,4 +1,4 @@
-FROM arangodb:3.9.2
+FROM arangodb:3.9.10
 
 COPY --from=golang:1.19.4-alpine /usr/local/go/ /usr/local/go/
  

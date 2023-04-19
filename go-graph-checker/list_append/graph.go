@@ -431,8 +431,8 @@ func parseEvtId(id string) (int, int, error) {
 	return txnId, evtId, nil
 }
 
-// happen before within the same txn
-func happenBefore(id1 string, id2 string) bool {
+// happens before within the same txn
+func happensBefore(id1 string, id2 string) bool {
 	txnId1, evtId1, err := parseEvtId(id1)
 	if err != nil {
 		return false
@@ -500,7 +500,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 				// we need to construct rw dependencies
 				// between longerAppended and the values appended later
 				for _, rid := range longerRidArr {
-					if !happenBefore(rid, laterAid) {
+					if !happensBefore(rid, laterAid) {
 						evtDepEdges = append(evtDepEdges, EvtDepEdge{
 							rid,
 							laterAid,
@@ -535,7 +535,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 			// between longerAppended and the values appended later
 			if _, ok := valueSet[laterAppended]; !ok {
 				for _, rid := range longerRidArr {
-					if !happenBefore(rid, laterAid) {
+					if !happensBefore(rid, laterAid) {
 						evtDepEdges = append(evtDepEdges, EvtDepEdge{
 							rid,
 							laterAid,
@@ -549,7 +549,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 				}
 				// ww
 				// between longerAppended and the values appended later
-				if longerAidOk && !happenBefore(longerAid, laterAid) {
+				if longerAidOk && !happensBefore(longerAid, laterAid) {
 					evtDepEdges = append(evtDepEdges, EvtDepEdge{
 						longerAid,
 						laterAid,
@@ -566,13 +566,13 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 		if longerAidOk {
 			for _, rid := range longerRidArr {
 				// only longerAid < rid < laterAid is allowed
-				allowed := happenBefore(longerAid, rid) && laterAidMap[rid]
+				allowed := happensBefore(longerAid, rid) && laterAidMap[rid]
 				if longerItmd := objItmdMap[longerAppended]; longerItmd && !allowed {
 					g1.G1b = true
-					log.Printf("G1b.1: The object %v has an intermediate append %v in event %v and reads %v in events %v\n",
-						obj, longerAppended, longerAid, longerVal, longerRidArr)
+					log.Printf("G1b.1: The object %v has an intermediate append %v in event %v and reads %v in event %v\n",
+						obj, longerAppended, longerAid, longerVal, rid)
 				} else {
-					if !happenBefore(longerAid, rid) {
+					if !happensBefore(longerAid, rid) {
 						evtDepEdges = append(evtDepEdges, EvtDepEdge{
 							longerAid,
 							rid,
@@ -606,7 +606,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 						obj, nextAppended, longerVal, longerRidArr)
 				} else {
 					for _, rid := range ridArr {
-						if !happenBefore(rid, nextAid) {
+						if !happensBefore(rid, nextAid) {
 							evtDepEdges = append(evtDepEdges, EvtDepEdge{
 								rid,
 								nextAid,
@@ -632,7 +632,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 								obj, appended, longerVal, longerRidArr)
 						} else {
 							// aid ok, but nextAid might not be okay
-							if nextAidOk && !happenBefore(aid, nextAid) {
+							if nextAidOk && !happensBefore(aid, nextAid) {
 								evtDepEdges = append(evtDepEdges, EvtDepEdge{
 									aid,
 									nextAid,
@@ -656,13 +656,13 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 						// wr
 						for _, rid := range ridArr {
 							// only aid < rid < nextAid is allowed
-							allowed := happenBefore(aid, rid) && happenBefore(rid, nextAid)
+							allowed := happensBefore(aid, rid) && happensBefore(rid, nextAid)
 							if itmd := objItmdMap[appended]; itmd && !allowed {
 								g1.G1b = true
-								log.Printf("G1b.2: The object %v has an intermediate append %v in event %v and reads %v in events %v\n",
-									obj, appended, aid, val, ridArr)
+								log.Printf("G1b.2: The object %v has an intermediate append %v in event %v and reads %v in event %v\n",
+									obj, appended, aid, val, rid)
 							} else {
-								if !happenBefore(aid, rid) {
+								if !happensBefore(aid, rid) {
 									evtDepEdges = append(evtDepEdges, EvtDepEdge{
 										aid,
 										rid,
@@ -686,6 +686,8 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 				}
 
 			} else {
+				// once a value is appended, it cannot be removed
+				// this case violates the non-traceable property
 				log.Fatalf("Anomaly 2: %v read by events %v is not a prefix of %v read by events %v (inconsistent read events under object %v). Non-traceable.\n",
 					val, ridArr, longerVal, longerRidArr, obj)
 			}
@@ -700,7 +702,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 				log.Printf("G1a.5: The object %v has no %v in its append events (possibly aborted), but reads %v in events %v\n",
 					obj, appended, longerVal, longerRidArr)
 			} else {
-				if longerAidOk && !happenBefore(aid, longerAid) {
+				if longerAidOk && !happensBefore(aid, longerAid) {
 					evtDepEdges = append(evtDepEdges, EvtDepEdge{
 						aid,
 						longerAid,

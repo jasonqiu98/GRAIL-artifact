@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/arangodb/go-driver"
 	"github.com/arangodb/go-driver/http"
@@ -27,9 +28,10 @@ Obj is the original key of the history
 */
 
 type WriteEvt struct {
-	Key string `json:"_key"`
-	Obj string `json:"obj"`
-	Arg int    `json:"arg"`
+	Key   string `json:"_key"`
+	Obj   string `json:"obj"`
+	Arg   int    `json:"arg"`
+	Index int    `json:"index"` // -1 means last write
 }
 
 type ReadEvt struct {
@@ -85,7 +87,7 @@ get db if db already exists, otherwise create db
 */
 func getOrCreateDB(client driver.Client, dbName string) driver.Database {
 	if dbExists, _ := client.DatabaseExists(context.Background(), dbName); dbExists {
-		fmt.Println("db exists already and will be dropped first...")
+		log.Println("db exists already and will be dropped first...")
 		db, err := client.Database(context.Background(), dbName)
 		if err != nil {
 			log.Fatalf("Failed to open existing database: %v\n", err)
@@ -195,7 +197,7 @@ func createGraph(client driver.Client, dbConsts DBConsts) (driver.Database, driv
 /*
 create nodes: txns, writeEvts & readEvts
 */
-func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts, ignoreReads bool) []int {
+func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.History, dbConsts DBConsts) []int {
 	txns := make([]TxnNode, 0, len(okHistory))
 	txnIds := make([]int, 0, len(okHistory))
 	// init by assuming each txn has one write, two reads on avg
@@ -208,28 +210,36 @@ func createNodes(txnGraph driver.Graph, evtGraph driver.Graph, okHistory core.Hi
 			strconv.Itoa(txnId), // will panic if not found
 		})
 
+		writeIdxCounter := make(map[string]int)
+		lastwriteMap := make(map[string]int)
+
 		for j, v := range *op.Value {
 			if v.IsRead() {
-				if !ignoreReads {
-					readVal := v.GetValue()
-					// we use zero-value as the default "start" value here
-					if readVal == nil {
-						readVal = 0
-					}
-					// mark those "first reads" with index 0
-					readEvts = append(readEvts, ReadEvt{
-						evtKey(txnId, j),
-						v.GetKey(),
-						readVal.(int),
-					})
+				readVal := v.GetValue()
+				// we use zero-value as the default "start" value here
+				if readVal == nil {
+					readVal = 0
 				}
+				// mark those "first reads" with index 0
+				readEvts = append(readEvts, ReadEvt{
+					evtKey(txnId, j),
+					v.GetKey(),
+					readVal.(int),
+				})
 			} else if v.IsWrite() {
 				writeEvts = append(writeEvts, WriteEvt{
 					evtKey(txnId, j),
 					v.GetKey(),
 					v.GetValue().(int),
+					writeIdxCounter[v.GetKey()],
 				})
+				writeIdxCounter[v.GetKey()]++
+				lastwriteMap[v.GetKey()] = len(writeEvts) - 1
 			}
+		}
+		// mark those "last writes" with index - 1
+		for _, k := range lastwriteMap {
+			writeEvts[k].Index = -1
 		}
 	}
 
@@ -338,21 +348,22 @@ type WriteEvtsInfo struct {
 }
 
 type WriteEvtsElement struct {
-	Element int      `json:"element"`
-	Ids     []string `json:"ids"`
+	Element  int      `json:"element"`
+	Ids      []string `json:"ids"`
+	WriteIdx []int    `json:"write_idx"`
 }
 
 /*
 returns a write map {obj1: {key1: id1, key2: id2, ...}, ...}
 */
-func queryWriteEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]string {
+func queryWriteEvts(db driver.Database, dbConsts DBConsts) (map[string]map[int]string, map[string]map[int]bool) {
 	query := fmt.Sprintf(`
 		FOR e1 IN %s
 			COLLECT obj = e1.obj into objs
 			RETURN { obj, evts: (
 				FOR e2 in objs[*].e1
 					COLLECT element = e2.arg INTO elements
-					RETURN { element, ids: elements[*].e2._id }
+					RETURN { element, ids: elements[*].e2._id, write_idx: elements[*].e2.index }
 			)}
 	`, dbConsts.WriteEvtNode)
 
@@ -365,6 +376,8 @@ func queryWriteEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]st
 	defer cursor.Close()
 
 	writeMap := make(map[string]map[int]string)
+	// intermediate writes or not: with index != -1, intermediate writes
+	itmdMap := make(map[string]map[int]bool)
 
 	for {
 		var info WriteEvtsInfo
@@ -378,18 +391,22 @@ func queryWriteEvts(db driver.Database, dbConsts DBConsts) map[string]map[int]st
 			obj := info.Obj
 			if _, ok := writeMap[obj]; !ok {
 				writeMap[obj] = make(map[int]string)
+				itmdMap[obj] = make(map[int]bool)
 			}
 			for _, evt := range info.Evts {
 				if len(evt.Ids) == 1 {
 					writeMap[obj][evt.Element] = evt.Ids[0]
+					if evt.WriteIdx[0] != -1 {
+						itmdMap[obj][evt.Element] = true
+					}
 				} else {
-					log.Fatalf("Anomaly 1: Multiple events %v write %v to the same object %v\n",
+					log.Fatalf("Anomaly: Multiple events %v write the same value %v to the same object %v.\n",
 						evt.Ids, evt.Element, obj)
 				}
 			}
 		}
 	}
-	return writeMap
+	return writeMap, itmdMap
 }
 
 type EvtDepEdge struct {
@@ -399,35 +416,215 @@ type EvtDepEdge struct {
 	Type string `json:"type"`
 }
 
-func getEvtDepEdges(db driver.Database, wm WALWriteMap, dbConsts DBConsts) []EvtDepEdge {
+type G1Anomalies struct {
+	G1a bool
+	G1b bool
+}
+
+// get txnId and EvtId
+func parseEvtId(id string) (int, int, error) {
+	idstrs := strings.Split(id, ",")
+	txnIdStr, evtIdStr := strings.Split(idstrs[0], "/")[1], idstrs[1]
+	txnId, err := strconv.Atoi(txnIdStr)
+	if err != nil {
+		return -1, -1, err
+	}
+	evtId, err := strconv.Atoi(evtIdStr)
+	if err != nil {
+		return -1, -1, err
+	}
+	return txnId, evtId, nil
+}
+
+// happens before within the same txn
+func happensBefore(id1 string, id2 string) bool {
+	txnId1, evtId1, err := parseEvtId(id1)
+	if err != nil {
+		return false
+	}
+
+	txnId2, evtId2, err := parseEvtId(id2)
+	if err != nil {
+		return false
+	}
+
+	return txnId1 == txnId2 && evtId1 < evtId2
+}
+
+func getEvtDepEdges(db driver.Database, wm WALWriteMap, dbConsts DBConsts) ([]EvtDepEdge, G1Anomalies) {
 	readsInfoMap := queryReadEvts(db, dbConsts)
-	writesInfoMap := queryWriteEvts(db, dbConsts)
+	writesInfoMap, itmdMap := queryWriteEvts(db, dbConsts)
 
 	evtDepEdges := make([]EvtDepEdge, 0, len(readsInfoMap)*3)
 
-	for obj, versions := range wm {
-		readSubMap, writeSubMap := readsInfoMap[obj], writesInfoMap[obj]
-		prev := 0
-		// rw, update, ww, wr, reads
-		for _, cur := range versions {
-			// rw: prev r's -> cur w
-			w := writeSubMap[cur]
-			for _, r := range readSubMap[prev] {
-				evtDepEdges = append(evtDepEdges, EvtDepEdge{r, w, obj, "rw"})
+	g1 := G1Anomalies{}
+
+	// obj ~ G1a
+
+	for obj, readSubMap := range readsInfoMap {
+		if _, ok := wm[obj]; !ok && len(readSubMap) > 0 {
+			for v, reads := range readSubMap {
+				if v != 0 {
+					g1.G1a = true
+					log.Printf("G1a: The object %v does not have any writes (possibly aborted *internally*) but reads %v in events %v\n",
+						obj, v, reads)
+					break
+				}
 			}
-			// ww: prev w -> cur w
-			if prev > 0 {
-				evtDepEdges = append(evtDepEdges, EvtDepEdge{writeSubMap[prev], w, obj, "ww"})
-			}
-			// wr: cur w -> cur r's
-			for _, r := range readSubMap[cur] {
-				evtDepEdges = append(evtDepEdges, EvtDepEdge{w, r, obj, "wr"})
-			}
-			prev = cur
 		}
 	}
 
-	return evtDepEdges
+	for obj, versions := range wm {
+		readSubMap, writeSubMap := readsInfoMap[obj], writesInfoMap[obj]
+		itmdSubMap := itmdMap[obj]
+
+		// write :ok - writeSubMap must have and versions must have
+		// write :fail - writeSubMap must not have and versions must not have
+		// - raise G1a when writeSubMap doesn't have but versions has
+		// - raise the non-recoverable anomaly when writeSubMap has but versions doesn't; exit immediately
+		// - raise G1b if: cur w < cur r < next w, where < means happensBefore
+
+		writesInLog := make(map[int]bool)
+
+		/*
+			deal with the first version, only wr edges
+		*/
+		if len(versions) == 0 {
+			log.Fatalf("Anomaly: Broken WAL logs for object %v. Non-recoverable.\n", obj)
+		}
+
+		// ver, w, writeOk variables defined in advance
+		var prevVer, ver, nextVer int
+		var prevW, w, nextW string
+		var prevWriteOk, writeOk, nextWriteOk bool
+
+		ver = versions[0]
+		w, writeOk = writeSubMap[ver]
+
+		if len(versions) > 1 {
+			// has next
+			nextVer = versions[1]
+			nextW, nextWriteOk = writeSubMap[nextVer]
+		}
+		writesInLog[ver] = true // make it a hashset for values in versions
+		if writeOk {
+			// rw: 0 -> cur w
+			for _, prevR := range readSubMap[0] {
+				if !happensBefore(prevR, w) {
+					evtDepEdges = append(evtDepEdges, EvtDepEdge{prevR, w, obj, "rw"})
+				}
+			}
+
+			// wr: cur w -> cur r's
+			for _, r := range readSubMap[ver] {
+				g1bRaised := false
+				if nextWriteOk {
+					// else branch is not handled as it will be handled in the next iteration
+					// raise G1b if: cur w < cur r's < next w, where < means happensBefore
+					allowed := happensBefore(w, r) && happensBefore(r, nextW)
+					if itmd := itmdSubMap[ver]; itmd && !allowed {
+						g1.G1b = true
+						g1bRaised = true
+						log.Printf("G1b: The object %v has an intermediate write %v in event %v and reads it in event %v\n",
+							obj, ver, w, r)
+					}
+				}
+				// ignore wr dependencies within the same txn
+				if !g1bRaised && !happensBefore(w, r) {
+					evtDepEdges = append(evtDepEdges, EvtDepEdge{w, r, obj, "wr"})
+				}
+			}
+			prevVer, prevW, prevWriteOk = ver, w, writeOk
+		} else {
+			// raise G1a when writeSubMap doesn't have but versions has AND the value is read
+			if len(readSubMap[ver]) > 0 {
+				// aborted reads detected
+				g1.G1a = true
+				log.Printf("G1a: The object %v does not write %v (possibly aborted) but reads it in events %v\n",
+					obj, ver, readSubMap[ver])
+			}
+		}
+
+		// utilize the index of versions
+		for i := 1; i < len(versions); i++ {
+			// cur ver
+			ver = versions[i]
+			w, writeOk = writeSubMap[ver]
+			// next ver
+			if i+1 < len(versions) {
+				// has next
+				nextVer = versions[i+1]
+				nextW, nextWriteOk = writeSubMap[nextVer]
+			}
+			writesInLog[ver] = true // make it a hashset for values in versions
+
+			if writeOk {
+				// rw: prev r's -> cur w
+				if prevWriteOk {
+					for _, prevR := range readSubMap[prevVer] {
+						if !happensBefore(prevR, w) {
+							evtDepEdges = append(evtDepEdges, EvtDepEdge{prevR, w, obj, "rw"})
+						}
+					}
+				}
+
+				// ww: prev w -> cur w
+				if prevWriteOk && !happensBefore(prevW, w) {
+					evtDepEdges = append(evtDepEdges, EvtDepEdge{prevW, w, obj, "ww"})
+				}
+
+				// wr: cur w -> cur r's
+				for _, r := range readSubMap[ver] {
+					g1bRaised := false
+					if nextWriteOk {
+						// else branch is not handled as it will be handled in the next iteration
+						// raise G1b if: cur w < cur r's < next w, where < means happensBefore
+						allowed := happensBefore(w, r) && happensBefore(r, nextW)
+						if itmd := itmdSubMap[ver]; itmd && !allowed {
+							g1.G1b = true
+							g1bRaised = true
+							log.Printf("G1b: The object %v has an intermediate write %v in event %v and reads it in event %v\n",
+								obj, ver, w, r)
+						}
+					}
+					// ignore wr dependencies within the same txn
+					if !g1bRaised && !happensBefore(w, r) {
+						evtDepEdges = append(evtDepEdges, EvtDepEdge{w, r, obj, "wr"})
+					}
+				}
+				prevVer, prevW, prevWriteOk = ver, w, writeOk
+			} else {
+				// raise G1a when writeSubMap doesn't have but versions has AND the value is read
+				if len(readSubMap[ver]) > 0 {
+					// aborted reads detected
+					g1.G1a = true
+					log.Printf("G1a: The object %v does not write %v (possibly aborted) but reads it in events %v\n",
+						obj, ver, readSubMap[ver])
+				}
+			}
+		}
+
+		// val ~ G1a
+		for v := range readSubMap {
+			// v == 0 is allowed
+			if v != 0 && !writesInLog[v] {
+				// raise G1a when readSubMap has but versions doesn't AND the value is read
+				g1.G1a = true
+				log.Printf("G1a: The object %v does not write %v (possibly aborted *internally*) but reads it in events %v\n",
+					obj, v, readSubMap[v])
+			}
+		}
+
+		for v := range writeSubMap {
+			if !writesInLog[v] {
+				// raise the non-recoverable anomaly when writeSubMap has but versions doesn't; exit immediately
+				log.Printf("Warning: The write %v to object %v is not successful but the history records ok.\n",
+					v, obj)
+			}
+		}
+	}
+
+	return evtDepEdges, g1
 }
 
 type TxnDepEdge struct {

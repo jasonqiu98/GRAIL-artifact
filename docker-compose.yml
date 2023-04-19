@@ -11,7 +11,7 @@ services:
       - graph-checker-network
   
   starter:
-    image: arangodb:3.9.2
+    image: arangodb:3.9.10
     container_name: arango-starter
     environment:
       - ARANGO_NO_AUTH=1

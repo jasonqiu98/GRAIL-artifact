@@ -227,7 +227,8 @@ func TestChecker(t *testing.T) {
 		t3 := mustParseOp(`{:type :ok, :value [[:r x [1 2]] [:r y [2 1]]]}`)
 		h := []core.Op{t1, t2, t3}
 
-		// if we only test PL-1, we ignore read operations
+		// checking G0 doesn't require G1b and G1c
+		// however, for simplicity, we just keep the checks
 		db, txnIds, _ := ConstructGraph(txn.Opts{}, h, dbConsts)
 
 		// expect the result to be false
@@ -264,6 +265,29 @@ func TestChecker(t *testing.T) {
 		_, _, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
 
 		require.Equal(t, g1.G1b, true)
+	}
+
+	{
+		// a G-single case (single anti-dependency cycle)
+		// in Adya's PhD thesis
+		// proscribed by PL-2+ and above, but not PL-2
+		log.Println("Checking G-single...")
+		h := []core.Op{
+			mustParseOp(`{:type :ok, :value [[:append 1 1] [:append 2 1]]}`),
+			mustParseOp(`{:type :ok, :value [[:append 1 2] [:append 2 2]]}`),
+			mustParseOp(`{:type :ok, :value [[:r 1 [1 2]] [:r 2 [1]]]}`),
+		}
+
+		db, txnIds, g1 := ConstructGraph(txn.Opts{}, h, dbConsts)
+
+		require.Equal(t, g1.G1a, false)
+		require.Equal(t, g1.G1b, false)
+
+		testPL2(t, h, db, dbConsts, txnIds, true) // PL-2 not violated
+
+		testSER(t, h, db, dbConsts, txnIds, false)
+		testSI(t, h, db, dbConsts, txnIds, false)
+		testPSI(t, h, db, dbConsts, txnIds, false)
 	}
 
 	{
@@ -397,6 +421,16 @@ func TestG1bCases(t *testing.T) {
 		mustParseOp(`{:type :ok, :value [[:append x 1]]}`),
 		mustParseOp(`{:type :ok, :value [[:append x 2] [:append x 3] [:r x [1 2]]]}`),
 		mustParseOp(`{:type :ok, :value [[:r x [1 2 3]]]}`),
+	}
+
+	_, _, g1 = ConstructGraph(txn.Opts{}, h, dbConsts)
+
+	require.Equal(t, g1.G1b, true) // G1b detected
+
+	h = []core.Op{
+		mustParseOp(`{:type :ok, :value [[:append x 1]]}`),
+		mustParseOp(`{:type :ok, :value [[:append x 2] [:append x 3] [:r x [1 2]]]}`),
+		mustParseOp(`{:type :ok, :value [[:r x [1 2]]]}`),
 	}
 
 	_, _, g1 = ConstructGraph(txn.Opts{}, h, dbConsts)

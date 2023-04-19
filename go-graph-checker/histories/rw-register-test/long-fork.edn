@@ -1,0 +1,4 @@
+{:type :ok, :value [[:r 1 nil] [:r 2 nil] [:w 1 1]]}
+{:type :ok, :value [[:r 1 1] [:r 2 nil]]}
+{:type :ok, :value [[:r 1 nil] [:r 2 nil] [:w 2 1]]}
+{:type :ok, :value [[:r 1 nil] [:r 2 1]]}

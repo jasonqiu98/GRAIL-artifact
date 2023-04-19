@@ -8,6 +8,7 @@ import (
 	driver "github.com/arangodb/go-driver"
 	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
 	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
+	"github.com/stretchr/testify/require"
 )
 
 func Benchmark(b *testing.B) {
@@ -45,7 +46,10 @@ func Benchmark(b *testing.B) {
 	}
 
 	// ignoreReads set to true only when checking PL-1
-	db, txnIds := ConstructGraph(txn.Opts{}, history, wal, dbConsts, false)
+	db, txnIds, g1 := ConstructGraph(txn.Opts{}, history, wal, dbConsts)
+
+	require.Equal(b, g1.G1a, false)
+	require.Equal(b, g1.G1b, false)
 
 	// ignore the cost to construct the dependency graph
 	b.ResetTimer()
