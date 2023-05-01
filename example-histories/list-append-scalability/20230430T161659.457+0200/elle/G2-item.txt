@@ -1,0 +1,18 @@
+G2-item #0
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:r 26 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 25 24]], :time 51046805400, :process 1, :index 688}
+  T2 = {:type :ok, :f :txn, :value [[:r 26 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 25 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 26 28] [:r 25 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 26 29] [:append 26 30] [:append 27 2] [:append 26 31]], :time 51052279301, :process 131, :index 689}
+
+Then:
+  - T1 < T2, because T1 did not observe T2's append of 28 to 26.
+  - However, T2 < T1, because T2 did not observe T1's append of 24 to 25: a contradiction!
+
+
+G2-item #1
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:r 72 [1 2 3 4 5 6 7]] [:append 73 23] [:r 73 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 73 24] [:r 74 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 73 25] [:r 73 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25]]], :time 108447797044, :process 122, :index 1855}
+  T2 = {:type :ok, :f :txn, :value [[:append 74 18] [:r 73 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]] [:append 74 19]], :time 108440031531, :process 21, :index 1854}
+
+Then:
+  - T1 < T2, because T1 did not observe T2's append of 18 to 74.
+  - However, T2 < T1, because T2 did not observe T1's append of 23 to 73: a contradiction!

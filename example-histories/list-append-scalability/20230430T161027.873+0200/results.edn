@@ -1,0 +1,56 @@
+{:la {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r 72 []]
+                                              [:r
+                                               70
+                                               [1 2 3 4 5 6 7 8 9 10]]
+                                              [:append 69 11]
+                                              [:r 72 []]],
+                                      :time 107989069622,
+                                      :process 132,
+                                      :index 1814}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 72 []]
+                                              [:r
+                                               69
+                                               [1 2 3 4 5 6 7 8 9 10]]
+                                              [:append 70 11]],
+                                      :time 107995096522,
+                                      :process 107,
+                                      :index 1816}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 72 []]
+                                              [:r
+                                               70
+                                               [1 2 3 4 5 6 7 8 9 10]]
+                                              [:append 69 11]
+                                              [:r 72 []]],
+                                      :time 107989069622,
+                                      :process 132,
+                                      :index 1814}],
+                             :steps ({:type :rw,
+                                      :key 70,
+                                      :value 10,
+                                      :value' 11,
+                                      :a-mop-index 1,
+                                      :b-mop-index 2}
+                                     {:type :rw,
+                                      :key 69,
+                                      :value 10,
+                                      :value' 11,
+                                      :a-mop-index 1,
+                                      :b-mop-index 2}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

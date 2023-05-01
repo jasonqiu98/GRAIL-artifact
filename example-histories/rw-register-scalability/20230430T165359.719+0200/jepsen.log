@@ -1,0 +1,532 @@
+2023-04-30 16:53:59,735{GMT}	INFO	[jepsen test runner] jepsen.core: Test version d3efd23b0314aea1a2d2e8bf72c456e71b80c61e (plus uncommitted changes)
+2023-04-30 16:53:59,736{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --nodes-file ./vagrant/nodes-vagrant.txt --password --ssh-private-key ./vagrant/vagrant_ssh_key --username vagrant --test-type rw --time-limit 10 -r 10 --concurrency 20 --key-count 3 --min-txn-length 2 --max-txn-length 8 --max-writes-per-key 32 --nemesis-type noop
+2023-04-30 16:53:59,783{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:nemesis-type :noop
+ :remote
+ #jepsen.control.retry.Remote{:remote #jepsen.control.scp.Remote{:cmd-remote #jepsen.control.sshj.SSHJRemote{:concurrency-limit 6,
+                                                                                                             :conn-spec nil,
+                                                                                                             :client nil,
+                                                                                                             :semaphore nil},
+                                                                 :conn-spec nil},
+                              :conn nil}
+ :max-txn-length 8
+ :concurrency 20
+ :key-count 3
+ :db
+ #object[jepsen.arangodb.utils.support$db_setup$reify__1915
+         "0x4d001a14"
+         "jepsen.arangodb.utils.support$db_setup$reify__1915@4d001a14"]
+ :max-writes-per-key 32
+ :leave-db-running? false
+ :name "arangodb-rw-register-test"
+ :logging-json? false
+ :ops-per-key 20
+ :start-time
+ #object[org.joda.time.DateTime "0x858bf8c" "2023-04-30T16:53:59.719+02:00"]
+ :net
+ #object[jepsen.net$reify__12440
+         "0x30c1447e"
+         "jepsen.net$reify__12440@30c1447e"]
+ :client
+ #jepsen.arangodb.tests.rw_register.Client{:db-created? #object[clojure.lang.Atom
+                                                                "0x4d462edc"
+                                                                {:status :ready,
+                                                                 :val false}],
+                                           :collection-created? #object[clojure.lang.Atom
+                                                                        "0x312ddc51"
+                                                                        {:status :ready,
+                                                                         :val false}],
+                                           :conn nil,
+                                           :node nil}
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x330f3046"
+         "java.util.concurrent.CyclicBarrier@330f3046"]
+ :pure-generators true
+ :ssh
+ {:dummy? false,
+  :username "vagrant",
+  :password "--ssh-private-key",
+  :strict-host-key-checking false,
+  :private-key-path nil}
+ :rate 10
+ :checker
+ #object[jepsen.checker$compose$reify__11881
+         "0x37a2d18c"
+         "jepsen.checker$compose$reify__11881@37a2d18c"]
+ :threads-per-group 5
+ :argv
+ ("test"
+  "--nodes-file"
+  "./vagrant/nodes-vagrant.txt"
+  "--password"
+  "--ssh-private-key"
+  "./vagrant/vagrant_ssh_key"
+  "--username"
+  "vagrant"
+  "--test-type"
+  "rw"
+  "--time-limit"
+  "10"
+  "-r"
+  "10"
+  "--concurrency"
+  "20"
+  "--key-count"
+  "3"
+  "--min-txn-length"
+  "2"
+  "--max-txn-length"
+  "8"
+  "--max-writes-per-key"
+  "32"
+  "--nemesis-type"
+  "noop")
+ :nemesis #unprintable "jepsen.nemesis$reify__12543@4b6e296a"
+ :test-type :rw-register
+ :nodes ["192.168.56.101"]
+ :test-count 1
+ :generator
+ (jepsen.generator.TimeLimit
+  {:limit 10000000000,
+   :cutoff nil,
+   :gen (jepsen.generator.Any
+         {:gens [(jepsen.generator.OnThreads
+                  {:f #{:nemesis},
+                   :context-filter #object[jepsen.generator.context$make_thread_filter$lazy_filter__9167
+                                           "0x27476b5f"
+                                           "jepsen.generator.context$make_thread_filter$lazy_filter__9167@27476b5f"],
+                   :gen nil})
+                 (jepsen.generator.OnThreads
+                  {:f #jepsen.generator.context.AllBut{:element :nemesis},
+                   :context-filter #object[jepsen.generator.context$make_thread_filter$lazy_filter__9167
+                                           "0x23d1090"
+                                           "jepsen.generator.context$make_thread_filter$lazy_filter__9167@23d1090"],
+                   :gen (jepsen.generator.Stagger
+                         {:dt 200000000,
+                          :next-time nil,
+                          :gen ({:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 2 nil]
+                                         [:r 2 nil]
+                                         [:w 2 1]
+                                         [:w 0 1]
+                                         [:r 2 nil]
+                                         [:w 1 1]
+                                         [:w 2 2]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 2 nil] [:w 2 3]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 1 nil] [:r 1 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:w 1 2] [:r 2 nil] [:w 1 3] [:w 2 4]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:w 0 2]
+                                         [:r 2 nil]
+                                         [:r 2 nil]
+                                         [:r 1 nil]
+                                         [:w 2 5]
+                                         [:w 0 3]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:w 2 6]
+                                         [:r 1 nil]
+                                         [:r 2 nil]
+                                         [:r 1 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 1 nil]
+                                         [:r 1 nil]
+                                         [:w 0 4]
+                                         [:w 1 4]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:w 2 7]
+                                         [:r 0 nil]
+                                         [:r 1 nil]
+                                         [:r 0 nil]]}
+                                ...)})})]})})
+ :os
+ #object[jepsen.os.debian.Debian "0x8fa4647" "jepsen.os.debian.Debian@8fa4647"]
+ :time-limit 10
+ :min-txn-length 2}
+
+2023-04-30 16:54:02,250{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.os.debian: 192.168.56.101 setting up debian
+2023-04-30 16:54:06,929{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.os.debian: Installing #{curl netcat tcpdump apt-transport-https libzip4 psmisc ntpdate faketime vim unzip dirmngr}
+2023-04-30 16:54:11,901{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2023-04-30 16:54:11,902{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: 192.168.56.101 tearing down arangodb
+2023-04-30 16:54:11,902{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.control.util: Stopping arangodb
+2023-04-30 16:54:12,174{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: no arangodb processes killed
+2023-04-30 16:54:12,176{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2023-04-30 16:54:12,177{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: 192.168.56.101 installing arangodb v3.9.10
+2023-04-30 16:54:12,225{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.control.util: Downloading https://download.arangodb.com/arangodb39/Community/Linux/arangodb3-linux-3.9.10.tar.gz
+2023-04-30 16:54:29,868{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.control.util: Starting arangodb
+2023-04-30 16:54:29,995{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2023-04-30 16:54:30,048{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.rw-register: sleep 15s to make sure the connection is ready
+2023-04-30 16:54:45,049{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.rw-register: Prepare to create databases
+2023-04-30 16:54:45,049{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.rw-register: Creating databases
+2023-04-30 16:54:45,590{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.rw-register: Databases created
+2023-04-30 16:54:45,590{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.rw-register: Creating collections
+2023-04-30 16:54:46,155{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.rw-register: Collections created
+2023-04-30 16:54:46,166{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 2 nil] [:r 2 nil] [:w 2 1] [:w 0 1] [:r 2 nil] [:w 1 1] [:w 2 2]]
+2023-04-30 16:54:46,182{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 137
+2023-04-30 16:54:46,182{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 2 nil] [:r 2 nil] [:w 2 1] [:w 0 1] [:r 2 1] [:w 1 1] [:w 2 2]]
+2023-04-30 16:54:46,247{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:r 2 nil] [:w 2 3]]
+2023-04-30 16:54:46,253{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.rw-register: committed transaction 145
+2023-04-30 16:54:46,253{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:r 2 2] [:w 2 3]]
+2023-04-30 16:54:46,315{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 1 nil] [:r 1 nil]]
+2023-04-30 16:54:46,321{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.rw-register: committed transaction 148
+2023-04-30 16:54:46,322{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 1 1] [:r 1 1]]
+2023-04-30 16:54:46,504{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:w 1 2] [:r 2 nil] [:w 1 3] [:w 2 4]]
+2023-04-30 16:54:46,514{GMT}	INFO	[jepsen worker 3] jepsen.arangodb.tests.rw-register: committed transaction 151
+2023-04-30 16:54:46,514{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:txn	[[:w 1 2] [:r 2 3] [:w 1 3] [:w 2 4]]
+2023-04-30 16:54:46,530{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:w 0 2] [:r 2 nil] [:r 2 nil] [:r 1 nil] [:w 2 5] [:w 0 3]]
+2023-04-30 16:54:46,539{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.rw-register: committed transaction 156
+2023-04-30 16:54:46,539{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:w 0 2] [:r 2 4] [:r 2 4] [:r 1 3] [:w 2 5] [:w 0 3]]
+2023-04-30 16:54:46,629{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:w 2 6] [:r 1 nil] [:r 2 nil] [:r 1 nil]]
+2023-04-30 16:54:46,632{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:r 1 nil] [:r 1 nil] [:w 0 4] [:w 1 4]]
+2023-04-30 16:54:46,637{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.rw-register: committed transaction 163
+2023-04-30 16:54:46,637{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:w 2 6] [:r 1 3] [:r 2 6] [:r 1 3]]
+2023-04-30 16:54:46,638{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.rw-register: committed transaction 165
+2023-04-30 16:54:46,638{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:r 1 3] [:r 1 3] [:w 0 4] [:w 1 4]]
+2023-04-30 16:54:46,693{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:w 2 7] [:r 0 nil] [:r 1 nil] [:r 0 nil]]
+2023-04-30 16:54:46,701{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.rw-register: committed transaction 173
+2023-04-30 16:54:46,701{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:w 2 7] [:r 0 4] [:r 1 4] [:r 0 4]]
+2023-04-30 16:54:46,851{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:r 1 nil] [:w 2 8] [:r 1 nil] [:r 1 nil] [:w 2 9]]
+2023-04-30 16:54:46,860{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.rw-register: committed transaction 178
+2023-04-30 16:54:46,860{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:r 1 4] [:w 2 8] [:r 1 4] [:r 1 4] [:w 2 9]]
+2023-04-30 16:54:46,911{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 2 nil] [:w 1 5] [:r 2 nil] [:w 2 10] [:r 2 nil] [:w 2 11] [:w 2 12]]
+2023-04-30 16:54:46,919{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.rw-register: committed transaction 184
+2023-04-30 16:54:46,920{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 2 9] [:w 1 5] [:r 2 9] [:w 2 10] [:r 2 10] [:w 2 11] [:w 2 12]]
+2023-04-30 16:54:47,094{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:w 1 6] [:w 2 13] [:w 0 5] [:w 1 7]]
+2023-04-30 16:54:47,101{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.rw-register: committed transaction 196
+2023-04-30 16:54:47,102{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:w 1 6] [:w 2 13] [:w 0 5] [:w 1 7]]
+2023-04-30 16:54:47,256{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:r 2 nil] [:w 0 6] [:r 0 nil]]
+2023-04-30 16:54:47,262{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.rw-register: committed transaction 201
+2023-04-30 16:54:47,263{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:r 2 13] [:w 0 6] [:r 0 6]]
+2023-04-30 16:54:47,297{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:w 1 8] [:r 1 nil] [:w 2 14]]
+2023-04-30 16:54:47,303{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.rw-register: committed transaction 205
+2023-04-30 16:54:47,303{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:w 1 8] [:r 1 8] [:w 2 14]]
+2023-04-30 16:54:47,336{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:w 0 7] [:w 1 9] [:w 1 10] [:w 1 11] [:r 2 nil] [:w 2 15] [:w 1 12] [:w 2 16]]
+2023-04-30 16:54:47,344{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.rw-register: committed transaction 209
+2023-04-30 16:54:47,344{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:w 0 7] [:w 1 9] [:w 1 10] [:w 1 11] [:r 2 14] [:w 2 15] [:w 1 12] [:w 2 16]]
+2023-04-30 16:54:47,532{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:w 2 17] [:w 1 13] [:r 2 nil]]
+2023-04-30 16:54:47,539{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.rw-register: committed transaction 218
+2023-04-30 16:54:47,539{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:r 0 nil] [:w 2 18] [:r 2 nil] [:w 2 19] [:r 2 nil] [:r 2 nil] [:r 2 nil] [:w 2 20]]
+2023-04-30 16:54:47,539{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:w 2 17] [:w 1 13] [:r 2 17]]
+2023-04-30 16:54:47,548{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.rw-register: committed transaction 222
+2023-04-30 16:54:47,548{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:r 0 7] [:w 2 18] [:r 2 18] [:w 2 19] [:r 2 19] [:r 2 19] [:r 2 19] [:w 2 20]]
+2023-04-30 16:54:47,565{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:r 0 nil] [:r 2 nil] [:w 2 21] [:w 1 14] [:r 0 nil]]
+2023-04-30 16:54:47,571{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.rw-register: committed transaction 231
+2023-04-30 16:54:47,571{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:r 0 7] [:r 2 20] [:w 2 21] [:w 1 14] [:r 0 7]]
+2023-04-30 16:54:47,635{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:w 2 22] [:r 1 nil] [:w 2 23]]
+2023-04-30 16:54:47,640{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.rw-register: committed transaction 237
+2023-04-30 16:54:47,640{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:w 2 22] [:r 1 14] [:w 2 23]]
+2023-04-30 16:54:47,696{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:r 2 nil] [:w 2 24] [:r 2 nil] [:r 1 nil] [:w 1 15]]
+2023-04-30 16:54:47,702{GMT}	INFO	[jepsen worker 18] jepsen.arangodb.tests.rw-register: committed transaction 241
+2023-04-30 16:54:47,703{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:ok	:txn	[[:r 2 23] [:w 2 24] [:r 2 24] [:r 1 14] [:w 1 15]]
+2023-04-30 16:54:47,882{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:w 2 25] [:w 2 26] [:w 1 16] [:w 1 17] [:r 2 nil]]
+2023-04-30 16:54:47,888{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.rw-register: committed transaction 247
+2023-04-30 16:54:47,889{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:w 2 25] [:w 2 26] [:w 1 16] [:w 1 17] [:r 2 26]]
+2023-04-30 16:54:47,915{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 2 nil] [:w 2 27] [:w 0 8]]
+2023-04-30 16:54:47,918{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 253
+2023-04-30 16:54:47,918{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 2 26] [:w 2 27] [:w 0 8]]
+2023-04-30 16:54:47,922{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:w 1 18] [:r 2 nil] [:r 2 nil] [:r 2 nil] [:w 2 28] [:r 2 nil] [:w 1 19]]
+2023-04-30 16:54:47,927{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 257
+2023-04-30 16:54:47,928{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:w 1 18] [:r 2 27] [:r 2 27] [:r 2 27] [:w 2 28] [:r 2 28] [:w 1 19]]
+2023-04-30 16:54:48,096{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:w 2 29] [:r 1 nil] [:w 1 20]]
+2023-04-30 16:54:48,101{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.rw-register: committed transaction 265
+2023-04-30 16:54:48,102{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:w 2 29] [:r 1 19] [:w 1 20]]
+2023-04-30 16:54:48,154{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:w 2 30] [:w 0 9] [:w 2 31] [:w 0 10] [:r 0 nil] [:w 2 32]]
+2023-04-30 16:54:48,160{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.rw-register: committed transaction 269
+2023-04-30 16:54:48,161{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:w 2 30] [:w 0 9] [:w 2 31] [:w 0 10] [:r 0 10] [:w 2 32]]
+2023-04-30 16:54:48,267{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:r 1 nil] [:r 2 nil] [:r 2 nil] [:r 2 nil] [:r 1 nil] [:w 1 21]]
+2023-04-30 16:54:48,273{GMT}	INFO	[jepsen worker 3] jepsen.arangodb.tests.rw-register: committed transaction 276
+2023-04-30 16:54:48,273{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:txn	[[:r 1 20] [:r 2 32] [:r 2 32] [:r 2 32] [:r 1 20] [:w 1 21]]
+2023-04-30 16:54:48,343{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:r 0 nil] [:r 2 nil] [:w 1 22] [:r 0 nil]]
+2023-04-30 16:54:48,349{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.rw-register: committed transaction 283
+2023-04-30 16:54:48,349{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:r 0 10] [:r 2 32] [:w 1 22] [:r 0 10]]
+2023-04-30 16:54:48,394{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 1 nil] [:r 2 nil] [:w 3 1] [:w 3 2] [:r 1 nil] [:w 3 3] [:r 3 nil] [:w 3 4]]
+2023-04-30 16:54:48,402{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.rw-register: committed transaction 288
+2023-04-30 16:54:48,402{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 1 22] [:r 2 32] [:w 3 1] [:w 3 2] [:r 1 22] [:w 3 3] [:r 3 3] [:w 3 4]]
+2023-04-30 16:54:48,457{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:r 1 nil] [:r 1 nil]]
+2023-04-30 16:54:48,460{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.rw-register: committed transaction 297
+2023-04-30 16:54:48,460{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:r 1 22] [:r 1 22]]
+2023-04-30 16:54:48,514{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:w 3 5] [:r 3 nil] [:w 3 6] [:r 3 nil] [:w 3 7] [:r 0 nil] [:r 3 nil] [:r 3 nil]]
+2023-04-30 16:54:48,522{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.rw-register: committed transaction 300
+2023-04-30 16:54:48,522{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:w 3 5] [:r 3 5] [:w 3 6] [:r 3 6] [:w 3 7] [:r 0 10] [:r 3 7] [:r 3 7]]
+2023-04-30 16:54:48,533{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:w 3 8] [:w 0 11] [:w 3 9] [:w 1 23] [:r 3 nil] [:w 3 10]]
+2023-04-30 16:54:48,540{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.rw-register: committed transaction 309
+2023-04-30 16:54:48,540{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:w 3 8] [:w 0 11] [:w 3 9] [:w 1 23] [:r 3 9] [:w 3 10]]
+2023-04-30 16:54:48,663{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:w 1 24] [:r 0 nil] [:r 3 nil]]
+2023-04-30 16:54:48,667{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.rw-register: committed transaction 316
+2023-04-30 16:54:48,668{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:w 1 24] [:r 0 11] [:r 3 10]]
+2023-04-30 16:54:48,711{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:w 3 11] [:r 3 nil] [:r 3 nil] [:r 3 nil] [:r 1 nil] [:r 3 nil]]
+2023-04-30 16:54:48,716{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.rw-register: committed transaction 320
+2023-04-30 16:54:48,717{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:w 3 11] [:r 3 11] [:r 3 11] [:r 3 11] [:r 1 24] [:r 3 11]]
+2023-04-30 16:54:48,784{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:w 3 12] [:w 1 25] [:r 3 nil] [:w 3 13] [:w 3 14] [:w 0 12]]
+2023-04-30 16:54:48,790{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.rw-register: committed transaction 327
+2023-04-30 16:54:48,790{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:w 3 12] [:w 1 25] [:r 3 12] [:w 3 13] [:w 3 14] [:w 0 12]]
+2023-04-30 16:54:48,962{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:r 3 nil] [:w 3 15] [:w 3 16] [:r 1 nil]]
+2023-04-30 16:54:48,967{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.rw-register: committed transaction 334
+2023-04-30 16:54:48,967{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:r 3 14] [:w 3 15] [:w 3 16] [:r 1 25]]
+2023-04-30 16:54:48,998{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 3 nil] [:r 3 nil] [:w 0 13]]
+2023-04-30 16:54:49,003{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.rw-register: committed transaction 339
+2023-04-30 16:54:49,003{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:r 3 16] [:r 3 16] [:w 0 13]]
+2023-04-30 16:54:49,135{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:w 3 17] [:w 3 18] [:w 1 26] [:r 3 nil] [:w 3 19]]
+2023-04-30 16:54:49,140{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.rw-register: committed transaction 343
+2023-04-30 16:54:49,141{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:w 3 17] [:w 3 18] [:w 1 26] [:r 3 18] [:w 3 19]]
+2023-04-30 16:54:49,192{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:r 3 nil] [:r 3 nil] [:r 1 nil] [:r 1 nil] [:w 3 20]]
+2023-04-30 16:54:49,197{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.rw-register: committed transaction 349
+2023-04-30 16:54:49,197{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:r 3 19] [:r 3 19] [:r 1 26] [:r 1 26] [:w 3 20]]
+2023-04-30 16:54:49,338{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:r 1 nil] [:r 1 nil] [:w 3 21] [:w 1 27]]
+2023-04-30 16:54:49,343{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.rw-register: committed transaction 355
+2023-04-30 16:54:49,343{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:r 1 26] [:r 1 26] [:w 3 21] [:w 1 27]]
+2023-04-30 16:54:49,355{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:r 1 nil] [:r 3 nil] [:r 3 nil] [:w 3 22] [:r 3 nil] [:r 0 nil] [:w 3 23]]
+2023-04-30 16:54:49,361{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.rw-register: committed transaction 360
+2023-04-30 16:54:49,361{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:r 1 27] [:r 3 21] [:r 3 21] [:w 3 22] [:r 3 22] [:r 0 13] [:w 3 23]]
+2023-04-30 16:54:49,429{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:r 3 nil] [:r 1 nil] [:w 1 28] [:r 3 nil] [:w 3 24]]
+2023-04-30 16:54:49,434{GMT}	INFO	[jepsen worker 18] jepsen.arangodb.tests.rw-register: committed transaction 368
+2023-04-30 16:54:49,434{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:ok	:txn	[[:r 3 23] [:r 1 27] [:w 1 28] [:r 3 23] [:w 3 24]]
+2023-04-30 16:54:49,583{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:r 3 nil] [:w 1 29] [:r 1 nil] [:w 3 25] [:w 1 30] [:r 1 nil] [:r 3 nil]]
+2023-04-30 16:54:49,590{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.rw-register: committed transaction 374
+2023-04-30 16:54:49,590{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:r 3 24] [:w 1 29] [:r 1 29] [:w 3 25] [:w 1 30] [:r 1 30] [:r 3 25]]
+2023-04-30 16:54:49,769{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:w 1 31] [:w 1 32] [:w 3 26] [:r 3 nil] [:w 4 1] [:w 0 14]]
+2023-04-30 16:54:49,775{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 382
+2023-04-30 16:54:49,775{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:w 1 31] [:w 1 32] [:w 3 26] [:r 3 26] [:w 4 1] [:w 0 14]]
+2023-04-30 16:54:49,886{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:w 0 15] [:r 0 nil] [:r 3 nil] [:r 3 nil]]
+2023-04-30 16:54:49,890{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 389
+2023-04-30 16:54:49,891{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:w 0 15] [:r 0 15] [:r 3 26] [:r 3 26]]
+2023-04-30 16:54:49,897{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:w 3 27] [:w 4 2] [:w 4 3] [:r 3 nil] [:r 3 nil] [:w 4 4] [:r 4 nil] [:r 4 nil]]
+2023-04-30 16:54:49,903{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.rw-register: committed transaction 394
+2023-04-30 16:54:49,904{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:w 3 27] [:w 4 2] [:w 4 3] [:r 3 27] [:r 3 27] [:w 4 4] [:r 4 4] [:r 4 4]]
+2023-04-30 16:54:50,003{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:w 3 28] [:w 3 29] [:r 3 nil] [:r 0 nil]]
+2023-04-30 16:54:50,007{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.rw-register: committed transaction 403
+2023-04-30 16:54:50,008{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:w 3 28] [:w 3 29] [:r 3 29] [:r 0 15]]
+2023-04-30 16:54:50,009{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:r 3 nil] [:w 0 16]]
+2023-04-30 16:54:50,012{GMT}	INFO	[jepsen worker 3] jepsen.arangodb.tests.rw-register: committed transaction 408
+2023-04-30 16:54:50,012{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:txn	[[:r 3 29] [:w 0 16]]
+2023-04-30 16:54:50,130{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:r 4 nil] [:r 4 nil] [:w 0 17] [:w 3 30]]
+2023-04-30 16:54:50,135{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.rw-register: committed transaction 411
+2023-04-30 16:54:50,135{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:r 4 4] [:r 4 4] [:w 0 17] [:w 3 30]]
+2023-04-30 16:54:50,171{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:w 3 31] [:r 0 nil] [:w 4 5] [:w 4 6] [:r 3 nil] [:w 3 32] [:r 3 nil] [:w 4 7]]
+2023-04-30 16:54:50,178{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.rw-register: committed transaction 416
+2023-04-30 16:54:50,178{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:w 3 31] [:r 0 17] [:w 4 5] [:w 4 6] [:r 3 31] [:w 3 32] [:r 3 32] [:w 4 7]]
+2023-04-30 16:54:50,325{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:w 5 1] [:w 5 2] [:r 4 nil] [:r 5 nil] [:w 5 3]]
+2023-04-30 16:54:50,331{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.rw-register: committed transaction 425
+2023-04-30 16:54:50,331{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:w 5 1] [:w 5 2] [:r 4 7] [:r 5 2] [:w 5 3]]
+2023-04-30 16:54:50,382{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 5 nil] [:w 5 4] [:w 5 5] [:r 5 nil] [:r 5 nil] [:r 5 nil]]
+2023-04-30 16:54:50,387{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.rw-register: committed transaction 431
+2023-04-30 16:54:50,388{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 5 3] [:w 5 4] [:w 5 5] [:r 5 5] [:r 5 5] [:r 5 5]]
+2023-04-30 16:54:50,558{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:r 5 nil] [:r 5 nil]]
+2023-04-30 16:54:50,562{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.rw-register: committed transaction 438
+2023-04-30 16:54:50,562{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:r 5 5] [:r 5 5]]
+2023-04-30 16:54:50,703{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 4 nil] [:r 5 nil] [:w 5 6] [:r 0 nil] [:r 5 nil] [:r 5 nil] [:w 0 18]]
+2023-04-30 16:54:50,710{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.rw-register: committed transaction 441
+2023-04-30 16:54:50,710{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 4 7] [:r 5 5] [:w 5 6] [:r 0 17] [:r 5 6] [:r 5 6] [:w 0 18]]
+2023-04-30 16:54:50,711{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:r 4 nil] [:w 5 7]]
+2023-04-30 16:54:50,714{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.rw-register: committed transaction 449
+2023-04-30 16:54:50,714{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:r 4 7] [:w 5 7]]
+2023-04-30 16:54:50,750{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:r 5 nil] [:r 0 nil] [:r 4 nil] [:w 5 8]]
+2023-04-30 16:54:50,755{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.rw-register: committed transaction 452
+2023-04-30 16:54:50,755{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:r 5 7] [:r 0 18] [:r 4 7] [:w 5 8]]
+2023-04-30 16:54:50,784{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:r 5 nil] [:w 5 9] [:r 0 nil] [:w 0 19] [:r 4 nil] [:r 5 nil] [:r 5 nil]]
+2023-04-30 16:54:50,789{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.rw-register: committed transaction 457
+2023-04-30 16:54:50,789{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:r 5 8] [:w 5 9] [:r 0 18] [:w 0 19] [:r 4 7] [:r 5 9] [:r 5 9]]
+2023-04-30 16:54:50,872{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 5 nil] [:r 5 nil] [:w 5 10]]
+2023-04-30 16:54:50,876{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.rw-register: committed transaction 465
+2023-04-30 16:54:50,876{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:r 5 9] [:r 5 9] [:w 5 10]]
+2023-04-30 16:54:51,024{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:w 4 8] [:r 5 nil] [:w 5 11] [:w 5 12]]
+2023-04-30 16:54:51,029{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.rw-register: committed transaction 469
+2023-04-30 16:54:51,029{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:w 4 8] [:r 5 10] [:w 5 11] [:w 5 12]]
+2023-04-30 16:54:51,200{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:w 5 13] [:r 4 nil] [:w 4 9] [:r 4 nil]]
+2023-04-30 16:54:51,204{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.rw-register: committed transaction 474
+2023-04-30 16:54:51,204{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:w 5 13] [:r 4 8] [:w 4 9] [:r 4 9]]
+2023-04-30 16:54:51,281{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:w 0 20] [:r 4 nil] [:w 5 14] [:w 5 15]]
+2023-04-30 16:54:51,285{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.rw-register: committed transaction 479
+2023-04-30 16:54:51,286{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:w 0 20] [:r 4 9] [:w 5 14] [:w 5 15]]
+2023-04-30 16:54:51,307{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:w 5 16] [:w 5 17] [:w 5 18] [:r 5 nil] [:w 0 21]]
+2023-04-30 16:54:51,311{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.rw-register: committed transaction 484
+2023-04-30 16:54:51,311{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:w 5 16] [:w 5 17] [:w 5 18] [:r 5 18] [:w 0 21]]
+2023-04-30 16:54:51,312{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:r 4 nil] [:w 4 10] [:r 5 nil] [:r 4 nil] [:w 5 19] [:w 5 20]]
+2023-04-30 16:54:51,316{GMT}	INFO	[jepsen worker 18] jepsen.arangodb.tests.rw-register: committed transaction 490
+2023-04-30 16:54:51,317{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:ok	:txn	[[:r 4 9] [:w 4 10] [:r 5 18] [:r 4 10] [:w 5 19] [:w 5 20]]
+2023-04-30 16:54:51,470{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:r 0 nil] [:w 5 21] [:w 5 22]]
+2023-04-30 16:54:51,474{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.rw-register: committed transaction 497
+2023-04-30 16:54:51,474{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:r 0 21] [:w 5 21] [:w 5 22]]
+2023-04-30 16:54:51,530{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 5 nil] [:w 4 11] [:w 0 22] [:w 5 23] [:r 4 nil] [:w 5 24] [:r 5 nil] [:r 5 nil]]
+2023-04-30 16:54:51,536{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 501
+2023-04-30 16:54:51,536{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 5 22] [:w 4 11] [:w 0 22] [:w 5 23] [:r 4 11] [:w 5 24] [:r 5 24] [:r 5 24]]
+2023-04-30 16:54:51,687{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 5 nil] [:r 5 nil] [:r 5 nil] [:r 5 nil] [:r 5 nil]]
+2023-04-30 16:54:51,691{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 510
+2023-04-30 16:54:51,691{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 5 24] [:r 5 24] [:r 5 24] [:r 5 24] [:r 5 24]]
+2023-04-30 16:54:51,782{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:r 4 nil] [:w 4 12] [:r 0 nil]]
+2023-04-30 16:54:51,786{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.rw-register: committed transaction 516
+2023-04-30 16:54:51,786{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:r 4 11] [:w 4 12] [:r 0 22]]
+2023-04-30 16:54:51,971{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 5 nil] [:r 5 nil] [:w 4 13] [:w 5 25]]
+2023-04-30 16:54:51,976{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.rw-register: committed transaction 520
+2023-04-30 16:54:51,977{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 5 24] [:r 5 24] [:w 4 13] [:w 5 25]]
+2023-04-30 16:54:51,994{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:w 5 26] [:w 5 27]]
+2023-04-30 16:54:51,997{GMT}	INFO	[jepsen worker 3] jepsen.arangodb.tests.rw-register: committed transaction 525
+2023-04-30 16:54:51,997{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:txn	[[:w 5 26] [:w 5 27]]
+2023-04-30 16:54:52,015{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:r 4 nil] [:w 4 14] [:w 0 23] [:r 5 nil] [:r 0 nil] [:r 4 nil] [:r 4 nil] [:r 0 nil]]
+2023-04-30 16:54:52,021{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.rw-register: committed transaction 528
+2023-04-30 16:54:52,021{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:r 4 13] [:w 4 14] [:w 0 23] [:r 5 27] [:r 0 23] [:r 4 14] [:r 4 14] [:r 0 23]]
+2023-04-30 16:54:52,171{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:w 5 28] [:w 4 15] [:w 5 29] [:r 0 nil] [:w 5 30]]
+2023-04-30 16:54:52,176{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.rw-register: committed transaction 537
+2023-04-30 16:54:52,176{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:w 5 28] [:w 4 15] [:w 5 29] [:r 0 23] [:w 5 30]]
+2023-04-30 16:54:52,246{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:r 0 nil] [:w 5 31]]
+2023-04-30 16:54:52,248{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.rw-register: committed transaction 543
+2023-04-30 16:54:52,248{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:r 0 23] [:w 5 31]]
+2023-04-30 16:54:52,413{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 5 nil] [:r 0 nil] [:r 0 nil] [:w 4 16] [:r 5 nil] [:r 5 nil]]
+2023-04-30 16:54:52,419{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.rw-register: committed transaction 546
+2023-04-30 16:54:52,419{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 5 31] [:r 0 23] [:r 0 23] [:w 4 16] [:r 5 31] [:r 5 31]]
+2023-04-30 16:54:52,431{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:r 5 nil] [:r 4 nil]]
+2023-04-30 16:54:52,434{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.rw-register: committed transaction 553
+2023-04-30 16:54:52,434{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:r 5 31] [:r 4 16]]
+2023-04-30 16:54:52,449{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:w 4 17] [:w 4 18] [:w 4 19] [:r 5 nil]]
+2023-04-30 16:54:52,453{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.rw-register: committed transaction 556
+2023-04-30 16:54:52,453{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:w 4 17] [:w 4 18] [:w 4 19] [:r 5 31]]
+2023-04-30 16:54:52,557{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:w 4 20] [:w 5 32]]
+2023-04-30 16:54:52,560{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.rw-register: committed transaction 561
+2023-04-30 16:54:52,560{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:w 4 20] [:w 5 32]]
+2023-04-30 16:54:52,651{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:w 4 21] [:r 0 nil] [:r 0 nil] [:r 4 nil] [:r 5 nil] [:r 4 nil]]
+2023-04-30 16:54:52,656{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.rw-register: committed transaction 564
+2023-04-30 16:54:52,656{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:w 4 21] [:r 0 23] [:r 0 23] [:r 4 21] [:r 5 32] [:r 4 21]]
+2023-04-30 16:54:52,678{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:w 6 1] [:r 6 nil] [:r 6 nil] [:r 4 nil] [:r 4 nil] [:w 6 2]]
+2023-04-30 16:54:52,683{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.rw-register: committed transaction 571
+2023-04-30 16:54:52,684{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:w 6 1] [:r 6 1] [:r 6 1] [:r 4 21] [:r 4 21] [:w 6 2]]
+2023-04-30 16:54:52,813{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 6 nil] [:w 6 3] [:w 0 24]]
+2023-04-30 16:54:52,816{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.rw-register: committed transaction 578
+2023-04-30 16:54:52,817{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:r 6 2] [:w 6 3] [:w 0 24]]
+2023-04-30 16:54:52,986{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:w 0 25] [:w 0 26] [:r 6 nil] [:w 4 22] [:w 6 4] [:w 6 5] [:r 4 nil] [:w 6 6]]
+2023-04-30 16:54:52,993{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.rw-register: committed transaction 582
+2023-04-30 16:54:52,994{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:w 0 25] [:w 0 26] [:r 6 3] [:w 4 22] [:w 6 4] [:w 6 5] [:r 4 22] [:w 6 6]]
+2023-04-30 16:54:53,062{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:w 4 23] [:r 6 nil] [:r 4 nil] [:r 6 nil] [:w 6 7] [:w 6 8]]
+2023-04-30 16:54:53,067{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.rw-register: committed transaction 591
+2023-04-30 16:54:53,067{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:w 4 23] [:r 6 6] [:r 4 23] [:r 6 6] [:w 6 7] [:w 6 8]]
+2023-04-30 16:54:53,092{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:r 4 nil] [:w 4 24] [:w 0 27] [:r 6 nil]]
+2023-04-30 16:54:53,096{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.rw-register: committed transaction 598
+2023-04-30 16:54:53,096{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:r 4 23] [:w 4 24] [:w 0 27] [:r 6 8]]
+2023-04-30 16:54:53,175{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:r 0 nil] [:w 4 25] [:r 6 nil] [:w 6 9] [:w 6 10] [:w 6 11] [:r 6 nil]]
+2023-04-30 16:54:53,181{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.rw-register: committed transaction 603
+2023-04-30 16:54:53,181{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:r 0 27] [:w 4 25] [:r 6 8] [:w 6 9] [:w 6 10] [:w 6 11] [:r 6 11]]
+2023-04-30 16:54:53,198{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:w 6 12] [:r 6 nil] [:w 6 13] [:w 6 14] [:w 6 15]]
+2023-04-30 16:54:53,202{GMT}	INFO	[jepsen worker 18] jepsen.arangodb.tests.rw-register: committed transaction 611
+2023-04-30 16:54:53,203{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:ok	:txn	[[:w 6 12] [:r 6 12] [:w 6 13] [:w 6 14] [:w 6 15]]
+2023-04-30 16:54:53,393{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:r 6 nil] [:w 6 16] [:r 4 nil] [:w 6 17] [:w 4 26]]
+2023-04-30 16:54:53,398{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.rw-register: committed transaction 617
+2023-04-30 16:54:53,398{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:r 6 15] [:w 6 16] [:r 4 25] [:w 6 17] [:w 4 26]]
+2023-04-30 16:54:53,430{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:w 4 27] [:r 4 nil] [:w 0 28] [:r 6 nil] [:r 4 nil] [:w 0 29] [:r 4 nil]]
+2023-04-30 16:54:53,435{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 623
+2023-04-30 16:54:53,435{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:w 4 27] [:r 4 27] [:w 0 28] [:r 6 17] [:r 4 27] [:w 0 29] [:r 4 27]]
+2023-04-30 16:54:53,484{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 6 nil] [:r 4 nil] [:w 6 18] [:w 4 28]]
+2023-04-30 16:54:53,488{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 631
+2023-04-30 16:54:53,488{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 6 17] [:r 4 27] [:w 6 18] [:w 4 28]]
+2023-04-30 16:54:53,546{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:w 4 29] [:r 6 nil] [:w 0 30] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:r 4 nil]]
+2023-04-30 16:54:53,552{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.rw-register: committed transaction 636
+2023-04-30 16:54:53,552{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:w 4 29] [:r 6 18] [:w 0 30] [:r 6 18] [:r 6 18] [:r 6 18] [:r 6 18] [:r 4 29]]
+2023-04-30 16:54:53,579{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 0 nil] [:r 4 nil] [:r 4 nil]]
+2023-04-30 16:54:53,582{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.rw-register: committed transaction 645
+2023-04-30 16:54:53,582{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 0 30] [:r 4 29] [:r 4 29]]
+2023-04-30 16:54:53,695{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:r 4 nil] [:r 4 nil] [:w 4 30] [:r 4 nil] [:w 6 19]]
+2023-04-30 16:54:53,700{GMT}	INFO	[jepsen worker 3] jepsen.arangodb.tests.rw-register: committed transaction 649
+2023-04-30 16:54:53,700{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:txn	[[:r 4 29] [:r 4 29] [:w 4 30] [:r 4 30] [:w 6 19]]
+2023-04-30 16:54:53,804{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:w 6 20] [:r 6 nil] [:r 6 nil] [:r 4 nil] [:w 4 31] [:w 6 21] [:w 0 31]]
+2023-04-30 16:54:53,810{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.rw-register: committed transaction 655
+2023-04-30 16:54:53,810{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:w 6 20] [:r 6 20] [:r 6 20] [:r 4 30] [:w 4 31] [:w 6 21] [:w 0 31]]
+2023-04-30 16:54:53,839{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:w 6 22] [:w 4 32] [:w 0 32] [:r 6 nil] [:r 4 nil] [:r 0 nil] [:r 0 nil]]
+2023-04-30 16:54:53,844{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.rw-register: committed transaction 663
+2023-04-30 16:54:53,844{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:w 6 22] [:w 4 32] [:w 0 32] [:r 6 22] [:r 4 32] [:r 0 32] [:r 0 32]]
+2023-04-30 16:54:53,938{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:w 6 23] [:r 7 nil] [:r 4 nil] [:w 6 24] [:w 6 25]]
+2023-04-30 16:54:53,942{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.rw-register: committed transaction 671
+2023-04-30 16:54:53,942{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:w 6 23] [:r 7 nil] [:r 4 32] [:w 6 24] [:w 6 25]]
+2023-04-30 16:54:54,097{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 4 nil] [:r 6 nil] [:w 8 1] [:r 6 nil] [:r 6 nil] [:w 8 2] [:w 8 3]]
+2023-04-30 16:54:54,104{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.rw-register: committed transaction 677
+2023-04-30 16:54:54,104{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 4 32] [:r 6 25] [:w 8 1] [:r 6 25] [:r 6 25] [:w 8 2] [:w 8 3]]
+2023-04-30 16:54:54,157{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:w 6 26] [:r 6 nil] [:w 7 1] [:r 8 nil] [:r 7 nil] [:r 8 nil]]
+2023-04-30 16:54:54,162{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.rw-register: committed transaction 685
+2023-04-30 16:54:54,162{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:w 6 26] [:r 6 26] [:w 7 1] [:r 8 3] [:r 7 1] [:r 8 3]]
+2023-04-30 16:54:54,291{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:w 8 4] [:w 8 5] [:w 8 6] [:r 7 nil] [:r 6 nil] [:r 6 nil] [:r 7 nil] [:w 7 2]]
+2023-04-30 16:54:54,298{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.rw-register: committed transaction 692
+2023-04-30 16:54:54,298{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:w 8 4] [:w 8 5] [:w 8 6] [:r 7 1] [:r 6 26] [:r 6 26] [:r 7 1] [:w 7 2]]
+2023-04-30 16:54:54,305{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:r 8 nil] [:r 6 nil] [:r 7 nil] [:w 8 7] [:w 8 8] [:r 8 nil]]
+2023-04-30 16:54:54,309{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.rw-register: committed transaction 701
+2023-04-30 16:54:54,309{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:r 8 6] [:r 6 26] [:r 7 2] [:w 8 7] [:w 8 8] [:r 8 8]]
+2023-04-30 16:54:54,312{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:r 7 nil] [:r 8 nil] [:w 8 9] [:w 7 3] [:r 6 nil] [:w 6 27]]
+2023-04-30 16:54:54,316{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.rw-register: committed transaction 708
+2023-04-30 16:54:54,316{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:r 7 2] [:r 8 8] [:w 8 9] [:w 7 3] [:r 6 26] [:w 6 27]]
+2023-04-30 16:54:54,385{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:r 8 nil] [:r 6 nil] [:r 6 nil] [:r 8 nil]]
+2023-04-30 16:54:54,390{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.rw-register: committed transaction 715
+2023-04-30 16:54:54,390{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:r 8 9] [:r 6 27] [:r 6 27] [:r 8 9]]
+2023-04-30 16:54:54,462{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 6 nil] [:w 8 10] [:r 6 nil]]
+2023-04-30 16:54:54,466{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.rw-register: committed transaction 720
+2023-04-30 16:54:54,466{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:r 6 27] [:w 8 10] [:r 6 27]]
+2023-04-30 16:54:54,561{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:r 8 nil] [:w 8 11] [:r 6 nil] [:w 6 28] [:r 6 nil] [:w 6 29] [:w 6 30] [:r 8 nil]]
+2023-04-30 16:54:54,568{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.rw-register: committed transaction 724
+2023-04-30 16:54:54,568{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:r 8 10] [:w 8 11] [:r 6 27] [:w 6 28] [:r 6 28] [:w 6 29] [:w 6 30] [:r 8 11]]
+2023-04-30 16:54:54,649{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:r 8 nil] [:r 8 nil] [:w 6 31] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:w 6 32]]
+2023-04-30 16:54:54,655{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.rw-register: committed transaction 733
+2023-04-30 16:54:54,655{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:r 8 11] [:r 8 11] [:w 6 31] [:r 6 31] [:r 6 31] [:r 6 31] [:w 6 32]]
+2023-04-30 16:54:54,845{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:r 9 nil] [:w 9 1] [:w 9 2] [:w 8 12]]
+2023-04-30 16:54:54,850{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.rw-register: committed transaction 741
+2023-04-30 16:54:54,850{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:r 9 nil] [:w 9 1] [:w 9 2] [:w 8 12]]
+2023-04-30 16:54:55,004{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:r 8 nil] [:r 8 nil] [:r 8 nil] [:r 9 nil] [:w 9 3]]
+2023-04-30 16:54:55,010{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.rw-register: committed transaction 746
+2023-04-30 16:54:55,010{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:r 8 12] [:r 8 12] [:r 8 12] [:r 9 2] [:w 9 3]]
+2023-04-30 16:54:55,155{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:w 9 4] [:r 7 nil] [:w 9 5] [:w 8 13] [:w 7 4] [:r 7 nil]]
+2023-04-30 16:54:55,161{GMT}	INFO	[jepsen worker 18] jepsen.arangodb.tests.rw-register: committed transaction 752
+2023-04-30 16:54:55,161{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:ok	:txn	[[:w 9 4] [:r 7 3] [:w 9 5] [:w 8 13] [:w 7 4] [:r 7 4]]
+2023-04-30 16:54:55,222{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:r 8 nil] [:w 8 14] [:w 9 6] [:w 7 5] [:w 9 7] [:r 9 nil] [:w 9 8] [:w 9 9]]
+2023-04-30 16:54:55,225{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 8 nil] [:r 7 nil] [:w 8 15]]
+2023-04-30 16:54:55,229{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.rw-register: committed transaction 759
+2023-04-30 16:54:55,229{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:r 8 13] [:w 8 14] [:w 9 6] [:w 7 5] [:w 9 7] [:r 9 7] [:w 9 8] [:w 9 9]]
+2023-04-30 16:54:55,232{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: aborted transaction 764
+2023-04-30 16:54:55,232{GMT}	WARN	[jepsen worker 0] jepsen.arangodb.tests.rw-register: AQL: timeout waiting to lock key Operation timed out: Timeout waiting to lock key; key: 8 (while executing)
+2023-04-30 16:54:55,232{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:txn	[[:r 8 nil] [:r 7 nil] [:w 8 15]]	:ww-conflict
+2023-04-30 16:54:55,270{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:w 8 16] [:r 8 nil] [:r 9 nil] [:w 8 17] [:r 8 nil]]
+2023-04-30 16:54:55,274{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.rw-register: committed transaction 772
+2023-04-30 16:54:55,274{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:w 8 16] [:r 8 16] [:r 9 9] [:w 8 17] [:r 8 17]]
+2023-04-30 16:54:55,466{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:r 9 nil] [:r 9 nil] [:w 7 6] [:w 9 10]]
+2023-04-30 16:54:55,471{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.rw-register: committed transaction 778
+2023-04-30 16:54:55,471{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:r 9 9] [:r 9 9] [:w 7 6] [:w 9 10]]
+2023-04-30 16:54:55,543{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:w 9 11] [:w 9 12]]
+2023-04-30 16:54:55,545{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.rw-register: committed transaction 783
+2023-04-30 16:54:55,545{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:w 9 11] [:w 9 12]]
+2023-04-30 16:54:55,713{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:w 9 13] [:w 8 18] [:r 9 nil]]
+2023-04-30 16:54:55,717{GMT}	INFO	[jepsen worker 3] jepsen.arangodb.tests.rw-register: committed transaction 786
+2023-04-30 16:54:55,717{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:txn	[[:w 9 13] [:w 8 18] [:r 9 13]]
+2023-04-30 16:54:55,859{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:w 8 19] [:w 8 20] [:w 7 7] [:w 9 14]]
+2023-04-30 16:54:55,864{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.rw-register: committed transaction 790
+2023-04-30 16:54:55,865{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:w 8 19] [:w 8 20] [:w 7 7] [:w 9 14]]
+2023-04-30 16:54:55,988{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:w 9 15] [:r 7 nil] [:r 9 nil] [:r 9 nil] [:r 8 nil] [:w 7 8] [:w 9 16]]
+2023-04-30 16:54:55,993{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.rw-register: committed transaction 795
+2023-04-30 16:54:55,993{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:w 9 15] [:r 7 7] [:r 9 15] [:r 9 15] [:r 8 20] [:w 7 8] [:w 9 16]]
+2023-04-30 16:54:56,012{GMT}	INFO	[real-pmap 0] jepsen.arangodb.tests.rw-register: Downloading WAL entries to  store/current/wal.log ...
+2023-04-30 16:54:56,114{GMT}	INFO	[real-pmap 0] jepsen.arangodb.tests.rw-register: WAL entries downloaded
+2023-04-30 16:54:56,114{GMT}	INFO	[real-pmap 0] jepsen.arangodb.tests.rw-register: Connection closed
+2023-04-30 16:54:56,114{GMT}	INFO	[jepsen test runner] jepsen.core: Run complete, writing
+2023-04-30 16:54:56,157{GMT}	INFO	[jepsen test runner] jepsen.core: Snarfing log files
+2023-04-30 16:54:56,164{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 16:54:56,286{GMT}	INFO	[jepsen test runner] jepsen.core: Snarfing log files
+2023-04-30 16:54:56,290{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 16:54:56,454{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: 192.168.56.101 tearing down arangodb
+2023-04-30 16:54:56,454{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.control.util: Stopping arangodb
+2023-04-30 16:54:56,610{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: processes [2571 2584] killed
+2023-04-30 16:54:56,723{GMT}	INFO	[jepsen test runner] jepsen.core: Analyzing...
+2023-04-30 16:54:56,829{GMT}	INFO	[jepsen test runner] jepsen.core: Analysis complete
+2023-04-30 16:54:56,831{GMT}	INFO	[jepsen results] jepsen.store: Wrote /home/jasonqiu98/thesis-workspace-new/jepsen.arangodb.single/store/arangodb-rw-register-test/20230430T165359.719+0200/results.edn
+2023-04-30 16:54:56,845{GMT}	INFO	[jepsen test runner] jepsen.core: {:rw {:valid? true},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? true}
+
+
+Everything looks good! ヽ(‘ー`)ノ

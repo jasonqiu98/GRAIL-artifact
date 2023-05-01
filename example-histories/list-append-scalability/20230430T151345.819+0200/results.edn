@@ -1,0 +1,197 @@
+{:la {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r
+                                               136
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12]]
+                                              [:r 137 [1 2 3 4 5]]
+                                              [:append 136 17]],
+                                      :time 107955844152,
+                                      :process 1,
+                                      :index 1776}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r
+                                               132
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16
+                                                17
+                                                18
+                                                19
+                                                20
+                                                21
+                                                22
+                                                23
+                                                24
+                                                25]]
+                                              [:r 137 [1 2 3 4 5]]
+                                              [:r
+                                               132
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16
+                                                17
+                                                18
+                                                19
+                                                20
+                                                21
+                                                22
+                                                23
+                                                24
+                                                25]]
+                                              [:r
+                                               136
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12]]
+                                              [:r
+                                               136
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12]]
+                                              [:r 137 [1 2 3 4 5]]
+                                              [:r
+                                               136
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12]]
+                                              [:r
+                                               132
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16
+                                                17
+                                                18
+                                                19
+                                                20
+                                                21
+                                                22
+                                                23
+                                                24
+                                                25]]
+                                              [:append 137 11]],
+                                      :time 107960442322,
+                                      :process 4,
+                                      :index 1777}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r
+                                               136
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12]]
+                                              [:r 137 [1 2 3 4 5]]
+                                              [:append 136 17]],
+                                      :time 107955844152,
+                                      :process 1,
+                                      :index 1776}],
+                             :steps ({:type :rw,
+                                      :key 137,
+                                      :value 5,
+                                      :value' 11,
+                                      :a-mop-index 1,
+                                      :b-mop-index 8}
+                                     {:type :rw,
+                                      :key 136,
+                                      :value 12,
+                                      :value' 17,
+                                      :a-mop-index 3,
+                                      :b-mop-index 2}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

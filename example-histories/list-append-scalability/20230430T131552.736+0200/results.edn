@@ -1,0 +1,110 @@
+{:la {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r 21 [1]]
+                                              [:r
+                                               18
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16
+                                                17
+                                                18]]
+                                              [:append 21 2]
+                                              [:r 21 [1 2]]],
+                                      :time 42357889496,
+                                      :process 17,
+                                      :index 490}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 21 [1]]
+                                              [:append 18 21]
+                                              [:r 21 [1]]
+                                              [:r
+                                               18
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16
+                                                17
+                                                18
+                                                21]]
+                                              [:r 21 [1]]],
+                                      :time 42358441942,
+                                      :process 0,
+                                      :index 491}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r 21 [1]]
+                                              [:r
+                                               18
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16
+                                                17
+                                                18]]
+                                              [:append 21 2]
+                                              [:r 21 [1 2]]],
+                                      :time 42357889496,
+                                      :process 17,
+                                      :index 490}],
+                             :steps ({:type :rw,
+                                      :key 18,
+                                      :value 18,
+                                      :value' 21,
+                                      :a-mop-index 1,
+                                      :b-mop-index 1}
+                                     {:type :rw,
+                                      :key 21,
+                                      :value 1,
+                                      :value' 2,
+                                      :a-mop-index 0,
+                                      :b-mop-index 2}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

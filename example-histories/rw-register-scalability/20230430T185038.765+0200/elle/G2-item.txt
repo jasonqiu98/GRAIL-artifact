@@ -1,0 +1,8 @@
+G2-item #0
+Let:
+  T1 = {:index 2, :time 16153622594, :type :ok, :process 1, :f :txn, :value [[:r 0 nil] [:w 1 1] [:r 2 nil] [:r 2 nil]]}
+  T2 = {:index 3, :time 16155244099, :type :ok, :process 2, :f :txn, :value [[:r 2 nil] [:r 1 nil] [:w 2 1] [:w 2 2] [:r 0 nil] [:w 2 3] [:r 2 3]]}
+
+Then:
+  - T1 < T2, because T1 read key 2 = nil, and T2 set it to 3, which came later in the version order.
+  - However, T2 < T1, because T2 read key 1 = nil, and T1 set it to 1, which came later in the version order: a contradiction!

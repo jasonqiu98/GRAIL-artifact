@@ -1,0 +1,8 @@
+G2-item #0
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:append 51 1] [:append 49 25] [:r 50 []]], :time 85922313641, :process 14, :index 1320}
+  T2 = {:type :ok, :f :txn, :value [[:r 49 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24]] [:r 49 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24]] [:append 50 1]], :time 85927827525, :process 2, :index 1321}
+
+Then:
+  - T1 < T2, because T1 observed the initial (nil) state of 50, which T2 created by appending 1.
+  - However, T2 < T1, because T2 did not observe T1's append of 25 to 49: a contradiction!

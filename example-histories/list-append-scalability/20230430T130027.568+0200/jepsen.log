@@ -1,0 +1,1287 @@
+2023-04-30 13:00:27,580{GMT}	INFO	[jepsen test runner] jepsen.core: Test version 7e78c60c7d59dabfd9d4fac1adf15bd88e983c9b (plus uncommitted changes)
+2023-04-30 13:00:27,581{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --nodes-file ./vagrant/nodes-vagrant.txt --password --ssh-private-key ./vagrant/vagrant_ssh_key --username vagrant --test-type la --time-limit 20 -r 10 --concurrency 20 --key-count 3 --min-txn-length 2 --max-txn-length 8 --max-writes-per-key 32 --nemesis-type partition
+2023-04-30 13:00:27,633{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:nemesis-type :partition
+ :remote
+ #jepsen.control.retry.Remote{:remote #jepsen.control.scp.Remote{:cmd-remote #jepsen.control.sshj.SSHJRemote{:concurrency-limit 6,
+                                                                                                             :conn-spec nil,
+                                                                                                             :client nil,
+                                                                                                             :semaphore nil},
+                                                                 :conn-spec nil},
+                              :conn nil}
+ :max-txn-length 8
+ :concurrency 20
+ :key-count 3
+ :db
+ #object[jepsen.arangodb.utils.support$db_setup$reify__445
+         "0x6662974a"
+         "jepsen.arangodb.utils.support$db_setup$reify__445@6662974a"]
+ :max-writes-per-key 32
+ :leave-db-running? false
+ :name "arangodb-list-append-test"
+ :logging-json? false
+ :ops-per-key 20
+ :start-time
+ #object[org.joda.time.DateTime "0x1aba8978" "2023-04-30T13:00:27.568+02:00"]
+ :net
+ #object[jepsen.net$reify__10223
+         "0x2662e3ff"
+         "jepsen.net$reify__10223@2662e3ff"]
+ :client
+ #jepsen.arangodb.tests.list_append.Client{:db-created? #object[clojure.lang.Atom
+                                                                "0x175745fc"
+                                                                {:status :ready,
+                                                                 :val false}],
+                                           :collection-created? #object[clojure.lang.Atom
+                                                                        "0x2c1a0f82"
+                                                                        {:status :ready,
+                                                                         :val false}],
+                                           :conn nil,
+                                           :node nil}
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x60e5db1d"
+         "java.util.concurrent.CyclicBarrier@60e5db1d"]
+ :pure-generators true
+ :ssh
+ {:dummy? false,
+  :username "vagrant",
+  :password "--ssh-private-key",
+  :strict-host-key-checking false,
+  :private-key-path nil}
+ :rate 10
+ :checker
+ #object[jepsen.checker$compose$reify__9724
+         "0x1f3f0d25"
+         "jepsen.checker$compose$reify__9724@1f3f0d25"]
+ :threads-per-group 5
+ :argv
+ ("test"
+  "--nodes-file"
+  "./vagrant/nodes-vagrant.txt"
+  "--password"
+  "--ssh-private-key"
+  "./vagrant/vagrant_ssh_key"
+  "--username"
+  "vagrant"
+  "--test-type"
+  "la"
+  "--time-limit"
+  "20"
+  "-r"
+  "10"
+  "--concurrency"
+  "20"
+  "--key-count"
+  "3"
+  "--min-txn-length"
+  "2"
+  "--max-txn-length"
+  "8"
+  "--max-writes-per-key"
+  "32"
+  "--nemesis-type"
+  "partition")
+ :nemesis #unprintable "jepsen.nemesis$partitioner$reify__10376@32eac39b"
+ :test-type :list-append
+ :nodes
+ ["192.168.56.101"
+  "192.168.56.102"
+  "192.168.56.103"
+  "192.168.56.104"
+  "192.168.56.105"]
+ :test-count 1
+ :generator
+ (jepsen.generator.TimeLimit
+  {:limit 20000000000,
+   :cutoff nil,
+   :gen (jepsen.generator.Any
+         {:gens [(jepsen.generator.OnThreads
+                  {:f #{:nemesis},
+                   :gen ({:type :sleep, :value 5}
+                         {:type :info, :f :start}
+                         {:type :sleep, :value 5}
+                         {:type :info, :f :stop}
+                         {:type :sleep, :value 5}
+                         {:type :info, :f :start}
+                         {:type :sleep, :value 5}
+                         {:type :info, :f :stop}
+                         ...)})
+                 (jepsen.generator.OnThreads
+                  {:f #object[clojure.core$complement$fn__5737
+                              "0x62ff3028"
+                              "clojure.core$complement$fn__5737@62ff3028"],
+                   :gen (jepsen.generator.Stagger
+                         {:dt 200000000,
+                          :next-time nil,
+                          :gen ({:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 2 nil] [:append 2 1] [:append 2 2]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 1 nil]
+                                         [:append 2 3]
+                                         [:r 2 nil]
+                                         [:append 1 1]
+                                         [:append 2 4]
+                                         [:append 2 5]
+                                         [:append 2 6]
+                                         [:r 1 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:append 1 2]
+                                         [:r 2 nil]
+                                         [:append 2 7]
+                                         [:append 2 8]
+                                         [:append 0 1]
+                                         [:r 0 nil]
+                                         [:r 0 nil]
+                                         [:append 0 2]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 2 nil]
+                                         [:r 2 nil]
+                                         [:r 2 nil]
+                                         [:append 1 3]
+                                         [:append 1 4]
+                                         [:r 2 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:append 2 9]
+                                         [:r 2 nil]
+                                         [:r 2 nil]
+                                         [:append 2 10]
+                                         [:append 0 3]
+                                         [:append 0 4]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 1 nil]
+                                         [:append 2 11]
+                                         [:append 0 5]
+                                         [:append 2 12]
+                                         [:append 1 5]
+                                         [:r 2 nil]
+                                         [:r 2 nil]
+                                         [:r 0 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:r 2 nil]
+                                         [:append 2 13]
+                                         [:append 2 14]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:append 2 15]
+                                         [:r 1 nil]
+                                         [:r 2 nil]
+                                         [:append 2 16]
+                                         [:r 2 nil]
+                                         [:r 1 nil]
+                                         [:append 1 6]
+                                         [:append 2 17]]}
+                                ...)})})]})})
+ :os
+ #object[jepsen.os.debian.Debian
+         "0x684eb4a0"
+         "jepsen.os.debian.Debian@684eb4a0"]
+ :time-limit 20
+ :min-txn-length 2}
+
+2023-04-30 13:00:30,211{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.os.debian: 192.168.56.105 setting up debian
+2023-04-30 13:00:30,211{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.os.debian: 192.168.56.103 setting up debian
+2023-04-30 13:00:30,211{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.os.debian: 192.168.56.101 setting up debian
+2023-04-30 13:00:30,211{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.os.debian: 192.168.56.104 setting up debian
+2023-04-30 13:00:30,211{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.os.debian: 192.168.56.102 setting up debian
+2023-04-30 13:00:30,686{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: 192.168.56.101 tearing down arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.utils.support: 192.168.56.104 tearing down arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.utils.support: 192.168.56.105 tearing down arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.utils.support: 192.168.56.102 tearing down arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.utils.support: 192.168.56.103 tearing down arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.control.util: Stopping arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.control.util: Stopping arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.control.util: Stopping arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.control.util: Stopping arangodb
+2023-04-30 13:00:30,688{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.control.util: Stopping arangodb
+2023-04-30 13:00:30,782{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.utils.support: no arangodb processes killed
+2023-04-30 13:00:30,782{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.utils.support: no arangodb processes killed
+2023-04-30 13:00:30,828{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: no arangodb processes killed
+2023-04-30 13:00:30,858{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.utils.support: no arangodb processes killed
+2023-04-30 13:00:30,939{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.utils.support: no arangodb processes killed
+2023-04-30 13:00:30,940{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2023-04-30 13:00:30,941{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.utils.support: 192.168.56.104 installing arangodb v3.9.10
+2023-04-30 13:00:30,941{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.utils.support: 192.168.56.102 installing arangodb v3.9.10
+2023-04-30 13:00:30,941{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: 192.168.56.101 installing arangodb v3.9.10
+2023-04-30 13:00:30,941{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.utils.support: 192.168.56.105 installing arangodb v3.9.10
+2023-04-30 13:00:30,941{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.utils.support: 192.168.56.103 installing arangodb v3.9.10
+2023-04-30 13:00:33,663{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.control.util: Starting arangodb
+2023-04-30 13:00:33,711{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.control.util: Starting arangodb
+2023-04-30 13:00:33,783{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.control.util: Starting arangodb
+2023-04-30 13:00:33,932{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.control.util: Starting arangodb
+2023-04-30 13:00:33,996{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.control.util: Starting arangodb
+2023-04-30 13:00:34,185{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2023-04-30 13:00:34,241{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.list-append: sleep 15s to make sure the connection is ready
+2023-04-30 13:00:34,241{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.tests.list-append: sleep 15s to make sure the connection is ready
+2023-04-30 13:00:34,241{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.tests.list-append: sleep 15s to make sure the connection is ready
+2023-04-30 13:00:34,241{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.tests.list-append: sleep 15s to make sure the connection is ready
+2023-04-30 13:00:34,241{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.tests.list-append: sleep 15s to make sure the connection is ready
+2023-04-30 13:00:49,242{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.list-append: Prepare to create databases
+2023-04-30 13:00:49,242{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.list-append: Creating databases
+2023-04-30 13:00:49,971{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.list-append: Databases created
+2023-04-30 13:00:49,971{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.list-append: Creating collections
+2023-04-30 13:00:49,971{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.tests.list-append: Prepare to create databases
+2023-04-30 13:00:49,971{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.tests.list-append: Creating databases
+2023-04-30 13:00:50,489{GMT}	WARN	[jepsen node 192.168.56.102] jepsen.arangodb.tests.list-append: duplicate database name 'listAppend'
+2023-04-30 13:00:50,489{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.tests.list-append: Prepare to create databases
+2023-04-30 13:00:50,489{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.tests.list-append: Creating databases
+2023-04-30 13:00:50,525{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.tests.list-append: Collections created
+2023-04-30 13:00:50,525{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.tests.list-append: Creating collections
+2023-04-30 13:00:51,011{GMT}	WARN	[jepsen node 192.168.56.105] jepsen.arangodb.tests.list-append: duplicate database name 'listAppend'
+2023-04-30 13:00:51,012{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.tests.list-append: Prepare to create databases
+2023-04-30 13:00:51,012{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.tests.list-append: Creating databases
+2023-04-30 13:00:51,036{GMT}	WARN	[jepsen node 192.168.56.102] jepsen.arangodb.tests.list-append: duplicate collection name 'laCol'
+2023-04-30 13:00:51,036{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.tests.list-append: Creating collections
+2023-04-30 13:00:51,537{GMT}	WARN	[jepsen node 192.168.56.104] jepsen.arangodb.tests.list-append: duplicate database name 'listAppend'
+2023-04-30 13:00:51,537{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.tests.list-append: Prepare to create databases
+2023-04-30 13:00:51,537{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.tests.list-append: Creating databases
+2023-04-30 13:00:51,547{GMT}	WARN	[jepsen node 192.168.56.105] jepsen.arangodb.tests.list-append: duplicate collection name 'laCol'
+2023-04-30 13:00:51,547{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.tests.list-append: Creating collections
+2023-04-30 13:00:52,055{GMT}	WARN	[jepsen node 192.168.56.104] jepsen.arangodb.tests.list-append: duplicate collection name 'laCol'
+2023-04-30 13:00:52,083{GMT}	WARN	[jepsen node 192.168.56.103] jepsen.arangodb.tests.list-append: duplicate database name 'listAppend'
+2023-04-30 13:00:52,084{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.tests.list-append: Creating collections
+2023-04-30 13:00:52,586{GMT}	WARN	[jepsen node 192.168.56.103] jepsen.arangodb.tests.list-append: duplicate collection name 'laCol'
+2023-04-30 13:00:52,595{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 2 nil] [:append 2 1] [:append 2 2]]
+2023-04-30 13:00:52,626{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582923364
+2023-04-30 13:00:52,627{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 2 []] [:append 2 1] [:append 2 2]]
+2023-04-30 13:00:52,664{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:r 1 nil] [:append 2 3] [:r 2 nil] [:append 1 1] [:append 2 4] [:append 2 5] [:append 2 6] [:r 1 nil]]
+2023-04-30 13:00:52,690{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.list-append: committed transaction 2199063295584
+2023-04-30 13:00:52,690{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:r 1 []] [:append 2 3] [:r 2 [1 2 3]] [:append 1 1] [:append 2 4] [:append 2 5] [:append 2 6] [:r 1 [1]]]
+2023-04-30 13:00:52,704{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 1 2] [:r 2 nil] [:append 2 7] [:append 2 8] [:append 0 1] [:r 0 nil] [:r 0 nil] [:append 0 2]]
+2023-04-30 13:00:52,732{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590178996
+2023-04-30 13:00:52,732{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 1 2] [:r 2 [1 2 3 4 5 6]] [:append 2 7] [:append 2 8] [:append 0 1] [:r 0 [1]] [:r 0 [1]] [:append 0 2]]
+2023-04-30 13:00:52,819{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 2 nil] [:r 2 nil] [:r 2 nil] [:append 1 3] [:append 1 4] [:r 2 nil]]
+2023-04-30 13:00:52,833{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590179072
+2023-04-30 13:00:52,833{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 2 [1 2 3 4 5 6 7 8]] [:r 2 [1 2 3 4 5 6 7 8]] [:r 2 [1 2 3 4 5 6 7 8]] [:append 1 3] [:append 1 4] [:r 2 [1 2 3 4 5 6 7 8]]]
+2023-04-30 13:00:53,016{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:append 2 9] [:r 2 nil] [:r 2 nil] [:append 2 10] [:append 0 3] [:append 0 4]]
+2023-04-30 13:00:53,037{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582923396
+2023-04-30 13:00:53,037{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:append 2 9] [:r 2 [1 2 3 4 5 6 7 8 9]] [:r 2 [1 2 3 4 5 6 7 8 9]] [:append 2 10] [:append 0 3] [:append 0 4]]
+2023-04-30 13:00:53,047{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:r 1 nil] [:append 2 11] [:append 0 5] [:append 2 12] [:append 1 5] [:r 2 nil] [:r 2 nil] [:r 0 nil]]
+2023-04-30 13:00:53,069{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.list-append: committed transaction 1099543667900
+2023-04-30 13:00:53,069{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:r 1 [1 2 3 4]] [:append 2 11] [:append 0 5] [:append 2 12] [:append 1 5] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12]] [:r 0 [1 2 3 4 5]]]
+2023-04-30 13:00:53,202{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 2 nil] [:append 2 13] [:append 2 14]]
+2023-04-30 13:00:53,211{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543667968
+2023-04-30 13:00:53,211{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 2 13] [:append 2 14]]
+2023-04-30 13:00:53,304{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:append 2 15] [:r 1 nil] [:r 2 nil] [:append 2 16] [:r 2 nil] [:r 1 nil] [:append 1 6] [:append 2 17]]
+2023-04-30 13:00:53,332{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.list-append: committed transaction 4398078551236
+2023-04-30 13:00:53,333{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:append 2 15] [:r 1 [1 2 3 4 5]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:append 2 16] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:r 1 [1 2 3 4 5]] [:append 1 6] [:append 2 17]]
+2023-04-30 13:00:53,441{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:append 1 7] [:r 1 nil] [:append 1 8] [:append 1 9] [:append 0 6] [:r 2 nil] [:append 2 18] [:append 1 10]]
+2023-04-30 13:00:53,465{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.list-append: committed transaction 4398078551304
+2023-04-30 13:00:53,465{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:append 1 7] [:r 1 [1 2 3 4 5 6 7]] [:append 1 8] [:append 1 9] [:append 0 6] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 2 18] [:append 1 10]]
+2023-04-30 13:00:53,536{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 1 11] [:append 1 12] [:r 2 nil]]
+2023-04-30 13:00:53,545{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:r 2 nil] [:r 1 nil] [:append 2 19] [:r 2 nil] [:append 2 20]]
+2023-04-30 13:00:53,546{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590179116
+2023-04-30 13:00:53,546{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 1 11] [:append 1 12] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]]]
+2023-04-30 13:00:53,556{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.list-append: committed transaction 2199063295660
+2023-04-30 13:00:53,556{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 2 19] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:append 2 20]]
+2023-04-30 13:00:53,573{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:r 1 nil] [:append 2 21] [:append 1 13] [:r 2 nil] [:r 2 nil] [:append 2 22]]
+2023-04-30 13:00:53,588{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582923456
+2023-04-30 13:00:53,589{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 2 21] [:append 1 13] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:append 2 22]]
+2023-04-30 13:00:53,699{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 2 nil] [:append 0 7] [:append 1 14] [:append 1 15] [:r 0 nil] [:r 2 nil] [:r 2 nil] [:append 2 23]]
+2023-04-30 13:00:53,719{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.list-append: committed transaction 2199063295700
+2023-04-30 13:00:53,719{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]] [:append 0 7] [:append 1 14] [:append 1 15] [:r 0 [1 2 3 4 5 6 7]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]] [:append 2 23]]
+2023-04-30 13:00:53,855{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:append 2 24] [:r 2 nil]]
+2023-04-30 13:00:53,863{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582923508
+2023-04-30 13:00:53,863{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:append 2 24] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]]]
+2023-04-30 13:00:54,044{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 1 nil] [:append 2 25] [:append 2 26] [:append 2 27] [:append 2 28]]
+2023-04-30 13:00:54,058{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.list-append: committed transaction 1099543668000
+2023-04-30 13:00:54,058{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:append 2 25] [:append 2 26] [:append 2 27] [:append 2 28]]
+2023-04-30 13:00:54,237{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:append 2 29] [:r 0 nil] [:append 2 30] [:append 1 16]]
+2023-04-30 13:00:54,250{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.list-append: committed transaction 4398078551388
+2023-04-30 13:00:54,250{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:append 2 29] [:r 0 [1 2 3 4 5 6 7]] [:append 2 30] [:append 1 16]]
+2023-04-30 13:00:54,356{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:r 2 nil] [:r 2 nil] [:append 1 17] [:append 0 8] [:append 0 9]]
+2023-04-30 13:00:54,370{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.list-append: committed transaction 4398078551432
+2023-04-30 13:00:54,370{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 1 17] [:append 0 8] [:append 0 9]]
+2023-04-30 13:00:54,450{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:r 2 nil] [:append 2 31] [:r 1 nil] [:append 0 10]]
+2023-04-30 13:00:54,459{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668056
+2023-04-30 13:00:54,460{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 2 31] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 0 10]]
+2023-04-30 13:00:54,537{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 2 32] [:r 2 nil] [:r 1 nil] [:r 1 nil]]
+2023-04-30 13:00:54,544{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668092
+2023-04-30 13:00:54,544{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 2 32] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]]]
+2023-04-30 13:00:54,606{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:append 1 18] [:r 3 nil] [:append 3 1] [:r 0 nil] [:r 3 nil] [:append 3 2] [:r 3 nil] [:r 1 nil]]
+2023-04-30 13:00:54,623{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582923528
+2023-04-30 13:00:54,623{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:append 1 18] [:r 3 []] [:append 3 1] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:r 3 [1]] [:append 3 2] [:r 3 [1 2]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]]]
+2023-04-30 13:00:54,660{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 0 nil] [:append 1 19] [:append 3 3] [:append 0 11]]
+2023-04-30 13:00:54,670{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.list-append: committed transaction 1099543668120
+2023-04-30 13:00:54,670{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 0 [1 2 3 4 5 6 7 8 9 10]] [:append 1 19] [:append 3 3] [:append 0 11]]
+2023-04-30 13:00:54,811{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:append 1 20] [:r 3 nil] [:r 0 nil] [:append 3 4] [:append 0 12]]
+2023-04-30 13:00:54,824{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582923588
+2023-04-30 13:00:54,824{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:append 1 20] [:r 3 [1 2 3]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11]] [:append 3 4] [:append 0 12]]
+2023-04-30 13:00:54,881{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:r 3 nil] [:append 3 5] [:append 3 6] [:append 1 21] [:r 0 nil] [:append 1 22] [:r 1 nil]]
+2023-04-30 13:00:54,899{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590179148
+2023-04-30 13:00:54,900{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:r 3 [1 2 3 4]] [:append 3 5] [:append 3 6] [:append 1 21] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 1 22] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]]]
+2023-04-30 13:00:55,006{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:append 3 7] [:r 3 nil] [:append 0 13] [:r 3 nil] [:append 1 23] [:r 3 nil] [:append 3 8]]
+2023-04-30 13:00:55,025{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.list-append: committed transaction 4398078551480
+2023-04-30 13:00:55,025{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:append 3 7] [:r 3 [1 2 3 4 5 6 7]] [:append 0 13] [:r 3 [1 2 3 4 5 6 7]] [:append 1 23] [:r 3 [1 2 3 4 5 6 7]] [:append 3 8]]
+2023-04-30 13:00:55,177{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:r 3 nil] [:r 1 nil] [:r 3 nil] [:append 0 14] [:r 1 nil] [:append 0 15] [:r 3 nil]]
+2023-04-30 13:00:55,186{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668164
+2023-04-30 13:00:55,186{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:r 3 [1 2 3 4 5 6 7 8]] [:append 0 14] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 0 15] [:r 3 [1 2 3 4 5 6 7 8]]]
+2023-04-30 13:00:55,257{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:append 3 9] [:append 3 10]]
+2023-04-30 13:00:55,266{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.list-append: committed transaction 2199063295776
+2023-04-30 13:00:55,267{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:append 3 9] [:append 3 10]]
+2023-04-30 13:00:55,274{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:append 1 24] [:r 1 nil] [:r 1 nil] [:r 1 nil] [:r 1 nil]]
+2023-04-30 13:00:55,284{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590179212
+2023-04-30 13:00:55,284{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:append 1 24] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]]]
+2023-04-30 13:00:55,369{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:append 3 11] [:append 3 12] [:append 3 13] [:r 3 nil] [:r 1 nil] [:r 1 nil]]
+2023-04-30 13:00:55,382{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582923636
+2023-04-30 13:00:55,383{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:append 3 11] [:append 3 12] [:append 3 13] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]]]
+2023-04-30 13:00:55,508{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 1 25] [:r 0 nil] [:append 1 26] [:r 3 nil] [:append 1 27] [:r 3 nil] [:append 3 14] [:r 3 nil]]
+2023-04-30 13:00:55,525{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590179244
+2023-04-30 13:00:55,525{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 1 25] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:append 1 26] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13]] [:append 1 27] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13]] [:append 3 14] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]]]
+2023-04-30 13:00:55,561{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 3 nil] [:append 3 15] [:r 1 nil]]
+2023-04-30 13:00:55,568{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.list-append: committed transaction 2199063295804
+2023-04-30 13:00:55,568{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:append 3 15] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]]]
+2023-04-30 13:00:55,717{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 3 nil] [:r 1 nil] [:r 0 nil] [:r 3 nil] [:r 3 nil] [:r 3 nil]]
+2023-04-30 13:00:55,724{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582923688
+2023-04-30 13:00:55,725{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]]]
+2023-04-30 13:00:55,735{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 0 16] [:append 0 17] [:r 1 nil] [:r 3 nil] [:r 0 nil] [:r 3 nil]]
+2023-04-30 13:00:55,744{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668212
+2023-04-30 13:00:55,744{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 0 16] [:append 0 17] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]]]
+2023-04-30 13:00:55,907{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:r 3 nil] [:append 3 16] [:append 1 28] [:r 3 nil] [:append 1 29]]
+2023-04-30 13:00:55,921{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590179312
+2023-04-30 13:00:55,922{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:append 3 16] [:append 1 28] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 1 29]]
+2023-04-30 13:00:56,024{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:r 1 nil] [:append 3 17] [:append 1 30] [:append 3 18] [:r 3 nil] [:r 3 nil] [:append 3 19] [:append 3 20]]
+2023-04-30 13:00:56,045{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.list-append: committed transaction 2199063295828
+2023-04-30 13:00:56,045{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:append 3 17] [:append 1 30] [:append 3 18] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 3 19] [:append 3 20]]
+2023-04-30 13:00:56,191{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 3 nil] [:append 3 21] [:r 0 nil]]
+2023-04-30 13:00:56,197{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543668256
+2023-04-30 13:00:56,197{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]] [:append 3 21] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]]]
+2023-04-30 13:00:56,199{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:append 1 31] [:r 3 nil] [:r 1 nil] [:r 3 nil] [:r 3 nil] [:r 3 nil] [:r 3 nil]]
+2023-04-30 13:00:56,210{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582923716
+2023-04-30 13:00:56,210{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:append 1 31] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]]]
+2023-04-30 13:00:56,335{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 3 nil] [:r 1 nil]]
+2023-04-30 13:00:56,340{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590179360
+2023-04-30 13:00:56,340{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31]]]
+2023-04-30 13:00:56,477{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:append 1 32] [:r 3 nil]]
+2023-04-30 13:00:56,481{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:append 3 22] [:append 0 18] [:append 3 23]]
+2023-04-30 13:00:56,483{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590179372
+2023-04-30 13:00:56,483{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:append 1 32] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]]]
+2023-04-30 13:00:56,493{GMT}	INFO	[jepsen worker 3] jepsen.arangodb.tests.list-append: committed transaction 2199063295904
+2023-04-30 13:00:56,493{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:txn	[[:append 3 22] [:append 0 18] [:append 3 23]]
+2023-04-30 13:00:56,596{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:r 3 nil] [:append 4 1] [:append 3 24] [:append 4 2] [:r 3 nil] [:append 0 19] [:r 3 nil]]
+2023-04-30 13:00:56,612{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.list-append: committed transaction 4398078551544
+2023-04-30 13:00:56,612{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 4 1] [:append 3 24] [:append 4 2] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:append 0 19] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]]]
+2023-04-30 13:00:56,653{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:append 0 20] [:append 4 3]]
+2023-04-30 13:00:56,662{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590179400
+2023-04-30 13:00:56,662{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:append 0 20] [:append 4 3]]
+2023-04-30 13:00:56,725{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:r 3 nil] [:append 4 4] [:append 3 25] [:append 4 5]]
+2023-04-30 13:00:56,738{GMT}	INFO	[jepsen worker 18] jepsen.arangodb.tests.list-append: committed transaction 2199063295944
+2023-04-30 13:00:56,738{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:append 4 4] [:append 3 25] [:append 4 5]]
+2023-04-30 13:00:56,806{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:append 3 26] [:r 3 nil] [:r 3 nil] [:r 3 nil] [:append 3 27] [:r 3 nil]]
+2023-04-30 13:00:56,815{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.list-append: committed transaction 1099543668280
+2023-04-30 13:00:56,816{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:append 3 26] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26]] [:append 3 27] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]]]
+2023-04-30 13:00:56,888{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:r 3 nil] [:append 0 21] [:r 0 nil] [:append 3 28] [:r 4 nil]]
+2023-04-30 13:00:56,901{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.list-append: committed transaction 4398078551608
+2023-04-30 13:00:56,901{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 0 21] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:append 3 28] [:r 4 [1 2 3 4 5]]]
+2023-04-30 13:00:56,925{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:append 4 6] [:r 3 nil]]
+2023-04-30 13:00:56,932{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582923756
+2023-04-30 13:00:56,932{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:append 4 6] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28]]]
+2023-04-30 13:00:57,003{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:append 4 7] [:r 0 nil] [:r 3 nil] [:append 3 29] [:append 3 30]]
+2023-04-30 13:00:57,013{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543668324
+2023-04-30 13:00:57,013{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:append 4 7] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28]] [:append 3 29] [:append 3 30]]
+2023-04-30 13:00:57,092{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:append 4 8] [:append 4 9]]
+2023-04-30 13:00:57,101{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590179428
+2023-04-30 13:00:57,101{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:append 4 8] [:append 4 9]]
+2023-04-30 13:00:57,132{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:append 0 22] [:append 0 23] [:r 3 nil] [:r 4 nil] [:append 4 10]]
+2023-04-30 13:00:57,146{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.list-append: committed transaction 2199063295988
+2023-04-30 13:00:57,146{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:append 0 22] [:append 0 23] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 4 [1 2 3 4 5 6 7 8 9]] [:append 4 10]]
+2023-04-30 13:00:57,238{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:append 3 31] [:r 0 nil] [:append 3 32] [:append 5 1] [:append 5 2]]
+2023-04-30 13:00:57,255{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582923776
+2023-04-30 13:00:57,255{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:append 3 31] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 3 32] [:append 5 1] [:append 5 2]]
+2023-04-30 13:00:57,369{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:append 0 24] [:append 4 11] [:append 4 12] [:r 4 nil]]
+2023-04-30 13:00:57,382{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.list-append: committed transaction 4398078551648
+2023-04-30 13:00:57,382{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:append 0 24] [:append 4 11] [:append 4 12] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12]]]
+2023-04-30 13:00:57,471{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:r 5 nil] [:r 5 nil] [:append 5 3]]
+2023-04-30 13:00:57,475{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 5 nil] [:r 0 nil] [:append 5 4] [:append 5 5] [:r 4 nil] [:append 4 13]]
+2023-04-30 13:00:57,479{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.list-append: committed transaction 4398078551692
+2023-04-30 13:00:57,479{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:r 5 [1 2]] [:r 5 [1 2]] [:append 5 3]]
+2023-04-30 13:00:57,495{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: aborted transaction 3298582923832
+2023-04-30 13:00:57,495{GMT}	WARN	[jepsen worker 9] jepsen.arangodb.tests.list-append: AQL: Error message received from cluster node 'PRMR-c5e038cc-4f08-4f75-84ea-9b4317a16705': write-write conflict; key: 5 (while executing)
+2023-04-30 13:00:57,495{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:fail	:txn	[[:r 5 nil] [:r 0 nil] [:append 5 4] [:append 5 5] [:r 4 nil] [:append 4 13]]	:ww-conflict
+2023-04-30 13:00:57,571{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:append 0 25] [:append 5 6] [:append 0 26] [:append 5 7]]
+2023-04-30 13:00:57,585{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582923856
+2023-04-30 13:00:57,585{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:append 0 25] [:append 5 6] [:append 0 26] [:append 5 7]]
+2023-04-30 13:00:57,595{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	nil
+2023-04-30 13:00:57,672{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 0 27] [:r 5 nil] [:r 4 nil]]
+2023-04-30 13:00:57,678{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668372
+2023-04-30 13:00:57,678{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 0 27] [:r 5 [1 2 3 6 7]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12]]]
+2023-04-30 13:00:57,754{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 5 nil] [:r 4 nil] [:append 5 8] [:r 4 nil] [:append 4 14]]
+2023-04-30 13:00:57,762{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543668396
+2023-04-30 13:00:57,763{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 5 [1 2 3 6 7]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 5 8] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 4 14]]
+2023-04-30 13:00:57,799{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	[:isolated {"192.168.56.104" #{"192.168.56.105" "192.168.56.103" "192.168.56.101"}, "192.168.56.102" #{"192.168.56.105" "192.168.56.103" "192.168.56.101"}, "192.168.56.105" #{"192.168.56.104" "192.168.56.102"}, "192.168.56.103" #{"192.168.56.104" "192.168.56.102"}, "192.168.56.101" #{"192.168.56.104" "192.168.56.102"}}]
+2023-04-30 13:00:57,890{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 5 nil] [:r 4 nil] [:append 4 15]]
+2023-04-30 13:00:57,896{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590179456
+2023-04-30 13:00:57,896{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 5 [1 2 3 6 7 8]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14]] [:append 4 15]]
+2023-04-30 13:00:57,914{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:r 0 nil] [:r 4 nil] [:append 5 9] [:append 0 28] [:r 4 nil] [:append 5 10] [:r 5 nil]]
+2023-04-30 13:00:57,931{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 4 16] [:append 0 29] [:append 5 11] [:r 5 nil] [:r 5 nil]]
+2023-04-30 13:00:57,940{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668436
+2023-04-30 13:00:57,941{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 4 16] [:append 0 29] [:append 5 11] [:r 5 [1 2 3 6 7 8 11]] [:r 5 [1 2 3 6 7 8 11]]]
+2023-04-30 13:00:58,092{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:append 5 12] [:append 5 13] [:append 4 17] [:append 5 14] [:append 4 18] [:r 5 nil] [:r 5 nil] [:r 5 nil]]
+2023-04-30 13:00:58,111{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590179480
+2023-04-30 13:00:58,112{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:append 5 12] [:append 5 13] [:append 4 17] [:append 5 14] [:append 4 18] [:r 5 [1 2 3 6 7 8 11 12 13 14]] [:r 5 [1 2 3 6 7 8 11 12 13 14]] [:r 5 [1 2 3 6 7 8 11 12 13 14]]]
+2023-04-30 13:00:58,258{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:r 5 nil] [:append 5 15] [:r 5 nil] [:append 5 16] [:append 5 17]]
+2023-04-30 13:00:58,357{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:r 4 nil] [:append 0 30]]
+2023-04-30 13:00:58,363{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590179556
+2023-04-30 13:00:58,363{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18]] [:append 0 30]]
+2023-04-30 13:00:58,366{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:append 4 19] [:r 4 nil] [:r 4 nil]]
+2023-04-30 13:00:58,372{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590179576
+2023-04-30 13:00:58,372{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:append 4 19] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19]]]
+2023-04-30 13:00:58,378{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:r 5 nil] [:append 5 18]]
+2023-04-30 13:00:58,382{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.list-append: committed transaction 1099543668484
+2023-04-30 13:00:58,382{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:r 5 [1 2 3 6 7 8 11 12 13 14]] [:append 5 18]]
+2023-04-30 13:00:58,385{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 5 19] [:append 4 20] [:r 5 nil] [:r 5 nil] [:append 4 21] [:append 4 22] [:append 4 23]]
+2023-04-30 13:00:58,403{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590179600
+2023-04-30 13:00:58,403{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 5 19] [:append 4 20] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19]] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19]] [:append 4 21] [:append 4 22] [:append 4 23]]
+2023-04-30 13:00:58,480{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 0 nil] [:append 0 31]]
+2023-04-30 13:00:58,486{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590179672
+2023-04-30 13:00:58,486{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 29 30]] [:append 0 31]]
+2023-04-30 13:00:58,661{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:r 0 nil] [:append 5 20] [:append 5 21] [:append 4 24] [:r 5 nil]]
+2023-04-30 13:00:58,678{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.list-append: committed transaction 3298582923908
+2023-04-30 13:00:58,678{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 29 30 31]] [:append 5 20] [:append 5 21] [:append 4 24] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21]]]
+2023-04-30 13:00:58,833{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:append 5 22] [:r 5 nil] [:append 4 25] [:append 5 23] [:r 5 nil] [:append 5 24] [:r 5 nil] [:r 4 nil]]
+2023-04-30 13:00:58,849{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582923956
+2023-04-30 13:00:58,850{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:append 5 22] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22]] [:append 4 25] [:append 5 23] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23]] [:append 5 24] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25]]]
+2023-04-30 13:00:58,981{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 5 nil] [:append 5 25] [:append 5 26] [:r 5 nil] [:append 5 27]]
+2023-04-30 13:00:58,991{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.list-append: committed transaction 1099543668508
+2023-04-30 13:00:58,992{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24]] [:append 5 25] [:append 5 26] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26]] [:append 5 27]]
+2023-04-30 13:00:59,070{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:append 4 26] [:append 5 28] [:append 4 27] [:append 5 29] [:r 5 nil] [:r 5 nil] [:r 5 nil] [:append 5 30]]
+2023-04-30 13:00:59,105{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:r 5 nil] [:append 5 31]]
+2023-04-30 13:00:59,157{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:r 5 nil] [:r 5 nil] [:r 5 nil] [:append 5 32] [:append 4 28] [:r 5 nil] [:r 4 nil] [:r 5 nil]]
+2023-04-30 13:00:59,188{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:append 0 32] [:r 0 nil] [:append 6 1] [:r 4 nil] [:append 6 2]]
+2023-04-30 13:00:59,198{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543668556
+2023-04-30 13:00:59,199{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:append 0 32] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 29 30 31 32]] [:append 6 1] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25]] [:append 6 2]]
+2023-04-30 13:00:59,281{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 6 nil] [:r 6 nil] [:r 4 nil]]
+2023-04-30 13:00:59,285{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590179692
+2023-04-30 13:00:59,285{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 6 [1 2]] [:r 6 [1 2]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25]]]
+2023-04-30 13:00:59,382{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 4 nil] [:append 4 29] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:r 4 nil]]
+2023-04-30 13:00:59,392{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590179708
+2023-04-30 13:00:59,392{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25]] [:append 4 29] [:r 6 [1 2]] [:r 6 [1 2]] [:r 6 [1 2]] [:r 6 [1 2]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25 29]]]
+2023-04-30 13:00:59,471{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:r 6 nil] [:append 4 30] [:r 6 nil]]
+2023-04-30 13:00:59,478{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582924024
+2023-04-30 13:00:59,478{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:r 6 [1 2]] [:append 4 30] [:r 6 [1 2]]]
+2023-04-30 13:00:59,536{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 6 3] [:r 4 nil] [:append 6 4] [:append 4 31] [:append 4 32]]
+2023-04-30 13:00:59,546{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:r 6 nil] [:r 6 nil]]
+2023-04-30 13:00:59,549{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582924048
+2023-04-30 13:00:59,549{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:r 6 [1 2]] [:r 6 [1 2]]]
+2023-04-30 13:00:59,551{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590179748
+2023-04-30 13:00:59,551{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 6 3] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25 29 30]] [:append 6 4] [:append 4 31] [:append 4 32]]
+2023-04-30 13:00:59,740{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:append 6 5] [:append 6 6] [:append 6 7] [:r 7 nil] [:append 6 8] [:append 6 9] [:r 7 nil]]
+2023-04-30 13:00:59,758{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590179804
+2023-04-30 13:00:59,758{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:append 6 5] [:append 6 6] [:append 6 7] [:r 7 []] [:append 6 8] [:append 6 9] [:r 7 []]]
+2023-04-30 13:00:59,926{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:r 6 nil] [:append 6 10] [:r 6 nil] [:append 6 11] [:append 6 12] [:append 6 13]]
+2023-04-30 13:00:59,940{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590179876
+2023-04-30 13:00:59,941{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:r 6 [1 2 3 4 5 6 7 8 9]] [:append 6 10] [:r 6 [1 2 3 4 5 6 7 8 9 10]] [:append 6 11] [:append 6 12] [:append 6 13]]
+2023-04-30 13:01:00,084{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:append 6 14] [:r 6 nil] [:r 6 nil]]
+2023-04-30 13:01:00,091{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590179936
+2023-04-30 13:01:00,092{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:append 6 14] [:r 6 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 6 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]]]
+2023-04-30 13:01:00,244{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 4 nil] [:append 6 15] [:r 6 nil]]
+2023-04-30 13:01:00,252{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590179960
+2023-04-30 13:01:00,252{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25 29 30 31 32]] [:append 6 15] [:r 6 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]]]
+2023-04-30 13:01:00,267{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 4 nil] [:append 6 16] [:r 6 nil] [:r 7 nil] [:append 6 17]]
+2023-04-30 13:01:00,279{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543668604
+2023-04-30 13:01:00,280{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25 29 30 31 32]] [:append 6 16] [:r 6 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:r 7 []] [:append 6 17]]
+2023-04-30 13:01:00,414{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 7 nil] [:append 8 1] [:append 6 18]]
+2023-04-30 13:01:00,425{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582924060
+2023-04-30 13:01:00,425{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 7 []] [:append 8 1] [:append 6 18]]
+2023-04-30 13:01:00,599{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:append 7 1] [:append 8 2] [:r 6 nil] [:r 8 nil] [:append 6 19] [:append 6 20]]
+2023-04-30 13:01:00,775{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:append 6 21] [:append 6 22] [:append 6 23] [:r 8 nil] [:append 6 24] [:append 6 25]]
+2023-04-30 13:01:00,777{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:append 6 26] [:r 6 nil] [:append 6 27] [:r 6 nil]]
+2023-04-30 13:01:00,786{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: aborted transaction 1099543668644
+2023-04-30 13:01:00,786{GMT}	WARN	[jepsen worker 5] jepsen.arangodb.tests.list-append: AQL: Error message received from cluster node 'PRMR-c5e038cc-4f08-4f75-84ea-9b4317a16705': timeout waiting to lock key Operation timed out: Timeout waiting to lock key; key: 6 (while executing)
+2023-04-30 13:01:00,786{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:fail	:txn	[[:append 6 26] [:r 6 nil] [:append 6 27] [:r 6 nil]]	:ww-conflict
+2023-04-30 13:01:00,797{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590179984
+2023-04-30 13:01:00,797{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:append 6 21] [:append 6 22] [:append 6 23] [:r 8 [1]] [:append 6 24] [:append 6 25]]
+2023-04-30 13:01:00,802{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 8 3] [:r 8 nil] [:append 8 4] [:append 6 28] [:append 8 5] [:r 6 nil] [:append 8 6]]
+2023-04-30 13:01:00,820{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590180052
+2023-04-30 13:01:00,820{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 8 3] [:r 8 [1 3]] [:append 8 4] [:append 6 28] [:append 8 5] [:r 6 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 28]] [:append 8 6]]
+2023-04-30 13:01:00,993{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:append 8 7] [:append 6 29] [:append 6 30] [:append 6 31] [:append 6 32] [:r 8 nil] [:append 8 8]]
+2023-04-30 13:01:01,025{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:r 7 nil] [:r 9 nil] [:r 9 nil] [:r 9 nil] [:append 8 9] [:r 9 nil] [:append 7 2] [:append 8 10]]
+2023-04-30 13:01:01,036{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.list-append: committed transaction 1099543668660
+2023-04-30 13:01:01,036{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:r 7 []] [:r 9 []] [:r 9 []] [:r 9 []] [:append 8 9] [:r 9 []] [:append 7 2] [:append 8 10]]
+2023-04-30 13:01:01,137{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 8 nil] [:r 9 nil] [:r 9 nil] [:r 9 nil] [:append 8 11] [:append 9 1] [:append 8 12]]
+2023-04-30 13:01:01,152{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582924092
+2023-04-30 13:01:01,152{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 8 [1 3 4 5 6 9 10]] [:r 9 []] [:r 9 []] [:r 9 []] [:append 8 11] [:append 9 1] [:append 8 12]]
+2023-04-30 13:01:01,252{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 9 nil] [:append 7 3] [:r 9 nil] [:r 9 nil] [:append 9 2]]
+2023-04-30 13:01:01,263{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590180124
+2023-04-30 13:01:01,263{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 9 [1]] [:append 7 3] [:r 9 [1]] [:r 9 [1]] [:append 9 2]]
+2023-04-30 13:01:01,400{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:append 9 3] [:r 7 nil]]
+2023-04-30 13:01:01,405{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.list-append: committed transaction 1099543668720
+2023-04-30 13:01:01,405{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:append 9 3] [:r 7 [2 3]]]
+2023-04-30 13:01:01,573{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 7 4] [:r 7 nil] [:append 7 5]]
+2023-04-30 13:01:01,582{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590180164
+2023-04-30 13:01:01,582{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 7 4] [:r 7 [2 3 4]] [:append 7 5]]
+2023-04-30 13:01:01,721{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 9 4] [:r 8 nil] [:r 9 nil] [:append 9 5] [:append 9 6] [:r 9 nil] [:r 7 nil]]
+2023-04-30 13:01:01,733{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668740
+2023-04-30 13:01:01,733{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 9 4] [:r 8 [1 3 4 5 6 9 10 11 12]] [:r 9 [1 2 3 4]] [:append 9 5] [:append 9 6] [:r 9 [1 2 3 4 5 6]] [:r 7 [2 3 4 5]]]
+2023-04-30 13:01:01,777{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 7 nil] [:r 8 nil] [:r 9 nil] [:append 9 7] [:r 9 nil] [:append 7 6] [:r 9 nil]]
+2023-04-30 13:01:01,787{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.list-append: committed transaction 1099543668796
+2023-04-30 13:01:01,787{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 7 [2 3 4 5]] [:r 8 [1 3 4 5 6 9 10 11 12]] [:r 9 [1 2 3 4 5 6]] [:append 9 7] [:r 9 [1 2 3 4 5 6 7]] [:append 7 6] [:r 9 [1 2 3 4 5 6 7]]]
+2023-04-30 13:01:01,909{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:r 8 nil] [:append 8 13] [:append 8 14]]
+2023-04-30 13:01:01,916{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668844
+2023-04-30 13:01:01,916{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:r 8 [1 3 4 5 6 9 10 11 12]] [:append 8 13] [:append 8 14]]
+2023-04-30 13:01:02,030{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:append 8 15] [:append 9 8] [:r 9 nil] [:append 7 7] [:append 9 9]]
+2023-04-30 13:01:02,045{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582924152
+2023-04-30 13:01:02,045{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:append 8 15] [:append 9 8] [:r 9 [1 2 3 4 5 6 7 8]] [:append 7 7] [:append 9 9]]
+2023-04-30 13:01:02,094{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 8 16] [:r 7 nil] [:append 7 8] [:append 8 17] [:append 9 10] [:r 8 nil] [:r 9 nil]]
+2023-04-30 13:01:02,110{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590180196
+2023-04-30 13:01:02,111{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 8 16] [:r 7 [2 3 4 5 6 7]] [:append 7 8] [:append 8 17] [:append 9 10] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17]] [:r 9 [1 2 3 4 5 6 7 8 9 10]]]
+2023-04-30 13:01:02,172{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 9 nil] [:append 7 9] [:r 9 nil]]
+2023-04-30 13:01:02,173{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 8 nil] [:r 9 nil] [:r 9 nil] [:append 9 11] [:r 9 nil] [:append 8 18]]
+2023-04-30 13:01:02,180{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582924208
+2023-04-30 13:01:02,180{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 9 [1 2 3 4 5 6 7 8 9 10]] [:append 7 9] [:r 9 [1 2 3 4 5 6 7 8 9 10]]]
+2023-04-30 13:01:02,184{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590180260
+2023-04-30 13:01:02,184{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17]] [:r 9 [1 2 3 4 5 6 7 8 9 10]] [:r 9 [1 2 3 4 5 6 7 8 9 10]] [:append 9 11] [:r 9 [1 2 3 4 5 6 7 8 9 10 11]] [:append 8 18]]
+2023-04-30 13:01:02,356{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:append 9 12] [:append 7 10] [:r 8 nil] [:append 8 19] [:r 9 nil] [:append 9 13] [:append 9 14] [:r 9 nil]]
+2023-04-30 13:01:02,376{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582924232
+2023-04-30 13:01:02,376{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:append 9 12] [:append 7 10] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18]] [:append 8 19] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 9 13] [:append 9 14] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]]]
+2023-04-30 13:01:02,534{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:append 8 20] [:append 9 15] [:r 7 nil] [:append 9 16] [:append 8 21] [:r 9 nil] [:append 7 11] [:append 9 17]]
+2023-04-30 13:01:02,555{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582924308
+2023-04-30 13:01:02,555{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:append 8 20] [:append 9 15] [:r 7 [2 3 4 5 6 7 8 9 10]] [:append 9 16] [:append 8 21] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 7 11] [:append 9 17]]
+2023-04-30 13:01:02,694{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:r 9 nil] [:append 9 18] [:append 9 19] [:append 8 22] [:append 9 20]]
+2023-04-30 13:01:02,709{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590180304
+2023-04-30 13:01:02,709{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 9 18] [:append 9 19] [:append 8 22] [:append 9 20]]
+2023-04-30 13:01:02,726{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:r 8 nil] [:append 9 21] [:r 8 nil]]
+2023-04-30 13:01:02,733{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582924392
+2023-04-30 13:01:02,733{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22]] [:append 9 21] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22]]]
+2023-04-30 13:01:02,772{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:r 9 nil] [:r 9 nil] [:r 9 nil] [:append 8 23] [:append 9 22]]
+2023-04-30 13:01:02,776{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:r 9 nil] [:r 7 nil] [:r 9 nil] [:r 9 nil] [:append 8 24] [:r 9 nil] [:r 9 nil] [:r 9 nil]]
+2023-04-30 13:01:02,788{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.list-append: committed transaction 3298582924416
+2023-04-30 13:01:02,788{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 7 [2 3 4 5 6 7 8 9 10 11]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:append 8 24] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]]]
+2023-04-30 13:01:02,799{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop	nil
+2023-04-30 13:01:02,855{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:append 9 23] [:r 9 nil] [:r 9 nil] [:append 8 25] [:r 8 nil]]
+2023-04-30 13:01:02,870{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582924460
+2023-04-30 13:01:02,870{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:append 9 23] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23]] [:append 8 25] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25]]]
+2023-04-30 13:01:02,890{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop	:network-healed
+2023-04-30 13:01:02,965{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:append 9 24] [:append 7 12] [:append 7 13] [:r 9 nil] [:r 9 nil] [:r 9 nil] [:append 8 26]]
+2023-04-30 13:01:02,979{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.list-append: committed transaction 1099543668876
+2023-04-30 13:01:02,979{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:append 9 24] [:append 7 12] [:append 7 13] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24]] [:append 8 26]]
+2023-04-30 13:01:02,998{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 7 nil] [:append 8 27] [:append 8 28] [:append 9 25] [:append 8 29] [:r 7 nil]]
+2023-04-30 13:01:03,013{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582924500
+2023-04-30 13:01:03,013{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 7 [2 3 4 5 6 7 8 9 10 11 12 13]] [:append 8 27] [:append 8 28] [:append 9 25] [:append 8 29] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13]]]
+2023-04-30 13:01:03,122{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:r 8 nil] [:r 9 nil] [:r 8 nil] [:append 9 26]]
+2023-04-30 13:01:03,130{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582924560
+2023-04-30 13:01:03,130{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 27 28 29]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25]] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 27 28 29]] [:append 9 26]]
+2023-04-30 13:01:03,302{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 9 27] [:r 9 nil]]
+2023-04-30 13:01:03,308{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668940
+2023-04-30 13:01:03,308{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 9 27] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27]]]
+2023-04-30 13:01:03,447{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:txn	[[:r 7 nil] [:append 8 30] [:r 9 nil]]
+2023-04-30 13:01:03,452{GMT}	INFO	[jepsen worker 15] jepsen.arangodb.tests.list-append: committed transaction 1099543668960
+2023-04-30 13:01:03,452{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:ok	:txn	[[:r 7 [2 3 4 5 6 7 8 9 10 11 12 13]] [:append 8 30] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27]]]
+2023-04-30 13:01:03,576{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 9 nil] [:append 7 14] [:r 9 nil] [:r 7 nil] [:append 9 28] [:r 8 nil] [:append 8 31] [:r 8 nil]]
+2023-04-30 13:01:03,590{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590180360
+2023-04-30 13:01:03,591{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27]] [:append 7 14] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27]] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14]] [:append 9 28] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 27 28 29 30]] [:append 8 31] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 27 28 29 30 31]]]
+2023-04-30 13:01:03,643{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.list-append: committed transaction 2199063296060
+2023-04-30 13:01:03,643{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:append 7 1] [:append 8 2] [:r 6 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 28]] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 27 28 29 30 31 2]] [:append 6 19] [:append 6 20]]
+2023-04-30 13:01:03,666{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 9 nil] [:r 9 nil] [:append 9 29] [:r 8 nil] [:r 8 nil] [:append 8 32]]
+2023-04-30 13:01:03,680{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.list-append: committed transaction 2199063296120
+2023-04-30 13:01:03,680{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28]] [:append 9 29] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 27 28 29 30 31 2]] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 27 28 29 30 31 2]] [:append 8 32]]
+2023-04-30 13:01:03,737{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:append 9 30] [:append 9 31] [:r 9 nil] [:append 10 1] [:r 9 nil] [:r 9 nil]]
+2023-04-30 13:01:03,752{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582924592
+2023-04-30 13:01:03,752{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:append 9 30] [:append 9 31] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28 29 30 31]] [:append 10 1] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28 29 30 31]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28 29 30 31]]]
+2023-04-30 13:01:03,817{GMT}	INFO	[jepsen worker 16] jepsen.arangodb.tests.list-append: committed transaction 4398078551764
+2023-04-30 13:01:03,817{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:ok	:txn	[[:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28 29 30 31]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28 29 30 31]] [:r 9 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28 29 30 31]] [:append 8 23] [:append 9 22]]
+2023-04-30 13:01:03,818{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:append 9 32] [:append 11 1] [:append 11 2] [:append 11 3]]
+2023-04-30 13:01:03,823{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:append 11 4] [:append 11 5]]
+2023-04-30 13:01:03,833{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: aborted transaction 5497590180420
+2023-04-30 13:01:03,833{GMT}	WARN	[jepsen worker 12] jepsen.arangodb.tests.list-append: AQL: Error message received from cluster node 'PRMR-c5e038cc-4f08-4f75-84ea-9b4317a16705': timeout waiting to lock key Operation timed out: Timeout waiting to lock key - in index primary of type primary over '_key'; conflicting key: 11 (while executing)
+2023-04-30 13:01:03,833{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:fail	:txn	[[:append 11 4] [:append 11 5]]	:ww-conflict
+2023-04-30 13:01:03,835{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582924644
+2023-04-30 13:01:03,835{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:append 9 32] [:append 11 1] [:append 11 2] [:append 11 3]]
+2023-04-30 13:01:03,977{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 11 6] [:r 10 nil] [:r 11 nil] [:r 11 nil] [:r 10 nil] [:append 11 7] [:r 10 nil]]
+2023-04-30 13:01:03,987{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543668984
+2023-04-30 13:01:03,987{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 11 6] [:r 10 [1]] [:r 11 [1 2 3 6]] [:r 11 [1 2 3 6]] [:r 10 [1]] [:append 11 7] [:r 10 [1]]]
+2023-04-30 13:01:04,048{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.list-append: committed transaction 4398078551740
+2023-04-30 13:01:04,048{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:append 8 7] [:append 6 29] [:append 6 30] [:append 6 31] [:append 6 32] [:r 8 [1 3 4 5 6 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 27 28 29 30 31 2 32 23 7]] [:append 8 8]]
+2023-04-30 13:01:04,158{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:r 10 nil] [:append 7 15] [:append 11 8]]
+2023-04-30 13:01:04,167{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.list-append: committed transaction 3298582924696
+2023-04-30 13:01:04,167{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:r 10 [1]] [:append 7 15] [:append 11 8]]
+2023-04-30 13:01:04,351{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:append 11 9] [:append 11 10] [:append 11 11] [:append 11 12] [:append 7 16] [:r 11 nil]]
+2023-04-30 13:01:04,369{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582924728
+2023-04-30 13:01:04,369{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:append 11 9] [:append 11 10] [:append 11 11] [:append 11 12] [:append 7 16] [:r 11 [1 2 3 6 7 8 9 10 11 12]]]
+2023-04-30 13:01:04,398{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:txn	[[:append 11 13] [:r 10 nil]]
+2023-04-30 13:01:04,404{GMT}	INFO	[jepsen worker 4] jepsen.arangodb.tests.list-append: committed transaction 3298582924796
+2023-04-30 13:01:04,404{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:txn	[[:append 11 13] [:r 10 [1]]]
+2023-04-30 13:01:04,483{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 10 2] [:append 7 17] [:r 10 nil] [:append 11 14] [:r 11 nil] [:r 10 nil] [:append 7 18]]
+2023-04-30 13:01:04,496{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543669032
+2023-04-30 13:01:04,496{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 10 2] [:append 7 17] [:r 10 [1 2]] [:append 11 14] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14]] [:r 10 [1 2]] [:append 7 18]]
+2023-04-30 13:01:04,527{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 11 nil] [:append 11 15] [:append 10 3] [:r 7 nil] [:append 10 4] [:r 11 nil]]
+2023-04-30 13:01:04,538{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.list-append: committed transaction 1099543669096
+2023-04-30 13:01:04,538{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 11 [1 2 3 6 7 8 9 10 11 12 13 14]] [:append 11 15] [:append 10 3] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18]] [:append 10 4] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15]]]
+2023-04-30 13:01:04,644{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 10 nil] [:append 11 16] [:r 10 nil] [:append 11 17] [:r 11 nil] [:r 11 nil] [:append 11 18]]
+2023-04-30 13:01:04,660{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543669148
+2023-04-30 13:01:04,660{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 10 [1 2 3 4]] [:append 11 16] [:r 10 [1 2 3 4]] [:append 11 17] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17]] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 11 18]]
+2023-04-30 13:01:04,698{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:append 10 5] [:r 10 nil] [:append 11 19] [:r 11 nil]]
+2023-04-30 13:01:04,707{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.list-append: committed transaction 2199063296164
+2023-04-30 13:01:04,708{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:append 10 5] [:r 10 [1 2 3 4 5]] [:append 11 19] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19]]]
+2023-04-30 13:01:04,709{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.list-append: committed transaction 4398078551716
+2023-04-30 13:01:04,709{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 29 30 31 32]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25 29 30 31 32]] [:append 5 9] [:append 0 28] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25 29 30 31 32]] [:append 5 10] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10]]]
+2023-04-30 13:01:04,798{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:append 11 20] [:append 11 21] [:append 10 6] [:append 11 22] [:r 11 nil] [:append 11 23] [:r 10 nil]]
+2023-04-30 13:01:04,815{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.list-append: committed transaction 4398078551916
+2023-04-30 13:01:04,815{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:append 11 20] [:append 11 21] [:append 10 6] [:append 11 22] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]] [:append 11 23] [:r 10 [1 2 3 4 5 6]]]
+2023-04-30 13:01:04,973{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:r 11 nil] [:append 11 24] [:append 11 25] [:append 11 26] [:append 10 7] [:append 11 27] [:append 10 8] [:append 11 28]]
+2023-04-30 13:01:04,990{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543669204
+2023-04-30 13:01:04,990{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 11 24] [:append 11 25] [:append 11 26] [:append 10 7] [:append 11 27] [:append 10 8] [:append 11 28]]
+2023-04-30 13:01:05,010{GMT}	INFO	[jepsen worker 8] jepsen.arangodb.tests.list-append: committed transaction 2199063296036
+2023-04-30 13:01:05,010{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:ok	:txn	[[:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10]] [:append 5 15] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15]] [:append 5 16] [:append 5 17]]
+2023-04-30 13:01:05,113{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:append 11 29] [:r 11 nil] [:r 11 nil] [:r 11 nil] [:r 7 nil] [:r 7 nil] [:append 10 9]]
+2023-04-30 13:01:05,126{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590180436
+2023-04-30 13:01:05,126{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:append 11 29] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18]] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18]] [:append 10 9]]
+2023-04-30 13:01:05,184{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 11 nil] [:append 10 10] [:r 11 nil] [:r 10 nil] [:r 11 nil] [:append 11 30] [:r 11 nil] [:r 11 nil]]
+2023-04-30 13:01:05,197{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590180484
+2023-04-30 13:01:05,197{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:append 10 10] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:r 10 [1 2 3 4 5 6 7 8 9 10]] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:append 11 30] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]]]
+2023-04-30 13:01:05,352{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:append 11 31] [:append 11 32] [:r 11 nil] [:r 11 nil] [:r 11 nil] [:r 10 nil] [:r 10 nil] [:append 12 1]]
+2023-04-30 13:01:05,366{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.list-append: committed transaction 4398078551988
+2023-04-30 13:01:05,366{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:append 11 31] [:append 11 32] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32]] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32]] [:r 11 [1 2 3 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32]] [:r 10 [1 2 3 4 5 6 7 8 9 10]] [:r 10 [1 2 3 4 5 6 7 8 9 10]] [:append 12 1]]
+2023-04-30 13:01:05,478{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:append 12 2] [:append 7 19] [:append 12 3]]
+2023-04-30 13:01:05,490{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582924816
+2023-04-30 13:01:05,490{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:append 12 2] [:append 7 19] [:append 12 3]]
+2023-04-30 13:01:05,516{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:append 10 11] [:append 12 4] [:append 12 5] [:r 12 nil] [:append 12 6]]
+2023-04-30 13:01:05,530{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.list-append: committed transaction 4398078552048
+2023-04-30 13:01:05,530{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:append 10 11] [:append 12 4] [:append 12 5] [:r 12 [1 2 3 4 5]] [:append 12 6]]
+2023-04-30 13:01:05,563{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:append 10 12] [:append 12 7] [:r 12 nil]]
+2023-04-30 13:01:05,572{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590180536
+2023-04-30 13:01:05,572{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:append 10 12] [:append 12 7] [:r 12 [1 2 3 4 5 6 7]]]
+2023-04-30 13:01:05,635{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:append 10 13] [:append 10 14] [:append 10 15]]
+2023-04-30 13:01:05,647{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582924856
+2023-04-30 13:01:05,647{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:append 10 13] [:append 10 14] [:append 10 15]]
+2023-04-30 13:01:05,742{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:append 10 16] [:r 10 nil] [:append 12 8] [:r 12 nil] [:r 12 nil] [:r 12 nil] [:r 12 nil]]
+2023-04-30 13:01:05,754{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.list-append: committed transaction 2199063296248
+2023-04-30 13:01:05,754{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:append 10 16] [:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 12 8] [:r 12 [1 2 3 4 5 6 7 8]] [:r 12 [1 2 3 4 5 6 7 8]] [:r 12 [1 2 3 4 5 6 7 8]] [:r 12 [1 2 3 4 5 6 7 8]]]
+2023-04-30 13:01:05,778{GMT}	INFO	[jepsen worker 18] jepsen.arangodb.tests.list-append: aborted transaction 2199063296044
+2023-04-30 13:01:05,778{GMT}	WARN	[jepsen worker 18] jepsen.arangodb.tests.list-append: AQL: Error message received from cluster node 'PRMR-c5e038cc-4f08-4f75-84ea-9b4317a16705': timeout waiting to lock key Operation timed out: Timeout waiting to lock key; key: 5 (while executing)
+2023-04-30 13:01:05,778{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:fail	:txn	[[:r 5 nil] [:append 5 31]]	:ww-conflict
+2023-04-30 13:01:05,784{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.list-append: committed transaction 4398078551724
+2023-04-30 13:01:05,784{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:append 4 26] [:append 5 28] [:append 4 27] [:append 5 29] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15 16 17 28 29]] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15 16 17 28 29]] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15 16 17 28 29]] [:append 5 30]]
+2023-04-30 13:01:05,931{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 10 nil] [:append 7 20] [:r 12 nil] [:append 10 17] [:append 7 21] [:r 10 nil] [:r 10 nil] [:append 10 18]]
+2023-04-30 13:01:05,948{GMT}	INFO	[jepsen worker 13] jepsen.arangodb.tests.list-append: committed transaction 2199063296308
+2023-04-30 13:01:05,949{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:ok	:txn	[[:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 7 20] [:r 12 [1 2 3 4 5 6 7 8]] [:append 10 17] [:append 7 21] [:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 10 18]]
+2023-04-30 13:01:06,079{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 10 nil] [:append 10 19] [:append 10 20] [:append 12 9] [:r 12 nil] [:append 12 10] [:r 10 nil]]
+2023-04-30 13:01:06,094{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590180568
+2023-04-30 13:01:06,095{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 10 19] [:append 10 20] [:append 12 9] [:r 12 [1 2 3 4 5 6 7 8 9]] [:append 12 10] [:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]]]
+2023-04-30 13:01:06,212{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:append 10 21] [:append 7 22]]
+2023-04-30 13:01:06,220{GMT}	INFO	[jepsen worker 1] jepsen.arangodb.tests.list-append: committed transaction 4398078552164
+2023-04-30 13:01:06,220{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:txn	[[:append 10 21] [:append 7 22]]
+2023-04-30 13:01:06,291{GMT}	INFO	[jepsen worker 3] jepsen.arangodb.tests.list-append: committed transaction 2199063296052
+2023-04-30 13:01:06,291{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:txn	[[:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15 16 17 28 29 30]] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15 16 17 28 29 30]] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15 16 17 28 29 30]] [:append 5 32] [:append 4 28] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15 16 17 28 29 30 32]] [:r 4 [1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25 29 30 31 32 26 27 28]] [:r 5 [1 2 3 6 7 8 11 12 13 14 18 19 20 21 22 23 24 25 26 27 9 10 15 16 17 28 29 30 32]]]
+2023-04-30 13:01:06,333{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:append 12 11] [:r 12 nil]]
+2023-04-30 13:01:06,339{GMT}	INFO	[jepsen worker 14] jepsen.arangodb.tests.list-append: committed transaction 3298582924896
+2023-04-30 13:01:06,339{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:ok	:txn	[[:append 12 11] [:r 12 [1 2 3 4 5 6 7 8 9 10 11]]]
+2023-04-30 13:01:06,486{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 10 nil] [:r 12 nil] [:append 12 12] [:r 7 nil] [:append 10 22] [:append 12 13] [:r 7 nil]]
+2023-04-30 13:01:06,488{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 12 nil] [:append 12 14] [:r 12 nil] [:append 10 23] [:append 7 23]]
+2023-04-30 13:01:06,496{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: aborted transaction 5497590180632
+2023-04-30 13:01:06,496{GMT}	WARN	[jepsen worker 7] jepsen.arangodb.tests.list-append: AQL: Error message received from cluster node 'PRMR-c5e038cc-4f08-4f75-84ea-9b4317a16705': timeout waiting to lock key Operation timed out: Timeout waiting to lock key; key: 12 (while executing)
+2023-04-30 13:01:06,496{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:fail	:txn	[[:r 10 nil] [:r 12 nil] [:append 12 12] [:r 7 nil] [:append 10 22] [:append 12 13] [:r 7 nil]]	:ww-conflict
+2023-04-30 13:01:06,501{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590180640
+2023-04-30 13:01:06,501{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 12 [1 2 3 4 5 6 7 8 9 10 11]] [:append 12 14] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14]] [:append 10 23] [:append 7 23]]
+2023-04-30 13:01:06,575{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:r 12 nil] [:append 10 24] [:append 12 15] [:r 12 nil] [:append 7 24] [:r 10 nil] [:append 10 25]]
+2023-04-30 13:01:06,589{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543669300
+2023-04-30 13:01:06,589{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:r 12 [1 2 3 4 5 6 7 8 9 10 11 14]] [:append 10 24] [:append 12 15] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15]] [:append 7 24] [:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24]] [:append 10 25]]
+2023-04-30 13:01:06,714{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:append 12 16] [:append 12 17] [:r 12 nil] [:append 12 18] [:r 12 nil]]
+2023-04-30 13:01:06,726{GMT}	INFO	[jepsen worker 11] jepsen.arangodb.tests.list-append: committed transaction 4398078552192
+2023-04-30 13:01:06,726{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:ok	:txn	[[:append 12 16] [:append 12 17] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15 16 17]] [:append 12 18] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15 16 17 18]]]
+2023-04-30 13:01:06,865{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:append 7 25] [:append 12 19] [:append 12 20] [:append 12 21] [:r 12 nil] [:append 12 22] [:append 10 26]]
+2023-04-30 13:01:06,886{GMT}	INFO	[jepsen worker 19] jepsen.arangodb.tests.list-append: committed transaction 3298582924916
+2023-04-30 13:01:06,886{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:ok	:txn	[[:append 7 25] [:append 12 19] [:append 12 20] [:append 12 21] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15 16 17 18 19 20 21]] [:append 12 22] [:append 10 26]]
+2023-04-30 13:01:06,962{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:append 7 26] [:r 12 nil] [:r 10 nil]]
+2023-04-30 13:01:06,969{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590180712
+2023-04-30 13:01:06,969{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:append 7 26] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15 16 17 18 19 20 21 22]] [:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26]]]
+2023-04-30 13:01:07,130{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:append 10 27] [:r 12 nil]]
+2023-04-30 13:01:07,136{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590180736
+2023-04-30 13:01:07,136{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:append 10 27] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15 16 17 18 19 20 21 22]]]
+2023-04-30 13:01:07,295{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:append 7 27] [:r 12 nil] [:r 12 nil]]
+2023-04-30 13:01:07,302{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590180756
+2023-04-30 13:01:07,302{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:append 7 27] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15 16 17 18 19 20 21 22]] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15 16 17 18 19 20 21 22]]]
+2023-04-30 13:01:07,337{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:append 12 23] [:append 12 24] [:append 10 28] [:r 10 nil] [:r 7 nil]]
+2023-04-30 13:01:07,349{GMT}	INFO	[jepsen worker 18] jepsen.arangodb.tests.list-append: committed transaction 2199063296420
+2023-04-30 13:01:07,349{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:ok	:txn	[[:append 12 23] [:append 12 24] [:append 10 28] [:r 10 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 27 28]] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27]]]
+2023-04-30 13:01:07,370{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 7 nil] [:append 12 25] [:r 7 nil] [:append 10 29] [:append 10 30] [:r 7 nil] [:append 12 26] [:append 12 27]]
+2023-04-30 13:01:07,381{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 12 nil] [:r 12 nil] [:r 10 nil] [:append 12 28] [:append 12 29] [:r 12 nil] [:append 12 30] [:r 12 nil]]
+2023-04-30 13:01:07,389{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: aborted transaction 1099543669364
+2023-04-30 13:01:07,389{GMT}	WARN	[jepsen worker 5] jepsen.arangodb.tests.list-append: AQL: Error message received from cluster node 'PRMR-c5e038cc-4f08-4f75-84ea-9b4317a16705': timeout waiting to lock key Operation timed out: Timeout waiting to lock key; key: 12 (while executing)
+2023-04-30 13:01:07,389{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:fail	:txn	[[:r 12 nil] [:r 12 nil] [:r 10 nil] [:append 12 28] [:append 12 29] [:r 12 nil] [:append 12 30] [:r 12 nil]]	:ww-conflict
+2023-04-30 13:01:07,391{GMT}	INFO	[jepsen worker 9] jepsen.arangodb.tests.list-append: committed transaction 3298582924996
+2023-04-30 13:01:07,391{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:ok	:txn	[[:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 12 25] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 10 29] [:append 10 30] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 12 26] [:append 12 27]]
+2023-04-30 13:01:07,565{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:append 10 31] [:r 12 nil] [:append 10 32] [:append 12 31] [:append 12 32] [:r 7 nil] [:r 7 nil]]
+2023-04-30 13:01:07,584{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.list-append: committed transaction 4398078552240
+2023-04-30 13:01:07,584{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:append 10 31] [:r 12 [1 2 3 4 5 6 7 8 9 10 11 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 10 32] [:append 12 31] [:append 12 32] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27]]]
+2023-04-30 13:01:07,703{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:append 13 1] [:append 14 1] [:append 13 2] [:r 14 nil] [:append 14 2]]
+2023-04-30 13:01:07,719{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590180780
+2023-04-30 13:01:07,719{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:append 13 1] [:append 14 1] [:append 13 2] [:r 14 [1]] [:append 14 2]]
+2023-04-30 13:01:07,748{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 14 3] [:r 13 nil] [:r 7 nil] [:r 13 nil] [:append 13 3] [:append 14 4]]
+2023-04-30 13:01:07,758{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:append 14 5] [:r 14 nil] [:append 13 4] [:append 14 6] [:r 13 nil] [:r 13 nil]]
+2023-04-30 13:01:07,760{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.list-append: committed transaction 1099543669392
+2023-04-30 13:01:07,760{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 14 3] [:r 13 [1 2]] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 13 [1 2]] [:append 13 3] [:append 14 4]]
+2023-04-30 13:01:07,774{GMT}	INFO	[jepsen worker 6] jepsen.arangodb.tests.list-append: committed transaction 4398078552304
+2023-04-30 13:01:07,774{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:ok	:txn	[[:append 14 5] [:r 14 [1 2 3 4 5]] [:append 13 4] [:append 14 6] [:r 13 [1 2 3 4]] [:r 13 [1 2 3 4]]]
+2023-04-30 13:01:07,890{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	nil
+2023-04-30 13:01:07,931{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	[:isolated {"192.168.56.103" #{"192.168.56.105" "192.168.56.104" "192.168.56.102"}, "192.168.56.101" #{"192.168.56.105" "192.168.56.104" "192.168.56.102"}, "192.168.56.105" #{"192.168.56.103" "192.168.56.101"}, "192.168.56.104" #{"192.168.56.103" "192.168.56.101"}, "192.168.56.102" #{"192.168.56.103" "192.168.56.101"}}]
+2023-04-30 13:01:07,946{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:append 7 28] [:append 13 5] [:r 14 nil] [:append 13 6] [:append 14 7] [:append 13 7] [:append 14 8]]
+2023-04-30 13:01:07,960{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:txn	[[:r 14 nil] [:append 13 8] [:append 14 9] [:r 14 nil] [:append 14 10] [:r 13 nil] [:append 14 11] [:append 14 12]]
+2023-04-30 13:01:07,972{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590180836
+2023-04-30 13:01:07,972{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:append 7 28] [:append 13 5] [:r 14 [1 2 3 4 5 6]] [:append 13 6] [:append 14 7] [:append 13 7] [:append 14 8]]
+2023-04-30 13:01:08,116{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:append 14 13] [:append 7 29] [:r 13 nil] [:r 7 nil] [:r 14 nil] [:append 13 9] [:append 7 30]]
+2023-04-30 13:01:08,130{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543669444
+2023-04-30 13:01:08,130{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:append 14 13] [:append 7 29] [:r 13 [1 2 3 4 5 6 7]] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:r 14 [1 2 3 4 5 6 7 8 13]] [:append 13 9] [:append 7 30]]
+2023-04-30 13:01:08,282{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:txn	[[:r 7 nil] [:append 14 14] [:append 14 15] [:r 13 nil] [:append 14 16] [:append 13 10] [:r 14 nil] [:r 14 nil]]
+2023-04-30 13:01:08,405{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:txn	[[:append 13 11] [:append 14 17]]
+2023-04-30 13:01:08,443{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:append 14 18] [:append 14 19] [:append 14 20]]
+2023-04-30 13:01:08,455{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590180916
+2023-04-30 13:01:08,455{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:append 14 18] [:append 14 19] [:append 14 20]]
+2023-04-30 13:01:08,586{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:append 14 21] [:append 13 12] [:r 7 nil] [:r 14 nil] [:append 14 22]]
+2023-04-30 13:01:08,600{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590180956
+2023-04-30 13:01:08,600{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:append 14 21] [:append 13 12] [:r 7 [2 3 4 5 6 7 8 9 10 11 12 13 14 1 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21]] [:append 14 22]]
+2023-04-30 13:01:08,754{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:txn	[[:r 13 nil] [:r 13 nil] [:r 14 nil] [:r 7 nil] [:append 13 13]]
+2023-04-30 13:01:08,919{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:txn	[[:r 14 nil] [:r 14 nil] [:r 14 nil]]
+2023-04-30 13:01:09,010{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 14 nil] [:append 14 23]]
+2023-04-30 13:01:09,016{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590181004
+2023-04-30 13:01:09,016{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22]] [:append 14 23]]
+2023-04-30 13:01:09,111{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:txn	[[:r 14 nil] [:append 7 31] [:r 14 nil] [:r 14 nil] [:append 14 24]]
+2023-04-30 13:01:09,287{GMT}	INFO	[jepsen worker 16] jepsen.util: 16	:invoke	:txn	[[:append 13 14] [:append 14 25] [:append 13 15] [:r 13 nil] [:r 13 nil] [:r 14 nil]]
+2023-04-30 13:01:09,478{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:txn	[[:r 13 nil] [:r 13 nil] [:r 13 nil]]
+2023-04-30 13:01:09,673{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 13 nil] [:append 14 26] [:append 7 32] [:r 13 nil] [:append 13 16]]
+2023-04-30 13:01:09,684{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590181024
+2023-04-30 13:01:09,684{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 13 [1 2 3 4 5 6 7 9 12]] [:append 14 26] [:append 7 32] [:r 13 [1 2 3 4 5 6 7 9 12]] [:append 13 16]]
+2023-04-30 13:01:09,810{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 13 17] [:append 13 18] [:r 14 nil] [:r 14 nil] [:append 14 27] [:r 14 nil] [:r 13 nil]]
+2023-04-30 13:01:09,810{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:txn	[[:append 13 19] [:r 14 nil] [:append 13 20] [:append 14 28] [:r 14 nil] [:r 13 nil] [:r 14 nil] [:r 14 nil]]
+2023-04-30 13:01:09,824{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543669508
+2023-04-30 13:01:09,824{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 13 17] [:append 13 18] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26]] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26]] [:append 14 27] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26 27]] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18]]]
+2023-04-30 13:01:09,924{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 14 nil] [:append 13 21]]
+2023-04-30 13:01:09,930{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543669564
+2023-04-30 13:01:09,930{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26 27]] [:append 13 21]]
+2023-04-30 13:01:09,952{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:r 14 nil] [:r 14 nil] [:r 13 nil] [:append 13 22] [:append 15 1] [:append 14 29] [:r 13 nil]]
+2023-04-30 13:01:09,965{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590181072
+2023-04-30 13:01:09,965{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26 27]] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26 27]] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21]] [:append 13 22] [:append 15 1] [:append 14 29] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22]]]
+2023-04-30 13:01:10,018{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:txn	[[:r 14 nil] [:r 14 nil] [:r 13 nil] [:r 14 nil] [:r 14 nil] [:r 15 nil] [:append 13 23]]
+2023-04-30 13:01:10,099{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 15 nil] [:r 15 nil] [:r 13 nil] [:append 15 2]]
+2023-04-30 13:01:10,106{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590181128
+2023-04-30 13:01:10,106{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 15 [1]] [:r 15 [1]] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22]] [:append 15 2]]
+2023-04-30 13:01:10,261{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:r 13 nil] [:r 14 nil] [:r 14 nil] [:r 13 nil] [:r 14 nil] [:r 14 nil] [:append 14 30] [:append 14 31]]
+2023-04-30 13:01:10,277{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590181156
+2023-04-30 13:01:10,278{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22]] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26 27 29]] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26 27 29]] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22]] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26 27 29]] [:r 14 [1 2 3 4 5 6 7 8 13 18 19 20 21 22 23 26 27 29]] [:append 14 30] [:append 14 31]]
+2023-04-30 13:01:10,436{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 13 nil] [:append 15 3] [:r 13 nil] [:append 14 32]]
+2023-04-30 13:01:10,447{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590181208
+2023-04-30 13:01:10,447{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22]] [:append 15 3] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22]] [:append 14 32]]
+2023-04-30 13:01:10,623{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 15 4] [:r 13 nil] [:r 16 nil] [:append 16 1] [:r 16 nil] [:append 16 2]]
+2023-04-30 13:01:10,637{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543669584
+2023-04-30 13:01:10,637{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 15 4] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22]] [:r 16 []] [:append 16 1] [:r 16 [1]] [:append 16 2]]
+2023-04-30 13:01:10,728{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 16 nil] [:r 16 nil] [:append 13 24] [:append 13 25] [:append 16 3] [:append 16 4] [:append 16 5]]
+2023-04-30 13:01:10,747{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590181244
+2023-04-30 13:01:10,747{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 16 [1 2]] [:r 16 [1 2]] [:append 13 24] [:append 13 25] [:append 16 3] [:append 16 4] [:append 16 5]]
+2023-04-30 13:01:10,782{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:append 16 6] [:append 16 7] [:append 13 26] [:r 16 nil] [:r 16 nil]]
+2023-04-30 13:01:10,794{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590181316
+2023-04-30 13:01:10,795{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:append 16 6] [:append 16 7] [:append 13 26] [:r 16 [1 2 3 4 5 6 7]] [:r 16 [1 2 3 4 5 6 7]]]
+2023-04-30 13:01:10,913{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:txn	[[:append 16 8] [:append 16 9] [:append 13 27] [:append 16 10] [:r 16 nil] [:append 13 28] [:append 13 29]]
+2023-04-30 13:01:10,928{GMT}	INFO	[jepsen worker 10] jepsen.arangodb.tests.list-append: committed transaction 1099543669636
+2023-04-30 13:01:10,928{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:ok	:txn	[[:append 16 8] [:append 16 9] [:append 13 27] [:append 16 10] [:r 16 [1 2 3 4 5 6 7 8 9 10]] [:append 13 28] [:append 13 29]]
+2023-04-30 13:01:11,058{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 16 nil] [:r 15 nil]]
+2023-04-30 13:01:11,061{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543669716
+2023-04-30 13:01:11,061{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 16 [1 2 3 4 5 6 7 8 9 10]] [:r 15 [1 2 3 4]]]
+2023-04-30 13:01:11,192{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:append 13 30] [:append 16 11]]
+2023-04-30 13:01:11,202{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590181364
+2023-04-30 13:01:11,202{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:append 13 30] [:append 16 11]]
+2023-04-30 13:01:11,333{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:append 13 31] [:r 16 nil] [:r 13 nil] [:r 13 nil] [:append 16 12] [:r 15 nil] [:r 13 nil]]
+2023-04-30 13:01:11,346{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590181392
+2023-04-30 13:01:11,346{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:append 13 31] [:r 16 [1 2 3 4 5 6 7 8 9 10 11]] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22 24 25 26 27 28 29 30 31]] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22 24 25 26 27 28 29 30 31]] [:append 16 12] [:r 15 [1 2 3 4]] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22 24 25 26 27 28 29 30 31]]]
+2023-04-30 13:01:11,531{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 13 nil] [:r 16 nil] [:append 16 13] [:r 15 nil] [:append 16 14] [:r 13 nil]]
+2023-04-30 13:01:11,543{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.list-append: committed transaction 1099543669728
+2023-04-30 13:01:11,543{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22 24 25 26 27 28 29 30 31]] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 16 13] [:r 15 [1 2 3 4]] [:append 16 14] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22 24 25 26 27 28 29 30 31]]]
+2023-04-30 13:01:11,691{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:txn	[[:r 16 nil] [:r 16 nil] [:r 16 nil] [:r 13 nil] [:r 16 nil] [:r 16 nil]]
+2023-04-30 13:01:11,698{GMT}	INFO	[jepsen worker 2] jepsen.arangodb.tests.list-append: committed transaction 5497590181440
+2023-04-30 13:01:11,698{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:txn	[[:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 13 [1 2 3 4 5 6 7 9 12 16 17 18 21 22 24 25 26 27 28 29 30 31]] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]]]
+2023-04-30 13:01:11,742{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:txn	[[:append 16 15] [:append 16 16] [:append 16 17] [:append 15 5]]
+2023-04-30 13:01:11,758{GMT}	INFO	[jepsen worker 12] jepsen.arangodb.tests.list-append: committed transaction 5497590181468
+2023-04-30 13:01:11,758{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:ok	:txn	[[:append 16 15] [:append 16 16] [:append 16 17] [:append 15 5]]
+2023-04-30 13:01:11,896{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:txn	[[:append 15 6] [:r 16 nil] [:append 15 7] [:r 16 nil]]
+2023-04-30 13:01:12,013{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:r 16 nil] [:append 13 32] [:append 16 18] [:r 15 nil] [:r 17 nil] [:r 16 nil] [:append 16 19] [:append 16 20]]
+2023-04-30 13:01:12,025{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: committed transaction 1099543669772
+2023-04-30 13:01:12,026{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:ok	:txn	[[:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 13 32] [:append 16 18] [:r 15 [1 2 3 4 5]] [:r 17 []] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 16 19] [:append 16 20]]
+2023-04-30 13:01:12,114{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:txn	[[:append 16 21] [:r 17 nil] [:append 17 1] [:r 16 nil] [:append 16 22] [:r 16 nil] [:append 16 23]]
+2023-04-30 13:01:12,114{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:r 17 nil] [:append 17 2]]
+2023-04-30 13:01:12,121{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590181520
+2023-04-30 13:01:12,121{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:r 17 []] [:append 17 2]]
+2023-04-30 13:01:12,123{GMT}	INFO	[jepsen worker 5] jepsen.arangodb.tests.list-append: aborted transaction 1099543669840
+2023-04-30 13:01:12,123{GMT}	WARN	[jepsen worker 5] jepsen.arangodb.tests.list-append: AQL: Error message received from cluster node 'PRMR-c5e038cc-4f08-4f75-84ea-9b4317a16705': write-write conflict - in index primary of type primary over '_key'; conflicting key: 17 (while executing)
+2023-04-30 13:01:12,123{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:fail	:txn	[[:append 16 21] [:r 17 nil] [:append 17 1] [:r 16 nil] [:append 16 22] [:r 16 nil] [:append 16 23]]	:ww-conflict
+2023-04-30 13:01:12,189{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:r 16 nil] [:r 17 nil] [:append 16 24] [:append 16 25] [:r 16 nil] [:append 16 26] [:append 17 3] [:append 16 27]]
+2023-04-30 13:01:12,208{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590181540
+2023-04-30 13:01:12,208{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]] [:r 17 [2]] [:append 16 24] [:append 16 25] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 24 25]] [:append 16 26] [:append 17 3] [:append 16 27]]
+2023-04-30 13:01:12,376{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 16 nil] [:append 17 4] [:append 16 28]]
+2023-04-30 13:01:12,383{GMT}	INFO	[jepsen worker 0] jepsen.arangodb.tests.list-append: committed transaction 1099543669872
+2023-04-30 13:01:12,383{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 24 25 26 27]] [:append 17 4] [:append 16 28]]
+2023-04-30 13:01:12,501{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:txn	[[:r 16 nil] [:append 17 5] [:r 17 nil]]
+2023-04-30 13:01:12,508{GMT}	INFO	[jepsen worker 17] jepsen.arangodb.tests.list-append: committed transaction 5497590181616
+2023-04-30 13:01:12,508{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:ok	:txn	[[:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 24 25 26 27 28]] [:append 17 5] [:r 17 [2 3 4 5]]]
+2023-04-30 13:01:12,577{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:invoke	:txn	[[:r 16 nil] [:r 16 nil]]
+2023-04-30 13:01:12,580{GMT}	INFO	[jepsen worker 7] jepsen.arangodb.tests.list-append: committed transaction 5497590181640
+2023-04-30 13:01:12,580{GMT}	INFO	[jepsen worker 7] jepsen.util: 7	:ok	:txn	[[:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 24 25 26 27 28]] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 24 25 26 27 28]]]
+2023-04-30 13:01:20,964{GMT}	WARN	[jepsen worker 14] jepsen.generator.interpreter: Process 14 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 3298582925072 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:21,311{GMT}	WARN	[jepsen worker 13] jepsen.generator.interpreter: Process 13 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 2199063296468 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:21,414{GMT}	WARN	[jepsen worker 6] jepsen.generator.interpreter: Process 6 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 4398078552356 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:21,765{GMT}	WARN	[jepsen worker 11] jepsen.generator.interpreter: Process 11 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 4398078552372 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:21,924{GMT}	WARN	[jepsen worker 19] jepsen.generator.interpreter: Process 19 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 3298582925080 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:22,118{GMT}	WARN	[jepsen worker 1] jepsen.generator.interpreter: Process 1 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 4398078552380 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:22,289{GMT}	WARN	[jepsen worker 16] jepsen.generator.interpreter: Process 16 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 4398078552388 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:22,480{GMT}	WARN	[jepsen worker 9] jepsen.generator.interpreter: Process 9 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 3298582925088 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:22,812{GMT}	WARN	[jepsen worker 8] jepsen.generator.interpreter: Process 8 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 2199063296476 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:23,019{GMT}	WARN	[jepsen worker 18] jepsen.generator.interpreter: Process 18 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 2199063296492 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at jdk.internal.reflect.GeneratedMethodAccessor11.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:24,898{GMT}	WARN	[jepsen worker 3] jepsen.generator.interpreter: Process 3 crashed
+com.arangodb.ArangoDBException: Response: 500, Error: 28 - updating transaction status failed. transaction 2199063296500 is in use
+	at com.arangodb.internal.util.ResponseUtils.checkError(ResponseUtils.java:55)
+	at com.arangodb.internal.velocystream.VstCommunication.checkError(VstCommunication.java:157)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:144)
+	at com.arangodb.internal.velocystream.VstCommunicationSync.execute(VstCommunicationSync.java:45)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:149)
+	at com.arangodb.internal.velocystream.VstCommunication.execute(VstCommunication.java:144)
+	at com.arangodb.internal.velocystream.VstProtocol.execute(VstProtocol.java:46)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:71)
+	at com.arangodb.internal.ArangoExecutorSync.execute(ArangoExecutorSync.java:61)
+	at com.arangodb.internal.ArangoDatabaseImpl.abortStreamTransaction(ArangoDatabaseImpl.java:340)
+	at jdk.internal.reflect.GeneratedMethodAccessor11.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at clojure.lang.Reflector.invokeMatchingMethod(Reflector.java:167)
+	at clojure.lang.Reflector.invokeInstanceMethod(Reflector.java:102)
+	at jepsen.arangodb.tests.list_append.Client.invoke_BANG_(list_append.clj:95)
+	at jepsen.client.Validate.invoke_BANG_(client.clj:83)
+	at jepsen.generator.interpreter.ClientWorker.invoke_BANG_(interpreter.clj:62)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688.invoke(interpreter.clj:137)
+	at jepsen.generator.interpreter$spawn_worker$fn__10687.invoke(interpreter.clj:120)
+	at clojure.core$binding_conveyor_fn$fn__5823.invoke(core.clj:2047)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:24,901{GMT}	INFO	[real-pmap 3] jepsen.arangodb.tests.list-append: Connection closed
+2023-04-30 13:01:24,901{GMT}	INFO	[real-pmap 0] jepsen.arangodb.tests.list-append: Connection closed
+2023-04-30 13:01:24,901{GMT}	INFO	[real-pmap 2] jepsen.arangodb.tests.list-append: Connection closed
+2023-04-30 13:01:24,901{GMT}	INFO	[real-pmap 1] jepsen.arangodb.tests.list-append: Connection closed
+2023-04-30 13:01:24,901{GMT}	INFO	[real-pmap 4] jepsen.arangodb.tests.list-append: Connection closed
+2023-04-30 13:01:24,982{GMT}	INFO	[jepsen test runner] jepsen.core: Run complete, writing
+2023-04-30 13:01:25,000{GMT}	INFO	[jepsen test runner] jepsen.core: Snarfing log files
+2023-04-30 13:01:25,007{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,009{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,010{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,027{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,028{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,234{GMT}	INFO	[jepsen test runner] jepsen.core: Snarfing log files
+2023-04-30 13:01:25,239{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,240{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,241{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,242{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,243{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.core: downloading /home/vagrant/arangodb.log to arangodb.log
+2023-04-30 13:01:25,430{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.utils.support: 192.168.56.104 tearing down arangodb
+2023-04-30 13:01:25,430{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.utils.support: 192.168.56.103 tearing down arangodb
+2023-04-30 13:01:25,430{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.utils.support: 192.168.56.102 tearing down arangodb
+2023-04-30 13:01:25,431{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.utils.support: 192.168.56.105 tearing down arangodb
+2023-04-30 13:01:25,431{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.control.util: Stopping arangodb
+2023-04-30 13:01:25,430{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: 192.168.56.101 tearing down arangodb
+2023-04-30 13:01:25,431{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.control.util: Stopping arangodb
+2023-04-30 13:01:25,431{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.control.util: Stopping arangodb
+2023-04-30 13:01:25,431{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.control.util: Stopping arangodb
+2023-04-30 13:01:25,431{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.control.util: Stopping arangodb
+2023-04-30 13:01:25,590{GMT}	INFO	[jepsen node 192.168.56.105] jepsen.arangodb.utils.support: processes [9098 9113 9164 9175] killed
+2023-04-30 13:01:25,590{GMT}	INFO	[jepsen node 192.168.56.103] jepsen.arangodb.utils.support: processes [10162 10179 10190] killed
+2023-04-30 13:01:25,597{GMT}	ERROR	[pool-9-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,597{GMT}	ERROR	[pool-6-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,597{GMT}	ERROR	[pool-24-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,599{GMT}	INFO	[jepsen node 192.168.56.102] jepsen.arangodb.utils.support: processes [9140 9157 9168] killed
+2023-04-30 13:01:25,602{GMT}	ERROR	[pool-23-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,603{GMT}	ERROR	[pool-18-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,603{GMT}	ERROR	[pool-13-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,603{GMT}	ERROR	[pool-12-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,620{GMT}	INFO	[jepsen node 192.168.56.104] jepsen.arangodb.utils.support: processes [10233 10250 10298 10310] killed
+2023-04-30 13:01:25,623{GMT}	ERROR	[pool-22-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,623{GMT}	ERROR	[pool-14-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,623{GMT}	ERROR	[pool-7-thread-1] com.arangodb.internal.velocystream.internal.MessageStore: Reached the end of the stream.
+java.io.IOException: Reached the end of the stream.
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytesIntoBuffer(VstConnection.java:348)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readBytes(VstConnection.java:340)
+	at com.arangodb.internal.velocystream.internal.VstConnection.readChunk(VstConnection.java:315)
+	at com.arangodb.internal.velocystream.internal.VstConnection.lambda$open$0(VstConnection.java:212)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-04-30 13:01:25,633{GMT}	INFO	[jepsen node 192.168.56.101] jepsen.arangodb.utils.support: processes [10418 10437 10484 10495] killed
+2023-04-30 13:01:25,779{GMT}	INFO	[jepsen test runner] jepsen.core: Analyzing...
+2023-04-30 13:01:25,882{GMT}	INFO	[jepsen test runner] jepsen.core: Analysis complete
+2023-04-30 13:01:25,884{GMT}	INFO	[jepsen results] jepsen.store: Wrote /home/jasonqiu98/thesis-workspace-new/jepsen.arangodb/store/arangodb-list-append-test/20230430T130027.568+0200/results.edn
+2023-04-30 13:01:25,902{GMT}	INFO	[jepsen test runner] jepsen.core: {:la {:valid? true},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? true}
+
+
+Everything looks good! ヽ(‘ー`)ノ

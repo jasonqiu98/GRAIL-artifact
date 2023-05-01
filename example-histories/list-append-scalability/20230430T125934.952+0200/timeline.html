@@ -1,0 +1,935 @@
+<html><head><style>.ops        { position: absolute; }
+.op         { position: absolute; padding: 2px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); transition: all 0.3s cubic-bezier(.25,.8,.25,1); overflow: hidden; }
+.op.invoke  { background: #eeeeee; }
+.op.ok      { background: #6DB6FE; }
+.op.info    { background: #FFAA26; }
+.op.fail    { background: #FEB5DA; }
+.op:target  { box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); }
+</style></head><body><div><a href="/">jepsen</a> / <a href="/files/arangodb-list-append-test">arangodb-list-append-test</a> / <a href="/files/arangodb-list-append-test/20230430T125934.952+0200">20230430T125934.952+0200</a> / <a href="/files/arangodb-list-append-test/20230430T125934.952+0200/">independent</a> / <a href="/files/arangodb-list-append-test/20230430T125934.952+0200/independent/"></a></div><h1>arangodb-list-append-test key </h1><div class="ops"><a href="#i1"><div class="op ok" id="i1" style="width:100;left:530;top:0;height:16" title="Dur: 23 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:53.344Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 1
+ :value [[:append 2 1] [:r 1 []]]}">4 txn [[:append 2 1] [:r 1 nil]]<br />[[:append 2 1] [:r 1 []]]</div></a><a href="#i3"><div class="op ok" id="i3" style="width:100;left:1908;top:32;height:16" title="Dur: 26 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:53.468Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 3
+ :value [[:r 2 [1]] [:r 2 [1]] [:append 0 1] [:r 2 [1]] [:append 0 2] [:append 2 2] [:append 0 3]]}">17 txn [[:r 2 nil] [:r 2 nil] [:append 0 1] [:r 2 nil] [:append 0 2] [:append 2 2] [:append 0 3]]<br />[[:r 2 [1]] [:r 2 [1]] [:append 0 1] [:r 2 [1]] [:append 0 2] [:append 2 2] [:append 0 3]]</div></a><a href="#i5"><div class="op ok" id="i5" style="width:100;left:106;top:64;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:53.572Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 5
+ :value [[:r 1 []] [:r 2 [1 2]] [:r 1 []] [:r 1 []] [:append 2 3] [:append 1 1]]}">0 txn [[:r 1 nil] [:r 2 nil] [:r 1 nil] [:r 1 nil] [:append 2 3] [:append 1 1]]<br />[[:r 1 []] [:r 2 [1 2]] [:r 1 []] [:r 1 []] [:append 2 3] [:append 1 1]]</div></a><a href="#i7"><div class="op ok" id="i7" style="width:100;left:212;top:96;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:53.630Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 7
+ :value [[:append 0 4] [:r 2 [1 2 3]]]}">1 txn [[:append 0 4] [:r 2 nil]]<br />[[:append 0 4] [:r 2 [1 2 3]]]</div></a><a href="#i9"><div class="op ok" id="i9" style="width:100;left:848;top:128;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:53.818Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 9
+ :value [[:r 2 [1 2 3]] [:append 2 4] [:r 1 [1]] [:r 2 [1 2 3 4]] [:append 1 2]]}">7 txn [[:r 2 nil] [:append 2 4] [:r 1 nil] [:r 2 nil] [:append 1 2]]<br />[[:r 2 [1 2 3]] [:append 2 4] [:r 1 [1]] [:r 2 [1 2 3 4]] [:append 1 2]]</div></a><a href="#i11"><div class="op ok" id="i11" style="width:100;left:1060;top:160;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:53.892Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 11
+ :value [[:r 2 [1 2 3 4]] [:r 2 [1 2 3 4]]]}">9 txn [[:r 2 nil] [:r 2 nil]]<br />[[:r 2 [1 2 3 4]] [:r 2 [1 2 3 4]]]</div></a><a href="#i13"><div class="op ok" id="i13" style="width:100;left:1166;top:192;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:53.923Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 13
+ :value [[:r 0 [1 2 3 4]] [:append 0 5] [:r 2 [1 2 3 4]] [:append 0 6] [:append 2 5] [:append 1 3]]}">10 txn [[:r 0 nil] [:append 0 5] [:r 2 nil] [:append 0 6] [:append 2 5] [:append 1 3]]<br />[[:r 0 [1 2 3 4]] [:append 0 5] [:r 2 [1 2 3 4]] [:append 0 6] [:append 2 5] [:append 1 3]]</div></a><a href="#i15"><div class="op ok" id="i15" style="width:100;left:1590;top:224;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.094Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 15
+ :value [[:r 2 [1 2 3 4 5]] [:r 2 [1 2 3 4 5]] [:append 2 6] [:r 2 [1 2 3 4 5 6]] [:r 2 [1 2 3 4 5 6]] [:append 2 7]]}">14 txn [[:r 2 nil] [:r 2 nil] [:append 2 6] [:r 2 nil] [:r 2 nil] [:append 2 7]]<br />[[:r 2 [1 2 3 4 5]] [:r 2 [1 2 3 4 5]] [:append 2 6] [:r 2 [1 2 3 4 5 6]] [:r 2 [1 2 3 4 5 6]] [:append 2 7]]</div></a><a href="#i17"><div class="op ok" id="i17" style="width:100;left:424;top:256;height:16" title="Dur: 30 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.243Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 17
+ :value [[:append 2 8] [:append 2 9]]}">3 txn [[:append 2 8] [:append 2 9]]</div></a><a href="#i19"><div class="op ok" id="i19" style="width:100;left:1802;top:288;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.373Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 19
+ :value [[:append 2 10] [:r 1 [1 2 3]] [:r 2 [1 2 3 4 5 6 7 8 9 10]] [:r 1 [1 2 3]] [:r 2 [1 2 3 4 5 6 7 8 9 10]] [:r 2 [1 2 3 4 5 6 7 8 9 10]] [:r 1 [1 2 3]] [:append 2 11]]}">16 txn [[:append 2 10] [:r 1 nil] [:r 2 nil] [:r 1 nil] [:r 2 nil] [:r 2 nil] [:r 1 nil] [:append 2 11]]<br />[[:append 2 10] [:r 1 [1 2 3]] [:r 2 [1 2 3 4 5 6 7 8 9 10]] [:r 1 [1 2 3]] [:r 2 [1 2 3 4 5 6 7 8 9 10]] [:r 2 [1 2 3 4 5 6 7 8 9 10]] [:r 1 [1 2 3]] [:append 2 11]]</div></a><a href="#i21"><div class="op ok" id="i21" style="width:100;left:1802;top:320;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.455Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 21
+ :value [[:r 2 [1 2 3 4 5 6 7 8 9 10 11]] [:append 0 7]]}">16 txn [[:r 2 nil] [:append 0 7]]<br />[[:r 2 [1 2 3 4 5 6 7 8 9 10 11]] [:append 0 7]]</div></a><a href="#i23"><div class="op ok" id="i23" style="width:100;left:1590;top:352;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.545Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 23
+ :value [[:append 0 8] [:r 2 [1 2 3 4 5 6 7 8 9 10 11]] [:r 0 [1 2 3 4 5 6 7 8]] [:r 1 [1 2 3]] [:append 1 4] [:r 2 [1 2 3 4 5 6 7 8 9 10 11]]]}">14 txn [[:append 0 8] [:r 2 nil] [:r 0 nil] [:r 1 nil] [:append 1 4] [:r 2 nil]]<br />[[:append 0 8] [:r 2 [1 2 3 4 5 6 7 8 9 10 11]] [:r 0 [1 2 3 4 5 6 7 8]] [:r 1 [1 2 3]] [:append 1 4] [:r 2 [1 2 3 4 5 6 7 8 9 10 11]]]</div></a><a href="#i25"><div class="op ok" id="i25" style="width:100;left:1166;top:384;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.672Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 25
+ :value [[:append 2 12] [:r 0 [1 2 3 4 5 6 7 8]] [:append 2 13] [:append 2 14] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:append 1 5] [:r 0 [1 2 3 4 5 6 7 8]]]}">10 txn [[:append 2 12] [:r 0 nil] [:append 2 13] [:append 2 14] [:r 2 nil] [:append 1 5] [:r 0 nil]]<br />[[:append 2 12] [:r 0 [1 2 3 4 5 6 7 8]] [:append 2 13] [:append 2 14] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:append 1 5] [:r 0 [1 2 3 4 5 6 7 8]]]</div></a><a href="#i27"><div class="op ok" id="i27" style="width:100;left:106;top:416;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.826Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 27
+ :value [[:r 1 [1 2 3 4 5]] [:r 1 [1 2 3 4 5]]]}">0 txn [[:r 1 nil] [:r 1 nil]]<br />[[:r 1 [1 2 3 4 5]] [:r 1 [1 2 3 4 5]]]</div></a><a href="#i29"><div class="op ok" id="i29" style="width:100;left:1590;top:448;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.837Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 29
+ :value [[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]]]}">14 txn [[:r 2 nil] [:r 2 nil] [:r 2 nil] [:r 2 nil]]<br />[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]]]</div></a><a href="#i31"><div class="op ok" id="i31" style="width:100;left:1060;top:480;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.866Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 31
+ :value [[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:append 0 9] [:r 1 [1 2 3 4 5]] [:r 0 [1 2 3 4 5 6 7 8 9]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]]]}">9 txn [[:r 2 nil] [:append 0 9] [:r 1 nil] [:r 0 nil] [:r 2 nil]]<br />[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]] [:append 0 9] [:r 1 [1 2 3 4 5]] [:r 0 [1 2 3 4 5 6 7 8 9]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14]]]</div></a><a href="#i33"><div class="op ok" id="i33" style="width:100;left:212;top:512;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:54.900Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 33
+ :value [[:append 2 15] [:append 1 6]]}">1 txn [[:append 2 15] [:append 1 6]]</div></a><a href="#i35"><div class="op ok" id="i35" style="width:100;left:742;top:544;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.023Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 35
+ :value [[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:append 2 16] [:r 0 [1 2 3 4 5 6 7 8 9]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]]]}">6 txn [[:r 2 nil] [:append 2 16] [:r 0 nil] [:r 2 nil]]<br />[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:append 2 16] [:r 0 [1 2 3 4 5 6 7 8 9]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]]]</div></a><a href="#i37"><div class="op ok" id="i37" style="width:100;left:530;top:576;height:16" title="Dur: 18 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.151Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 37
+ :value [[:append 1 7] [:append 1 8] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 2 17] [:append 0 10] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:append 1 9]]}">4 txn [[:append 1 7] [:append 1 8] [:r 2 nil] [:append 2 17] [:append 0 10] [:r 0 nil] [:append 1 9]]<br />[[:append 1 7] [:append 1 8] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 2 17] [:append 0 10] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:append 1 9]]</div></a><a href="#i39"><div class="op ok" id="i39" style="width:100;left:848;top:608;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.247Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 39
+ :value [[:append 2 18] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:append 2 19] [:r 1 [1 2 3 4 5 6 7 8 9]]]}">7 txn [[:append 2 18] [:r 0 nil] [:append 2 19] [:r 1 nil]]<br />[[:append 2 18] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:append 2 19] [:r 1 [1 2 3 4 5 6 7 8 9]]]</div></a><a href="#i41"><div class="op ok" id="i41" style="width:100;left:1378;top:640;height:16" title="Dur: 17 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.337Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 41
+ :value [[:r 1 [1 2 3 4 5 6 7 8 9]] [:append 2 20] [:append 2 21] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:append 1 10] [:append 2 22] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]]]}">12 txn [[:r 1 nil] [:append 2 20] [:append 2 21] [:r 2 nil] [:append 1 10] [:append 2 22] [:r 2 nil]]<br />[[:r 1 [1 2 3 4 5 6 7 8 9]] [:append 2 20] [:append 2 21] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21]] [:append 1 10] [:append 2 22] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]]]</div></a><a href="#i43"><div class="op ok" id="i43" style="width:100;left:318;top:672;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.496Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 43
+ :value [[:append 2 23] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 2 24] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]]]}">2 txn [[:append 2 23] [:r 2 nil] [:append 2 24] [:r 2 nil] [:r 2 nil]]<br />[[:append 2 23] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23]] [:append 2 24] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]]]</div></a><a href="#i45"><div class="op ok" id="i45" style="width:100;left:954;top:704;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.618Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 45
+ :value [[:append 2 25] [:append 2 26] [:r 1 [1 2 3 4 5 6 7 8 9 10]] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26]] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26]]]}">8 txn [[:append 2 25] [:append 2 26] [:r 1 nil] [:r 0 nil] [:r 2 nil] [:r 0 nil] [:r 2 nil]]<br />[[:append 2 25] [:append 2 26] [:r 1 [1 2 3 4 5 6 7 8 9 10]] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26]] [:r 0 [1 2 3 4 5 6 7 8 9 10]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26]]]</div></a><a href="#i47"><div class="op ok" id="i47" style="width:100;left:318;top:736;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.713Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 47
+ :value [[:append 1 11] [:append 1 12] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 1 13] [:append 2 27]]}">2 txn [[:append 1 11] [:append 1 12] [:r 1 nil] [:append 1 13] [:append 2 27]]<br />[[:append 1 11] [:append 1 12] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12]] [:append 1 13] [:append 2 27]]</div></a><a href="#i49"><div class="op ok" id="i49" style="width:100;left:1484;top:768;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.769Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 49
+ :value [[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 1 14] [:append 2 28] [:append 2 29]]}">13 txn [[:r 2 nil] [:append 1 14] [:append 2 28] [:append 2 29]]<br />[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 1 14] [:append 2 28] [:append 2 29]]</div></a><a href="#i51"><div class="op ok" id="i51" style="width:100;left:848;top:800;height:16" title="Dur: 19 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.849Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 51
+ :value [[:append 1 15] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:append 1 16] [:append 0 11] [:append 2 30] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 1 17]]}">7 txn [[:append 1 15] [:r 2 nil] [:r 1 nil] [:append 1 16] [:append 0 11] [:append 2 30] [:r 1 nil] [:append 1 17]]<br />[[:append 1 15] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:append 1 16] [:append 0 11] [:append 2 30] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 1 17]]</div></a><a href="#i53"><div class="op ok" id="i53" style="width:100;left:848;top:832;height:16" title="Dur: 13 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:55.982Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 53
+ :value [[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 2 31] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 2 32]]}">7 txn [[:r 2 nil] [:r 2 nil] [:r 2 nil] [:r 2 nil] [:append 2 31] [:r 1 nil] [:append 2 32]]<br />[[:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 2 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 2 31] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]] [:append 2 32]]</div></a><a href="#i55"><div class="op ok" id="i55" style="width:100;left:1696;top:864;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.030Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 55
+ :value [[:append 3 1] [:r 3 [1]] [:r 3 [1]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]]]}">15 txn [[:append 3 1] [:r 3 nil] [:r 3 nil] [:r 1 nil]]<br />[[:append 3 1] [:r 3 [1]] [:r 3 [1]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17]]]</div></a><a href="#i57"><div class="op ok" id="i57" style="width:100;left:1272;top:896;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.148Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 57
+ :value [[:r 3 [1]] [:append 1 18] [:append 1 19] [:r 3 [1]]]}">11 txn [[:r 3 nil] [:append 1 18] [:append 1 19] [:r 3 nil]]<br />[[:r 3 [1]] [:append 1 18] [:append 1 19] [:r 3 [1]]]</div></a><a href="#i59"><div class="op ok" id="i59" style="width:100;left:212;top:928;height:16" title="Dur: 16 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.344Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 59
+ :value [[:r 3 [1]] [:r 3 [1]] [:append 3 2] [:r 0 [1 2 3 4 5 6 7 8 9 10 11]] [:r 3 [1 2]] [:append 0 12] [:append 3 3] [:r 3 [1 2 3]]]}">1 txn [[:r 3 nil] [:r 3 nil] [:append 3 2] [:r 0 nil] [:r 3 nil] [:append 0 12] [:append 3 3] [:r 3 nil]]<br />[[:r 3 [1]] [:r 3 [1]] [:append 3 2] [:r 0 [1 2 3 4 5 6 7 8 9 10 11]] [:r 3 [1 2]] [:append 0 12] [:append 3 3] [:r 3 [1 2 3]]]</div></a><a href="#i61"><div class="op ok" id="i61" style="width:100;left:318;top:960;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.452Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 61
+ :value [[:append 3 4] [:r 3 [1 2 3 4]] [:append 0 13]]}">2 txn [[:append 3 4] [:r 3 nil] [:append 0 13]]<br />[[:append 3 4] [:r 3 [1 2 3 4]] [:append 0 13]]</div></a><a href="#i63"><div class="op ok" id="i63" style="width:100;left:1166;top:992;height:16" title="Dur: 13 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.529Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 63
+ :value [[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:append 3 5] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:append 3 6] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13]] [:r 3 [1 2 3 4 5 6]] [:r 3 [1 2 3 4 5 6]] [:append 3 7]]}">10 txn [[:r 1 nil] [:append 3 5] [:r 1 nil] [:append 3 6] [:r 0 nil] [:r 3 nil] [:r 3 nil] [:append 3 7]]<br />[[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:append 3 5] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:append 3 6] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13]] [:r 3 [1 2 3 4 5 6]] [:r 3 [1 2 3 4 5 6]] [:append 3 7]]</div></a><a href="#i65"><div class="op ok" id="i65" style="width:100;left:318;top:1024;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.664Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 65
+ :value [[:append 3 8] [:append 1 20] [:r 3 [1 2 3 4 5 6 7 8]]]}">2 txn [[:append 3 8] [:append 1 20] [:r 3 nil]]<br />[[:append 3 8] [:append 1 20] [:r 3 [1 2 3 4 5 6 7 8]]]</div></a><a href="#i67"><div class="op ok" id="i67" style="width:100;left:1802;top:1056;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.766Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 67
+ :value [[:r 3 [1 2 3 4 5 6 7 8]] [:append 1 21] [:append 1 22] [:append 3 9] [:r 3 [1 2 3 4 5 6 7 8 9]]]}">16 txn [[:r 3 nil] [:append 1 21] [:append 1 22] [:append 3 9] [:r 3 nil]]<br />[[:r 3 [1 2 3 4 5 6 7 8]] [:append 1 21] [:append 1 22] [:append 3 9] [:r 3 [1 2 3 4 5 6 7 8 9]]]</div></a><a href="#i69"><div class="op ok" id="i69" style="width:100;left:1272;top:1088;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.889Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 69
+ :value [[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]] [:r 3 [1 2 3 4 5 6 7 8 9]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]]]}">11 txn [[:r 1 nil] [:r 3 nil] [:r 1 nil]]<br />[[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]] [:r 3 [1 2 3 4 5 6 7 8 9]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22]]]</div></a><a href="#i72"><div class="op ok" id="i72" style="width:100;left:1802;top:1120;height:32" title="Dur: 24 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:56.958Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 72
+ :value [[:append 1 23] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13]] [:append 3 10] [:r 3 [1 2 3 4 5 6 7 8 9 10]] [:append 3 11] [:r 3 [1 2 3 4 5 6 7 8 9 10 11]] [:append 0 14] [:append 1 24]]}">16 txn [[:append 1 23] [:r 0 nil] [:append 3 10] [:r 3 nil] [:append 3 11] [:r 3 nil] [:append 0 14] [:append 1 24]]<br />[[:append 1 23] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13]] [:append 3 10] [:r 3 [1 2 3 4 5 6 7 8 9 10]] [:append 3 11] [:r 3 [1 2 3 4 5 6 7 8 9 10 11]] [:append 0 14] [:append 1 24]]</div></a><a href="#i73"><div class="op fail" id="i73" style="width:100;left:1908;top:1136;height:32" title="Dur: 9 ms
+Err: :ww-conflict
+Wall-clock Time: 2023-04-30T10:59:56.959Z
+
+Op:
+{:process 17
+ :type :fail
+ :f :txn
+ :index 73
+ :error :ww-conflict
+ :value [[:append 3 12] [:r 3 nil] [:r 1 nil]]}">17 txn [[:append 3 12] [:r 3 nil] [:r 1 nil]]</div></a><a href="#i75"><div class="op ok" id="i75" style="width:100;left:1908;top:1184;height:16" title="Dur: 24 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:57.060Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 75
+ :value [[:append 0 15] [:append 1 25] [:append 3 13] [:append 3 14] [:append 3 15] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15]] [:append 1 26] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15]]]}">17 txn [[:append 0 15] [:append 1 25] [:append 3 13] [:append 3 14] [:append 3 15] [:r 3 nil] [:append 1 26] [:r 3 nil]]<br />[[:append 0 15] [:append 1 25] [:append 3 13] [:append 3 14] [:append 3 15] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15]] [:append 1 26] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15]]]</div></a><a href="#i77"><div class="op ok" id="i77" style="width:100;left:1908;top:1216;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:57.149Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 77
+ :value [[:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15]] [:append 3 16] [:append 1 27] [:append 0 16] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16]] [:append 3 17]]}">17 txn [[:r 3 nil] [:append 3 16] [:append 1 27] [:append 0 16] [:r 1 nil] [:r 3 nil] [:append 3 17]]<br />[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15]] [:append 3 16] [:append 1 27] [:append 0 16] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16]] [:append 3 17]]</div></a><a href="#i79"><div class="op ok" id="i79" style="width:100;left:636;top:1248;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:57.285Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 79
+ :value [[:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17]] [:append 3 18] [:append 1 28]]}">5 txn [[:r 3 nil] [:r 3 nil] [:append 3 18] [:append 1 28]]<br />[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17]] [:append 3 18] [:append 1 28]]</div></a><a href="#i81"><div class="op ok" id="i81" style="width:100;left:212;top:1280;height:16" title="Dur: 16 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:57.451Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 81
+ :value [[:append 3 19] [:append 1 29] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19]] [:append 0 17] [:append 1 30]]}">1 txn [[:append 3 19] [:append 1 29] [:r 3 nil] [:r 3 nil] [:append 0 17] [:append 1 30]]<br />[[:append 3 19] [:append 1 29] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19]] [:append 0 17] [:append 1 30]]</div></a><a href="#i83"><div class="op ok" id="i83" style="width:100;left:1166;top:1312;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:57.546Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 83
+ :value [[:append 3 20] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]]]}">10 txn [[:append 3 20] [:r 3 nil] [:r 1 nil]]<br />[[:append 3 20] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]]]</div></a><a href="#i85"><div class="op ok" id="i85" style="width:100;left:1272;top:1344;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:57.629Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 85
+ :value [[:append 0 18] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20]] [:append 3 21] [:append 3 22] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22]]]}">11 txn [[:append 0 18] [:r 3 nil] [:append 3 21] [:append 3 22] [:r 3 nil] [:r 3 nil] [:r 3 nil]]<br />[[:append 0 18] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20]] [:append 3 21] [:append 3 22] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22]]]</div></a><a href="#i87"><div class="op ok" id="i87" style="width:100;left:2120;top:1376;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:57.788Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 87
+ :value [[:append 3 23] [:append 3 24] [:append 3 25] [:append 3 26] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26]]]}">19 txn [[:append 3 23] [:append 3 24] [:append 3 25] [:append 3 26] [:r 3 nil]]<br />[[:append 3 23] [:append 3 24] [:append 3 25] [:append 3 26] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26]]]</div></a><a href="#i89"><div class="op ok" id="i89" style="width:100;left:1696;top:1408;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:57.928Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 89
+ :value [[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 1 31]]}">15 txn [[:r 1 nil] [:r 0 nil] [:append 1 31]]<br />[[:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 1 31]]</div></a><a href="#i91"><div class="op ok" id="i91" style="width:100;left:212;top:1440;height:16" title="Dur: 22 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.044Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 91
+ :value [[:append 3 27] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 0 19] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 1 32] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]]]}">1 txn [[:append 3 27] [:r 0 nil] [:append 0 19] [:r 3 nil] [:append 1 32] [:r 3 nil]]<br />[[:append 3 27] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 0 19] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 1 32] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]]]</div></a><a href="#i93"><div class="op ok" id="i93" style="width:100;left:1378;top:1472;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.085Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 93
+ :value [[:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32]] [:r 4 []] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:r 4 []] [:append 3 28]]}">12 txn [[:r 3 nil] [:r 3 nil] [:r 1 nil] [:r 4 nil] [:r 0 nil] [:r 4 nil] [:append 3 28]]<br />[[:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 1 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32]] [:r 4 []] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:r 4 []] [:append 3 28]]</div></a><a href="#i95"><div class="op ok" id="i95" style="width:100;left:1060;top:1504;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.092Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 95
+ :value [[:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28]]]}">9 txn [[:r 0 nil] [:r 3 nil] [:r 3 nil]]<br />[[:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28]] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28]]]</div></a><a href="#i98"><div class="op ok" id="i98" style="width:100;left:954;top:1536;height:32" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.127Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 98
+ :value [[:append 3 29] [:append 4 1]]}">8 txn [[:append 3 29] [:append 4 1]]</div></a><a href="#i99"><div class="op ok" id="i99" style="width:100;left:530;top:1552;height:32" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.135Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 99
+ :value [[:append 3 30] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 3 31]]}">4 txn [[:append 3 30] [:r 3 nil] [:append 3 31]]<br />[[:append 3 30] [:r 3 [1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 3 31]]</div></a><a href="#i101"><div class="op ok" id="i101" style="width:100;left:106;top:1600;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.316Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 101
+ :value [[:append 3 32] [:r 5 []] [:append 0 20] [:r 5 []] [:append 0 21] [:r 5 []]]}">0 txn [[:append 3 32] [:r 5 nil] [:append 0 20] [:r 5 nil] [:append 0 21] [:r 5 nil]]<br />[[:append 3 32] [:r 5 []] [:append 0 20] [:r 5 []] [:append 0 21] [:r 5 []]]</div></a><a href="#i102"><div class="op info" id="i102" style="width:100;left:0;top:1632;height:16" title="Msg: nil
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.320Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 102
+ :value }">:nemesis start </div></a><a href="#i104"><div class="op ok" id="i104" style="width:100;left:1802;top:1648;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.445Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 104
+ :value [[:r 5 []] [:append 4 2]]}">16 txn [[:r 5 nil] [:append 4 2]]<br />[[:r 5 []] [:append 4 2]]</div></a><a href="#i106"><div class="op ok" id="i106" style="width:100;left:530;top:1680;height:16" title="Dur: 27 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.523Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 106
+ :value [[:r 5 []] [:append 5 1] [:append 5 2] [:append 4 3] [:append 5 3] [:append 0 22] [:append 5 4]]}">4 txn [[:r 5 nil] [:append 5 1] [:append 5 2] [:append 4 3] [:append 5 3] [:append 0 22] [:append 5 4]]<br />[[:r 5 []] [:append 5 1] [:append 5 2] [:append 4 3] [:append 5 3] [:append 0 22] [:append 5 4]]</div></a><a href="#i108"><div class="op info" id="i108" style="width:100;left:0;top:1728;height:16" title="Msg: [:isolated {&quot;192.168.56.105&quot; #{&quot;192.168.56.103&quot; &quot;192.168.56.102&quot; &quot;192.168.56.101&quot;}, &quot;192.168.56.104&quot; #{&quot;192.168.56.103&quot; &quot;192.168.56.102&quot; &quot;192.168.56.101&quot;}, &quot;192.168.56.103&quot; #{&quot;192.168.56.105&quot; &quot;192.168.56.104&quot;}, &quot;192.168.56.102&quot; #{&quot;192.168.56.105&quot; &quot;192.168.56.104&quot;}, &quot;192.168.56.101&quot; #{&quot;192.168.56.105&quot; &quot;192.168.56.104&quot;}}]
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.576Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 108
+ :value [:isolated {&quot;192.168.56.105&quot; #{&quot;192.168.56.103&quot; &quot;192.168.56.102&quot; &quot;192.168.56.101&quot;}, &quot;192.168.56.104&quot; #{&quot;192.168.56.103&quot; &quot;192.168.56.102&quot; &quot;192.168.56.101&quot;}, &quot;192.168.56.103&quot; #{&quot;192.168.56.105&quot; &quot;192.168.56.104&quot;}, &quot;192.168.56.102&quot; #{&quot;192.168.56.105&quot; &quot;192.168.56.104&quot;}, &quot;192.168.56.101&quot; #{&quot;192.168.56.105&quot; &quot;192.168.56.104&quot;}}]}">:nemesis start <br /></div></a><a href="#i110"><div class="op ok" id="i110" style="width:100;left:1166;top:1744;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.652Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 110
+ :value [[:append 4 5] [:append 0 23] [:r 4 [1 2 3 5]] [:append 5 6] [:r 4 [1 2 3 5]]]}">10 txn [[:append 4 5] [:append 0 23] [:r 4 nil] [:append 5 6] [:r 4 nil]]<br />[[:append 4 5] [:append 0 23] [:r 4 [1 2 3 5]] [:append 5 6] [:r 4 [1 2 3 5]]]</div></a><a href="#i114"><div class="op ok" id="i114" style="width:100;left:1272;top:1808;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:58.992Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 114
+ :value [[:r 5 [1 2 3 4 6]] [:append 4 7] [:r 5 [1 2 3 4 6]]]}">11 txn [[:r 5 nil] [:append 4 7] [:r 5 nil]]<br />[[:r 5 [1 2 3 4 6]] [:append 4 7] [:r 5 [1 2 3 4 6]]]</div></a><a href="#i116"><div class="op ok" id="i116" style="width:100;left:636;top:1840;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.049Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 116
+ :value [[:r 4 [1 2 3 5 7]] [:append 5 11] [:append 5 12]]}">5 txn [[:r 4 nil] [:append 5 11] [:append 5 12]]<br />[[:r 4 [1 2 3 5 7]] [:append 5 11] [:append 5 12]]</div></a><a href="#i118"><div class="op ok" id="i118" style="width:100;left:212;top:1872;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.097Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 118
+ :value [[:r 5 [1 2 3 4 6 11 12]] [:r 4 [1 2 3 5 7]] [:r 4 [1 2 3 5 7]] [:append 0 24] [:r 4 [1 2 3 5 7]] [:r 5 [1 2 3 4 6 11 12]] [:r 4 [1 2 3 5 7]] [:append 4 8]]}">1 txn [[:r 5 nil] [:r 4 nil] [:r 4 nil] [:append 0 24] [:r 4 nil] [:r 5 nil] [:r 4 nil] [:append 4 8]]<br />[[:r 5 [1 2 3 4 6 11 12]] [:r 4 [1 2 3 5 7]] [:r 4 [1 2 3 5 7]] [:append 0 24] [:r 4 [1 2 3 5 7]] [:r 5 [1 2 3 4 6 11 12]] [:r 4 [1 2 3 5 7]] [:append 4 8]]</div></a><a href="#i120"><div class="op ok" id="i120" style="width:100;left:106;top:1904;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.143Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 120
+ :value [[:r 4 [1 2 3 5 7 8]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:r 4 [1 2 3 5 7 8]] [:append 5 13] [:r 5 [1 2 3 4 6 11 12 13]] [:r 5 [1 2 3 4 6 11 12 13]] [:append 0 25]]}">0 txn [[:r 4 nil] [:r 0 nil] [:r 4 nil] [:append 5 13] [:r 5 nil] [:r 5 nil] [:append 0 25]]<br />[[:r 4 [1 2 3 5 7 8]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24]] [:r 4 [1 2 3 5 7 8]] [:append 5 13] [:r 5 [1 2 3 4 6 11 12 13]] [:r 5 [1 2 3 4 6 11 12 13]] [:append 0 25]]</div></a><a href="#i122"><div class="op ok" id="i122" style="width:100;left:318;top:1936;height:16" title="Dur: 16 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.287Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 122
+ :value [[:append 5 14] [:append 5 15] [:r 5 [1 2 3 4 6 11 12 13 14 15]] [:append 0 26] [:append 4 9] [:append 5 16]]}">2 txn [[:append 5 14] [:append 5 15] [:r 5 nil] [:append 0 26] [:append 4 9] [:append 5 16]]<br />[[:append 5 14] [:append 5 15] [:r 5 [1 2 3 4 6 11 12 13 14 15]] [:append 0 26] [:append 4 9] [:append 5 16]]</div></a><a href="#i124"><div class="op ok" id="i124" style="width:100;left:636;top:1968;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.389Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 124
+ :value [[:r 5 [1 2 3 4 6 11 12 13 14 15 16]] [:r 4 [1 2 3 5 7 8 9]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16]] [:append 5 17]]}">5 txn [[:r 5 nil] [:r 4 nil] [:r 5 nil] [:append 5 17]]<br />[[:r 5 [1 2 3 4 6 11 12 13 14 15 16]] [:r 4 [1 2 3 5 7 8 9]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16]] [:append 5 17]]</div></a><a href="#i126"><div class="op ok" id="i126" style="width:100;left:636;top:2000;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.556Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 126
+ :value [[:append 5 18] [:append 0 27] [:r 4 [1 2 3 5 7 8 9]] [:append 4 10] [:r 4 [1 2 3 5 7 8 9 10]] [:r 4 [1 2 3 5 7 8 9 10]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]]]}">5 txn [[:append 5 18] [:append 0 27] [:r 4 nil] [:append 4 10] [:r 4 nil] [:r 4 nil] [:r 5 nil] [:r 0 nil]]<br />[[:append 5 18] [:append 0 27] [:r 4 [1 2 3 5 7 8 9]] [:append 4 10] [:r 4 [1 2 3 5 7 8 9 10]] [:r 4 [1 2 3 5 7 8 9 10]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]]]</div></a><a href="#i128"><div class="op ok" id="i128" style="width:100;left:1378;top:2032;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.613Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 128
+ :value [[:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 5 19] [:append 5 20] [:r 4 [1 2 3 5 7 8 9 10]] [:append 5 21] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21]]]}">12 txn [[:r 0 nil] [:r 5 nil] [:r 0 nil] [:append 5 19] [:append 5 20] [:r 4 nil] [:append 5 21] [:r 5 nil]]<br />[[:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18]] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 5 19] [:append 5 20] [:r 4 [1 2 3 5 7 8 9 10]] [:append 5 21] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21]]]</div></a><a href="#i131"><div class="op ok" id="i131" style="width:100;left:212;top:2080;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.718Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 131
+ :value [[:append 0 28] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21]]]}">1 txn [[:append 0 28] [:r 5 nil]]<br />[[:append 0 28] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21]]]</div></a><a href="#i133"><div class="op ok" id="i133" style="width:100;left:848;top:2112;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.881Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 133
+ :value [[:append 5 23] [:append 4 11] [:r 4 [1 2 3 5 7 8 9 10 11]] [:append 5 24] [:append 5 25]]}">7 txn [[:append 5 23] [:append 4 11] [:r 4 nil] [:append 5 24] [:append 5 25]]<br />[[:append 5 23] [:append 4 11] [:r 4 [1 2 3 5 7 8 9 10 11]] [:append 5 24] [:append 5 25]]</div></a><a href="#i135"><div class="op ok" id="i135" style="width:100;left:1378;top:2144;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T10:59:59.910Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 135
+ :value [[:r 4 [1 2 3 5 7 8 9 10 11]] [:append 5 26]]}">12 txn [[:r 4 nil] [:append 5 26]]<br />[[:r 4 [1 2 3 5 7 8 9 10 11]] [:append 5 26]]</div></a><a href="#i139"><div class="op ok" id="i139" style="width:100;left:106;top:2192;height:32" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:00.172Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 139
+ :value [[:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26]] [:r 4 [1 2 3 5 7 8 9 10 11]] [:append 0 29]]}">0 txn [[:r 5 nil] [:r 4 nil] [:append 0 29]]<br />[[:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26]] [:r 4 [1 2 3 5 7 8 9 10 11]] [:append 0 29]]</div></a><a href="#i141"><div class="op fail" id="i141" style="width:100;left:848;top:2208;height:48" title="Dur: 19 ms
+Err: :ww-conflict
+Wall-clock Time: 2023-04-30T11:00:00.189Z
+
+Op:
+{:process 7
+ :type :fail
+ :f :txn
+ :index 141
+ :error :ww-conflict
+ :value [[:r 4 nil] [:append 5 30] [:r 5 nil] [:append 4 13] [:append 4 14] [:append 0 30]]}">7 txn [[:r 4 nil] [:append 5 30] [:r 5 nil] [:append 4 13] [:append 4 14] [:append 0 30]]</div></a><a href="#i142"><div class="op ok" id="i142" style="width:100;left:1696;top:2240;height:32" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:00.191Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 142
+ :value [[:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26]] [:append 0 31] [:r 4 [1 2 3 5 7 8 9 10 11]] [:append 5 31]]}">15 txn [[:r 5 nil] [:append 0 31] [:r 4 nil] [:append 5 31]]<br />[[:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26]] [:append 0 31] [:r 4 [1 2 3 5 7 8 9 10 11]] [:append 5 31]]</div></a><a href="#i145"><div class="op ok" id="i145" style="width:100;left:1696;top:2304;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:00.338Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 145
+ :value [[:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]]]}">15 txn [[:r 5 nil] [:r 5 nil]]<br />[[:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]]]</div></a><a href="#i147"><div class="op ok" id="i147" style="width:100;left:1272;top:2336;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:00.486Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 147
+ :value [[:r 4 [1 2 3 5 7 8 9 10 11]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]] [:r 4 [1 2 3 5 7 8 9 10 11]]]}">11 txn [[:r 4 nil] [:r 5 nil] [:r 5 nil] [:r 4 nil]]<br />[[:r 4 [1 2 3 5 7 8 9 10 11]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]] [:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]] [:r 4 [1 2 3 5 7 8 9 10 11]]]</div></a><a href="#i149"><div class="op ok" id="i149" style="width:100;left:106;top:2368;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:00.522Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 149
+ :value [[:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]] [:r 6 []] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 31]]]}">0 txn [[:r 5 nil] [:r 6 nil] [:r 0 nil]]<br />[[:r 5 [1 2 3 4 6 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 31]] [:r 6 []] [:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 31]]]</div></a><a href="#i151"><div class="op ok" id="i151" style="width:100;left:742;top:2400;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:00.675Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 151
+ :value [[:append 4 15] [:r 6 []] [:append 4 16]]}">6 txn [[:append 4 15] [:r 6 nil] [:append 4 16]]<br />[[:append 4 15] [:r 6 []] [:append 4 16]]</div></a><a href="#i153"><div class="op ok" id="i153" style="width:100;left:742;top:2432;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:00.791Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 153
+ :value [[:r 6 []] [:r 6 []] [:append 7 1]]}">6 txn [[:r 6 nil] [:r 6 nil] [:append 7 1]]<br />[[:r 6 []] [:r 6 []] [:append 7 1]]</div></a><a href="#i155"><div class="op ok" id="i155" style="width:100;left:1908;top:2464;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:00.964Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 155
+ :value [[:r 6 []] [:append 6 1] [:r 6 [1]] [:append 4 17] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 6 [1]]]}">17 txn [[:r 6 nil] [:append 6 1] [:r 6 nil] [:append 4 17] [:r 4 nil] [:r 6 nil]]<br />[[:r 6 []] [:append 6 1] [:r 6 [1]] [:append 4 17] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 6 [1]]]</div></a><a href="#i157"><div class="op ok" id="i157" style="width:100;left:318;top:2496;height:16" title="Dur: 16 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:01.140Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 157
+ :value [[:append 6 2] [:r 6 [1 2]] [:append 7 2] [:append 7 3] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 6 [1 2]] [:append 6 3]]}">2 txn [[:append 6 2] [:r 6 nil] [:append 7 2] [:append 7 3] [:r 4 nil] [:r 6 nil] [:append 6 3]]<br />[[:append 6 2] [:r 6 [1 2]] [:append 7 2] [:append 7 3] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 6 [1 2]] [:append 6 3]]</div></a><a href="#i159"><div class="op ok" id="i159" style="width:100;left:318;top:2528;height:16" title="Dur: 21 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:01.287Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 159
+ :value [[:r 6 [1 2 3]] [:r 6 [1 2 3]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 6 [1 2 3]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:append 6 4] [:r 6 [1 2 3 4]]]}">2 txn [[:r 6 nil] [:r 6 nil] [:r 4 nil] [:r 4 nil] [:r 6 nil] [:r 4 nil] [:append 6 4] [:r 6 nil]]<br />[[:r 6 [1 2 3]] [:r 6 [1 2 3]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 6 [1 2 3]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:append 6 4] [:r 6 [1 2 3 4]]]</div></a><a href="#i161"><div class="op ok" id="i161" style="width:100;left:1378;top:2560;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:01.345Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 161
+ :value [[:append 6 5] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]]]}">12 txn [[:append 6 5] [:r 4 nil] [:r 4 nil] [:r 4 nil]]<br />[[:append 6 5] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17]]]</div></a><a href="#i164"><div class="op ok" id="i164" style="width:100;left:1378;top:2608;height:16" title="Dur: 16 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:01.662Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 164
+ :value [[:r 6 [1 2 3 4 5]] [:append 6 7] [:append 4 18] [:r 6 [1 2 3 4 5 7]] [:r 6 [1 2 3 4 5 7]] [:r 6 [1 2 3 4 5 7]] [:append 4 19] [:append 6 8]]}">12 txn [[:r 6 nil] [:append 6 7] [:append 4 18] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:append 4 19] [:append 6 8]]<br />[[:r 6 [1 2 3 4 5]] [:append 6 7] [:append 4 18] [:r 6 [1 2 3 4 5 7]] [:r 6 [1 2 3 4 5 7]] [:r 6 [1 2 3 4 5 7]] [:append 4 19] [:append 6 8]]</div></a><a href="#i166"><div class="op ok" id="i166" style="width:100;left:1378;top:2640;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:01.795Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 166
+ :value [[:append 6 9] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19]] [:append 7 4] [:append 6 10] [:append 4 20] [:r 6 [1 2 3 4 5 7 8 9 10]]]}">12 txn [[:append 6 9] [:r 4 nil] [:append 7 4] [:append 6 10] [:append 4 20] [:r 6 nil]]<br />[[:append 6 9] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19]] [:append 7 4] [:append 6 10] [:append 4 20] [:r 6 [1 2 3 4 5 7 8 9 10]]]</div></a><a href="#i168"><div class="op ok" id="i168" style="width:100;left:742;top:2672;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:01.982Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 168
+ :value [[:r 6 [1 2 3 4 5 7 8 9 10]] [:append 4 21] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21]] [:r 6 [1 2 3 4 5 7 8 9 10]] [:r 6 [1 2 3 4 5 7 8 9 10]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21]]]}">6 txn [[:r 6 nil] [:append 4 21] [:r 4 nil] [:r 6 nil] [:r 6 nil] [:r 4 nil]]<br />[[:r 6 [1 2 3 4 5 7 8 9 10]] [:append 4 21] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21]] [:r 6 [1 2 3 4 5 7 8 9 10]] [:r 6 [1 2 3 4 5 7 8 9 10]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21]]]</div></a><a href="#i170"><div class="op ok" id="i170" style="width:100;left:1908;top:2704;height:16" title="Dur: 17 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:02.166Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 170
+ :value [[:r 6 [1 2 3 4 5 7 8 9 10]] [:r 6 [1 2 3 4 5 7 8 9 10]] [:append 4 22] [:append 6 11] [:append 6 12] [:append 6 13] [:append 6 14]]}">17 txn [[:r 6 nil] [:r 6 nil] [:append 4 22] [:append 6 11] [:append 6 12] [:append 6 13] [:append 6 14]]<br />[[:r 6 [1 2 3 4 5 7 8 9 10]] [:r 6 [1 2 3 4 5 7 8 9 10]] [:append 4 22] [:append 6 11] [:append 6 12] [:append 6 13] [:append 6 14]]</div></a><a href="#i172"><div class="op ok" id="i172" style="width:100;left:636;top:2736;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:02.292Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 172
+ :value [[:append 6 15] [:append 6 16]]}">5 txn [[:append 6 15] [:append 6 16]]</div></a><a href="#i174"><div class="op ok" id="i174" style="width:100;left:636;top:2768;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:02.310Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 174
+ :value [[:append 6 17] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17]] [:append 6 18]]}">5 txn [[:append 6 17] [:r 6 nil] [:append 6 18]]<br />[[:append 6 17] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17]] [:append 6 18]]</div></a><a href="#i177"><div class="op ok" id="i177" style="width:100;left:1166;top:2816;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:02.651Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 177
+ :value [[:r 7 [1 2 3 4]] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18]] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 6 21] [:append 6 22] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22]]]}">10 txn [[:r 7 nil] [:r 6 nil] [:r 6 nil] [:append 6 21] [:append 6 22] [:r 6 nil]]<br />[[:r 7 [1 2 3 4]] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18]] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18]] [:append 6 21] [:append 6 22] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22]]]</div></a><a href="#i179"><div class="op ok" id="i179" style="width:100;left:848;top:2848;height:16" title="Dur: 19 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:02.796Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 179
+ :value [[:append 6 23] [:r 7 [1 2 3 4]] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23]] [:append 6 24] [:append 6 25] [:append 6 26] [:append 4 23]]}">7 txn [[:append 6 23] [:r 7 nil] [:r 6 nil] [:append 6 24] [:append 6 25] [:append 6 26] [:append 4 23]]<br />[[:append 6 23] [:r 7 [1 2 3 4]] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23]] [:append 6 24] [:append 6 25] [:append 6 26] [:append 4 23]]</div></a><a href="#i181"><div class="op ok" id="i181" style="width:100;left:1802;top:2880;height:16" title="Dur: 18 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:02.875Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 181
+ :value [[:append 4 24] [:append 6 27] [:append 4 25] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27]] [:append 4 26] [:append 4 27]]}">16 txn [[:append 4 24] [:append 6 27] [:append 4 25] [:r 6 nil] [:append 4 26] [:append 4 27]]<br />[[:append 4 24] [:append 6 27] [:append 4 25] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27]] [:append 4 26] [:append 4 27]]</div></a><a href="#i183"><div class="op ok" id="i183" style="width:100;left:742;top:2912;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:02.995Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 183
+ :value [[:append 4 28] [:append 6 28]]}">6 txn [[:append 4 28] [:append 6 28]]</div></a><a href="#i185"><div class="op ok" id="i185" style="width:100;left:848;top:2944;height:16" title="Dur: 13 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:03.055Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 185
+ :value [[:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28]] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28]] [:append 4 29] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:append 6 29]]}">7 txn [[:r 6 nil] [:r 4 nil] [:r 6 nil] [:append 4 29] [:r 4 nil] [:append 6 29]]<br />[[:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28]] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28]] [:append 4 29] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29]] [:append 6 29]]</div></a><a href="#i187"><div class="op ok" id="i187" style="width:100;left:848;top:2976;height:16" title="Dur: 13 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:03.137Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 187
+ :value [[:append 4 30] [:append 6 30] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 6 31] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30 31]]]}">7 txn [[:append 4 30] [:append 6 30] [:r 6 nil] [:r 4 nil] [:append 6 31] [:r 6 nil]]<br />[[:append 4 30] [:append 6 30] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 6 31] [:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30 31]]]</div></a><a href="#i189"><div class="op ok" id="i189" style="width:100;left:1802;top:3008;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:03.187Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 189
+ :value [[:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30 31]] [:append 6 32] [:append 7 5] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 8 1] [:r 8 [1]] [:r 8 [1]]]}">16 txn [[:r 6 nil] [:append 6 32] [:append 7 5] [:r 4 nil] [:append 8 1] [:r 8 nil] [:r 8 nil]]<br />[[:r 6 [1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 21 22 23 24 25 26 27 28 29 30 31]] [:append 6 32] [:append 7 5] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]] [:append 8 1] [:r 8 [1]] [:r 8 [1]]]</div></a><a href="#i191"><div class="op ok" id="i191" style="width:100;left:1272;top:3040;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T11:00:03.239Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 191
+ :value [[:r 8 [1]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]]]}">11 txn [[:r 8 nil] [:r 4 nil]]<br />[[:r 8 [1]] [:r 4 [1 2 3 5 7 8 9 10 11 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]]]</div></a><a href="#i192"><div class="op info" id="i192" style="width:100;left:424;top:1712;height:1504" title="Dur: 13023 ms
+Err: &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668056 is in use&quot;
+Wall-clock Time: 2023-04-30T11:00:11.582Z
+
+Op:
+{:process 3
+ :type :info
+ :f :txn
+ :index 192
+ :error &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668056 is in use&quot;
+ :exception {:via [{:type com.arangodb.ArangoDBException, :message &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668056 is in use&quot;, :at [com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55]}], :trace [[com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55] [com.arangodb.internal.velocystream.VstCommunication checkError &quot;VstCommunication.java&quot; 157] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 144] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 45] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 149] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 144] [com.arangodb.internal.velocystream.VstProtocol execute &quot;VstProtocol.java&quot; 46] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 71] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 61] [com.arangodb.internal.ArangoDatabaseImpl abortStreamTransaction &quot;ArangoDatabaseImpl.java&quot; 340] [jdk.internal.reflect.NativeMethodAccessorImpl invoke0 &quot;NativeMethodAccessorImpl.java&quot; -2] [jdk.internal.reflect.NativeMethodAccessorImpl invoke &quot;NativeMethodAccessorImpl.java&quot; 62] [jdk.internal.reflect.DelegatingMethodAccessorImpl invoke &quot;DelegatingMethodAccessorImpl.java&quot; 43] [java.lang.reflect.Method invoke &quot;Method.java&quot; 566] [clojure.lang.Reflector invokeMatchingMethod &quot;Reflector.java&quot; 167] [clojure.lang.Reflector invokeInstanceMethod &quot;Reflector.java&quot; 102] [jepsen.arangodb.tests.list_append.Client invoke_BANG_ &quot;list_append.clj&quot; 95] [jepsen.client.Validate invoke_BANG_ &quot;client.clj&quot; 83] [jepsen.generator.interpreter.ClientWorker invoke_BANG_ &quot;interpreter.clj&quot; 62] [jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688 invoke &quot;interpreter.clj&quot; 137] [jepsen.generator.interpreter$spawn_worker$fn__10687 invoke &quot;interpreter.clj&quot; 120] [clojure.core$binding_conveyor_fn$fn__5823 invoke &quot;core.clj&quot; 2047] [clojure.lang.AFn call &quot;AFn.java&quot; 18] [java.util.concurrent.FutureTask run &quot;FutureTask.java&quot; 264] [java.util.concurrent.ThreadPoolExecutor runWorker &quot;ThreadPoolExecutor.java&quot; 1128] [java.util.concurrent.ThreadPoolExecutor$Worker run &quot;ThreadPoolExecutor.java&quot; 628] [java.lang.Thread run &quot;Thread.java&quot; 829]], :cause &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668056 is in use&quot;}
+ :value [[:r 0 nil] [:append 4 4] [:r 5 nil] [:append 5 5] [:r 4 nil] [:r 5 nil]]}">3 txn [[:r 0 nil] [:append 4 4] [:r 5 nil] [:append 5 5] [:r 4 nil] [:r 5 nil]]</div></a><a href="#i193"><div class="op info" id="i193" style="width:100;left:530;top:1776;height:1440" title="Dur: 13002 ms
+Err: &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923880 is in use&quot;
+Wall-clock Time: 2023-04-30T11:00:11.812Z
+
+Op:
+{:process 4
+ :type :info
+ :f :txn
+ :index 193
+ :error &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923880 is in use&quot;
+ :exception {:via [{:type com.arangodb.ArangoDBException, :message &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923880 is in use&quot;, :at [com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55]}], :trace [[com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55] [com.arangodb.internal.velocystream.VstCommunication checkError &quot;VstCommunication.java&quot; 157] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 144] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 45] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 149] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 144] [com.arangodb.internal.velocystream.VstProtocol execute &quot;VstProtocol.java&quot; 46] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 71] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 61] [com.arangodb.internal.ArangoDatabaseImpl abortStreamTransaction &quot;ArangoDatabaseImpl.java&quot; 340] [jdk.internal.reflect.NativeMethodAccessorImpl invoke0 &quot;NativeMethodAccessorImpl.java&quot; -2] [jdk.internal.reflect.NativeMethodAccessorImpl invoke &quot;NativeMethodAccessorImpl.java&quot; 62] [jdk.internal.reflect.DelegatingMethodAccessorImpl invoke &quot;DelegatingMethodAccessorImpl.java&quot; 43] [java.lang.reflect.Method invoke &quot;Method.java&quot; 566] [clojure.lang.Reflector invokeMatchingMethod &quot;Reflector.java&quot; 167] [clojure.lang.Reflector invokeInstanceMethod &quot;Reflector.java&quot; 102] [jepsen.arangodb.tests.list_append.Client invoke_BANG_ &quot;list_append.clj&quot; 95] [jepsen.client.Validate invoke_BANG_ &quot;client.clj&quot; 83] [jepsen.generator.interpreter.ClientWorker invoke_BANG_ &quot;interpreter.clj&quot; 62] [jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688 invoke &quot;interpreter.clj&quot; 137] [jepsen.generator.interpreter$spawn_worker$fn__10687 invoke &quot;interpreter.clj&quot; 120] [clojure.core$binding_conveyor_fn$fn__5823 invoke &quot;core.clj&quot; 2047] [clojure.lang.AFn call &quot;AFn.java&quot; 18] [java.util.concurrent.FutureTask run &quot;FutureTask.java&quot; 264] [java.util.concurrent.ThreadPoolExecutor runWorker &quot;ThreadPoolExecutor.java&quot; 1128] [java.util.concurrent.ThreadPoolExecutor$Worker run &quot;ThreadPoolExecutor.java&quot; 628] [java.lang.Thread run &quot;Thread.java&quot; 829]], :cause &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923880 is in use&quot;}
+ :value [[:append 5 7] [:append 4 6] [:r 5 nil] [:r 0 nil] [:append 5 8]]}">4 txn [[:append 5 7] [:append 4 6] [:r 5 nil] [:r 0 nil] [:append 5 8]]</div></a><a href="#i194"><div class="op info" id="i194" style="width:100;left:954;top:1792;height:1424" title="Dur: 13002 ms
+Err: &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668064 is in use&quot;
+Wall-clock Time: 2023-04-30T11:00:11.850Z
+
+Op:
+{:process 8
+ :type :info
+ :f :txn
+ :index 194
+ :error &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668064 is in use&quot;
+ :exception {:via [{:type com.arangodb.ArangoDBException, :message &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668064 is in use&quot;, :at [com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55]}], :trace [[com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55] [com.arangodb.internal.velocystream.VstCommunication checkError &quot;VstCommunication.java&quot; 157] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 144] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 45] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 149] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 144] [com.arangodb.internal.velocystream.VstProtocol execute &quot;VstProtocol.java&quot; 46] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 71] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 61] [com.arangodb.internal.ArangoDatabaseImpl abortStreamTransaction &quot;ArangoDatabaseImpl.java&quot; 340] [jdk.internal.reflect.NativeMethodAccessorImpl invoke0 &quot;NativeMethodAccessorImpl.java&quot; -2] [jdk.internal.reflect.NativeMethodAccessorImpl invoke &quot;NativeMethodAccessorImpl.java&quot; 62] [jdk.internal.reflect.DelegatingMethodAccessorImpl invoke &quot;DelegatingMethodAccessorImpl.java&quot; 43] [java.lang.reflect.Method invoke &quot;Method.java&quot; 566] [clojure.lang.Reflector invokeMatchingMethod &quot;Reflector.java&quot; 167] [clojure.lang.Reflector invokeInstanceMethod &quot;Reflector.java&quot; 102] [jepsen.arangodb.tests.list_append.Client invoke_BANG_ &quot;list_append.clj&quot; 95] [jepsen.client.Validate invoke_BANG_ &quot;client.clj&quot; 83] [jepsen.generator.interpreter.ClientWorker invoke_BANG_ &quot;interpreter.clj&quot; 62] [jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688 invoke &quot;interpreter.clj&quot; 137] [jepsen.generator.interpreter$spawn_worker$fn__10687 invoke &quot;interpreter.clj&quot; 120] [clojure.core$binding_conveyor_fn$fn__5823 invoke &quot;core.clj&quot; 2047] [clojure.lang.AFn call &quot;AFn.java&quot; 18] [java.util.concurrent.FutureTask run &quot;FutureTask.java&quot; 264] [java.util.concurrent.ThreadPoolExecutor runWorker &quot;ThreadPoolExecutor.java&quot; 1128] [java.util.concurrent.ThreadPoolExecutor$Worker run &quot;ThreadPoolExecutor.java&quot; 628] [java.lang.Thread run &quot;Thread.java&quot; 829]], :cause &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668064 is in use&quot;}
+ :value [[:append 5 9] [:append 5 10]]}">8 txn [[:append 5 9] [:append 5 10]]</div></a><a href="#i195"><div class="op info" id="i195" style="width:100;left:1484;top:2064;height:1152" title="Dur: 13002 ms
+Err: &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668080 is in use&quot;
+Wall-clock Time: 2023-04-30T11:00:12.709Z
+
+Op:
+{:process 13
+ :type :info
+ :f :txn
+ :index 195
+ :error &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668080 is in use&quot;
+ :exception {:via [{:type com.arangodb.ArangoDBException, :message &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668080 is in use&quot;, :at [com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55]}], :trace [[com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55] [com.arangodb.internal.velocystream.VstCommunication checkError &quot;VstCommunication.java&quot; 157] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 144] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 45] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 149] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 144] [com.arangodb.internal.velocystream.VstProtocol execute &quot;VstProtocol.java&quot; 46] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 71] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 61] [com.arangodb.internal.ArangoDatabaseImpl abortStreamTransaction &quot;ArangoDatabaseImpl.java&quot; 340] [jdk.internal.reflect.NativeMethodAccessorImpl invoke0 &quot;NativeMethodAccessorImpl.java&quot; -2] [jdk.internal.reflect.NativeMethodAccessorImpl invoke &quot;NativeMethodAccessorImpl.java&quot; 62] [jdk.internal.reflect.DelegatingMethodAccessorImpl invoke &quot;DelegatingMethodAccessorImpl.java&quot; 43] [java.lang.reflect.Method invoke &quot;Method.java&quot; 566] [clojure.lang.Reflector invokeMatchingMethod &quot;Reflector.java&quot; 167] [clojure.lang.Reflector invokeInstanceMethod &quot;Reflector.java&quot; 102] [jepsen.arangodb.tests.list_append.Client invoke_BANG_ &quot;list_append.clj&quot; 95] [jepsen.client.Validate invoke_BANG_ &quot;client.clj&quot; 83] [jepsen.generator.interpreter.ClientWorker invoke_BANG_ &quot;interpreter.clj&quot; 62] [jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688 invoke &quot;interpreter.clj&quot; 137] [jepsen.generator.interpreter$spawn_worker$fn__10687 invoke &quot;interpreter.clj&quot; 120] [clojure.core$binding_conveyor_fn$fn__5823 invoke &quot;core.clj&quot; 2047] [clojure.lang.AFn call &quot;AFn.java&quot; 18] [java.util.concurrent.FutureTask run &quot;FutureTask.java&quot; 264] [java.util.concurrent.ThreadPoolExecutor runWorker &quot;ThreadPoolExecutor.java&quot; 1128] [java.util.concurrent.ThreadPoolExecutor$Worker run &quot;ThreadPoolExecutor.java&quot; 628] [java.lang.Thread run &quot;Thread.java&quot; 829]], :cause &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668080 is in use&quot;}
+ :value [[:r 5 nil] [:r 5 nil] [:append 5 22]]}">13 txn [[:r 5 nil] [:r 5 nil] [:append 5 22]]</div></a><a href="#i196"><div class="op info" id="i196" style="width:100;left:2014;top:2176;height:1040" title="Dur: 13003 ms
+Err: &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668088 is in use&quot;
+Wall-clock Time: 2023-04-30T11:00:13.054Z
+
+Op:
+{:process 18
+ :type :info
+ :f :txn
+ :index 196
+ :error &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668088 is in use&quot;
+ :exception {:via [{:type com.arangodb.ArangoDBException, :message &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668088 is in use&quot;, :at [com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55]}], :trace [[com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55] [com.arangodb.internal.velocystream.VstCommunication checkError &quot;VstCommunication.java&quot; 157] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 144] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 45] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 149] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 144] [com.arangodb.internal.velocystream.VstProtocol execute &quot;VstProtocol.java&quot; 46] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 71] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 61] [com.arangodb.internal.ArangoDatabaseImpl abortStreamTransaction &quot;ArangoDatabaseImpl.java&quot; 340] [jdk.internal.reflect.NativeMethodAccessorImpl invoke0 &quot;NativeMethodAccessorImpl.java&quot; -2] [jdk.internal.reflect.NativeMethodAccessorImpl invoke &quot;NativeMethodAccessorImpl.java&quot; 62] [jdk.internal.reflect.DelegatingMethodAccessorImpl invoke &quot;DelegatingMethodAccessorImpl.java&quot; 43] [java.lang.reflect.Method invoke &quot;Method.java&quot; 566] [clojure.lang.Reflector invokeMatchingMethod &quot;Reflector.java&quot; 167] [clojure.lang.Reflector invokeInstanceMethod &quot;Reflector.java&quot; 102] [jepsen.arangodb.tests.list_append.Client invoke_BANG_ &quot;list_append.clj&quot; 95] [jepsen.client.Validate invoke_BANG_ &quot;client.clj&quot; 83] [jepsen.generator.interpreter.ClientWorker invoke_BANG_ &quot;interpreter.clj&quot; 62] [jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688 invoke &quot;interpreter.clj&quot; 137] [jepsen.generator.interpreter$spawn_worker$fn__10687 invoke &quot;interpreter.clj&quot; 120] [clojure.core$binding_conveyor_fn$fn__5823 invoke &quot;core.clj&quot; 2047] [clojure.lang.AFn call &quot;AFn.java&quot; 18] [java.util.concurrent.FutureTask run &quot;FutureTask.java&quot; 264] [java.util.concurrent.ThreadPoolExecutor runWorker &quot;ThreadPoolExecutor.java&quot; 1128] [java.util.concurrent.ThreadPoolExecutor$Worker run &quot;ThreadPoolExecutor.java&quot; 628] [java.lang.Thread run &quot;Thread.java&quot; 829]], :cause &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 1099551668088 is in use&quot;}
+ :value [[:append 5 27] [:append 5 28] [:r 0 nil] [:append 4 12] [:append 5 29]]}">18 txn [[:append 5 27] [:append 5 28] [:r 0 nil] [:append 4 12] [:append 5 29]]</div></a><a href="#i197"><div class="op info" id="i197" style="width:100;left:1590;top:2288;height:928" title="Dur: 13023 ms
+Err: &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923896 is in use&quot;
+Wall-clock Time: 2023-04-30T11:00:13.322Z
+
+Op:
+{:process 14
+ :type :info
+ :f :txn
+ :index 197
+ :error &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923896 is in use&quot;
+ :exception {:via [{:type com.arangodb.ArangoDBException, :message &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923896 is in use&quot;, :at [com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55]}], :trace [[com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55] [com.arangodb.internal.velocystream.VstCommunication checkError &quot;VstCommunication.java&quot; 157] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 144] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 45] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 149] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 144] [com.arangodb.internal.velocystream.VstProtocol execute &quot;VstProtocol.java&quot; 46] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 71] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 61] [com.arangodb.internal.ArangoDatabaseImpl abortStreamTransaction &quot;ArangoDatabaseImpl.java&quot; 340] [jdk.internal.reflect.NativeMethodAccessorImpl invoke0 &quot;NativeMethodAccessorImpl.java&quot; -2] [jdk.internal.reflect.NativeMethodAccessorImpl invoke &quot;NativeMethodAccessorImpl.java&quot; 62] [jdk.internal.reflect.DelegatingMethodAccessorImpl invoke &quot;DelegatingMethodAccessorImpl.java&quot; 43] [java.lang.reflect.Method invoke &quot;Method.java&quot; 566] [clojure.lang.Reflector invokeMatchingMethod &quot;Reflector.java&quot; 167] [clojure.lang.Reflector invokeInstanceMethod &quot;Reflector.java&quot; 102] [jepsen.arangodb.tests.list_append.Client invoke_BANG_ &quot;list_append.clj&quot; 95] [jepsen.client.Validate invoke_BANG_ &quot;client.clj&quot; 83] [jepsen.generator.interpreter.ClientWorker invoke_BANG_ &quot;interpreter.clj&quot; 62] [jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688 invoke &quot;interpreter.clj&quot; 137] [jepsen.generator.interpreter$spawn_worker$fn__10687 invoke &quot;interpreter.clj&quot; 120] [clojure.core$binding_conveyor_fn$fn__5823 invoke &quot;core.clj&quot; 2047] [clojure.lang.AFn call &quot;AFn.java&quot; 18] [java.util.concurrent.FutureTask run &quot;FutureTask.java&quot; 264] [java.util.concurrent.ThreadPoolExecutor runWorker &quot;ThreadPoolExecutor.java&quot; 1128] [java.util.concurrent.ThreadPoolExecutor$Worker run &quot;ThreadPoolExecutor.java&quot; 628] [java.lang.Thread run &quot;Thread.java&quot; 829]], :cause &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923896 is in use&quot;}
+ :value [[:r 5 nil] [:append 5 32] [:r 4 nil] [:r 0 nil] [:append 0 32] [:r 5 nil]]}">14 txn [[:r 5 nil] [:append 5 32] [:r 4 nil] [:r 0 nil] [:append 0 32] [:r 5 nil]]</div></a><a href="#i198"><div class="op info" id="i198" style="width:100;left:2120;top:2592;height:624" title="Dur: 13002 ms
+Err: &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923904 is in use&quot;
+Wall-clock Time: 2023-04-30T11:00:14.461Z
+
+Op:
+{:process 19
+ :type :info
+ :f :txn
+ :index 198
+ :error &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923904 is in use&quot;
+ :exception {:via [{:type com.arangodb.ArangoDBException, :message &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923904 is in use&quot;, :at [com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55]}], :trace [[com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55] [com.arangodb.internal.velocystream.VstCommunication checkError &quot;VstCommunication.java&quot; 157] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 144] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 45] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 149] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 144] [com.arangodb.internal.velocystream.VstProtocol execute &quot;VstProtocol.java&quot; 46] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 71] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 61] [com.arangodb.internal.ArangoDatabaseImpl abortStreamTransaction &quot;ArangoDatabaseImpl.java&quot; 340] [jdk.internal.reflect.NativeMethodAccessorImpl invoke0 &quot;NativeMethodAccessorImpl.java&quot; -2] [jdk.internal.reflect.NativeMethodAccessorImpl invoke &quot;NativeMethodAccessorImpl.java&quot; 62] [jdk.internal.reflect.DelegatingMethodAccessorImpl invoke &quot;DelegatingMethodAccessorImpl.java&quot; 43] [java.lang.reflect.Method invoke &quot;Method.java&quot; 566] [clojure.lang.Reflector invokeMatchingMethod &quot;Reflector.java&quot; 167] [clojure.lang.Reflector invokeInstanceMethod &quot;Reflector.java&quot; 102] [jepsen.arangodb.tests.list_append.Client invoke_BANG_ &quot;list_append.clj&quot; 95] [jepsen.client.Validate invoke_BANG_ &quot;client.clj&quot; 83] [jepsen.generator.interpreter.ClientWorker invoke_BANG_ &quot;interpreter.clj&quot; 62] [jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688 invoke &quot;interpreter.clj&quot; 137] [jepsen.generator.interpreter$spawn_worker$fn__10687 invoke &quot;interpreter.clj&quot; 120] [clojure.core$binding_conveyor_fn$fn__5823 invoke &quot;core.clj&quot; 2047] [clojure.lang.AFn call &quot;AFn.java&quot; 18] [java.util.concurrent.FutureTask run &quot;FutureTask.java&quot; 264] [java.util.concurrent.ThreadPoolExecutor runWorker &quot;ThreadPoolExecutor.java&quot; 1128] [java.util.concurrent.ThreadPoolExecutor$Worker run &quot;ThreadPoolExecutor.java&quot; 628] [java.lang.Thread run &quot;Thread.java&quot; 829]], :cause &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923904 is in use&quot;}
+ :value [[:r 6 nil] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:append 6 6]]}">19 txn [[:r 6 nil] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:append 6 6]]</div></a><a href="#i199"><div class="op info" id="i199" style="width:100;left:1060;top:2800;height:416" title="Dur: 13002 ms
+Err: &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923912 is in use&quot;
+Wall-clock Time: 2023-04-30T11:00:15.469Z
+
+Op:
+{:process 9
+ :type :info
+ :f :txn
+ :index 199
+ :error &quot;indeterminate: Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923912 is in use&quot;
+ :exception {:via [{:type com.arangodb.ArangoDBException, :message &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923912 is in use&quot;, :at [com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55]}], :trace [[com.arangodb.internal.util.ResponseUtils checkError &quot;ResponseUtils.java&quot; 55] [com.arangodb.internal.velocystream.VstCommunication checkError &quot;VstCommunication.java&quot; 157] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 144] [com.arangodb.internal.velocystream.VstCommunicationSync execute &quot;VstCommunicationSync.java&quot; 45] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 149] [com.arangodb.internal.velocystream.VstCommunication execute &quot;VstCommunication.java&quot; 144] [com.arangodb.internal.velocystream.VstProtocol execute &quot;VstProtocol.java&quot; 46] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 71] [com.arangodb.internal.ArangoExecutorSync execute &quot;ArangoExecutorSync.java&quot; 61] [com.arangodb.internal.ArangoDatabaseImpl abortStreamTransaction &quot;ArangoDatabaseImpl.java&quot; 340] [jdk.internal.reflect.NativeMethodAccessorImpl invoke0 &quot;NativeMethodAccessorImpl.java&quot; -2] [jdk.internal.reflect.NativeMethodAccessorImpl invoke &quot;NativeMethodAccessorImpl.java&quot; 62] [jdk.internal.reflect.DelegatingMethodAccessorImpl invoke &quot;DelegatingMethodAccessorImpl.java&quot; 43] [java.lang.reflect.Method invoke &quot;Method.java&quot; 566] [clojure.lang.Reflector invokeMatchingMethod &quot;Reflector.java&quot; 167] [clojure.lang.Reflector invokeInstanceMethod &quot;Reflector.java&quot; 102] [jepsen.arangodb.tests.list_append.Client invoke_BANG_ &quot;list_append.clj&quot; 95] [jepsen.client.Validate invoke_BANG_ &quot;client.clj&quot; 83] [jepsen.generator.interpreter.ClientWorker invoke_BANG_ &quot;interpreter.clj&quot; 62] [jepsen.generator.interpreter$spawn_worker$fn__10687$fn__10688 invoke &quot;interpreter.clj&quot; 137] [jepsen.generator.interpreter$spawn_worker$fn__10687 invoke &quot;interpreter.clj&quot; 120] [clojure.core$binding_conveyor_fn$fn__5823 invoke &quot;core.clj&quot; 2047] [clojure.lang.AFn call &quot;AFn.java&quot; 18] [java.util.concurrent.FutureTask run &quot;FutureTask.java&quot; 264] [java.util.concurrent.ThreadPoolExecutor runWorker &quot;ThreadPoolExecutor.java&quot; 1128] [java.util.concurrent.ThreadPoolExecutor$Worker run &quot;ThreadPoolExecutor.java&quot; 628] [java.lang.Thread run &quot;Thread.java&quot; 829]], :cause &quot;Response: 500, Error: 28 - updating transaction status failed. transaction 3298574923912 is in use&quot;}
+ :value [[:r 4 nil] [:append 6 19] [:append 6 20]]}">9 txn [[:r 4 nil] [:append 6 19] [:append 6 20]]</div></a></div></body></html>

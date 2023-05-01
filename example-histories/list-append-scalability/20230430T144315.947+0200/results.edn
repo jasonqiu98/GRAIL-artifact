@@ -1,0 +1,121 @@
+{:la {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 45 19]
+                                              [:append 45 20]
+                                              [:r 47 []]
+                                              [:r 47 []]],
+                                      :time 114848474037,
+                                      :process 5,
+                                      :index 1926}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 47 1]
+                                              [:append 46 2]
+                                              [:append 46 3]
+                                              [:r
+                                               45
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                17
+                                                18]]],
+                                      :time 114857831351,
+                                      :process 10,
+                                      :index 1927}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 45 19]
+                                              [:append 45 20]
+                                              [:r 47 []]
+                                              [:r 47 []]],
+                                      :time 114848474037,
+                                      :process 5,
+                                      :index 1926}],
+                             :steps ({:type :rw,
+                                      :key 47,
+                                      :value :elle.list-append/init,
+                                      :value' 1,
+                                      :a-mop-index 2,
+                                      :b-mop-index 0}
+                                     {:type :rw,
+                                      :key 45,
+                                      :value 18,
+                                      :value' 19,
+                                      :a-mop-index 3,
+                                      :b-mop-index 0}),
+                             :type :G2-item}
+                            {:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 44 14]
+                                              [:append 39 31]
+                                              [:r 45 [1]]
+                                              [:append 39 32]],
+                                      :time 112324863896,
+                                      :process 17,
+                                      :index 1881}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r
+                                               44
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13]]
+                                              [:append 45 2]
+                                              [:r 45 [1 2]]],
+                                      :time 112322341183,
+                                      :process 3,
+                                      :index 1880}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 44 14]
+                                              [:append 39 31]
+                                              [:r 45 [1]]
+                                              [:append 39 32]],
+                                      :time 112324863896,
+                                      :process 17,
+                                      :index 1881}],
+                             :steps ({:type :rw,
+                                      :key 45,
+                                      :value 1,
+                                      :value' 2,
+                                      :a-mop-index 2,
+                                      :b-mop-index 1}
+                                     {:type :rw,
+                                      :key 44,
+                                      :value 13,
+                                      :value' 14,
+                                      :a-mop-index 0,
+                                      :b-mop-index 0}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

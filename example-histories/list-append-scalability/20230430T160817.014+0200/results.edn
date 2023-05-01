@@ -1,0 +1,120 @@
+{:la {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:append 15 11]
+                                              [:r
+                                               15
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11]]
+                                              [:r
+                                               16
+                                               [1 2 3 4 5 6 7 8 9]]
+                                              [:append 16 10]
+                                              [:r
+                                               15
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11]]
+                                              [:append 15 12]
+                                              [:append 15 13]
+                                              [:r 14 [1 2]]],
+                                      :time 37322214647,
+                                      :process 25,
+                                      :index 378}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r
+                                               15
+                                               [1 2 3 4 5 6 7 8 9 10]]
+                                              [:r
+                                               15
+                                               [1 2 3 4 5 6 7 8 9 10]]
+                                              [:r
+                                               15
+                                               [1 2 3 4 5 6 7 8 9 10]]
+                                              [:append 14 3]
+                                              [:r
+                                               16
+                                               [1 2 3 4 5 6 7 8 9]]],
+                                      :time 37325524256,
+                                      :process 77,
+                                      :index 379}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:append 15 11]
+                                              [:r
+                                               15
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11]]
+                                              [:r
+                                               16
+                                               [1 2 3 4 5 6 7 8 9]]
+                                              [:append 16 10]
+                                              [:r
+                                               15
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11]]
+                                              [:append 15 12]
+                                              [:append 15 13]
+                                              [:r 14 [1 2]]],
+                                      :time 37322214647,
+                                      :process 25,
+                                      :index 378}],
+                             :steps ({:type :rw,
+                                      :key 14,
+                                      :value 2,
+                                      :value' 3,
+                                      :a-mop-index 7,
+                                      :b-mop-index 3}
+                                     {:type :rw,
+                                      :key 15,
+                                      :value 10,
+                                      :value' 11,
+                                      :a-mop-index 0,
+                                      :b-mop-index 0}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

@@ -1,0 +1,179 @@
+{:la {:valid? false,
+      :anomaly-types (:G2-item),
+      :anomalies {:G2-item [{:cycle [{:type :ok,
+                                      :f :txn,
+                                      :value [[:r
+                                               15
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16]]
+                                              [:append 13 12]
+                                              [:r
+                                               15
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16]]],
+                                      :time 38754653451,
+                                      :process 19,
+                                      :index 422}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r
+                                               13
+                                               [1 2 3 4 6 7 8 9 10 11]]
+                                              [:r
+                                               16
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16
+                                                17
+                                                18
+                                                19
+                                                20
+                                                21
+                                                22
+                                                23
+                                                24
+                                                25
+                                                26
+                                                27]]
+                                              [:append 16 30]
+                                              [:append 15 17]
+                                              [:append 15 18]
+                                              [:r
+                                               16
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16
+                                                17
+                                                18
+                                                19
+                                                20
+                                                21
+                                                22
+                                                23
+                                                24
+                                                25
+                                                26
+                                                27
+                                                30]]
+                                              [:append 16 31]],
+                                      :time 38757667842,
+                                      :process 2,
+                                      :index 423}
+                                     {:type :ok,
+                                      :f :txn,
+                                      :value [[:r
+                                               15
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16]]
+                                              [:append 13 12]
+                                              [:r
+                                               15
+                                               [1
+                                                2
+                                                3
+                                                4
+                                                5
+                                                6
+                                                7
+                                                8
+                                                9
+                                                10
+                                                11
+                                                12
+                                                13
+                                                14
+                                                15
+                                                16]]],
+                                      :time 38754653451,
+                                      :process 19,
+                                      :index 422}],
+                             :steps ({:type :rw,
+                                      :key 15,
+                                      :value 16,
+                                      :value' 17,
+                                      :a-mop-index 0,
+                                      :b-mop-index 3}
+                                     {:type :rw,
+                                      :key 13,
+                                      :value 11,
+                                      :value' 12,
+                                      :a-mop-index 0,
+                                      :b-mop-index 1}),
+                             :type :G2-item}]},
+      :not #{:repeatable-read},
+      :also-not #{:serializable
+                  :strong-serializable
+                  :strong-session-serializable}},
+ :perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :valid? false}

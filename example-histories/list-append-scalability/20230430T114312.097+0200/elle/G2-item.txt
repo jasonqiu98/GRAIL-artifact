@@ -1,0 +1,48 @@
+G2-item #0
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:append 30 31] [:append 29 17] [:append 25 25] [:append 30 32] [:append 29 18] [:r 31 []] [:r 29 [1 2 3 4 5 6 8 9 11 12 13 14 15 16 17 18]]], :time 58672490776, :process 6, :index 813}
+  T2 = {:type :ok, :f :txn, :value [[:append 31 1] [:r 31 [1]] [:append 31 2] [:r 31 [1 2]] [:r 31 [1 2]] [:r 31 [1 2]] [:append 31 3] [:r 29 [1 2 3 4 5 6 8 9 11 12 13 14 15 16]]], :time 58667955370, :process 5, :index 812}
+
+Then:
+  - T1 < T2, because T1 observed the initial (nil) state of 31, which T2 created by appending 1.
+  - However, T2 < T1, because T2 did not observe T1's append of 17 to 29: a contradiction!
+
+
+G2-item #1
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:append 32 13] [:r 32 [1 2 3 4 5 6 7 10 11 12 13]] [:r 32 [1 2 3 4 5 6 7 10 11 12 13]] [:r 33 [1 2 5]] [:r 32 [1 2 3 4 5 6 7 10 11 12 13]]], :time 61693690578, :process 17, :index 872}
+  T2 = {:type :ok, :f :txn, :value [[:append 34 3] [:append 33 6] [:r 32 [1 2 3 4 5 6 7 10 11 12]]], :time 61698360639, :process 2, :index 873}
+
+Then:
+  - T1 < T2, because T1 did not observe T2's append of 6 to 33.
+  - However, T2 < T1, because T2 did not observe T1's append of 13 to 32: a contradiction!
+
+
+G2-item #2
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:append 45 1] [:r 44 [1 2 3 4 5 6 7 8 9]]], :time 76217886031, :process 19, :index 1160}
+  T2 = {:type :ok, :f :txn, :value [[:r 43 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31]] [:append 44 10] [:append 43 32] [:r 39 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31]] [:append 44 11] [:r 45 []]], :time 76226645417, :process 11, :index 1161}
+
+Then:
+  - T1 < T2, because T1 did not observe T2's append of 10 to 44.
+  - However, T2 < T1, because T2 observed the initial (nil) state of 45, which T1 created by appending 1: a contradiction!
+
+
+G2-item #3
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:r 11 []] [:append 8 16]], :time 30443310333, :process 0, :index 248}
+  T2 = {:type :ok, :f :txn, :value [[:append 11 1] [:r 10 [1 4 5 6 7]] [:r 8 [1 2 3 5 6 7 8 9 10 11 12 13 14 15]] [:append 11 2] [:r 8 [1 2 3 5 6 7 8 9 10 11 12 13 14 15]] [:append 11 3] [:r 11 [1 2 3]] [:append 11 4]], :time 30444223309, :process 13, :index 249}
+
+Then:
+  - T1 < T2, because T1 observed the initial (nil) state of 11, which T2 created by appending 1.
+  - However, T2 < T1, because T2 did not observe T1's append of 16 to 8: a contradiction!
+
+
+G2-item #4
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:r 0 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]] [:r 4 [1 2 3 4 5 6 7 8 9 10 15 16 17 18 19 20 21 22 23 24]] [:r 5 [3 4 5 6 7 8]] [:r 4 [1 2 3 4 5 6 7 8 9 10 15 16 17 18 19 20 21 22 23 24]] [:append 4 25]], :time 23755448240, :process 5, :index 106}
+  T2 = {:type :ok, :f :txn, :value [[:r 4 [1 2 3 4 5 6 7 8 9 10 15 16 17 18 19 20 21 22 23 24]] [:r 4 [1 2 3 4 5 6 7 8 9 10 15 16 17 18 19 20 21 22 23 24]] [:r 5 [3 4 5 6 7 8]] [:append 5 9]], :time 23756196808, :process 0, :index 107}
+
+Then:
+  - T1 < T2, because T1 did not observe T2's append of 9 to 5.
+  - However, T2 < T1, because T2 did not observe T1's append of 25 to 4: a contradiction!

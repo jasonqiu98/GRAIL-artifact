@@ -1,0 +1,3559 @@
+<html><head><style>.ops        { position: absolute; }
+.op         { position: absolute; padding: 2px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); transition: all 0.3s cubic-bezier(.25,.8,.25,1); overflow: hidden; }
+.op.invoke  { background: #eeeeee; }
+.op.ok      { background: #6DB6FE; }
+.op.info    { background: #FFAA26; }
+.op.fail    { background: #FEB5DA; }
+.op:target  { box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); }
+</style></head><body><div><a href="/">jepsen</a> / <a href="/files/arangodb-rw-register-test">arangodb-rw-register-test</a> / <a href="/files/arangodb-rw-register-test/20230430T182846.615+0200">20230430T182846.615+0200</a> / <a href="/files/arangodb-rw-register-test/20230430T182846.615+0200/">independent</a> / <a href="/files/arangodb-rw-register-test/20230430T182846.615+0200/independent/"></a></div><h1>arangodb-rw-register-test key </h1><div class="ops"><a href="#i1"><div class="op ok" id="i1" style="width:100;left:106;top:0;height:16" title="Dur: 20 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:02.789Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 1
+ :value [[:w 1 1] [:r 2 nil] [:w 2 1] [:r 2 1] [:w 1 2] [:r 2 1] [:r 2 1] [:r 2 1]]}">0 txn [[:w 1 1] [:r 2 nil] [:w 2 1] [:r 2 nil] [:w 1 2] [:r 2 nil] [:r 2 nil] [:r 2 nil]]<br />[[:w 1 1] [:r 2 nil] [:w 2 1] [:r 2 1] [:w 1 2] [:r 2 1] [:r 2 1] [:r 2 1]]</div></a><a href="#i3"><div class="op ok" id="i3" style="width:100;left:318;top:32;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:02.977Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 3
+ :value [[:r 1 2] [:r 1 2] [:r 2 1] [:r 2 1] [:r 1 2] [:w 1 3]]}">2 txn [[:r 1 nil] [:r 1 nil] [:r 2 nil] [:r 2 nil] [:r 1 nil] [:w 1 3]]<br />[[:r 1 2] [:r 1 2] [:r 2 1] [:r 2 1] [:r 1 2] [:w 1 3]]</div></a><a href="#i5"><div class="op ok" id="i5" style="width:100;left:424;top:64;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.098Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 5
+ :value [[:w 2 2] [:r 2 2]]}">3 txn [[:w 2 2] [:r 2 nil]]<br />[[:w 2 2] [:r 2 2]]</div></a><a href="#i7"><div class="op ok" id="i7" style="width:100;left:530;top:96;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.244Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 7
+ :value [[:w 2 3] [:r 2 3] [:w 1 4] [:r 1 4] [:w 2 4]]}">4 txn [[:w 2 3] [:r 2 nil] [:w 1 4] [:r 1 nil] [:w 2 4]]<br />[[:w 2 3] [:r 2 3] [:w 1 4] [:r 1 4] [:w 2 4]]</div></a><a href="#i9"><div class="op ok" id="i9" style="width:100;left:636;top:128;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.271Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 9
+ :value [[:r 0 nil] [:r 2 4] [:w 2 5] [:w 2 6] [:r 1 4] [:w 1 5] [:r 2 6]]}">5 txn [[:r 0 nil] [:r 2 nil] [:w 2 5] [:w 2 6] [:r 1 nil] [:w 1 5] [:r 2 nil]]<br />[[:r 0 nil] [:r 2 4] [:w 2 5] [:w 2 6] [:r 1 4] [:w 1 5] [:r 2 6]]</div></a><a href="#i11"><div class="op ok" id="i11" style="width:100;left:742;top:160;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.460Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 11
+ :value [[:r 2 6] [:r 0 nil]]}">6 txn [[:r 2 nil] [:r 0 nil]]<br />[[:r 2 6] [:r 0 nil]]</div></a><a href="#i13"><div class="op ok" id="i13" style="width:100;left:848;top:192;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.563Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 13
+ :value [[:w 2 7] [:r 1 5] [:r 2 7] [:r 2 7] [:w 0 1] [:w 0 2]]}">7 txn [[:w 2 7] [:r 1 nil] [:r 2 nil] [:r 2 nil] [:w 0 1] [:w 0 2]]<br />[[:w 2 7] [:r 1 5] [:r 2 7] [:r 2 7] [:w 0 1] [:w 0 2]]</div></a><a href="#i15"><div class="op ok" id="i15" style="width:100;left:954;top:224;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.607Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 15
+ :value [[:r 0 2] [:r 0 2] [:w 2 8] [:w 1 6] [:r 1 6]]}">8 txn [[:r 0 nil] [:r 0 nil] [:w 2 8] [:w 1 6] [:r 1 nil]]<br />[[:r 0 2] [:r 0 2] [:w 2 8] [:w 1 6] [:r 1 6]]</div></a><a href="#i17"><div class="op ok" id="i17" style="width:100;left:1060;top:256;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.801Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 17
+ :value [[:w 2 9] [:w 2 10] [:w 2 11] [:w 1 7]]}">9 txn [[:w 2 9] [:w 2 10] [:w 2 11] [:w 1 7]]</div></a><a href="#i19"><div class="op ok" id="i19" style="width:100;left:1166;top:288;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.972Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 19
+ :value [[:r 2 11] [:w 2 12] [:r 2 12] [:w 2 13] [:w 1 8] [:w 2 14]]}">10 txn [[:r 2 nil] [:w 2 12] [:r 2 nil] [:w 2 13] [:w 1 8] [:w 2 14]]<br />[[:r 2 11] [:w 2 12] [:r 2 12] [:w 2 13] [:w 1 8] [:w 2 14]]</div></a><a href="#i21"><div class="op ok" id="i21" style="width:100;left:1272;top:320;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:03.983Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 21
+ :value [[:w 2 15] [:r 2 15] [:r 2 15]]}">11 txn [[:w 2 15] [:r 2 nil] [:r 2 nil]]<br />[[:w 2 15] [:r 2 15] [:r 2 15]]</div></a><a href="#i23"><div class="op ok" id="i23" style="width:100;left:1378;top:352;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.028Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 23
+ :value [[:w 0 3] [:w 0 4] [:w 2 16] [:r 2 16] [:w 1 9] [:w 1 10]]}">12 txn [[:w 0 3] [:w 0 4] [:w 2 16] [:r 2 nil] [:w 1 9] [:w 1 10]]<br />[[:w 0 3] [:w 0 4] [:w 2 16] [:r 2 16] [:w 1 9] [:w 1 10]]</div></a><a href="#i25"><div class="op ok" id="i25" style="width:100;left:1484;top:384;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.047Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 25
+ :value [[:w 2 17] [:r 2 17] [:w 2 18] [:r 2 18] [:r 2 18]]}">13 txn [[:w 2 17] [:r 2 nil] [:w 2 18] [:r 2 nil] [:r 2 nil]]<br />[[:w 2 17] [:r 2 17] [:w 2 18] [:r 2 18] [:r 2 18]]</div></a><a href="#i27"><div class="op ok" id="i27" style="width:100;left:1590;top:416;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.165Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 27
+ :value [[:r 2 18] [:w 0 5]]}">14 txn [[:r 2 nil] [:w 0 5]]<br />[[:r 2 18] [:w 0 5]]</div></a><a href="#i29"><div class="op ok" id="i29" style="width:100;left:1696;top:448;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.290Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 29
+ :value [[:r 2 18] [:r 2 18] [:w 2 19]]}">15 txn [[:r 2 nil] [:r 2 nil] [:w 2 19]]<br />[[:r 2 18] [:r 2 18] [:w 2 19]]</div></a><a href="#i31"><div class="op ok" id="i31" style="width:100;left:1802;top:480;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.394Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 31
+ :value [[:r 0 5] [:r 1 10] [:r 2 19] [:r 1 10] [:w 1 11] [:w 1 12] [:w 0 6]]}">16 txn [[:r 0 nil] [:r 1 nil] [:r 2 nil] [:r 1 nil] [:w 1 11] [:w 1 12] [:w 0 6]]<br />[[:r 0 5] [:r 1 10] [:r 2 19] [:r 1 10] [:w 1 11] [:w 1 12] [:w 0 6]]</div></a><a href="#i34"><div class="op ok" id="i34" style="width:100;left:1908;top:512;height:32" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.560Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 34
+ :value [[:r 2 19] [:r 2 19] [:r 2 19] [:w 2 20] [:r 1 12]]}">17 txn [[:r 2 nil] [:r 2 nil] [:r 2 nil] [:w 2 20] [:r 1 nil]]<br />[[:r 2 19] [:r 2 19] [:r 2 19] [:w 2 20] [:r 1 12]]</div></a><a href="#i35"><div class="op ok" id="i35" style="width:100;left:2014;top:528;height:32" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.564Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 35
+ :value [[:w 1 13] [:w 2 21]]}">18 txn [[:w 1 13] [:w 2 21]]</div></a><a href="#i37"><div class="op ok" id="i37" style="width:100;left:2120;top:576;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.644Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 37
+ :value [[:r 2 21] [:r 2 21] [:r 2 21] [:w 1 14] [:w 2 22]]}">19 txn [[:r 2 nil] [:r 2 nil] [:r 2 nil] [:w 1 14] [:w 2 22]]<br />[[:r 2 21] [:r 2 21] [:r 2 21] [:w 1 14] [:w 2 22]]</div></a><a href="#i39"><div class="op ok" id="i39" style="width:100;left:106;top:608;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:04.821Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 39
+ :value [[:r 1 14] [:r 0 6] [:w 2 23] [:w 2 24] [:r 2 24] [:w 1 15]]}">0 txn [[:r 1 nil] [:r 0 nil] [:w 2 23] [:w 2 24] [:r 2 nil] [:w 1 15]]<br />[[:r 1 14] [:r 0 6] [:w 2 23] [:w 2 24] [:r 2 24] [:w 1 15]]</div></a><a href="#i41"><div class="op ok" id="i41" style="width:100;left:106;top:640;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:05.017Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 41
+ :value [[:r 1 15] [:w 2 25] [:w 2 26] [:w 2 27] [:r 0 6]]}">0 txn [[:r 1 nil] [:w 2 25] [:w 2 26] [:w 2 27] [:r 0 nil]]<br />[[:r 1 15] [:w 2 25] [:w 2 26] [:w 2 27] [:r 0 6]]</div></a><a href="#i43"><div class="op ok" id="i43" style="width:100;left:212;top:672;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:05.210Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 43
+ :value [[:w 2 28] [:r 1 15] [:r 2 28] [:r 0 6] [:r 0 6] [:r 2 28] [:r 0 6]]}">1 txn [[:w 2 28] [:r 1 nil] [:r 2 nil] [:r 0 nil] [:r 0 nil] [:r 2 nil] [:r 0 nil]]<br />[[:w 2 28] [:r 1 15] [:r 2 28] [:r 0 6] [:r 0 6] [:r 2 28] [:r 0 6]]</div></a><a href="#i45"><div class="op ok" id="i45" style="width:100;left:318;top:704;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:05.362Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 45
+ :value [[:w 1 16] [:w 2 29] [:r 2 29] [:r 1 16] [:r 2 29] [:r 2 29] [:w 0 7] [:r 1 16]]}">2 txn [[:w 1 16] [:w 2 29] [:r 2 nil] [:r 1 nil] [:r 2 nil] [:r 2 nil] [:w 0 7] [:r 1 nil]]<br />[[:w 1 16] [:w 2 29] [:r 2 29] [:r 1 16] [:r 2 29] [:r 2 29] [:w 0 7] [:r 1 16]]</div></a><a href="#i47"><div class="op ok" id="i47" style="width:100;left:424;top:736;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:05.472Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 47
+ :value [[:w 1 17] [:r 2 29] [:w 1 18] [:r 2 29] [:w 1 19] [:r 2 29]]}">3 txn [[:w 1 17] [:r 2 nil] [:w 1 18] [:r 2 nil] [:w 1 19] [:r 2 nil]]<br />[[:w 1 17] [:r 2 29] [:w 1 18] [:r 2 29] [:w 1 19] [:r 2 29]]</div></a><a href="#i49"><div class="op ok" id="i49" style="width:100;left:530;top:768;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:05.660Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 49
+ :value [[:r 2 29] [:w 1 20] [:r 2 29] [:r 1 20] [:r 0 7] [:r 2 29] [:r 2 29] [:w 1 21]]}">4 txn [[:r 2 nil] [:w 1 20] [:r 2 nil] [:r 1 nil] [:r 0 nil] [:r 2 nil] [:r 2 nil] [:w 1 21]]<br />[[:r 2 29] [:w 1 20] [:r 2 29] [:r 1 20] [:r 0 7] [:r 2 29] [:r 2 29] [:w 1 21]]</div></a><a href="#i51"><div class="op ok" id="i51" style="width:100;left:636;top:800;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:05.793Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 51
+ :value [[:r 1 21] [:w 2 30]]}">5 txn [[:r 1 nil] [:w 2 30]]<br />[[:r 1 21] [:w 2 30]]</div></a><a href="#i53"><div class="op ok" id="i53" style="width:100;left:742;top:832;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:05.854Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 53
+ :value [[:w 2 31] [:w 2 32] [:r 3 nil] [:r 1 21] [:r 3 nil] [:w 3 1]]}">6 txn [[:w 2 31] [:w 2 32] [:r 3 nil] [:r 1 nil] [:r 3 nil] [:w 3 1]]<br />[[:w 2 31] [:w 2 32] [:r 3 nil] [:r 1 21] [:r 3 nil] [:w 3 1]]</div></a><a href="#i55"><div class="op ok" id="i55" style="width:100;left:848;top:864;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:05.870Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 55
+ :value [[:r 0 7] [:r 1 21] [:w 3 2] [:r 1 21] [:w 1 22] [:w 1 23]]}">7 txn [[:r 0 nil] [:r 1 nil] [:w 3 2] [:r 1 nil] [:w 1 22] [:w 1 23]]<br />[[:r 0 7] [:r 1 21] [:w 3 2] [:r 1 21] [:w 1 22] [:w 1 23]]</div></a><a href="#i57"><div class="op ok" id="i57" style="width:100;left:954;top:896;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:06.068Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 57
+ :value [[:r 3 2] [:w 1 24] [:w 3 3] [:w 1 25]]}">8 txn [[:r 3 nil] [:w 1 24] [:w 3 3] [:w 1 25]]<br />[[:r 3 2] [:w 1 24] [:w 3 3] [:w 1 25]]</div></a><a href="#i59"><div class="op ok" id="i59" style="width:100;left:1060;top:928;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:06.257Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 59
+ :value [[:w 3 4] [:r 0 7]]}">9 txn [[:w 3 4] [:r 0 nil]]<br />[[:w 3 4] [:r 0 7]]</div></a><a href="#i61"><div class="op ok" id="i61" style="width:100;left:1166;top:960;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:06.263Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 61
+ :value [[:r 1 25] [:r 3 4] [:r 0 7]]}">10 txn [[:r 1 nil] [:r 3 nil] [:r 0 nil]]<br />[[:r 1 25] [:r 3 4] [:r 0 7]]</div></a><a href="#i63"><div class="op ok" id="i63" style="width:100;left:1272;top:992;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:06.348Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 63
+ :value [[:w 3 5] [:r 3 5] [:r 3 5] [:r 1 25] [:w 3 6] [:r 0 7] [:w 3 7] [:w 3 8]]}">11 txn [[:w 3 5] [:r 3 nil] [:r 3 nil] [:r 1 nil] [:w 3 6] [:r 0 nil] [:w 3 7] [:w 3 8]]<br />[[:w 3 5] [:r 3 5] [:r 3 5] [:r 1 25] [:w 3 6] [:r 0 7] [:w 3 7] [:w 3 8]]</div></a><a href="#i65"><div class="op ok" id="i65" style="width:100;left:1378;top:1024;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:06.461Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 65
+ :value [[:w 3 9] [:r 1 25] [:w 1 26] [:w 3 10] [:w 0 8] [:r 0 8]]}">12 txn [[:w 3 9] [:r 1 nil] [:w 1 26] [:w 3 10] [:w 0 8] [:r 0 nil]]<br />[[:w 3 9] [:r 1 25] [:w 1 26] [:w 3 10] [:w 0 8] [:r 0 8]]</div></a><a href="#i67"><div class="op ok" id="i67" style="width:100;left:1484;top:1056;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:06.621Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 67
+ :value [[:r 3 10] [:r 1 26] [:r 3 10] [:r 1 26] [:w 3 11] [:r 3 11] [:r 3 11]]}">13 txn [[:r 3 nil] [:r 1 nil] [:r 3 nil] [:r 1 nil] [:w 3 11] [:r 3 nil] [:r 3 nil]]<br />[[:r 3 10] [:r 1 26] [:r 3 10] [:r 1 26] [:w 3 11] [:r 3 11] [:r 3 11]]</div></a><a href="#i69"><div class="op ok" id="i69" style="width:100;left:1590;top:1088;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:06.702Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 69
+ :value [[:r 3 11] [:r 3 11] [:w 0 9] [:r 3 11] [:r 0 9] [:r 1 26] [:w 3 12] [:w 3 13]]}">14 txn [[:r 3 nil] [:r 3 nil] [:w 0 9] [:r 3 nil] [:r 0 nil] [:r 1 nil] [:w 3 12] [:w 3 13]]<br />[[:r 3 11] [:r 3 11] [:w 0 9] [:r 3 11] [:r 0 9] [:r 1 26] [:w 3 12] [:w 3 13]]</div></a><a href="#i71"><div class="op ok" id="i71" style="width:100;left:1696;top:1120;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:06.813Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 71
+ :value [[:r 3 13] [:w 1 27] [:r 1 27] [:r 1 27]]}">15 txn [[:r 3 nil] [:w 1 27] [:r 1 nil] [:r 1 nil]]<br />[[:r 3 13] [:w 1 27] [:r 1 27] [:r 1 27]]</div></a><a href="#i73"><div class="op ok" id="i73" style="width:100;left:1802;top:1152;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.006Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 73
+ :value [[:w 1 28] [:w 1 29] [:w 1 30] [:w 3 14] [:w 3 15] [:w 0 10]]}">16 txn [[:w 1 28] [:w 1 29] [:w 1 30] [:w 3 14] [:w 3 15] [:w 0 10]]</div></a><a href="#i75"><div class="op ok" id="i75" style="width:100;left:1908;top:1184;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.014Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 75
+ :value [[:w 3 16] [:r 0 10] [:r 3 16] [:w 0 11] [:r 3 16]]}">17 txn [[:w 3 16] [:r 0 nil] [:r 3 nil] [:w 0 11] [:r 3 nil]]<br />[[:w 3 16] [:r 0 10] [:r 3 16] [:w 0 11] [:r 3 16]]</div></a><a href="#i77"><div class="op ok" id="i77" style="width:100;left:2014;top:1216;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.171Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 77
+ :value [[:r 1 30] [:r 3 16] [:r 3 16] [:w 3 17] [:r 1 30] [:w 3 18] [:r 3 18] [:w 0 12]]}">18 txn [[:r 1 nil] [:r 3 nil] [:r 3 nil] [:w 3 17] [:r 1 nil] [:w 3 18] [:r 3 nil] [:w 0 12]]<br />[[:r 1 30] [:r 3 16] [:r 3 16] [:w 3 17] [:r 1 30] [:w 3 18] [:r 3 18] [:w 0 12]]</div></a><a href="#i79"><div class="op ok" id="i79" style="width:100;left:2120;top:1248;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.176Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 79
+ :value [[:r 1 30] [:r 0 12] [:w 3 19] [:r 3 19] [:w 3 20] [:r 1 30] [:r 3 20]]}">19 txn [[:r 1 nil] [:r 0 nil] [:w 3 19] [:r 3 nil] [:w 3 20] [:r 1 nil] [:r 3 nil]]<br />[[:r 1 30] [:r 0 12] [:w 3 19] [:r 3 19] [:w 3 20] [:r 1 30] [:r 3 20]]</div></a><a href="#i81"><div class="op ok" id="i81" style="width:100;left:106;top:1280;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.287Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 81
+ :value [[:r 3 20] [:w 1 31] [:r 3 20] [:w 1 32]]}">0 txn [[:r 3 nil] [:w 1 31] [:r 3 nil] [:w 1 32]]<br />[[:r 3 20] [:w 1 31] [:r 3 20] [:w 1 32]]</div></a><a href="#i83"><div class="op ok" id="i83" style="width:100;left:106;top:1312;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.399Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 83
+ :value [[:w 3 21] [:w 3 22] [:w 3 23] [:r 3 23] [:r 0 12]]}">0 txn [[:w 3 21] [:w 3 22] [:w 3 23] [:r 3 nil] [:r 0 nil]]<br />[[:w 3 21] [:w 3 22] [:w 3 23] [:r 3 23] [:r 0 12]]</div></a><a href="#i85"><div class="op ok" id="i85" style="width:100;left:212;top:1344;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.574Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 85
+ :value [[:w 3 24] [:w 3 25] [:r 4 nil] [:r 0 12] [:w 4 1] [:w 3 26] [:r 3 26]]}">1 txn [[:w 3 24] [:w 3 25] [:r 4 nil] [:r 0 nil] [:w 4 1] [:w 3 26] [:r 3 nil]]<br />[[:w 3 24] [:w 3 25] [:r 4 nil] [:r 0 12] [:w 4 1] [:w 3 26] [:r 3 26]]</div></a><a href="#i87"><div class="op ok" id="i87" style="width:100;left:318;top:1376;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.690Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 87
+ :value [[:r 3 26] [:r 3 26] [:w 3 27] [:w 3 28] [:w 3 29] [:w 3 30] [:r 3 30] [:r 4 1]]}">2 txn [[:r 3 nil] [:r 3 nil] [:w 3 27] [:w 3 28] [:w 3 29] [:w 3 30] [:r 3 nil] [:r 4 nil]]<br />[[:r 3 26] [:r 3 26] [:w 3 27] [:w 3 28] [:w 3 29] [:w 3 30] [:r 3 30] [:r 4 1]]</div></a><a href="#i88"><div class="op info" id="i88" style="width:100;left:0;top:1408;height:16" title="Msg: nil
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.773Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 88
+ :value }">:nemesis start </div></a><a href="#i89"><div class="op info" id="i89" style="width:100;left:0;top:1424;height:16" title="Msg: [:isolated {&quot;192.168.56.101&quot; #{}}]
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.776Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 89
+ :value [:isolated {&quot;192.168.56.101&quot; #{}}]}">:nemesis start <br /></div></a><a href="#i91"><div class="op ok" id="i91" style="width:100;left:636;top:1440;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.853Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 91
+ :value [[:w 3 31] [:w 0 13] [:w 0 14]]}">5 txn [[:w 3 31] [:w 0 13] [:w 0 14]]</div></a><a href="#i93"><div class="op ok" id="i93" style="width:100;left:742;top:1472;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:07.969Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 93
+ :value [[:w 3 32] [:w 4 2] [:r 4 2] [:w 0 15]]}">6 txn [[:w 3 32] [:w 4 2] [:r 4 nil] [:w 0 15]]<br />[[:w 3 32] [:w 4 2] [:r 4 2] [:w 0 15]]</div></a><a href="#i95"><div class="op ok" id="i95" style="width:100;left:848;top:1504;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.078Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 95
+ :value [[:r 5 nil] [:w 5 1] [:r 4 2] [:w 5 2]]}">7 txn [[:r 5 nil] [:w 5 1] [:r 4 nil] [:w 5 2]]<br />[[:r 5 nil] [:w 5 1] [:r 4 2] [:w 5 2]]</div></a><a href="#i97"><div class="op ok" id="i97" style="width:100;left:954;top:1536;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.215Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 97
+ :value [[:r 4 2] [:w 0 16]]}">8 txn [[:r 4 nil] [:w 0 16]]<br />[[:r 4 2] [:w 0 16]]</div></a><a href="#i99"><div class="op ok" id="i99" style="width:100;left:1060;top:1568;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.259Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 99
+ :value [[:w 4 3] [:w 4 4]]}">9 txn [[:w 4 3] [:w 4 4]]</div></a><a href="#i101"><div class="op ok" id="i101" style="width:100;left:1166;top:1600;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.324Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 101
+ :value [[:r 5 2] [:r 5 2] [:r 4 4] [:w 5 3] [:w 0 17] [:w 5 4] [:r 4 4] [:w 4 5]]}">10 txn [[:r 5 nil] [:r 5 nil] [:r 4 nil] [:w 5 3] [:w 0 17] [:w 5 4] [:r 4 nil] [:w 4 5]]<br />[[:r 5 2] [:r 5 2] [:r 4 4] [:w 5 3] [:w 0 17] [:w 5 4] [:r 4 4] [:w 4 5]]</div></a><a href="#i103"><div class="op ok" id="i103" style="width:100;left:1272;top:1632;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.521Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 103
+ :value [[:r 5 4] [:w 4 6] [:w 4 7] [:w 0 18] [:w 5 5] [:w 5 6] [:r 5 6]]}">11 txn [[:r 5 nil] [:w 4 6] [:w 4 7] [:w 0 18] [:w 5 5] [:w 5 6] [:r 5 nil]]<br />[[:r 5 4] [:w 4 6] [:w 4 7] [:w 0 18] [:w 5 5] [:w 5 6] [:r 5 6]]</div></a><a href="#i105"><div class="op ok" id="i105" style="width:100;left:1378;top:1664;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.565Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 105
+ :value [[:r 5 6] [:w 5 7] [:w 5 8] [:r 5 8] [:w 5 9] [:w 4 8]]}">12 txn [[:r 5 nil] [:w 5 7] [:w 5 8] [:r 5 nil] [:w 5 9] [:w 4 8]]<br />[[:r 5 6] [:w 5 7] [:w 5 8] [:r 5 8] [:w 5 9] [:w 4 8]]</div></a><a href="#i107"><div class="op ok" id="i107" style="width:100;left:1484;top:1696;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.644Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 107
+ :value [[:w 0 19] [:w 4 9]]}">13 txn [[:w 0 19] [:w 4 9]]</div></a><a href="#i109"><div class="op ok" id="i109" style="width:100;left:1590;top:1728;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.778Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 109
+ :value [[:r 5 9] [:r 5 9] [:w 4 10] [:w 4 11]]}">14 txn [[:r 5 nil] [:r 5 nil] [:w 4 10] [:w 4 11]]<br />[[:r 5 9] [:r 5 9] [:w 4 10] [:w 4 11]]</div></a><a href="#i111"><div class="op ok" id="i111" style="width:100;left:1696;top:1760;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:08.937Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 111
+ :value [[:r 5 9] [:w 5 10] [:w 0 20] [:w 5 11] [:r 4 11] [:r 4 11] [:r 5 11]]}">15 txn [[:r 5 nil] [:w 5 10] [:w 0 20] [:w 5 11] [:r 4 nil] [:r 4 nil] [:r 5 nil]]<br />[[:r 5 9] [:w 5 10] [:w 0 20] [:w 5 11] [:r 4 11] [:r 4 11] [:r 5 11]]</div></a><a href="#i113"><div class="op ok" id="i113" style="width:100;left:1802;top:1792;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.001Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 113
+ :value [[:w 4 12] [:w 4 13]]}">16 txn [[:w 4 12] [:w 4 13]]</div></a><a href="#i115"><div class="op ok" id="i115" style="width:100;left:1908;top:1824;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.018Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 115
+ :value [[:r 4 13] [:w 4 14] [:r 4 14] [:w 4 15] [:r 4 15] [:r 5 11] [:w 4 16]]}">17 txn [[:r 4 nil] [:w 4 14] [:r 4 nil] [:w 4 15] [:r 4 nil] [:r 5 nil] [:w 4 16]]<br />[[:r 4 13] [:w 4 14] [:r 4 14] [:w 4 15] [:r 4 15] [:r 5 11] [:w 4 16]]</div></a><a href="#i117"><div class="op ok" id="i117" style="width:100;left:2014;top:1856;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.129Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 117
+ :value [[:w 5 12] [:r 0 20] [:r 5 12] [:w 5 13] [:w 4 17] [:r 4 17] [:r 5 13]]}">18 txn [[:w 5 12] [:r 0 nil] [:r 5 nil] [:w 5 13] [:w 4 17] [:r 4 nil] [:r 5 nil]]<br />[[:w 5 12] [:r 0 20] [:r 5 12] [:w 5 13] [:w 4 17] [:r 4 17] [:r 5 13]]</div></a><a href="#i120"><div class="op ok" id="i120" style="width:100;left:2120;top:1888;height:32" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.289Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 120
+ :value [[:r 5 13] [:w 5 14] [:w 5 15] [:r 4 17] [:w 5 16]]}">19 txn [[:r 5 nil] [:w 5 14] [:w 5 15] [:r 4 nil] [:w 5 16]]<br />[[:r 5 13] [:w 5 14] [:w 5 15] [:r 4 17] [:w 5 16]]</div></a><a href="#i121"><div class="op fail" id="i121" style="width:100;left:106;top:1904;height:32" title="Dur: 8 ms
+Err: :ww-conflict
+Wall-clock Time: 2023-04-30T16:29:09.296Z
+
+Op:
+{:process 0
+ :type :fail
+ :f :txn
+ :index 121
+ :error :ww-conflict
+ :value [[:r 0 nil] [:w 4 18] [:w 4 19] [:w 4 20] [:r 5 nil] [:w 5 17] [:r 4 nil]]}">0 txn [[:r 0 nil] [:w 4 18] [:w 4 19] [:w 4 20] [:r 5 nil] [:w 5 17] [:r 4 nil]]</div></a><a href="#i123"><div class="op ok" id="i123" style="width:100;left:106;top:1952;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.456Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 123
+ :value [[:r 5 16] [:w 5 18]]}">0 txn [[:r 5 nil] [:w 5 18]]<br />[[:r 5 16] [:w 5 18]]</div></a><a href="#i125"><div class="op ok" id="i125" style="width:100;left:212;top:1984;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.620Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 125
+ :value [[:w 5 19] [:w 4 21] [:w 5 20] [:r 5 20] [:w 5 21]]}">1 txn [[:w 5 19] [:w 4 21] [:w 5 20] [:r 5 nil] [:w 5 21]]<br />[[:w 5 19] [:w 4 21] [:w 5 20] [:r 5 20] [:w 5 21]]</div></a><a href="#i127"><div class="op ok" id="i127" style="width:100;left:318;top:2016;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.649Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 127
+ :value [[:r 5 21] [:w 5 22] [:w 4 22] [:r 5 22] [:r 4 22] [:w 5 23] [:w 4 23]]}">2 txn [[:r 5 nil] [:w 5 22] [:w 4 22] [:r 5 nil] [:r 4 nil] [:w 5 23] [:w 4 23]]<br />[[:r 5 21] [:w 5 22] [:w 4 22] [:r 5 22] [:r 4 22] [:w 5 23] [:w 4 23]]</div></a><a href="#i129"><div class="op ok" id="i129" style="width:100;left:424;top:2048;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.737Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 129
+ :value [[:w 4 24] [:r 5 23] [:w 5 24] [:w 5 25] [:w 5 26] [:w 5 27] [:r 5 27] [:w 0 21]]}">3 txn [[:w 4 24] [:r 5 nil] [:w 5 24] [:w 5 25] [:w 5 26] [:w 5 27] [:r 5 nil] [:w 0 21]]<br />[[:w 4 24] [:r 5 23] [:w 5 24] [:w 5 25] [:w 5 26] [:w 5 27] [:r 5 27] [:w 0 21]]</div></a><a href="#i131"><div class="op ok" id="i131" style="width:100;left:530;top:2080;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:09.848Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 131
+ :value [[:r 4 24] [:w 5 28] [:r 0 21] [:w 5 29] [:r 5 29]]}">4 txn [[:r 4 nil] [:w 5 28] [:r 0 nil] [:w 5 29] [:r 5 nil]]<br />[[:r 4 24] [:w 5 28] [:r 0 21] [:w 5 29] [:r 5 29]]</div></a><a href="#i133"><div class="op ok" id="i133" style="width:100;left:636;top:2112;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.013Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 133
+ :value [[:r 5 29] [:w 0 22] [:w 0 23] [:r 5 29] [:r 5 29] [:w 4 25]]}">5 txn [[:r 5 nil] [:w 0 22] [:w 0 23] [:r 5 nil] [:r 5 nil] [:w 4 25]]<br />[[:r 5 29] [:w 0 22] [:w 0 23] [:r 5 29] [:r 5 29] [:w 4 25]]</div></a><a href="#i135"><div class="op ok" id="i135" style="width:100;left:742;top:2144;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.140Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 135
+ :value [[:w 4 26] [:r 5 29] [:r 5 29] [:r 5 29] [:r 4 26] [:r 4 26]]}">6 txn [[:w 4 26] [:r 5 nil] [:r 5 nil] [:r 5 nil] [:r 4 nil] [:r 4 nil]]<br />[[:w 4 26] [:r 5 29] [:r 5 29] [:r 5 29] [:r 4 26] [:r 4 26]]</div></a><a href="#i137"><div class="op ok" id="i137" style="width:100;left:848;top:2176;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.250Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 137
+ :value [[:w 5 30] [:w 5 31] [:w 5 32] [:w 4 27] [:w 0 24]]}">7 txn [[:w 5 30] [:w 5 31] [:w 5 32] [:w 4 27] [:w 0 24]]</div></a><a href="#i139"><div class="op ok" id="i139" style="width:100;left:954;top:2208;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.319Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 139
+ :value [[:r 6 nil] [:r 6 nil] [:w 6 1]]}">8 txn [[:r 6 nil] [:r 6 nil] [:w 6 1]]</div></a><a href="#i141"><div class="op ok" id="i141" style="width:100;left:1060;top:2240;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.469Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 141
+ :value [[:w 6 2] [:r 6 2] [:r 6 2] [:r 6 2] [:w 6 3]]}">9 txn [[:w 6 2] [:r 6 nil] [:r 6 nil] [:r 6 nil] [:w 6 3]]<br />[[:w 6 2] [:r 6 2] [:r 6 2] [:r 6 2] [:w 6 3]]</div></a><a href="#i143"><div class="op ok" id="i143" style="width:100;left:1166;top:2272;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.495Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 143
+ :value [[:w 6 4] [:r 4 27] [:r 6 4] [:w 4 28] [:r 6 4] [:r 6 4]]}">10 txn [[:w 6 4] [:r 4 nil] [:r 6 nil] [:w 4 28] [:r 6 nil] [:r 6 nil]]<br />[[:w 6 4] [:r 4 27] [:r 6 4] [:w 4 28] [:r 6 4] [:r 6 4]]</div></a><a href="#i145"><div class="op ok" id="i145" style="width:100;left:1272;top:2304;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.519Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 145
+ :value [[:w 6 5] [:w 6 6] [:w 6 7] [:w 6 8] [:w 6 9] [:w 6 10]]}">11 txn [[:w 6 5] [:w 6 6] [:w 6 7] [:w 6 8] [:w 6 9] [:w 6 10]]</div></a><a href="#i147"><div class="op ok" id="i147" style="width:100;left:1378;top:2336;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.717Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 147
+ :value [[:r 0 24] [:w 4 29] [:w 0 25] [:w 6 11]]}">12 txn [[:r 0 nil] [:w 4 29] [:w 0 25] [:w 6 11]]<br />[[:r 0 24] [:w 4 29] [:w 0 25] [:w 6 11]]</div></a><a href="#i149"><div class="op ok" id="i149" style="width:100;left:1484;top:2368;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.855Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 149
+ :value [[:w 4 30] [:w 0 26]]}">13 txn [[:w 4 30] [:w 0 26]]</div></a><a href="#i151"><div class="op ok" id="i151" style="width:100;left:1590;top:2400;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:10.998Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 151
+ :value [[:w 6 12] [:r 4 30] [:w 4 31] [:r 6 12] [:w 4 32]]}">14 txn [[:w 6 12] [:r 4 nil] [:w 4 31] [:r 6 nil] [:w 4 32]]<br />[[:w 6 12] [:r 4 30] [:w 4 31] [:r 6 12] [:w 4 32]]</div></a><a href="#i153"><div class="op ok" id="i153" style="width:100;left:1696;top:2432;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.012Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 153
+ :value [[:w 7 1] [:r 6 12]]}">15 txn [[:w 7 1] [:r 6 nil]]<br />[[:w 7 1] [:r 6 12]]</div></a><a href="#i155"><div class="op ok" id="i155" style="width:100;left:1802;top:2464;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.048Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 155
+ :value [[:w 6 13] [:r 7 1] [:w 6 14] [:r 7 1] [:w 6 15] [:w 6 16] [:r 7 1]]}">16 txn [[:w 6 13] [:r 7 nil] [:w 6 14] [:r 7 nil] [:w 6 15] [:w 6 16] [:r 7 nil]]<br />[[:w 6 13] [:r 7 1] [:w 6 14] [:r 7 1] [:w 6 15] [:w 6 16] [:r 7 1]]</div></a><a href="#i157"><div class="op ok" id="i157" style="width:100;left:1908;top:2496;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.227Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 157
+ :value [[:r 7 1] [:r 6 16] [:w 7 2] [:w 6 17] [:r 6 17] [:r 7 2] [:r 6 17]]}">17 txn [[:r 7 nil] [:r 6 nil] [:w 7 2] [:w 6 17] [:r 6 nil] [:r 7 nil] [:r 6 nil]]<br />[[:r 7 1] [:r 6 16] [:w 7 2] [:w 6 17] [:r 6 17] [:r 7 2] [:r 6 17]]</div></a><a href="#i160"><div class="op ok" id="i160" style="width:100;left:2120;top:2544;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.315Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 160
+ :value [[:r 6 17] [:w 7 3] [:r 7 3]]}">19 txn [[:r 6 nil] [:w 7 3] [:r 7 nil]]<br />[[:r 6 17] [:w 7 3] [:r 7 3]]</div></a><a href="#i161"><div class="op ok" id="i161" style="width:100;left:2014;top:2528;height:48" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.315Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 161
+ :value [[:w 6 18] [:r 6 18] [:r 6 18] [:r 7 2] [:w 0 27] [:w 6 19]]}">18 txn [[:w 6 18] [:r 6 nil] [:r 6 nil] [:r 7 nil] [:w 0 27] [:w 6 19]]<br />[[:w 6 18] [:r 6 18] [:r 6 18] [:r 7 2] [:w 0 27] [:w 6 19]]</div></a><a href="#i163"><div class="op ok" id="i163" style="width:100;left:106;top:2592;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.447Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 163
+ :value [[:r 6 19] [:r 6 19] [:r 6 19]]}">0 txn [[:r 6 nil] [:r 6 nil] [:r 6 nil]]<br />[[:r 6 19] [:r 6 19] [:r 6 19]]</div></a><a href="#i165"><div class="op ok" id="i165" style="width:100;left:106;top:2624;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.490Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 165
+ :value [[:r 0 27] [:r 6 19] [:r 6 19] [:w 7 4] [:w 6 20] [:r 7 4]]}">0 txn [[:r 0 nil] [:r 6 nil] [:r 6 nil] [:w 7 4] [:w 6 20] [:r 7 nil]]<br />[[:r 0 27] [:r 6 19] [:r 6 19] [:w 7 4] [:w 6 20] [:r 7 4]]</div></a><a href="#i167"><div class="op ok" id="i167" style="width:100;left:212;top:2656;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.690Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 167
+ :value [[:r 7 4] [:r 7 4] [:w 6 21]]}">1 txn [[:r 7 nil] [:r 7 nil] [:w 6 21]]<br />[[:r 7 4] [:r 7 4] [:w 6 21]]</div></a><a href="#i169"><div class="op ok" id="i169" style="width:100;left:318;top:2688;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.736Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 169
+ :value [[:w 7 5] [:w 6 22] [:w 6 23] [:r 6 23] [:w 6 24] [:r 0 27]]}">2 txn [[:w 7 5] [:w 6 22] [:w 6 23] [:r 6 nil] [:w 6 24] [:r 0 nil]]<br />[[:w 7 5] [:w 6 22] [:w 6 23] [:r 6 23] [:w 6 24] [:r 0 27]]</div></a><a href="#i171"><div class="op ok" id="i171" style="width:100;left:424;top:2720;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:11.893Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 171
+ :value [[:r 6 24] [:r 7 5] [:r 6 24] [:r 7 5] [:w 7 6]]}">3 txn [[:r 6 nil] [:r 7 nil] [:r 6 nil] [:r 7 nil] [:w 7 6]]<br />[[:r 6 24] [:r 7 5] [:r 6 24] [:r 7 5] [:w 7 6]]</div></a><a href="#i173"><div class="op ok" id="i173" style="width:100;left:530;top:2752;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.067Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 173
+ :value [[:w 6 25] [:r 7 6] [:w 7 7] [:r 6 25]]}">4 txn [[:w 6 25] [:r 7 nil] [:w 7 7] [:r 6 nil]]<br />[[:w 6 25] [:r 7 6] [:w 7 7] [:r 6 25]]</div></a><a href="#i175"><div class="op ok" id="i175" style="width:100;left:636;top:2784;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.263Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 175
+ :value [[:r 7 7] [:r 6 25] [:r 7 7] [:r 7 7] [:r 6 25] [:w 6 26] [:r 7 7]]}">5 txn [[:r 7 nil] [:r 6 nil] [:r 7 nil] [:r 7 nil] [:r 6 nil] [:w 6 26] [:r 7 nil]]<br />[[:r 7 7] [:r 6 25] [:r 7 7] [:r 7 7] [:r 6 25] [:w 6 26] [:r 7 7]]</div></a><a href="#i177"><div class="op ok" id="i177" style="width:100;left:742;top:2816;height:16" title="Dur: 13 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.350Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 177
+ :value [[:r 6 26] [:w 6 27] [:w 7 8] [:r 6 27] [:w 7 9] [:w 7 10]]}">6 txn [[:r 6 nil] [:w 6 27] [:w 7 8] [:r 6 nil] [:w 7 9] [:w 7 10]]<br />[[:r 6 26] [:w 6 27] [:w 7 8] [:r 6 27] [:w 7 9] [:w 7 10]]</div></a><a href="#i179"><div class="op ok" id="i179" style="width:100;left:848;top:2848;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.419Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 179
+ :value [[:w 7 11] [:r 6 27] [:w 7 12] [:w 7 13] [:w 7 14] [:r 6 27] [:w 6 28]]}">7 txn [[:w 7 11] [:r 6 nil] [:w 7 12] [:w 7 13] [:w 7 14] [:r 6 nil] [:w 6 28]]<br />[[:w 7 11] [:r 6 27] [:w 7 12] [:w 7 13] [:w 7 14] [:r 6 27] [:w 6 28]]</div></a><a href="#i181"><div class="op ok" id="i181" style="width:100;left:954;top:2880;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.568Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 181
+ :value [[:r 7 14] [:w 6 29] [:r 7 14] [:w 7 15] [:r 6 29] [:r 6 29] [:w 7 16]]}">8 txn [[:r 7 nil] [:w 6 29] [:r 7 nil] [:w 7 15] [:r 6 nil] [:r 6 nil] [:w 7 16]]<br />[[:r 7 14] [:w 6 29] [:r 7 14] [:w 7 15] [:r 6 29] [:r 6 29] [:w 7 16]]</div></a><a href="#i183"><div class="op ok" id="i183" style="width:100;left:1060;top:2912;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.626Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 183
+ :value [[:w 0 28] [:w 6 30] [:w 6 31] [:w 7 17] [:w 0 29] [:w 7 18] [:w 6 32] [:w 7 19]]}">9 txn [[:w 0 28] [:w 6 30] [:w 6 31] [:w 7 17] [:w 0 29] [:w 7 18] [:w 6 32] [:w 7 19]]</div></a><a href="#i185"><div class="op ok" id="i185" style="width:100;left:1166;top:2944;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.779Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 185
+ :value [[:r 8 nil] [:r 8 nil] [:r 7 19] [:w 8 1] [:w 8 2]]}">10 txn [[:r 8 nil] [:r 8 nil] [:r 7 nil] [:w 8 1] [:w 8 2]]<br />[[:r 8 nil] [:r 8 nil] [:r 7 19] [:w 8 1] [:w 8 2]]</div></a><a href="#i186"><div class="op info" id="i186" style="width:100;left:0;top:2976;height:16" title="Msg: nil
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.780Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :stop
+ :index 186
+ :value }">:nemesis stop </div></a><a href="#i187"><div class="op info" id="i187" style="width:100;left:0;top:2992;height:16" title="Msg: :network-healed
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.843Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :stop
+ :index 187
+ :value :network-healed}">:nemesis stop <br /></div></a><a href="#i189"><div class="op ok" id="i189" style="width:100;left:1484;top:3008;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:12.905Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 189
+ :value [[:w 0 30] [:r 8 2] [:w 8 3]]}">13 txn [[:w 0 30] [:r 8 nil] [:w 8 3]]<br />[[:w 0 30] [:r 8 2] [:w 8 3]]</div></a><a href="#i191"><div class="op ok" id="i191" style="width:100;left:1590;top:3040;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.022Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 191
+ :value [[:w 8 4] [:w 7 20] [:w 8 5]]}">14 txn [[:w 8 4] [:w 7 20] [:w 8 5]]</div></a><a href="#i193"><div class="op ok" id="i193" style="width:100;left:1696;top:3072;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.221Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 193
+ :value [[:r 7 20] [:w 8 6] [:r 8 6]]}">15 txn [[:r 7 nil] [:w 8 6] [:r 8 nil]]<br />[[:r 7 20] [:w 8 6] [:r 8 6]]</div></a><a href="#i195"><div class="op ok" id="i195" style="width:100;left:1802;top:3104;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.331Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 195
+ :value [[:r 8 6] [:w 8 7] [:r 7 20] [:w 8 8]]}">16 txn [[:r 8 nil] [:w 8 7] [:r 7 nil] [:w 8 8]]<br />[[:r 8 6] [:w 8 7] [:r 7 20] [:w 8 8]]</div></a><a href="#i197"><div class="op ok" id="i197" style="width:100;left:1908;top:3136;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.341Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 197
+ :value [[:w 7 21] [:w 8 9] [:w 7 22] [:w 7 23] [:r 8 9] [:w 8 10]]}">17 txn [[:w 7 21] [:w 8 9] [:w 7 22] [:w 7 23] [:r 8 nil] [:w 8 10]]<br />[[:w 7 21] [:w 8 9] [:w 7 22] [:w 7 23] [:r 8 9] [:w 8 10]]</div></a><a href="#i199"><div class="op ok" id="i199" style="width:100;left:2014;top:3168;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.514Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 199
+ :value [[:w 8 11] [:r 8 11] [:w 8 12] [:w 7 24] [:w 7 25] [:w 8 13] [:w 8 14]]}">18 txn [[:w 8 11] [:r 8 nil] [:w 8 12] [:w 7 24] [:w 7 25] [:w 8 13] [:w 8 14]]<br />[[:w 8 11] [:r 8 11] [:w 8 12] [:w 7 24] [:w 7 25] [:w 8 13] [:w 8 14]]</div></a><a href="#i201"><div class="op ok" id="i201" style="width:100;left:2120;top:3200;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.647Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 201
+ :value [[:w 8 15] [:w 7 26] [:r 8 15] [:w 8 16] [:r 8 16]]}">19 txn [[:w 8 15] [:w 7 26] [:r 8 nil] [:w 8 16] [:r 8 nil]]<br />[[:w 8 15] [:w 7 26] [:r 8 15] [:w 8 16] [:r 8 16]]</div></a><a href="#i203"><div class="op ok" id="i203" style="width:100;left:106;top:3232;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.693Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 203
+ :value [[:r 0 30] [:w 8 17] [:w 8 18] [:r 7 26]]}">0 txn [[:r 0 nil] [:w 8 17] [:w 8 18] [:r 7 nil]]<br />[[:r 0 30] [:w 8 17] [:w 8 18] [:r 7 26]]</div></a><a href="#i205"><div class="op ok" id="i205" style="width:100;left:106;top:3264;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.841Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 205
+ :value [[:r 8 18] [:w 8 19] [:r 8 19]]}">0 txn [[:r 8 nil] [:w 8 19] [:r 8 nil]]<br />[[:r 8 18] [:w 8 19] [:r 8 19]]</div></a><a href="#i207"><div class="op ok" id="i207" style="width:100;left:212;top:3296;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:13.902Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 207
+ :value [[:w 8 20] [:w 8 21] [:w 0 31] [:w 7 27] [:w 0 32]]}">1 txn [[:w 8 20] [:w 8 21] [:w 0 31] [:w 7 27] [:w 0 32]]</div></a><a href="#i209"><div class="op ok" id="i209" style="width:100;left:318;top:3328;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.032Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 209
+ :value [[:r 7 27] [:r 7 27] [:w 7 28] [:r 8 21] [:w 8 22] [:w 7 29] [:w 8 23] [:w 7 30]]}">2 txn [[:r 7 nil] [:r 7 nil] [:w 7 28] [:r 8 nil] [:w 8 22] [:w 7 29] [:w 8 23] [:w 7 30]]<br />[[:r 7 27] [:r 7 27] [:w 7 28] [:r 8 21] [:w 8 22] [:w 7 29] [:w 8 23] [:w 7 30]]</div></a><a href="#i211"><div class="op ok" id="i211" style="width:100;left:424;top:3360;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.128Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 211
+ :value [[:w 8 24] [:w 9 1] [:r 8 24] [:r 8 24] [:r 8 24] [:w 8 25]]}">3 txn [[:w 8 24] [:w 9 1] [:r 8 nil] [:r 8 nil] [:r 8 nil] [:w 8 25]]<br />[[:w 8 24] [:w 9 1] [:r 8 24] [:r 8 24] [:r 8 24] [:w 8 25]]</div></a><a href="#i213"><div class="op ok" id="i213" style="width:100;left:530;top:3392;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.152Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 213
+ :value [[:w 7 31] [:r 8 25] [:r 8 25]]}">4 txn [[:w 7 31] [:r 8 nil] [:r 8 nil]]<br />[[:w 7 31] [:r 8 25] [:r 8 25]]</div></a><a href="#i215"><div class="op ok" id="i215" style="width:100;left:636;top:3424;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.244Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 215
+ :value [[:w 8 26] [:w 7 32] [:r 8 26] [:w 8 27] [:r 7 32] [:r 8 27] [:r 8 27]]}">5 txn [[:w 8 26] [:w 7 32] [:r 8 nil] [:w 8 27] [:r 7 nil] [:r 8 nil] [:r 8 nil]]<br />[[:w 8 26] [:w 7 32] [:r 8 26] [:w 8 27] [:r 7 32] [:r 8 27] [:r 8 27]]</div></a><a href="#i217"><div class="op ok" id="i217" style="width:100;left:742;top:3456;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.265Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 217
+ :value [[:w 8 28] [:w 8 29]]}">6 txn [[:w 8 28] [:w 8 29]]</div></a><a href="#i219"><div class="op ok" id="i219" style="width:100;left:848;top:3488;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.429Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 219
+ :value [[:r 10 nil] [:w 10 1] [:w 9 2]]}">7 txn [[:r 10 nil] [:w 10 1] [:w 9 2]]</div></a><a href="#i221"><div class="op ok" id="i221" style="width:100;left:954;top:3520;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.620Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 221
+ :value [[:w 10 2] [:w 8 30] [:w 8 31] [:r 8 31] [:r 8 31] [:w 10 3] [:r 8 31]]}">8 txn [[:w 10 2] [:w 8 30] [:w 8 31] [:r 8 nil] [:r 8 nil] [:w 10 3] [:r 8 nil]]<br />[[:w 10 2] [:w 8 30] [:w 8 31] [:r 8 31] [:r 8 31] [:w 10 3] [:r 8 31]]</div></a><a href="#i223"><div class="op ok" id="i223" style="width:100;left:1060;top:3552;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.726Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 223
+ :value [[:r 8 31] [:w 9 3] [:w 10 4] [:w 10 5] [:r 8 31] [:w 9 4]]}">9 txn [[:r 8 nil] [:w 9 3] [:w 10 4] [:w 10 5] [:r 8 nil] [:w 9 4]]<br />[[:r 8 31] [:w 9 3] [:w 10 4] [:w 10 5] [:r 8 31] [:w 9 4]]</div></a><a href="#i225"><div class="op ok" id="i225" style="width:100;left:1166;top:3584;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:14.916Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 225
+ :value [[:w 10 6] [:r 8 31] [:r 10 6]]}">10 txn [[:w 10 6] [:r 8 nil] [:r 10 nil]]<br />[[:w 10 6] [:r 8 31] [:r 10 6]]</div></a><a href="#i227"><div class="op ok" id="i227" style="width:100;left:1272;top:3616;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.049Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 227
+ :value [[:w 8 32] [:r 9 4] [:r 9 4]]}">11 txn [[:w 8 32] [:r 9 nil] [:r 9 nil]]<br />[[:w 8 32] [:r 9 4] [:r 9 4]]</div></a><a href="#i229"><div class="op ok" id="i229" style="width:100;left:1378;top:3648;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.229Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 229
+ :value [[:r 8 32] [:r 8 32] [:r 11 nil] [:w 10 7] [:w 10 8]]}">12 txn [[:r 8 nil] [:r 8 nil] [:r 11 nil] [:w 10 7] [:w 10 8]]<br />[[:r 8 32] [:r 8 32] [:r 11 nil] [:w 10 7] [:w 10 8]]</div></a><a href="#i231"><div class="op ok" id="i231" style="width:100;left:1484;top:3680;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.318Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 231
+ :value [[:r 9 4] [:r 10 8] [:w 10 9] [:r 9 4] [:w 11 1] [:w 10 10] [:w 11 2]]}">13 txn [[:r 9 nil] [:r 10 nil] [:w 10 9] [:r 9 nil] [:w 11 1] [:w 10 10] [:w 11 2]]<br />[[:r 9 4] [:r 10 8] [:w 10 9] [:r 9 4] [:w 11 1] [:w 10 10] [:w 11 2]]</div></a><a href="#i233"><div class="op ok" id="i233" style="width:100;left:1590;top:3712;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.497Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 233
+ :value [[:w 10 11] [:w 11 3]]}">14 txn [[:w 10 11] [:w 11 3]]</div></a><a href="#i235"><div class="op ok" id="i235" style="width:100;left:1696;top:3744;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.562Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 235
+ :value [[:w 9 5] [:w 9 6] [:r 11 3] [:r 11 3] [:w 11 4] [:r 11 4] [:r 11 4] [:r 9 6]]}">15 txn [[:w 9 5] [:w 9 6] [:r 11 nil] [:r 11 nil] [:w 11 4] [:r 11 nil] [:r 11 nil] [:r 9 nil]]<br />[[:w 9 5] [:w 9 6] [:r 11 3] [:r 11 3] [:w 11 4] [:r 11 4] [:r 11 4] [:r 9 6]]</div></a><a href="#i237"><div class="op ok" id="i237" style="width:100;left:1802;top:3776;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.761Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 237
+ :value [[:w 11 5] [:w 10 12] [:r 11 5] [:r 10 12] [:w 9 7] [:r 11 5]]}">16 txn [[:w 11 5] [:w 10 12] [:r 11 nil] [:r 10 nil] [:w 9 7] [:r 11 nil]]<br />[[:w 11 5] [:w 10 12] [:r 11 5] [:r 10 12] [:w 9 7] [:r 11 5]]</div></a><a href="#i239"><div class="op ok" id="i239" style="width:100;left:1908;top:3808;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.815Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 239
+ :value [[:w 10 13] [:w 11 6] [:r 11 6] [:w 11 7] [:w 11 8] [:r 10 13] [:r 11 8] [:r 11 8]]}">17 txn [[:w 10 13] [:w 11 6] [:r 11 nil] [:w 11 7] [:w 11 8] [:r 10 nil] [:r 11 nil] [:r 11 nil]]<br />[[:w 10 13] [:w 11 6] [:r 11 6] [:w 11 7] [:w 11 8] [:r 10 13] [:r 11 8] [:r 11 8]]</div></a><a href="#i241"><div class="op ok" id="i241" style="width:100;left:2014;top:3840;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.833Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 241
+ :value [[:w 10 14] [:w 9 8] [:w 10 15] [:r 11 8] [:w 11 9] [:w 10 16] [:r 11 9]]}">18 txn [[:w 10 14] [:w 9 8] [:w 10 15] [:r 11 nil] [:w 11 9] [:w 10 16] [:r 11 nil]]<br />[[:w 10 14] [:w 9 8] [:w 10 15] [:r 11 8] [:w 11 9] [:w 10 16] [:r 11 9]]</div></a><a href="#i243"><div class="op ok" id="i243" style="width:100;left:2120;top:3872;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:15.927Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 243
+ :value [[:r 9 8] [:r 11 9] [:r 11 9] [:w 11 10] [:w 11 11] [:r 10 16]]}">19 txn [[:r 9 nil] [:r 11 nil] [:r 11 nil] [:w 11 10] [:w 11 11] [:r 10 nil]]<br />[[:r 9 8] [:r 11 9] [:r 11 9] [:w 11 10] [:w 11 11] [:r 10 16]]</div></a><a href="#i245"><div class="op ok" id="i245" style="width:100;left:106;top:3904;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.106Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 245
+ :value [[:w 11 12] [:w 11 13]]}">0 txn [[:w 11 12] [:w 11 13]]</div></a><a href="#i247"><div class="op ok" id="i247" style="width:100;left:106;top:3936;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.154Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 247
+ :value [[:w 9 9] [:r 9 9] [:r 11 13] [:r 11 13] [:w 11 14] [:w 9 10] [:w 9 11] [:r 11 14]]}">0 txn [[:w 9 9] [:r 9 nil] [:r 11 nil] [:r 11 nil] [:w 11 14] [:w 9 10] [:w 9 11] [:r 11 nil]]<br />[[:w 9 9] [:r 9 9] [:r 11 13] [:r 11 13] [:w 11 14] [:w 9 10] [:w 9 11] [:r 11 14]]</div></a><a href="#i249"><div class="op ok" id="i249" style="width:100;left:212;top:3968;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.329Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 249
+ :value [[:r 11 14] [:r 10 16] [:w 9 12]]}">1 txn [[:r 11 nil] [:r 10 nil] [:w 9 12]]<br />[[:r 11 14] [:r 10 16] [:w 9 12]]</div></a><a href="#i251"><div class="op ok" id="i251" style="width:100;left:318;top:4000;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.415Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 251
+ :value [[:w 11 15] [:r 11 15]]}">2 txn [[:w 11 15] [:r 11 nil]]<br />[[:w 11 15] [:r 11 15]]</div></a><a href="#i253"><div class="op ok" id="i253" style="width:100;left:424;top:4032;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.532Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 253
+ :value [[:w 11 16] [:r 9 12] [:r 9 12]]}">3 txn [[:w 11 16] [:r 9 nil] [:r 9 nil]]<br />[[:w 11 16] [:r 9 12] [:r 9 12]]</div></a><a href="#i255"><div class="op ok" id="i255" style="width:100;left:530;top:4064;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.538Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 255
+ :value [[:w 10 17] [:w 11 17] [:w 9 13] [:w 9 14] [:w 11 18] [:r 11 18]]}">4 txn [[:w 10 17] [:w 11 17] [:w 9 13] [:w 9 14] [:w 11 18] [:r 11 nil]]<br />[[:w 10 17] [:w 11 17] [:w 9 13] [:w 9 14] [:w 11 18] [:r 11 18]]</div></a><a href="#i257"><div class="op ok" id="i257" style="width:100;left:636;top:4096;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.692Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 257
+ :value [[:w 11 19] [:w 9 15] [:r 10 17] [:w 11 20] [:w 9 16] [:w 11 21]]}">5 txn [[:w 11 19] [:w 9 15] [:r 10 nil] [:w 11 20] [:w 9 16] [:w 11 21]]<br />[[:w 11 19] [:w 9 15] [:r 10 17] [:w 11 20] [:w 9 16] [:w 11 21]]</div></a><a href="#i259"><div class="op ok" id="i259" style="width:100;left:742;top:4128;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.774Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 259
+ :value [[:w 11 22] [:r 10 17]]}">6 txn [[:w 11 22] [:r 10 nil]]<br />[[:w 11 22] [:r 10 17]]</div></a><a href="#i261"><div class="op ok" id="i261" style="width:100;left:848;top:4160;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.799Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 261
+ :value [[:w 10 18] [:r 11 22] [:r 10 18] [:r 10 18] [:r 10 18] [:r 11 22] [:r 11 22] [:w 11 23]]}">7 txn [[:w 10 18] [:r 11 nil] [:r 10 nil] [:r 10 nil] [:r 10 nil] [:r 11 nil] [:r 11 nil] [:w 11 23]]<br />[[:w 10 18] [:r 11 22] [:r 10 18] [:r 10 18] [:r 10 18] [:r 11 22] [:r 11 22] [:w 11 23]]</div></a><a href="#i263"><div class="op ok" id="i263" style="width:100;left:954;top:4192;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.903Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 263
+ :value [[:w 9 17] [:w 10 19]]}">8 txn [[:w 9 17] [:w 10 19]]</div></a><a href="#i265"><div class="op ok" id="i265" style="width:100;left:1060;top:4224;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:16.963Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 265
+ :value [[:w 9 18] [:w 11 24]]}">9 txn [[:w 9 18] [:w 11 24]]</div></a><a href="#i267"><div class="op ok" id="i267" style="width:100;left:1166;top:4256;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.041Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 267
+ :value [[:w 11 25] [:r 11 25] [:r 11 25] [:w 9 19] [:w 9 20] [:r 11 25] [:r 10 19] [:w 11 26]]}">10 txn [[:w 11 25] [:r 11 nil] [:r 11 nil] [:w 9 19] [:w 9 20] [:r 11 nil] [:r 10 nil] [:w 11 26]]<br />[[:w 11 25] [:r 11 25] [:r 11 25] [:w 9 19] [:w 9 20] [:r 11 25] [:r 10 19] [:w 11 26]]</div></a><a href="#i269"><div class="op ok" id="i269" style="width:100;left:1272;top:4288;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.121Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 269
+ :value [[:w 10 20] [:w 11 27] [:r 10 20] [:r 9 20] [:w 9 21] [:r 11 27] [:w 11 28]]}">11 txn [[:w 10 20] [:w 11 27] [:r 10 nil] [:r 9 nil] [:w 9 21] [:r 11 nil] [:w 11 28]]<br />[[:w 10 20] [:w 11 27] [:r 10 20] [:r 9 20] [:w 9 21] [:r 11 27] [:w 11 28]]</div></a><a href="#i272"><div class="op ok" id="i272" style="width:100;left:1378;top:4320;height:32" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.279Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 272
+ :value [[:r 10 20] [:w 11 29]]}">12 txn [[:r 10 nil] [:w 11 29]]<br />[[:r 10 20] [:w 11 29]]</div></a><a href="#i273"><div class="op fail" id="i273" style="width:100;left:1484;top:4336;height:32" title="Dur: 4 ms
+Err: :ww-conflict
+Wall-clock Time: 2023-04-30T16:29:17.279Z
+
+Op:
+{:process 13
+ :type :fail
+ :f :txn
+ :index 273
+ :error :ww-conflict
+ :value [[:w 10 21] [:w 11 30] [:r 11 nil] [:w 11 31]]}">13 txn [[:w 10 21] [:w 11 30] [:r 11 nil] [:w 11 31]]</div></a><a href="#i275"><div class="op ok" id="i275" style="width:100;left:1590;top:4384;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.421Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 275
+ :value [[:w 11 32] [:r 9 21]]}">14 txn [[:w 11 32] [:r 9 nil]]<br />[[:w 11 32] [:r 9 21]]</div></a><a href="#i277"><div class="op ok" id="i277" style="width:100;left:1696;top:4416;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.490Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 277
+ :value [[:w 12 1] [:r 10 20] [:r 12 1] [:r 12 1] [:r 10 20] [:w 9 22]]}">15 txn [[:w 12 1] [:r 10 nil] [:r 12 nil] [:r 12 nil] [:r 10 nil] [:w 9 22]]<br />[[:w 12 1] [:r 10 20] [:r 12 1] [:r 12 1] [:r 10 20] [:w 9 22]]</div></a><a href="#i279"><div class="op ok" id="i279" style="width:100;left:1802;top:4448;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.506Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 279
+ :value [[:w 10 22] [:r 10 22] [:w 10 23] [:w 10 24] [:r 12 1] [:w 12 2] [:r 9 22] [:r 10 24]]}">16 txn [[:w 10 22] [:r 10 nil] [:w 10 23] [:w 10 24] [:r 12 nil] [:w 12 2] [:r 9 nil] [:r 10 nil]]<br />[[:w 10 22] [:r 10 22] [:w 10 23] [:w 10 24] [:r 12 1] [:w 12 2] [:r 9 22] [:r 10 24]]</div></a><a href="#i281"><div class="op ok" id="i281" style="width:100;left:1908;top:4480;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.552Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 281
+ :value [[:r 12 2] [:w 12 3] [:r 10 24] [:w 12 4] [:w 12 5] [:r 12 5] [:r 12 5] [:r 10 24]]}">17 txn [[:r 12 nil] [:w 12 3] [:r 10 nil] [:w 12 4] [:w 12 5] [:r 12 nil] [:r 12 nil] [:r 10 nil]]<br />[[:r 12 2] [:w 12 3] [:r 10 24] [:w 12 4] [:w 12 5] [:r 12 5] [:r 12 5] [:r 10 24]]</div></a><a href="#i283"><div class="op ok" id="i283" style="width:100;left:2014;top:4512;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.682Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 283
+ :value [[:w 9 23] [:r 12 5] [:w 12 6] [:r 10 24] [:r 12 6]]}">18 txn [[:w 9 23] [:r 12 nil] [:w 12 6] [:r 10 nil] [:r 12 nil]]<br />[[:w 9 23] [:r 12 5] [:w 12 6] [:r 10 24] [:r 12 6]]</div></a><a href="#i285"><div class="op ok" id="i285" style="width:100;left:2120;top:4544;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.696Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 285
+ :value [[:w 12 7] [:w 12 8]]}">19 txn [[:w 12 7] [:w 12 8]]</div></a><a href="#i287"><div class="op ok" id="i287" style="width:100;left:106;top:4576;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.724Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 287
+ :value [[:r 12 8] [:w 12 9] [:w 10 25] [:r 9 23] [:w 12 10] [:r 12 10] [:r 12 10]]}">0 txn [[:r 12 nil] [:w 12 9] [:w 10 25] [:r 9 nil] [:w 12 10] [:r 12 nil] [:r 12 nil]]<br />[[:r 12 8] [:w 12 9] [:w 10 25] [:r 9 23] [:w 12 10] [:r 12 10] [:r 12 10]]</div></a><a href="#i289"><div class="op ok" id="i289" style="width:100;left:106;top:4608;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.786Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 289
+ :value [[:r 10 25] [:r 9 23] [:r 12 10] [:w 9 24] [:w 9 25] [:w 12 11]]}">0 txn [[:r 10 nil] [:r 9 nil] [:r 12 nil] [:w 9 24] [:w 9 25] [:w 12 11]]<br />[[:r 10 25] [:r 9 23] [:r 12 10] [:w 9 24] [:w 9 25] [:w 12 11]]</div></a><a href="#i290"><div class="op info" id="i290" style="width:100;left:0;top:4640;height:16" title="Msg: nil
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.843Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 290
+ :value }">:nemesis start </div></a><a href="#i291"><div class="op info" id="i291" style="width:100;left:0;top:4656;height:16" title="Msg: [:isolated {&quot;192.168.56.101&quot; #{}}]
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.844Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 291
+ :value [:isolated {&quot;192.168.56.101&quot; #{}}]}">:nemesis start <br /></div></a><a href="#i293"><div class="op ok" id="i293" style="width:100;left:424;top:4672;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:17.907Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 293
+ :value [[:r 12 11] [:r 9 25] [:w 9 26] [:w 12 12] [:r 9 26]]}">3 txn [[:r 12 nil] [:r 9 nil] [:w 9 26] [:w 12 12] [:r 9 nil]]<br />[[:r 12 11] [:r 9 25] [:w 9 26] [:w 12 12] [:r 9 26]]</div></a><a href="#i295"><div class="op ok" id="i295" style="width:100;left:530;top:4704;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.061Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 295
+ :value [[:r 12 12] [:w 12 13] [:w 9 27] [:w 12 14] [:w 12 15]]}">4 txn [[:r 12 nil] [:w 12 13] [:w 9 27] [:w 12 14] [:w 12 15]]<br />[[:r 12 12] [:w 12 13] [:w 9 27] [:w 12 14] [:w 12 15]]</div></a><a href="#i297"><div class="op ok" id="i297" style="width:100;left:636;top:4736;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.225Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 297
+ :value [[:w 12 16] [:r 10 25] [:r 12 16] [:r 10 25] [:w 9 28] [:r 10 25] [:w 12 17] [:r 12 17]]}">5 txn [[:w 12 16] [:r 10 nil] [:r 12 nil] [:r 10 nil] [:w 9 28] [:r 10 nil] [:w 12 17] [:r 12 nil]]<br />[[:w 12 16] [:r 10 25] [:r 12 16] [:r 10 25] [:w 9 28] [:r 10 25] [:w 12 17] [:r 12 17]]</div></a><a href="#i299"><div class="op ok" id="i299" style="width:100;left:742;top:4768;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.253Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 299
+ :value [[:w 10 26] [:w 12 18] [:r 12 18] [:r 12 18] [:r 12 18]]}">6 txn [[:w 10 26] [:w 12 18] [:r 12 nil] [:r 12 nil] [:r 12 nil]]<br />[[:w 10 26] [:w 12 18] [:r 12 18] [:r 12 18] [:r 12 18]]</div></a><a href="#i301"><div class="op ok" id="i301" style="width:100;left:848;top:4800;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.424Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 301
+ :value [[:w 12 19] [:w 10 27] [:w 9 29] [:w 12 20]]}">7 txn [[:w 12 19] [:w 10 27] [:w 9 29] [:w 12 20]]</div></a><a href="#i303"><div class="op ok" id="i303" style="width:100;left:954;top:4832;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.564Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 303
+ :value [[:r 12 20] [:w 12 21] [:w 12 22] [:w 12 23] [:r 12 23] [:w 12 24] [:w 12 25] [:w 12 26]]}">8 txn [[:r 12 nil] [:w 12 21] [:w 12 22] [:w 12 23] [:r 12 nil] [:w 12 24] [:w 12 25] [:w 12 26]]<br />[[:r 12 20] [:w 12 21] [:w 12 22] [:w 12 23] [:r 12 23] [:w 12 24] [:w 12 25] [:w 12 26]]</div></a><a href="#i305"><div class="op ok" id="i305" style="width:100;left:1060;top:4864;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.605Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 305
+ :value [[:w 12 27] [:w 12 28] [:w 12 29] [:w 12 30] [:r 10 27] [:w 12 31]]}">9 txn [[:w 12 27] [:w 12 28] [:w 12 29] [:w 12 30] [:r 10 nil] [:w 12 31]]<br />[[:w 12 27] [:w 12 28] [:w 12 29] [:w 12 30] [:r 10 27] [:w 12 31]]</div></a><a href="#i307"><div class="op ok" id="i307" style="width:100;left:1166;top:4896;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.679Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 307
+ :value [[:r 10 27] [:w 12 32] [:r 9 29] [:w 13 1] [:w 13 2] [:r 13 2] [:w 13 3]]}">10 txn [[:r 10 nil] [:w 12 32] [:r 9 nil] [:w 13 1] [:w 13 2] [:r 13 nil] [:w 13 3]]<br />[[:r 10 27] [:w 12 32] [:r 9 29] [:w 13 1] [:w 13 2] [:r 13 2] [:w 13 3]]</div></a><a href="#i309"><div class="op ok" id="i309" style="width:100;left:1272;top:4928;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.731Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 309
+ :value [[:r 13 3] [:r 13 3] [:w 9 30] [:w 9 31] [:w 10 28]]}">11 txn [[:r 13 nil] [:r 13 nil] [:w 9 30] [:w 9 31] [:w 10 28]]<br />[[:r 13 3] [:r 13 3] [:w 9 30] [:w 9 31] [:w 10 28]]</div></a><a href="#i311"><div class="op ok" id="i311" style="width:100;left:1378;top:4960;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.804Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 311
+ :value [[:w 13 4] [:w 13 5] [:w 13 6] [:w 9 32] [:w 13 7] [:r 9 32] [:r 13 7]]}">12 txn [[:w 13 4] [:w 13 5] [:w 13 6] [:w 9 32] [:w 13 7] [:r 9 nil] [:r 13 nil]]<br />[[:w 13 4] [:w 13 5] [:w 13 6] [:w 9 32] [:w 13 7] [:r 9 32] [:r 13 7]]</div></a><a href="#i313"><div class="op ok" id="i313" style="width:100;left:1484;top:4992;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:18.926Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 313
+ :value [[:w 13 8] [:r 13 8] [:r 10 28] [:w 13 9] [:w 13 10] [:r 13 10] [:r 13 10] [:w 13 11]]}">13 txn [[:w 13 8] [:r 13 nil] [:r 10 nil] [:w 13 9] [:w 13 10] [:r 13 nil] [:r 13 nil] [:w 13 11]]<br />[[:w 13 8] [:r 13 8] [:r 10 28] [:w 13 9] [:w 13 10] [:r 13 10] [:r 13 10] [:w 13 11]]</div></a><a href="#i316"><div class="op fail" id="i316" style="width:100;left:1590;top:5024;height:32" title="Dur: 5 ms
+Err: :ww-conflict
+Wall-clock Time: 2023-04-30T16:29:19.071Z
+
+Op:
+{:process 14
+ :type :fail
+ :f :txn
+ :index 316
+ :error :ww-conflict
+ :value [[:w 13 12] [:r 13 nil] [:w 10 29] [:w 13 13] [:r 13 nil]]}">14 txn [[:w 13 12] [:r 13 nil] [:w 10 29] [:w 13 13] [:r 13 nil]]</div></a><a href="#i317"><div class="op ok" id="i317" style="width:100;left:1696;top:5040;height:32" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.072Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 317
+ :value [[:w 10 30] [:w 14 1] [:r 10 30] [:w 13 14] [:w 13 15] [:r 13 15] [:w 13 16]]}">15 txn [[:w 10 30] [:w 14 1] [:r 10 nil] [:w 13 14] [:w 13 15] [:r 13 nil] [:w 13 16]]<br />[[:w 10 30] [:w 14 1] [:r 10 30] [:w 13 14] [:w 13 15] [:r 13 15] [:w 13 16]]</div></a><a href="#i319"><div class="op ok" id="i319" style="width:100;left:1802;top:5088;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.185Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 319
+ :value [[:w 10 31] [:w 14 2] [:r 14 2] [:w 13 17] [:r 14 2] [:r 13 17]]}">16 txn [[:w 10 31] [:w 14 2] [:r 14 nil] [:w 13 17] [:r 14 nil] [:r 13 nil]]<br />[[:w 10 31] [:w 14 2] [:r 14 2] [:w 13 17] [:r 14 2] [:r 13 17]]</div></a><a href="#i321"><div class="op ok" id="i321" style="width:100;left:1908;top:5120;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.288Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 321
+ :value [[:w 13 18] [:w 13 19] [:w 14 3]]}">17 txn [[:w 13 18] [:w 13 19] [:w 14 3]]</div></a><a href="#i323"><div class="op ok" id="i323" style="width:100;left:2014;top:5152;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.374Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 323
+ :value [[:w 10 32] [:w 14 4] [:r 13 19] [:r 10 32] [:r 10 32] [:w 14 5] [:w 13 20] [:w 15 1]]}">18 txn [[:w 10 32] [:w 14 4] [:r 13 nil] [:r 10 nil] [:r 10 nil] [:w 14 5] [:w 13 20] [:w 15 1]]<br />[[:w 10 32] [:w 14 4] [:r 13 19] [:r 10 32] [:r 10 32] [:w 14 5] [:w 13 20] [:w 15 1]]</div></a><a href="#i325"><div class="op ok" id="i325" style="width:100;left:2120;top:5184;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.454Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 325
+ :value [[:w 13 21] [:w 13 22]]}">19 txn [[:w 13 21] [:w 13 22]]</div></a><a href="#i327"><div class="op ok" id="i327" style="width:100;left:106;top:5216;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.476Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 327
+ :value [[:r 14 5] [:w 13 23] [:w 14 6] [:r 15 1] [:r 13 23] [:r 13 23] [:w 13 24]]}">0 txn [[:r 14 nil] [:w 13 23] [:w 14 6] [:r 15 nil] [:r 13 nil] [:r 13 nil] [:w 13 24]]<br />[[:r 14 5] [:w 13 23] [:w 14 6] [:r 15 1] [:r 13 23] [:r 13 23] [:w 13 24]]</div></a><a href="#i329"><div class="op ok" id="i329" style="width:100;left:106;top:5248;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.561Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 329
+ :value [[:w 14 7] [:r 14 7] [:w 13 25] [:w 15 2] [:r 15 2]]}">0 txn [[:w 14 7] [:r 14 nil] [:w 13 25] [:w 15 2] [:r 15 nil]]<br />[[:w 14 7] [:r 14 7] [:w 13 25] [:w 15 2] [:r 15 2]]</div></a><a href="#i331"><div class="op ok" id="i331" style="width:100;left:212;top:5280;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.649Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 331
+ :value [[:w 13 26] [:r 15 2] [:w 14 8] [:w 13 27] [:w 13 28] [:r 13 28] [:r 15 2] [:w 14 9]]}">1 txn [[:w 13 26] [:r 15 nil] [:w 14 8] [:w 13 27] [:w 13 28] [:r 13 nil] [:r 15 nil] [:w 14 9]]<br />[[:w 13 26] [:r 15 2] [:w 14 8] [:w 13 27] [:w 13 28] [:r 13 28] [:r 15 2] [:w 14 9]]</div></a><a href="#i334"><div class="op ok" id="i334" style="width:100;left:318;top:5312;height:32" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.691Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 334
+ :value [[:w 15 3] [:w 13 29] [:w 13 30]]}">2 txn [[:w 15 3] [:w 13 29] [:w 13 30]]</div></a><a href="#i335"><div class="op fail" id="i335" style="width:100;left:424;top:5328;height:32" title="Dur: 2 ms
+Err: :ww-conflict
+Wall-clock Time: 2023-04-30T16:29:19.691Z
+
+Op:
+{:process 3
+ :type :fail
+ :f :txn
+ :index 335
+ :error :ww-conflict
+ :value [[:w 13 31] [:w 14 10] [:w 13 32]]}">3 txn [[:w 13 31] [:w 14 10] [:w 13 32]]</div></a><a href="#i337"><div class="op ok" id="i337" style="width:100;left:530;top:5376;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.840Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 337
+ :value [[:w 14 11] [:r 15 3] [:r 16 nil] [:r 16 nil] [:w 16 1] [:w 14 12] [:w 16 2]]}">4 txn [[:w 14 11] [:r 15 nil] [:r 16 nil] [:r 16 nil] [:w 16 1] [:w 14 12] [:w 16 2]]<br />[[:w 14 11] [:r 15 3] [:r 16 nil] [:r 16 nil] [:w 16 1] [:w 14 12] [:w 16 2]]</div></a><a href="#i339"><div class="op ok" id="i339" style="width:100;left:636;top:5408;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.877Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 339
+ :value [[:r 14 12] [:w 16 3] [:r 15 3] [:w 16 4]]}">5 txn [[:r 14 nil] [:w 16 3] [:r 15 nil] [:w 16 4]]<br />[[:r 14 12] [:w 16 3] [:r 15 3] [:w 16 4]]</div></a><a href="#i341"><div class="op ok" id="i341" style="width:100;left:742;top:5440;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:19.964Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 341
+ :value [[:r 15 3] [:r 16 4] [:r 16 4] [:r 16 4]]}">6 txn [[:r 15 nil] [:r 16 nil] [:r 16 nil] [:r 16 nil]]<br />[[:r 15 3] [:r 16 4] [:r 16 4] [:r 16 4]]</div></a><a href="#i343"><div class="op ok" id="i343" style="width:100;left:848;top:5472;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.017Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 343
+ :value [[:w 16 5] [:r 16 5] [:w 14 13] [:w 16 6] [:w 16 7] [:r 16 7] [:r 14 13] [:w 14 14]]}">7 txn [[:w 16 5] [:r 16 nil] [:w 14 13] [:w 16 6] [:w 16 7] [:r 16 nil] [:r 14 nil] [:w 14 14]]<br />[[:w 16 5] [:r 16 5] [:w 14 13] [:w 16 6] [:w 16 7] [:r 16 7] [:r 14 13] [:w 14 14]]</div></a><a href="#i345"><div class="op ok" id="i345" style="width:100;left:954;top:5504;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.204Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 345
+ :value [[:w 16 8] [:r 15 3]]}">8 txn [[:w 16 8] [:r 15 nil]]<br />[[:w 16 8] [:r 15 3]]</div></a><a href="#i347"><div class="op ok" id="i347" style="width:100;left:1060;top:5536;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.303Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 347
+ :value [[:w 16 9] [:r 16 9] [:r 16 9] [:r 16 9] [:w 15 4]]}">9 txn [[:w 16 9] [:r 16 nil] [:r 16 nil] [:r 16 nil] [:w 15 4]]<br />[[:w 16 9] [:r 16 9] [:r 16 9] [:r 16 9] [:w 15 4]]</div></a><a href="#i349"><div class="op ok" id="i349" style="width:100;left:1166;top:5568;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.341Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 349
+ :value [[:r 16 9] [:w 16 10] [:r 15 4] [:w 15 5] [:r 16 10] [:w 14 15]]}">10 txn [[:r 16 nil] [:w 16 10] [:r 15 nil] [:w 15 5] [:r 16 nil] [:w 14 15]]<br />[[:r 16 9] [:w 16 10] [:r 15 4] [:w 15 5] [:r 16 10] [:w 14 15]]</div></a><a href="#i351"><div class="op ok" id="i351" style="width:100;left:1272;top:5600;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.522Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 351
+ :value [[:r 14 15] [:w 15 6] [:w 16 11]]}">11 txn [[:r 14 nil] [:w 15 6] [:w 16 11]]<br />[[:r 14 15] [:w 15 6] [:w 16 11]]</div></a><a href="#i353"><div class="op ok" id="i353" style="width:100;left:1378;top:5632;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.583Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 353
+ :value [[:w 15 7] [:r 16 11]]}">12 txn [[:w 15 7] [:r 16 nil]]<br />[[:w 15 7] [:r 16 11]]</div></a><a href="#i355"><div class="op ok" id="i355" style="width:100;left:1484;top:5664;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.664Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 355
+ :value [[:w 16 12] [:w 16 13] [:r 16 13] [:r 16 13] [:w 16 14]]}">13 txn [[:w 16 12] [:w 16 13] [:r 16 nil] [:r 16 nil] [:w 16 14]]<br />[[:w 16 12] [:w 16 13] [:r 16 13] [:r 16 13] [:w 16 14]]</div></a><a href="#i357"><div class="op ok" id="i357" style="width:100;left:1590;top:5696;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.740Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 357
+ :value [[:w 15 8] [:r 14 15]]}">14 txn [[:w 15 8] [:r 14 nil]]<br />[[:w 15 8] [:r 14 15]]</div></a><a href="#i359"><div class="op ok" id="i359" style="width:100;left:1696;top:5728;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.858Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 359
+ :value [[:w 14 16] [:w 16 15] [:w 16 16]]}">15 txn [[:w 14 16] [:w 16 15] [:w 16 16]]</div></a><a href="#i361"><div class="op ok" id="i361" style="width:100;left:1802;top:5760;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:20.973Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 361
+ :value [[:w 16 17] [:r 15 8] [:w 16 18] [:w 16 19] [:w 16 20]]}">16 txn [[:w 16 17] [:r 15 nil] [:w 16 18] [:w 16 19] [:w 16 20]]<br />[[:w 16 17] [:r 15 8] [:w 16 18] [:w 16 19] [:w 16 20]]</div></a><a href="#i363"><div class="op ok" id="i363" style="width:100;left:1908;top:5792;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.090Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 363
+ :value [[:r 16 20] [:w 15 9] [:r 16 20] [:w 16 21]]}">17 txn [[:r 16 nil] [:w 15 9] [:r 16 nil] [:w 16 21]]<br />[[:r 16 20] [:w 15 9] [:r 16 20] [:w 16 21]]</div></a><a href="#i365"><div class="op ok" id="i365" style="width:100;left:2014;top:5824;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.158Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 365
+ :value [[:w 16 22] [:r 16 22] [:r 16 22] [:r 16 22] [:w 16 23]]}">18 txn [[:w 16 22] [:r 16 nil] [:r 16 nil] [:r 16 nil] [:w 16 23]]<br />[[:w 16 22] [:r 16 22] [:r 16 22] [:r 16 22] [:w 16 23]]</div></a><a href="#i367"><div class="op ok" id="i367" style="width:100;left:2120;top:5856;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.205Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 367
+ :value [[:r 16 23] [:r 15 9] [:w 16 24]]}">19 txn [[:r 16 nil] [:r 15 nil] [:w 16 24]]<br />[[:r 16 23] [:r 15 9] [:w 16 24]]</div></a><a href="#i369"><div class="op ok" id="i369" style="width:100;left:106;top:5888;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.387Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 369
+ :value [[:w 15 10] [:r 14 16] [:r 16 24] [:r 14 16]]}">0 txn [[:w 15 10] [:r 14 nil] [:r 16 nil] [:r 14 nil]]<br />[[:w 15 10] [:r 14 16] [:r 16 24] [:r 14 16]]</div></a><a href="#i371"><div class="op ok" id="i371" style="width:100;left:106;top:5920;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.528Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 371
+ :value [[:r 16 24] [:w 16 25] [:r 16 25] [:w 15 11] [:w 16 26] [:r 16 26] [:w 16 27]]}">0 txn [[:r 16 nil] [:w 16 25] [:r 16 nil] [:w 15 11] [:w 16 26] [:r 16 nil] [:w 16 27]]<br />[[:r 16 24] [:w 16 25] [:r 16 25] [:w 15 11] [:w 16 26] [:r 16 26] [:w 16 27]]</div></a><a href="#i373"><div class="op ok" id="i373" style="width:100;left:212;top:5952;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.637Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 373
+ :value [[:r 16 27] [:r 16 27] [:w 16 28] [:w 15 12] [:r 15 12] [:r 16 28] [:w 16 29] [:r 16 29]]}">1 txn [[:r 16 nil] [:r 16 nil] [:w 16 28] [:w 15 12] [:r 15 nil] [:r 16 nil] [:w 16 29] [:r 16 nil]]<br />[[:r 16 27] [:r 16 27] [:w 16 28] [:w 15 12] [:r 15 12] [:r 16 28] [:w 16 29] [:r 16 29]]</div></a><a href="#i375"><div class="op ok" id="i375" style="width:100;left:318;top:5984;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.671Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 375
+ :value [[:r 16 29] [:r 16 29] [:r 14 16] [:w 15 13] [:w 16 30] [:w 16 31] [:w 16 32]]}">2 txn [[:r 16 nil] [:r 16 nil] [:r 14 nil] [:w 15 13] [:w 16 30] [:w 16 31] [:w 16 32]]<br />[[:r 16 29] [:r 16 29] [:r 14 16] [:w 15 13] [:w 16 30] [:w 16 31] [:w 16 32]]</div></a><a href="#i378"><div class="op ok" id="i378" style="width:100;left:530;top:6032;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.721Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 378
+ :value [[:r 15 13] [:r 17 nil] [:r 14 16]]}">4 txn [[:r 15 nil] [:r 17 nil] [:r 14 nil]]<br />[[:r 15 13] [:r 17 nil] [:r 14 16]]</div></a><a href="#i379"><div class="op ok" id="i379" style="width:100;left:424;top:6016;height:48" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.722Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 379
+ :value [[:r 15 13] [:r 14 16] [:w 17 1] [:r 17 1] [:w 17 2] [:w 15 14] [:r 17 2]]}">3 txn [[:r 15 nil] [:r 14 nil] [:w 17 1] [:r 17 nil] [:w 17 2] [:w 15 14] [:r 17 nil]]<br />[[:r 15 13] [:r 14 16] [:w 17 1] [:r 17 1] [:w 17 2] [:w 15 14] [:r 17 2]]</div></a><a href="#i381"><div class="op ok" id="i381" style="width:100;left:636;top:6080;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.803Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 381
+ :value [[:w 17 3] [:w 14 17] [:w 17 4]]}">5 txn [[:w 17 3] [:w 14 17] [:w 17 4]]</div></a><a href="#i383"><div class="op ok" id="i383" style="width:100;left:742;top:6112;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:21.859Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 383
+ :value [[:r 14 17] [:w 17 5] [:r 14 17] [:r 15 14]]}">6 txn [[:r 14 nil] [:w 17 5] [:r 14 nil] [:r 15 nil]]<br />[[:r 14 17] [:w 17 5] [:r 14 17] [:r 15 14]]</div></a><a href="#i385"><div class="op ok" id="i385" style="width:100;left:848;top:6144;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.056Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 385
+ :value [[:w 17 6] [:w 17 7] [:w 17 8] [:w 17 9]]}">7 txn [[:w 17 6] [:w 17 7] [:w 17 8] [:w 17 9]]</div></a><a href="#i387"><div class="op ok" id="i387" style="width:100;left:954;top:6176;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.091Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 387
+ :value [[:r 14 17] [:w 14 18] [:w 17 10] [:r 14 18] [:w 17 11] [:w 15 15] [:r 14 18] [:w 17 12]]}">8 txn [[:r 14 nil] [:w 14 18] [:w 17 10] [:r 14 nil] [:w 17 11] [:w 15 15] [:r 14 nil] [:w 17 12]]<br />[[:r 14 17] [:w 14 18] [:w 17 10] [:r 14 18] [:w 17 11] [:w 15 15] [:r 14 18] [:w 17 12]]</div></a><a href="#i389"><div class="op ok" id="i389" style="width:100;left:1060;top:6208;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.266Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 389
+ :value [[:r 14 18] [:w 14 19] [:w 15 16] [:w 15 17] [:r 17 12] [:w 17 13] [:r 15 17] [:r 17 13]]}">9 txn [[:r 14 nil] [:w 14 19] [:w 15 16] [:w 15 17] [:r 17 nil] [:w 17 13] [:r 15 nil] [:r 17 nil]]<br />[[:r 14 18] [:w 14 19] [:w 15 16] [:w 15 17] [:r 17 12] [:w 17 13] [:r 15 17] [:r 17 13]]</div></a><a href="#i391"><div class="op ok" id="i391" style="width:100;left:1166;top:6240;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.371Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 391
+ :value [[:r 17 13] [:w 17 14] [:w 14 20] [:r 17 14] [:w 17 15]]}">10 txn [[:r 17 nil] [:w 17 14] [:w 14 20] [:r 17 nil] [:w 17 15]]<br />[[:r 17 13] [:w 17 14] [:w 14 20] [:r 17 14] [:w 17 15]]</div></a><a href="#i393"><div class="op ok" id="i393" style="width:100;left:1272;top:6272;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.417Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 393
+ :value [[:r 14 20] [:r 15 17] [:w 17 16] [:r 14 20]]}">11 txn [[:r 14 nil] [:r 15 nil] [:w 17 16] [:r 14 nil]]<br />[[:r 14 20] [:r 15 17] [:w 17 16] [:r 14 20]]</div></a><a href="#i395"><div class="op ok" id="i395" style="width:100;left:1378;top:6304;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.614Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 395
+ :value [[:w 17 17] [:r 17 17] [:r 14 20] [:r 15 17] [:r 17 17]]}">12 txn [[:w 17 17] [:r 17 nil] [:r 14 nil] [:r 15 nil] [:r 17 nil]]<br />[[:w 17 17] [:r 17 17] [:r 14 20] [:r 15 17] [:r 17 17]]</div></a><a href="#i397"><div class="op ok" id="i397" style="width:100;left:1484;top:6336;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.634Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 397
+ :value [[:w 17 18] [:w 17 19]]}">13 txn [[:w 17 18] [:w 17 19]]</div></a><a href="#i399"><div class="op ok" id="i399" style="width:100;left:1590;top:6368;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.789Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 399
+ :value [[:r 14 20] [:r 17 19] [:w 14 21] [:w 17 20]]}">14 txn [[:r 14 nil] [:r 17 nil] [:w 14 21] [:w 17 20]]<br />[[:r 14 20] [:r 17 19] [:w 14 21] [:w 17 20]]</div></a><a href="#i400"><div class="op info" id="i400" style="width:100;left:0;top:6400;height:16" title="Msg: nil
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.845Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :stop
+ :index 400
+ :value }">:nemesis stop </div></a><a href="#i402"><div class="op ok" id="i402" style="width:100;left:1802;top:6416;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.856Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 402
+ :value [[:r 14 21] [:r 15 17] [:r 15 17]]}">16 txn [[:r 14 nil] [:r 15 nil] [:r 15 nil]]<br />[[:r 14 21] [:r 15 17] [:r 15 17]]</div></a><a href="#i403"><div class="op info" id="i403" style="width:100;left:0;top:6448;height:16" title="Msg: :network-healed
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.906Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :stop
+ :index 403
+ :value :network-healed}">:nemesis stop <br /></div></a><a href="#i405"><div class="op ok" id="i405" style="width:100;left:2014;top:6464;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.968Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 405
+ :value [[:r 14 21] [:w 15 18] [:r 17 20] [:w 14 22] [:w 15 19]]}">18 txn [[:r 14 nil] [:w 15 18] [:r 17 nil] [:w 14 22] [:w 15 19]]<br />[[:r 14 21] [:w 15 18] [:r 17 20] [:w 14 22] [:w 15 19]]</div></a><a href="#i407"><div class="op ok" id="i407" style="width:100;left:2120;top:6496;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:22.980Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 407
+ :value [[:r 17 20] [:w 17 21] [:w 14 23] [:r 14 23] [:r 15 19]]}">19 txn [[:r 17 nil] [:w 17 21] [:w 14 23] [:r 14 nil] [:r 15 nil]]<br />[[:r 17 20] [:w 17 21] [:w 14 23] [:r 14 23] [:r 15 19]]</div></a><a href="#i409"><div class="op ok" id="i409" style="width:100;left:106;top:6528;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.125Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 409
+ :value [[:w 15 20] [:r 17 21] [:w 17 22]]}">0 txn [[:w 15 20] [:r 17 nil] [:w 17 22]]<br />[[:w 15 20] [:r 17 21] [:w 17 22]]</div></a><a href="#i411"><div class="op ok" id="i411" style="width:100;left:106;top:6560;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.298Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 411
+ :value [[:w 14 24] [:r 17 22] [:w 17 23] [:w 17 24] [:w 17 25] [:w 14 25]]}">0 txn [[:w 14 24] [:r 17 nil] [:w 17 23] [:w 17 24] [:w 17 25] [:w 14 25]]<br />[[:w 14 24] [:r 17 22] [:w 17 23] [:w 17 24] [:w 17 25] [:w 14 25]]</div></a><a href="#i413"><div class="op ok" id="i413" style="width:100;left:212;top:6592;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.444Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 413
+ :value [[:r 15 20] [:r 17 25] [:r 17 25] [:r 14 25] [:r 17 25] [:r 15 20] [:r 17 25]]}">1 txn [[:r 15 nil] [:r 17 nil] [:r 17 nil] [:r 14 nil] [:r 17 nil] [:r 15 nil] [:r 17 nil]]<br />[[:r 15 20] [:r 17 25] [:r 17 25] [:r 14 25] [:r 17 25] [:r 15 20] [:r 17 25]]</div></a><a href="#i415"><div class="op ok" id="i415" style="width:100;left:318;top:6624;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.569Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 415
+ :value [[:w 17 26] [:r 17 26] [:w 15 21] [:w 15 22] [:w 17 27]]}">2 txn [[:w 17 26] [:r 17 nil] [:w 15 21] [:w 15 22] [:w 17 27]]<br />[[:w 17 26] [:r 17 26] [:w 15 21] [:w 15 22] [:w 17 27]]</div></a><a href="#i417"><div class="op ok" id="i417" style="width:100;left:424;top:6656;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.583Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 417
+ :value [[:w 15 23] [:w 15 24] [:w 17 28] [:r 17 28] [:w 15 25] [:r 17 28] [:r 15 25]]}">3 txn [[:w 15 23] [:w 15 24] [:w 17 28] [:r 17 nil] [:w 15 25] [:r 17 nil] [:r 15 nil]]<br />[[:w 15 23] [:w 15 24] [:w 17 28] [:r 17 28] [:w 15 25] [:r 17 28] [:r 15 25]]</div></a><a href="#i419"><div class="op ok" id="i419" style="width:100;left:530;top:6688;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.674Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 419
+ :value [[:r 17 28] [:w 15 26] [:r 14 25] [:r 17 28] [:r 15 26] [:r 17 28] [:w 17 29]]}">4 txn [[:r 17 nil] [:w 15 26] [:r 14 nil] [:r 17 nil] [:r 15 nil] [:r 17 nil] [:w 17 29]]<br />[[:r 17 28] [:w 15 26] [:r 14 25] [:r 17 28] [:r 15 26] [:r 17 28] [:w 17 29]]</div></a><a href="#i421"><div class="op ok" id="i421" style="width:100;left:636;top:6720;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.711Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 421
+ :value [[:r 15 26] [:w 14 26] [:r 15 26] [:r 17 29]]}">5 txn [[:r 15 nil] [:w 14 26] [:r 15 nil] [:r 17 nil]]<br />[[:r 15 26] [:w 14 26] [:r 15 26] [:r 17 29]]</div></a><a href="#i423"><div class="op ok" id="i423" style="width:100;left:742;top:6752;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.722Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 423
+ :value [[:w 17 30] [:w 15 27] [:r 17 30]]}">6 txn [[:w 17 30] [:w 15 27] [:r 17 nil]]<br />[[:w 17 30] [:w 15 27] [:r 17 30]]</div></a><a href="#i425"><div class="op ok" id="i425" style="width:100;left:848;top:6784;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.793Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 425
+ :value [[:w 15 28] [:w 17 31] [:w 17 32] [:r 15 28] [:r 17 32]]}">7 txn [[:w 15 28] [:w 17 31] [:w 17 32] [:r 15 nil] [:r 17 nil]]<br />[[:w 15 28] [:w 17 31] [:w 17 32] [:r 15 28] [:r 17 32]]</div></a><a href="#i427"><div class="op ok" id="i427" style="width:100;left:954;top:6816;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:23.991Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 427
+ :value [[:r 15 28] [:r 17 32] [:r 17 32] [:r 17 32] [:w 18 1]]}">8 txn [[:r 15 nil] [:r 17 nil] [:r 17 nil] [:r 17 nil] [:w 18 1]]<br />[[:r 15 28] [:r 17 32] [:r 17 32] [:r 17 32] [:w 18 1]]</div></a><a href="#i429"><div class="op ok" id="i429" style="width:100;left:1060;top:6848;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.065Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 429
+ :value [[:r 18 1] [:w 18 2] [:r 15 28]]}">9 txn [[:r 18 nil] [:w 18 2] [:r 15 nil]]<br />[[:r 18 1] [:w 18 2] [:r 15 28]]</div></a><a href="#i431"><div class="op ok" id="i431" style="width:100;left:1166;top:6880;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.152Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 431
+ :value [[:r 14 26] [:r 18 2] [:w 18 3] [:w 18 4] [:w 18 5]]}">10 txn [[:r 14 nil] [:r 18 nil] [:w 18 3] [:w 18 4] [:w 18 5]]<br />[[:r 14 26] [:r 18 2] [:w 18 3] [:w 18 4] [:w 18 5]]</div></a><a href="#i434"><div class="op ok" id="i434" style="width:100;left:1272;top:6912;height:32" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.178Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 434
+ :value [[:w 14 27] [:r 15 28] [:r 18 5] [:w 18 6]]}">11 txn [[:w 14 27] [:r 15 nil] [:r 18 nil] [:w 18 6]]<br />[[:w 14 27] [:r 15 28] [:r 18 5] [:w 18 6]]</div></a><a href="#i435"><div class="op fail" id="i435" style="width:100;left:1378;top:6928;height:32" title="Dur: 3 ms
+Err: :ww-conflict
+Wall-clock Time: 2023-04-30T16:29:24.179Z
+
+Op:
+{:process 12
+ :type :fail
+ :f :txn
+ :index 435
+ :error :ww-conflict
+ :value [[:w 15 29] [:w 15 30] [:w 14 28] [:w 18 7] [:r 18 nil] [:w 18 8] [:r 15 nil] [:w 18 9]]}">12 txn [[:w 15 29] [:w 15 30] [:w 14 28] [:w 18 7] [:r 18 nil] [:w 18 8] [:r 15 nil] [:w 18 9]]</div></a><a href="#i437"><div class="op ok" id="i437" style="width:100;left:1484;top:6976;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.236Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 437
+ :value [[:w 15 31] [:r 15 31] [:r 15 31] [:r 18 6]]}">13 txn [[:w 15 31] [:r 15 nil] [:r 15 nil] [:r 18 nil]]<br />[[:w 15 31] [:r 15 31] [:r 15 31] [:r 18 6]]</div></a><a href="#i439"><div class="op ok" id="i439" style="width:100;left:1590;top:7008;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.345Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 439
+ :value [[:w 18 10] [:r 18 10] [:w 18 11] [:r 14 27] [:r 14 27]]}">14 txn [[:w 18 10] [:r 18 nil] [:w 18 11] [:r 14 nil] [:r 14 nil]]<br />[[:w 18 10] [:r 18 10] [:w 18 11] [:r 14 27] [:r 14 27]]</div></a><a href="#i441"><div class="op ok" id="i441" style="width:100;left:1696;top:7040;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.402Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 441
+ :value [[:w 15 32] [:r 18 11] [:w 18 12] [:r 18 12] [:r 18 12] [:w 18 13]]}">15 txn [[:w 15 32] [:r 18 nil] [:w 18 12] [:r 18 nil] [:r 18 nil] [:w 18 13]]<br />[[:w 15 32] [:r 18 11] [:w 18 12] [:r 18 12] [:r 18 12] [:w 18 13]]</div></a><a href="#i443"><div class="op ok" id="i443" style="width:100;left:1802;top:7072;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.539Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 443
+ :value [[:w 18 14] [:w 19 1] [:w 19 2] [:w 18 15] [:w 18 16] [:r 19 2] [:r 18 16] [:r 18 16]]}">16 txn [[:w 18 14] [:w 19 1] [:w 19 2] [:w 18 15] [:w 18 16] [:r 19 nil] [:r 18 nil] [:r 18 nil]]<br />[[:w 18 14] [:w 19 1] [:w 19 2] [:w 18 15] [:w 18 16] [:r 19 2] [:r 18 16] [:r 18 16]]</div></a><a href="#i445"><div class="op ok" id="i445" style="width:100;left:1908;top:7104;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.574Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 445
+ :value [[:w 18 17] [:w 18 18] [:w 18 19] [:w 18 20]]}">17 txn [[:w 18 17] [:w 18 18] [:w 18 19] [:w 18 20]]</div></a><a href="#i447"><div class="op ok" id="i447" style="width:100;left:2014;top:7136;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.729Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 447
+ :value [[:w 18 21] [:w 14 29] [:r 18 21] [:r 18 21] [:r 14 29]]}">18 txn [[:w 18 21] [:w 14 29] [:r 18 nil] [:r 18 nil] [:r 14 nil]]<br />[[:w 18 21] [:w 14 29] [:r 18 21] [:r 18 21] [:r 14 29]]</div></a><a href="#i449"><div class="op ok" id="i449" style="width:100;left:2120;top:7168;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:24.855Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 449
+ :value [[:r 14 29] [:w 18 22]]}">19 txn [[:r 14 nil] [:w 18 22]]<br />[[:r 14 29] [:w 18 22]]</div></a><a href="#i451"><div class="op ok" id="i451" style="width:100;left:106;top:7200;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.049Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 451
+ :value [[:r 18 22] [:w 14 30] [:w 14 31]]}">0 txn [[:r 18 nil] [:w 14 30] [:w 14 31]]<br />[[:r 18 22] [:w 14 30] [:w 14 31]]</div></a><a href="#i453"><div class="op ok" id="i453" style="width:100;left:106;top:7232;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.137Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 453
+ :value [[:r 18 22] [:r 19 2]]}">0 txn [[:r 18 nil] [:r 19 nil]]<br />[[:r 18 22] [:r 19 2]]</div></a><a href="#i455"><div class="op ok" id="i455" style="width:100;left:212;top:7264;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.179Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 455
+ :value [[:r 18 22] [:r 18 22] [:r 14 31] [:w 18 23] [:w 18 24]]}">1 txn [[:r 18 nil] [:r 18 nil] [:r 14 nil] [:w 18 23] [:w 18 24]]<br />[[:r 18 22] [:r 18 22] [:r 14 31] [:w 18 23] [:w 18 24]]</div></a><a href="#i457"><div class="op ok" id="i457" style="width:100;left:318;top:7296;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.272Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 457
+ :value [[:w 14 32] [:r 18 24] [:w 19 3]]}">2 txn [[:w 14 32] [:r 18 nil] [:w 19 3]]<br />[[:w 14 32] [:r 18 24] [:w 19 3]]</div></a><a href="#i459"><div class="op ok" id="i459" style="width:100;left:424;top:7328;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.381Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 459
+ :value [[:w 18 25] [:w 19 4] [:r 20 nil]]}">3 txn [[:w 18 25] [:w 19 4] [:r 20 nil]]</div></a><a href="#i461"><div class="op ok" id="i461" style="width:100;left:530;top:7360;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.527Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 461
+ :value [[:w 19 5] [:w 20 1] [:w 18 26] [:w 18 27] [:w 18 28] [:r 19 5] [:w 19 6] [:w 19 7]]}">4 txn [[:w 19 5] [:w 20 1] [:w 18 26] [:w 18 27] [:w 18 28] [:r 19 nil] [:w 19 6] [:w 19 7]]<br />[[:w 19 5] [:w 20 1] [:w 18 26] [:w 18 27] [:w 18 28] [:r 19 5] [:w 19 6] [:w 19 7]]</div></a><a href="#i463"><div class="op ok" id="i463" style="width:100;left:636;top:7392;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.589Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 463
+ :value [[:w 19 8] [:r 18 28] [:r 18 28]]}">5 txn [[:w 19 8] [:r 18 nil] [:r 18 nil]]<br />[[:w 19 8] [:r 18 28] [:r 18 28]]</div></a><a href="#i465"><div class="op ok" id="i465" style="width:100;left:742;top:7424;height:16" title="Dur: 15 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.746Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 465
+ :value [[:r 19 8] [:r 19 8] [:r 18 28] [:w 19 9] [:w 20 2] [:r 20 2] [:r 18 28] [:w 18 29]]}">6 txn [[:r 19 nil] [:r 19 nil] [:r 18 nil] [:w 19 9] [:w 20 2] [:r 20 nil] [:r 18 nil] [:w 18 29]]<br />[[:r 19 8] [:r 19 8] [:r 18 28] [:w 19 9] [:w 20 2] [:r 20 2] [:r 18 28] [:w 18 29]]</div></a><a href="#i467"><div class="op ok" id="i467" style="width:100;left:848;top:7456;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:25.931Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 467
+ :value [[:w 18 30] [:w 20 3] [:r 20 3] [:r 18 30] [:r 18 30] [:w 19 10]]}">7 txn [[:w 18 30] [:w 20 3] [:r 20 nil] [:r 18 nil] [:r 18 nil] [:w 19 10]]<br />[[:w 18 30] [:w 20 3] [:r 20 3] [:r 18 30] [:r 18 30] [:w 19 10]]</div></a><a href="#i469"><div class="op ok" id="i469" style="width:100;left:954;top:7488;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.058Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 469
+ :value [[:w 18 31] [:r 18 31] [:r 18 31]]}">8 txn [[:w 18 31] [:r 18 nil] [:r 18 nil]]<br />[[:w 18 31] [:r 18 31] [:r 18 31]]</div></a><a href="#i471"><div class="op ok" id="i471" style="width:100;left:1060;top:7520;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.165Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 471
+ :value [[:w 18 32] [:r 19 10] [:r 20 3]]}">9 txn [[:w 18 32] [:r 19 nil] [:r 20 nil]]<br />[[:w 18 32] [:r 19 10] [:r 20 3]]</div></a><a href="#i473"><div class="op ok" id="i473" style="width:100;left:1166;top:7552;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.324Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 473
+ :value [[:r 21 nil] [:w 21 1] [:w 21 2]]}">10 txn [[:r 21 nil] [:w 21 1] [:w 21 2]]</div></a><a href="#i476"><div class="op ok" id="i476" style="width:100;left:1272;top:7584;height:32" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.389Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 476
+ :value [[:r 19 10] [:r 21 2] [:r 21 2]]}">11 txn [[:r 19 nil] [:r 21 nil] [:r 21 nil]]<br />[[:r 19 10] [:r 21 2] [:r 21 2]]</div></a><a href="#i477"><div class="op ok" id="i477" style="width:100;left:1378;top:7600;height:32" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.394Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 477
+ :value [[:w 21 3] [:r 19 10] [:w 21 4] [:r 21 4] [:w 20 4] [:w 21 5] [:r 21 5] [:w 20 5]]}">12 txn [[:w 21 3] [:r 19 nil] [:w 21 4] [:r 21 nil] [:w 20 4] [:w 21 5] [:r 21 nil] [:w 20 5]]<br />[[:w 21 3] [:r 19 10] [:w 21 4] [:r 21 4] [:w 20 4] [:w 21 5] [:r 21 5] [:w 20 5]]</div></a><a href="#i479"><div class="op ok" id="i479" style="width:100;left:1484;top:7648;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.567Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 479
+ :value [[:w 21 6] [:w 21 7] [:r 21 7] [:w 19 11]]}">13 txn [[:w 21 6] [:w 21 7] [:r 21 nil] [:w 19 11]]<br />[[:w 21 6] [:w 21 7] [:r 21 7] [:w 19 11]]</div></a><a href="#i481"><div class="op ok" id="i481" style="width:100;left:1590;top:7680;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.767Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 481
+ :value [[:r 21 7] [:r 19 11] [:r 20 5] [:w 20 6] [:r 19 11]]}">14 txn [[:r 21 nil] [:r 19 nil] [:r 20 nil] [:w 20 6] [:r 19 nil]]<br />[[:r 21 7] [:r 19 11] [:r 20 5] [:w 20 6] [:r 19 11]]</div></a><a href="#i483"><div class="op ok" id="i483" style="width:100;left:1696;top:7712;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.881Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 483
+ :value [[:w 20 7] [:r 21 7]]}">15 txn [[:w 20 7] [:r 21 nil]]<br />[[:w 20 7] [:r 21 7]]</div></a><a href="#i485"><div class="op ok" id="i485" style="width:100;left:1802;top:7744;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:26.919Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 485
+ :value [[:r 21 7] [:r 21 7] [:r 21 7] [:w 21 8] [:w 20 8]]}">16 txn [[:r 21 nil] [:r 21 nil] [:r 21 nil] [:w 21 8] [:w 20 8]]<br />[[:r 21 7] [:r 21 7] [:r 21 7] [:w 21 8] [:w 20 8]]</div></a><a href="#i487"><div class="op ok" id="i487" style="width:100;left:1908;top:7776;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.096Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 487
+ :value [[:r 19 11] [:w 21 9] [:w 20 9] [:r 20 9] [:r 21 9] [:w 21 10]]}">17 txn [[:r 19 nil] [:w 21 9] [:w 20 9] [:r 20 nil] [:r 21 nil] [:w 21 10]]<br />[[:r 19 11] [:w 21 9] [:w 20 9] [:r 20 9] [:r 21 9] [:w 21 10]]</div></a><a href="#i489"><div class="op ok" id="i489" style="width:100;left:2014;top:7808;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.284Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 489
+ :value [[:w 21 11] [:w 21 12] [:r 19 11]]}">18 txn [[:w 21 11] [:w 21 12] [:r 19 nil]]<br />[[:w 21 11] [:w 21 12] [:r 19 11]]</div></a><a href="#i491"><div class="op ok" id="i491" style="width:100;left:2120;top:7840;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.379Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 491
+ :value [[:w 19 12] [:r 21 12] [:w 20 10] [:w 21 13] [:w 21 14] [:w 21 15] [:w 20 11] [:w 19 13]]}">19 txn [[:w 19 12] [:r 21 nil] [:w 20 10] [:w 21 13] [:w 21 14] [:w 21 15] [:w 20 11] [:w 19 13]]<br />[[:w 19 12] [:r 21 12] [:w 20 10] [:w 21 13] [:w 21 14] [:w 21 15] [:w 20 11] [:w 19 13]]</div></a><a href="#i493"><div class="op ok" id="i493" style="width:100;left:106;top:7872;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.475Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 493
+ :value [[:r 19 13] [:r 20 11] [:r 20 11] [:r 21 15] [:r 21 15] [:r 19 13] [:w 19 14] [:w 21 16]]}">0 txn [[:r 19 nil] [:r 20 nil] [:r 20 nil] [:r 21 nil] [:r 21 nil] [:r 19 nil] [:w 19 14] [:w 21 16]]<br />[[:r 19 13] [:r 20 11] [:r 20 11] [:r 21 15] [:r 21 15] [:r 19 13] [:w 19 14] [:w 21 16]]</div></a><a href="#i495"><div class="op ok" id="i495" style="width:100;left:106;top:7904;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.494Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 495
+ :value [[:w 19 15] [:r 21 16] [:w 21 17] [:r 21 17] [:w 19 16] [:w 21 18] [:w 21 19] [:w 19 17]]}">0 txn [[:w 19 15] [:r 21 nil] [:w 21 17] [:r 21 nil] [:w 19 16] [:w 21 18] [:w 21 19] [:w 19 17]]<br />[[:w 19 15] [:r 21 16] [:w 21 17] [:r 21 17] [:w 19 16] [:w 21 18] [:w 21 19] [:w 19 17]]</div></a><a href="#i497"><div class="op ok" id="i497" style="width:100;left:212;top:7936;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.502Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 497
+ :value [[:w 21 20] [:w 21 21]]}">1 txn [[:w 21 20] [:w 21 21]]</div></a><a href="#i499"><div class="op ok" id="i499" style="width:100;left:318;top:7968;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.678Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 499
+ :value [[:r 21 21] [:w 21 22] [:r 21 22] [:w 21 23]]}">2 txn [[:r 21 nil] [:w 21 22] [:r 21 nil] [:w 21 23]]<br />[[:r 21 21] [:w 21 22] [:r 21 22] [:w 21 23]]</div></a><a href="#i502"><div class="op ok" id="i502" style="width:100;left:424;top:8000;height:32" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.843Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 502
+ :value [[:w 21 24] [:w 21 25] [:r 19 17] [:w 21 26] [:w 19 18] [:r 21 26] [:w 19 19] [:r 20 11]]}">3 txn [[:w 21 24] [:w 21 25] [:r 19 nil] [:w 21 26] [:w 19 18] [:r 21 nil] [:w 19 19] [:r 20 nil]]<br />[[:w 21 24] [:w 21 25] [:r 19 17] [:w 21 26] [:w 19 18] [:r 21 26] [:w 19 19] [:r 20 11]]</div></a><a href="#i503"><div class="op ok" id="i503" style="width:100;left:530;top:8016;height:32" title="Dur: 1 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.844Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 503
+ :value [[:r 19 19] [:w 19 20]]}">4 txn [[:r 19 nil] [:w 19 20]]<br />[[:r 19 19] [:w 19 20]]</div></a><a href="#i504"><div class="op info" id="i504" style="width:100;left:0;top:8064;height:16" title="Msg: nil
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.906Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 504
+ :value }">:nemesis start </div></a><a href="#i505"><div class="op info" id="i505" style="width:100;left:0;top:8080;height:16" title="Msg: [:isolated {&quot;192.168.56.101&quot; #{}}]
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.908Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 505
+ :value [:isolated {&quot;192.168.56.101&quot; #{}}]}">:nemesis start <br /></div></a><a href="#i507"><div class="op ok" id="i507" style="width:100;left:848;top:8096;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:27.944Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 507
+ :value [[:r 19 20] [:w 21 27] [:r 19 20]]}">7 txn [[:r 19 nil] [:w 21 27] [:r 19 nil]]<br />[[:r 19 20] [:w 21 27] [:r 19 20]]</div></a><a href="#i509"><div class="op ok" id="i509" style="width:100;left:954;top:8128;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:28.074Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 509
+ :value [[:w 21 28] [:w 21 29]]}">8 txn [[:w 21 28] [:w 21 29]]</div></a><a href="#i511"><div class="op ok" id="i511" style="width:100;left:1060;top:8160;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:28.250Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 511
+ :value [[:w 19 21] [:r 21 29] [:w 20 12] [:w 21 30] [:r 21 30] [:r 21 30]]}">9 txn [[:w 19 21] [:r 21 nil] [:w 20 12] [:w 21 30] [:r 21 nil] [:r 21 nil]]<br />[[:w 19 21] [:r 21 29] [:w 20 12] [:w 21 30] [:r 21 30] [:r 21 30]]</div></a><a href="#i513"><div class="op ok" id="i513" style="width:100;left:1166;top:8192;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:28.442Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 513
+ :value [[:r 21 30] [:r 21 30] [:w 21 31] [:w 19 22] [:w 19 23]]}">10 txn [[:r 21 nil] [:r 21 nil] [:w 21 31] [:w 19 22] [:w 19 23]]<br />[[:r 21 30] [:r 21 30] [:w 21 31] [:w 19 22] [:w 19 23]]</div></a><a href="#i515"><div class="op ok" id="i515" style="width:100;left:1272;top:8224;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:28.621Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 515
+ :value [[:w 21 32] [:r 21 32] [:r 19 23] [:r 19 23] [:r 21 32]]}">11 txn [[:w 21 32] [:r 21 nil] [:r 19 nil] [:r 19 nil] [:r 21 nil]]<br />[[:w 21 32] [:r 21 32] [:r 19 23] [:r 19 23] [:r 21 32]]</div></a><a href="#i517"><div class="op ok" id="i517" style="width:100;left:1378;top:8256;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:28.821Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 517
+ :value [[:w 19 24] [:w 19 25] [:w 22 1] [:w 19 26]]}">12 txn [[:w 19 24] [:w 19 25] [:w 22 1] [:w 19 26]]</div></a><a href="#i519"><div class="op ok" id="i519" style="width:100;left:1484;top:8288;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:28.945Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 519
+ :value [[:r 19 26] [:w 20 13] [:w 22 2] [:w 22 3] [:r 22 3] [:w 22 4]]}">13 txn [[:r 19 nil] [:w 20 13] [:w 22 2] [:w 22 3] [:r 22 nil] [:w 22 4]]<br />[[:r 19 26] [:w 20 13] [:w 22 2] [:w 22 3] [:r 22 3] [:w 22 4]]</div></a><a href="#i521"><div class="op ok" id="i521" style="width:100;left:1590;top:8320;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.024Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 521
+ :value [[:r 22 4] [:r 19 26] [:w 20 14] [:r 22 4] [:r 22 4] [:w 22 5] [:w 22 6] [:r 19 26]]}">14 txn [[:r 22 nil] [:r 19 nil] [:w 20 14] [:r 22 nil] [:r 22 nil] [:w 22 5] [:w 22 6] [:r 19 nil]]<br />[[:r 22 4] [:r 19 26] [:w 20 14] [:r 22 4] [:r 22 4] [:w 22 5] [:w 22 6] [:r 19 26]]</div></a><a href="#i523"><div class="op ok" id="i523" style="width:100;left:1696;top:8352;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.215Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 523
+ :value [[:w 22 7] [:r 22 7] [:r 19 26] [:r 22 7] [:w 22 8] [:w 19 27] [:w 19 28]]}">15 txn [[:w 22 7] [:r 22 nil] [:r 19 nil] [:r 22 nil] [:w 22 8] [:w 19 27] [:w 19 28]]<br />[[:w 22 7] [:r 22 7] [:r 19 26] [:r 22 7] [:w 22 8] [:w 19 27] [:w 19 28]]</div></a><a href="#i525"><div class="op ok" id="i525" style="width:100;left:1802;top:8384;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.359Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 525
+ :value [[:r 22 8] [:w 19 29] [:w 22 9] [:r 22 9] [:r 22 9]]}">16 txn [[:r 22 nil] [:w 19 29] [:w 22 9] [:r 22 nil] [:r 22 nil]]<br />[[:r 22 8] [:w 19 29] [:w 22 9] [:r 22 9] [:r 22 9]]</div></a><a href="#i527"><div class="op ok" id="i527" style="width:100;left:1908;top:8416;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.548Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 527
+ :value [[:w 22 10] [:r 22 10]]}">17 txn [[:w 22 10] [:r 22 nil]]<br />[[:w 22 10] [:r 22 10]]</div></a><a href="#i529"><div class="op ok" id="i529" style="width:100;left:2014;top:8448;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.585Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 529
+ :value [[:r 22 10] [:w 22 11] [:r 22 11] [:r 20 14]]}">18 txn [[:r 22 nil] [:w 22 11] [:r 22 nil] [:r 20 nil]]<br />[[:r 22 10] [:w 22 11] [:r 22 11] [:r 20 14]]</div></a><a href="#i531"><div class="op ok" id="i531" style="width:100;left:2120;top:8480;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.662Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 531
+ :value [[:w 22 12] [:w 22 13] [:r 22 13] [:r 22 13] [:w 22 14] [:w 19 30]]}">19 txn [[:w 22 12] [:w 22 13] [:r 22 nil] [:r 22 nil] [:w 22 14] [:w 19 30]]<br />[[:w 22 12] [:w 22 13] [:r 22 13] [:r 22 13] [:w 22 14] [:w 19 30]]</div></a><a href="#i533"><div class="op ok" id="i533" style="width:100;left:106;top:8512;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.691Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 533
+ :value [[:r 22 14] [:r 19 30] [:w 22 15] [:w 19 31]]}">0 txn [[:r 22 nil] [:r 19 nil] [:w 22 15] [:w 19 31]]<br />[[:r 22 14] [:r 19 30] [:w 22 15] [:w 19 31]]</div></a><a href="#i535"><div class="op ok" id="i535" style="width:100;left:106;top:8544;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.742Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 535
+ :value [[:r 20 14] [:r 22 15] [:r 19 31] [:w 20 15]]}">0 txn [[:r 20 nil] [:r 22 nil] [:r 19 nil] [:w 20 15]]<br />[[:r 20 14] [:r 22 15] [:r 19 31] [:w 20 15]]</div></a><a href="#i537"><div class="op ok" id="i537" style="width:100;left:212;top:8576;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.829Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 537
+ :value [[:r 22 15] [:r 20 15] [:r 19 31] [:w 19 32] [:w 20 16] [:w 22 16] [:w 22 17]]}">1 txn [[:r 22 nil] [:r 20 nil] [:r 19 nil] [:w 19 32] [:w 20 16] [:w 22 16] [:w 22 17]]<br />[[:r 22 15] [:r 20 15] [:r 19 31] [:w 19 32] [:w 20 16] [:w 22 16] [:w 22 17]]</div></a><a href="#i539"><div class="op ok" id="i539" style="width:100;left:318;top:8608;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.904Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 539
+ :value [[:w 20 17] [:r 23 nil] [:w 22 18] [:r 22 18] [:w 22 19]]}">2 txn [[:w 20 17] [:r 23 nil] [:w 22 18] [:r 22 nil] [:w 22 19]]<br />[[:w 20 17] [:r 23 nil] [:w 22 18] [:r 22 18] [:w 22 19]]</div></a><a href="#i541"><div class="op ok" id="i541" style="width:100;left:424;top:8640;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:29.999Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 541
+ :value [[:w 23 1] [:r 23 1] [:r 23 1] [:r 20 17] [:r 23 1] [:r 22 19]]}">3 txn [[:w 23 1] [:r 23 nil] [:r 23 nil] [:r 20 nil] [:r 23 nil] [:r 22 nil]]<br />[[:w 23 1] [:r 23 1] [:r 23 1] [:r 20 17] [:r 23 1] [:r 22 19]]</div></a><a href="#i543"><div class="op ok" id="i543" style="width:100;left:530;top:8672;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.006Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 543
+ :value [[:w 22 20] [:w 22 21]]}">4 txn [[:w 22 20] [:w 22 21]]</div></a><a href="#i545"><div class="op ok" id="i545" style="width:100;left:636;top:8704;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.122Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 545
+ :value [[:w 23 2] [:r 20 17] [:r 22 21] [:w 20 18]]}">5 txn [[:w 23 2] [:r 20 nil] [:r 22 nil] [:w 20 18]]<br />[[:w 23 2] [:r 20 17] [:r 22 21] [:w 20 18]]</div></a><a href="#i547"><div class="op ok" id="i547" style="width:100;left:742;top:8736;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.179Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 547
+ :value [[:r 22 21] [:w 22 22] [:r 22 22] [:r 22 22] [:w 22 23] [:r 22 23]]}">6 txn [[:r 22 nil] [:w 22 22] [:r 22 nil] [:r 22 nil] [:w 22 23] [:r 22 nil]]<br />[[:r 22 21] [:w 22 22] [:r 22 22] [:r 22 22] [:w 22 23] [:r 22 23]]</div></a><a href="#i549"><div class="op ok" id="i549" style="width:100;left:848;top:8768;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.196Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 549
+ :value [[:r 23 2] [:r 23 2] [:w 22 24]]}">7 txn [[:r 23 nil] [:r 23 nil] [:w 22 24]]<br />[[:r 23 2] [:r 23 2] [:w 22 24]]</div></a><a href="#i551"><div class="op ok" id="i551" style="width:100;left:954;top:8800;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.311Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 551
+ :value [[:w 23 3] [:w 20 19] [:r 23 3] [:w 22 25] [:w 20 20] [:r 23 3] [:w 23 4] [:w 22 26]]}">8 txn [[:w 23 3] [:w 20 19] [:r 23 nil] [:w 22 25] [:w 20 20] [:r 23 nil] [:w 23 4] [:w 22 26]]<br />[[:w 23 3] [:w 20 19] [:r 23 3] [:w 22 25] [:w 20 20] [:r 23 3] [:w 23 4] [:w 22 26]]</div></a><a href="#i553"><div class="op ok" id="i553" style="width:100;left:1060;top:8832;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.324Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 553
+ :value [[:r 22 26] [:r 22 26] [:r 23 4] [:w 22 27] [:r 22 27]]}">9 txn [[:r 22 nil] [:r 22 nil] [:r 23 nil] [:w 22 27] [:r 22 nil]]<br />[[:r 22 26] [:r 22 26] [:r 23 4] [:w 22 27] [:r 22 27]]</div></a><a href="#i555"><div class="op ok" id="i555" style="width:100;left:1166;top:8864;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.433Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 555
+ :value [[:r 22 27] [:r 23 4] [:w 22 28] [:w 20 21] [:r 22 28] [:w 22 29] [:r 22 29]]}">10 txn [[:r 22 nil] [:r 23 nil] [:w 22 28] [:w 20 21] [:r 22 nil] [:w 22 29] [:r 22 nil]]<br />[[:r 22 27] [:r 23 4] [:w 22 28] [:w 20 21] [:r 22 28] [:w 22 29] [:r 22 29]]</div></a><a href="#i557"><div class="op ok" id="i557" style="width:100;left:1272;top:8896;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.612Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 557
+ :value [[:r 23 4] [:w 23 5] [:r 23 5] [:r 20 21] [:r 22 29] [:w 22 30] [:r 22 30]]}">11 txn [[:r 23 nil] [:w 23 5] [:r 23 nil] [:r 20 nil] [:r 22 nil] [:w 22 30] [:r 22 nil]]<br />[[:r 23 4] [:w 23 5] [:r 23 5] [:r 20 21] [:r 22 29] [:w 22 30] [:r 22 30]]</div></a><a href="#i559"><div class="op ok" id="i559" style="width:100;left:1378;top:8928;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.697Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 559
+ :value [[:r 23 5] [:w 23 6] [:r 22 30] [:w 22 31] [:w 22 32]]}">12 txn [[:r 23 nil] [:w 23 6] [:r 22 nil] [:w 22 31] [:w 22 32]]<br />[[:r 23 5] [:w 23 6] [:r 22 30] [:w 22 31] [:w 22 32]]</div></a><a href="#i561"><div class="op ok" id="i561" style="width:100;left:1484;top:8960;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.869Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 561
+ :value [[:r 23 6] [:r 22 32] [:r 20 21] [:r 20 21]]}">13 txn [[:r 23 nil] [:r 22 nil] [:r 20 nil] [:r 20 nil]]<br />[[:r 23 6] [:r 22 32] [:r 20 21] [:r 20 21]]</div></a><a href="#i563"><div class="op ok" id="i563" style="width:100;left:1590;top:8992;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:30.926Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 563
+ :value [[:r 24 nil] [:r 24 nil]]}">14 txn [[:r 24 nil] [:r 24 nil]]</div></a><a href="#i565"><div class="op ok" id="i565" style="width:100;left:1696;top:9024;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:31.092Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 565
+ :value [[:r 24 nil] [:w 24 1] [:r 24 1] [:w 24 2] [:w 24 3] [:w 24 4]]}">15 txn [[:r 24 nil] [:w 24 1] [:r 24 nil] [:w 24 2] [:w 24 3] [:w 24 4]]<br />[[:r 24 nil] [:w 24 1] [:r 24 1] [:w 24 2] [:w 24 3] [:w 24 4]]</div></a><a href="#i567"><div class="op ok" id="i567" style="width:100;left:1802;top:9056;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:31.271Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 567
+ :value [[:w 24 5] [:r 24 5] [:w 23 7] [:w 24 6] [:r 24 6] [:w 20 22]]}">16 txn [[:w 24 5] [:r 24 nil] [:w 23 7] [:w 24 6] [:r 24 nil] [:w 20 22]]<br />[[:w 24 5] [:r 24 5] [:w 23 7] [:w 24 6] [:r 24 6] [:w 20 22]]</div></a><a href="#i569"><div class="op ok" id="i569" style="width:100;left:1908;top:9088;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:31.308Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 569
+ :value [[:r 24 6] [:w 23 8] [:r 24 6] [:r 24 6] [:w 24 7] [:w 24 8] [:r 20 22] [:r 23 8]]}">17 txn [[:r 24 nil] [:w 23 8] [:r 24 nil] [:r 24 nil] [:w 24 7] [:w 24 8] [:r 20 nil] [:r 23 nil]]<br />[[:r 24 6] [:w 23 8] [:r 24 6] [:r 24 6] [:w 24 7] [:w 24 8] [:r 20 22] [:r 23 8]]</div></a><a href="#i571"><div class="op ok" id="i571" style="width:100;left:2014;top:9120;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:31.485Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 571
+ :value [[:w 24 9] [:r 24 9] [:w 24 10] [:w 23 9] [:w 24 11] [:r 24 11]]}">18 txn [[:w 24 9] [:r 24 nil] [:w 24 10] [:w 23 9] [:w 24 11] [:r 24 nil]]<br />[[:w 24 9] [:r 24 9] [:w 24 10] [:w 23 9] [:w 24 11] [:r 24 11]]</div></a><a href="#i573"><div class="op ok" id="i573" style="width:100;left:2120;top:9152;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:31.671Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 573
+ :value [[:w 23 10] [:r 24 11] [:r 24 11]]}">19 txn [[:w 23 10] [:r 24 nil] [:r 24 nil]]<br />[[:w 23 10] [:r 24 11] [:r 24 11]]</div></a><a href="#i575"><div class="op ok" id="i575" style="width:100;left:106;top:9184;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:31.822Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 575
+ :value [[:r 24 11] [:w 24 12] [:w 23 11] [:w 24 13] [:r 24 13] [:r 24 13] [:r 24 13] [:w 23 12]]}">0 txn [[:r 24 nil] [:w 24 12] [:w 23 11] [:w 24 13] [:r 24 nil] [:r 24 nil] [:r 24 nil] [:w 23 12]]<br />[[:r 24 11] [:w 24 12] [:w 23 11] [:w 24 13] [:r 24 13] [:r 24 13] [:r 24 13] [:w 23 12]]</div></a><a href="#i577"><div class="op ok" id="i577" style="width:100;left:106;top:9216;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:31.860Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 577
+ :value [[:w 24 14] [:w 24 15] [:r 24 15]]}">0 txn [[:w 24 14] [:w 24 15] [:r 24 nil]]<br />[[:w 24 14] [:w 24 15] [:r 24 15]]</div></a><a href="#i579"><div class="op ok" id="i579" style="width:100;left:212;top:9248;height:16" title="Dur: 14 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.012Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 579
+ :value [[:r 20 22] [:w 24 16] [:w 24 17] [:r 24 17] [:w 24 18] [:w 23 13] [:w 23 14]]}">1 txn [[:r 20 nil] [:w 24 16] [:w 24 17] [:r 24 nil] [:w 24 18] [:w 23 13] [:w 23 14]]<br />[[:r 20 22] [:w 24 16] [:w 24 17] [:r 24 17] [:w 24 18] [:w 23 13] [:w 23 14]]</div></a><a href="#i581"><div class="op ok" id="i581" style="width:100;left:318;top:9280;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.023Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 581
+ :value [[:r 23 14] [:w 23 15]]}">2 txn [[:r 23 nil] [:w 23 15]]<br />[[:r 23 14] [:w 23 15]]</div></a><a href="#i583"><div class="op ok" id="i583" style="width:100;left:424;top:9312;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.132Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 583
+ :value [[:w 24 19] [:r 23 15] [:w 24 20] [:r 24 20] [:r 23 15]]}">3 txn [[:w 24 19] [:r 23 nil] [:w 24 20] [:r 24 nil] [:r 23 nil]]<br />[[:w 24 19] [:r 23 15] [:w 24 20] [:r 24 20] [:r 23 15]]</div></a><a href="#i585"><div class="op ok" id="i585" style="width:100;left:530;top:9344;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.164Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 585
+ :value [[:r 24 20] [:r 24 20] [:w 23 16] [:r 24 20] [:w 24 21] [:r 24 21] [:r 20 22] [:w 24 22]]}">4 txn [[:r 24 nil] [:r 24 nil] [:w 23 16] [:r 24 nil] [:w 24 21] [:r 24 nil] [:r 20 nil] [:w 24 22]]<br />[[:r 24 20] [:r 24 20] [:w 23 16] [:r 24 20] [:w 24 21] [:r 24 21] [:r 20 22] [:w 24 22]]</div></a><a href="#i587"><div class="op ok" id="i587" style="width:100;left:636;top:9376;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.295Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 587
+ :value [[:r 24 22] [:r 24 22]]}">5 txn [[:r 24 nil] [:r 24 nil]]<br />[[:r 24 22] [:r 24 22]]</div></a><a href="#i589"><div class="op ok" id="i589" style="width:100;left:742;top:9408;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.432Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 589
+ :value [[:w 23 17] [:r 24 22] [:r 24 22] [:r 24 22]]}">6 txn [[:w 23 17] [:r 24 nil] [:r 24 nil] [:r 24 nil]]<br />[[:w 23 17] [:r 24 22] [:r 24 22] [:r 24 22]]</div></a><a href="#i591"><div class="op ok" id="i591" style="width:100;left:848;top:9440;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.510Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 591
+ :value [[:w 24 23] [:w 24 24] [:r 24 24] [:w 20 23] [:w 24 25] [:w 23 18]]}">7 txn [[:w 24 23] [:w 24 24] [:r 24 nil] [:w 20 23] [:w 24 25] [:w 23 18]]<br />[[:w 24 23] [:w 24 24] [:r 24 24] [:w 20 23] [:w 24 25] [:w 23 18]]</div></a><a href="#i593"><div class="op ok" id="i593" style="width:100;left:954;top:9472;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.657Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 593
+ :value [[:w 24 26] [:w 23 19] [:w 23 20]]}">8 txn [[:w 24 26] [:w 23 19] [:w 23 20]]</div></a><a href="#i595"><div class="op ok" id="i595" style="width:100;left:1060;top:9504;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.665Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 595
+ :value [[:w 24 27] [:r 24 27] [:w 23 21] [:r 24 27]]}">9 txn [[:w 24 27] [:r 24 nil] [:w 23 21] [:r 24 nil]]<br />[[:w 24 27] [:r 24 27] [:w 23 21] [:r 24 27]]</div></a><a href="#i597"><div class="op ok" id="i597" style="width:100;left:1166;top:9536;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.804Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 597
+ :value [[:w 24 28] [:r 20 23] [:w 24 29] [:w 23 22] [:r 23 22]]}">10 txn [[:w 24 28] [:r 20 nil] [:w 24 29] [:w 23 22] [:r 23 nil]]<br />[[:w 24 28] [:r 20 23] [:w 24 29] [:w 23 22] [:r 23 22]]</div></a><a href="#i599"><div class="op ok" id="i599" style="width:100;left:1272;top:9568;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.824Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 599
+ :value [[:r 23 22] [:r 24 29] [:w 20 24]]}">11 txn [[:r 23 nil] [:r 24 nil] [:w 20 24]]<br />[[:r 23 22] [:r 24 29] [:w 20 24]]</div></a><a href="#i601"><div class="op ok" id="i601" style="width:100;left:1378;top:9600;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.855Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 601
+ :value [[:w 24 30] [:w 20 25] [:w 24 31]]}">12 txn [[:w 24 30] [:w 20 25] [:w 24 31]]</div></a><a href="#i602"><div class="op info" id="i602" style="width:100;left:0;top:9632;height:16" title="Msg: nil
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.908Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :stop
+ :index 602
+ :value }">:nemesis stop </div></a><a href="#i603"><div class="op info" id="i603" style="width:100;left:0;top:9648;height:16" title="Msg: :network-healed
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:32.976Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :stop
+ :index 603
+ :value :network-healed}">:nemesis stop <br /></div></a><a href="#i605"><div class="op ok" id="i605" style="width:100;left:1696;top:9664;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.057Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 605
+ :value [[:r 24 31] [:r 20 25] [:r 20 25] [:r 24 31] [:w 24 32]]}">15 txn [[:r 24 nil] [:r 20 nil] [:r 20 nil] [:r 24 nil] [:w 24 32]]<br />[[:r 24 31] [:r 20 25] [:r 20 25] [:r 24 31] [:w 24 32]]</div></a><a href="#i607"><div class="op ok" id="i607" style="width:100;left:1802;top:9696;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.149Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 607
+ :value [[:r 24 32] [:r 23 22] [:r 25 nil] [:r 25 nil] [:r 25 nil]]}">16 txn [[:r 24 nil] [:r 23 nil] [:r 25 nil] [:r 25 nil] [:r 25 nil]]<br />[[:r 24 32] [:r 23 22] [:r 25 nil] [:r 25 nil] [:r 25 nil]]</div></a><a href="#i609"><div class="op ok" id="i609" style="width:100;left:1908;top:9728;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.279Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 609
+ :value [[:w 20 26] [:r 25 nil] [:r 25 nil]]}">17 txn [[:w 20 26] [:r 25 nil] [:r 25 nil]]</div></a><a href="#i611"><div class="op ok" id="i611" style="width:100;left:2014;top:9760;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.391Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 611
+ :value [[:r 25 nil] [:r 23 22] [:w 25 1] [:w 23 23]]}">18 txn [[:r 25 nil] [:r 23 nil] [:w 25 1] [:w 23 23]]<br />[[:r 25 nil] [:r 23 22] [:w 25 1] [:w 23 23]]</div></a><a href="#i613"><div class="op ok" id="i613" style="width:100;left:2120;top:9792;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.482Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 613
+ :value [[:r 23 23] [:r 25 1]]}">19 txn [[:r 23 nil] [:r 25 nil]]<br />[[:r 23 23] [:r 25 1]]</div></a><a href="#i615"><div class="op ok" id="i615" style="width:100;left:106;top:9824;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.677Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 615
+ :value [[:w 25 2] [:r 25 2] [:w 25 3] [:w 20 27] [:r 25 3] [:w 20 28] [:r 25 3]]}">0 txn [[:w 25 2] [:r 25 nil] [:w 25 3] [:w 20 27] [:r 25 nil] [:w 20 28] [:r 25 nil]]<br />[[:w 25 2] [:r 25 2] [:w 25 3] [:w 20 27] [:r 25 3] [:w 20 28] [:r 25 3]]</div></a><a href="#i617"><div class="op ok" id="i617" style="width:100;left:106;top:9856;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.785Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 617
+ :value [[:w 23 24] [:r 23 24] [:r 25 3] [:w 23 25] [:w 23 26] [:r 25 3] [:r 25 3] [:r 23 26]]}">0 txn [[:w 23 24] [:r 23 nil] [:r 25 nil] [:w 23 25] [:w 23 26] [:r 25 nil] [:r 25 nil] [:r 23 nil]]<br />[[:w 23 24] [:r 23 24] [:r 25 3] [:w 23 25] [:w 23 26] [:r 25 3] [:r 25 3] [:r 23 26]]</div></a><a href="#i619"><div class="op ok" id="i619" style="width:100;left:212;top:9888;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.889Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 619
+ :value [[:w 25 4] [:w 20 29] [:r 23 26] [:r 25 4] [:r 20 29] [:r 25 4] [:r 25 4] [:r 25 4]]}">1 txn [[:w 25 4] [:w 20 29] [:r 23 nil] [:r 25 nil] [:r 20 nil] [:r 25 nil] [:r 25 nil] [:r 25 nil]]<br />[[:w 25 4] [:w 20 29] [:r 23 26] [:r 25 4] [:r 20 29] [:r 25 4] [:r 25 4] [:r 25 4]]</div></a><a href="#i621"><div class="op ok" id="i621" style="width:100;left:318;top:9920;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.914Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 621
+ :value [[:r 25 4] [:r 25 4] [:w 23 27] [:w 23 28]]}">2 txn [[:r 25 nil] [:r 25 nil] [:w 23 27] [:w 23 28]]<br />[[:r 25 4] [:r 25 4] [:w 23 27] [:w 23 28]]</div></a><a href="#i623"><div class="op ok" id="i623" style="width:100;left:424;top:9952;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:33.998Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 623
+ :value [[:r 23 28] [:w 25 5] [:w 23 29] [:r 25 5] [:r 25 5] [:r 23 29] [:r 20 29]]}">3 txn [[:r 23 nil] [:w 25 5] [:w 23 29] [:r 25 nil] [:r 25 nil] [:r 23 nil] [:r 20 nil]]<br />[[:r 23 28] [:w 25 5] [:w 23 29] [:r 25 5] [:r 25 5] [:r 23 29] [:r 20 29]]</div></a><a href="#i625"><div class="op ok" id="i625" style="width:100;left:530;top:9984;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:34.090Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 625
+ :value [[:r 20 29] [:r 25 5] [:r 25 5] [:r 25 5]]}">4 txn [[:r 20 nil] [:r 25 nil] [:r 25 nil] [:r 25 nil]]<br />[[:r 20 29] [:r 25 5] [:r 25 5] [:r 25 5]]</div></a><a href="#i627"><div class="op ok" id="i627" style="width:100;left:636;top:10016;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:34.237Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 627
+ :value [[:r 25 5] [:r 25 5] [:w 23 30]]}">5 txn [[:r 25 nil] [:r 25 nil] [:w 23 30]]<br />[[:r 25 5] [:r 25 5] [:w 23 30]]</div></a><a href="#i629"><div class="op ok" id="i629" style="width:100;left:742;top:10048;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:34.263Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 629
+ :value [[:w 23 31] [:w 25 6] [:r 25 6]]}">6 txn [[:w 23 31] [:w 25 6] [:r 25 nil]]<br />[[:w 23 31] [:w 25 6] [:r 25 6]]</div></a><a href="#i631"><div class="op ok" id="i631" style="width:100;left:848;top:10080;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:34.458Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 631
+ :value [[:w 25 7] [:r 25 7] [:w 25 8] [:r 25 8] [:w 20 30] [:r 25 8] [:w 25 9] [:w 23 32]]}">7 txn [[:w 25 7] [:r 25 nil] [:w 25 8] [:r 25 nil] [:w 20 30] [:r 25 nil] [:w 25 9] [:w 23 32]]<br />[[:w 25 7] [:r 25 7] [:w 25 8] [:r 25 8] [:w 20 30] [:r 25 8] [:w 25 9] [:w 23 32]]</div></a><a href="#i633"><div class="op ok" id="i633" style="width:100;left:954;top:10112;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:34.583Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 633
+ :value [[:r 23 32] [:w 20 31] [:r 25 9]]}">8 txn [[:r 23 nil] [:w 20 31] [:r 25 nil]]<br />[[:r 23 32] [:w 20 31] [:r 25 9]]</div></a><a href="#i635"><div class="op ok" id="i635" style="width:100;left:1060;top:10144;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:34.602Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 635
+ :value [[:r 25 9] [:w 26 1] [:r 26 1]]}">9 txn [[:r 25 nil] [:w 26 1] [:r 26 nil]]<br />[[:r 25 9] [:w 26 1] [:r 26 1]]</div></a><a href="#i637"><div class="op ok" id="i637" style="width:100;left:1166;top:10176;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:34.782Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 637
+ :value [[:r 25 9] [:r 25 9] [:r 25 9] [:r 26 1]]}">10 txn [[:r 25 nil] [:r 25 nil] [:r 25 nil] [:r 26 nil]]<br />[[:r 25 9] [:r 25 9] [:r 25 9] [:r 26 1]]</div></a><a href="#i639"><div class="op ok" id="i639" style="width:100;left:1272;top:10208;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:34.928Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 639
+ :value [[:w 25 10] [:r 26 1] [:r 25 10] [:r 26 1] [:w 25 11] [:w 26 2] [:w 25 12]]}">11 txn [[:w 25 10] [:r 26 nil] [:r 25 nil] [:r 26 nil] [:w 25 11] [:w 26 2] [:w 25 12]]<br />[[:w 25 10] [:r 26 1] [:r 25 10] [:r 26 1] [:w 25 11] [:w 26 2] [:w 25 12]]</div></a><a href="#i641"><div class="op ok" id="i641" style="width:100;left:1378;top:10240;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.033Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 641
+ :value [[:w 25 13] [:w 25 14] [:r 26 2] [:w 26 3]]}">12 txn [[:w 25 13] [:w 25 14] [:r 26 nil] [:w 26 3]]<br />[[:w 25 13] [:w 25 14] [:r 26 2] [:w 26 3]]</div></a><a href="#i643"><div class="op ok" id="i643" style="width:100;left:1484;top:10272;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.047Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 643
+ :value [[:w 25 15] [:w 25 16] [:w 20 32]]}">13 txn [[:w 25 15] [:w 25 16] [:w 20 32]]</div></a><a href="#i645"><div class="op ok" id="i645" style="width:100;left:1590;top:10304;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.089Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 645
+ :value [[:w 25 17] [:w 25 18] [:w 25 19] [:w 25 20]]}">14 txn [[:w 25 17] [:w 25 18] [:w 25 19] [:w 25 20]]</div></a><a href="#i647"><div class="op ok" id="i647" style="width:100;left:1696;top:10336;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.175Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 647
+ :value [[:r 25 20] [:w 26 4] [:r 25 20]]}">15 txn [[:r 25 nil] [:w 26 4] [:r 25 nil]]<br />[[:r 25 20] [:w 26 4] [:r 25 20]]</div></a><a href="#i649"><div class="op ok" id="i649" style="width:100;left:1802;top:10368;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.377Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 649
+ :value [[:r 25 20] [:r 27 nil] [:r 26 4] [:r 25 20] [:w 25 21] [:w 26 5]]}">16 txn [[:r 25 nil] [:r 27 nil] [:r 26 nil] [:r 25 nil] [:w 25 21] [:w 26 5]]<br />[[:r 25 20] [:r 27 nil] [:r 26 4] [:r 25 20] [:w 25 21] [:w 26 5]]</div></a><a href="#i651"><div class="op ok" id="i651" style="width:100;left:1908;top:10400;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.528Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 651
+ :value [[:w 25 22] [:w 25 23] [:r 25 23] [:r 25 23] [:r 25 23] [:r 25 23]]}">17 txn [[:w 25 22] [:w 25 23] [:r 25 nil] [:r 25 nil] [:r 25 nil] [:r 25 nil]]<br />[[:w 25 22] [:w 25 23] [:r 25 23] [:r 25 23] [:r 25 23] [:r 25 23]]</div></a><a href="#i653"><div class="op ok" id="i653" style="width:100;left:2014;top:10432;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.545Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 653
+ :value [[:w 25 24] [:w 25 25]]}">18 txn [[:w 25 24] [:w 25 25]]</div></a><a href="#i655"><div class="op ok" id="i655" style="width:100;left:2120;top:10464;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.620Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 655
+ :value [[:w 26 6] [:r 27 nil] [:w 27 1] [:r 26 6] [:w 25 26] [:w 25 27] [:w 25 28]]}">19 txn [[:w 26 6] [:r 27 nil] [:w 27 1] [:r 26 nil] [:w 25 26] [:w 25 27] [:w 25 28]]<br />[[:w 26 6] [:r 27 nil] [:w 27 1] [:r 26 6] [:w 25 26] [:w 25 27] [:w 25 28]]</div></a><a href="#i657"><div class="op ok" id="i657" style="width:100;left:106;top:10496;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.767Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 657
+ :value [[:w 25 29] [:r 27 1] [:r 26 6] [:r 26 6] [:r 27 1] [:r 25 29]]}">0 txn [[:w 25 29] [:r 27 nil] [:r 26 nil] [:r 26 nil] [:r 27 nil] [:r 25 nil]]<br />[[:w 25 29] [:r 27 1] [:r 26 6] [:r 26 6] [:r 27 1] [:r 25 29]]</div></a><a href="#i659"><div class="op ok" id="i659" style="width:100;left:106;top:10528;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:35.920Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 659
+ :value [[:w 26 7] [:w 26 8] [:w 25 30] [:r 25 30]]}">0 txn [[:w 26 7] [:w 26 8] [:w 25 30] [:r 25 nil]]<br />[[:w 26 7] [:w 26 8] [:w 25 30] [:r 25 30]]</div></a><a href="#i661"><div class="op ok" id="i661" style="width:100;left:212;top:10560;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:36.111Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 661
+ :value [[:w 25 31] [:w 25 32] [:w 28 1] [:r 27 1] [:w 28 2]]}">1 txn [[:w 25 31] [:w 25 32] [:w 28 1] [:r 27 nil] [:w 28 2]]<br />[[:w 25 31] [:w 25 32] [:w 28 1] [:r 27 1] [:w 28 2]]</div></a><a href="#i663"><div class="op ok" id="i663" style="width:100;left:318;top:10592;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:36.239Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 663
+ :value [[:w 26 9] [:w 28 3] [:r 26 9] [:w 26 10] [:w 26 11] [:r 28 3] [:r 26 11] [:r 28 3]]}">2 txn [[:w 26 9] [:w 28 3] [:r 26 nil] [:w 26 10] [:w 26 11] [:r 28 nil] [:r 26 nil] [:r 28 nil]]<br />[[:w 26 9] [:w 28 3] [:r 26 9] [:w 26 10] [:w 26 11] [:r 28 3] [:r 26 11] [:r 28 3]]</div></a><a href="#i665"><div class="op ok" id="i665" style="width:100;left:424;top:10624;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:36.368Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 665
+ :value [[:w 28 4] [:r 28 4] [:r 28 4] [:w 28 5]]}">3 txn [[:w 28 4] [:r 28 nil] [:r 28 nil] [:w 28 5]]<br />[[:w 28 4] [:r 28 4] [:r 28 4] [:w 28 5]]</div></a><a href="#i667"><div class="op ok" id="i667" style="width:100;left:530;top:10656;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:36.448Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 667
+ :value [[:w 28 6] [:r 28 6] [:r 28 6] [:w 28 7] [:w 26 12] [:r 28 7] [:r 26 12] [:r 28 7]]}">4 txn [[:w 28 6] [:r 28 nil] [:r 28 nil] [:w 28 7] [:w 26 12] [:r 28 nil] [:r 26 nil] [:r 28 nil]]<br />[[:w 28 6] [:r 28 6] [:r 28 6] [:w 28 7] [:w 26 12] [:r 28 7] [:r 26 12] [:r 28 7]]</div></a><a href="#i669"><div class="op ok" id="i669" style="width:100;left:636;top:10688;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:36.631Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 669
+ :value [[:r 26 12] [:w 27 2] [:r 28 7] [:r 28 7]]}">5 txn [[:r 26 nil] [:w 27 2] [:r 28 nil] [:r 28 nil]]<br />[[:r 26 12] [:w 27 2] [:r 28 7] [:r 28 7]]</div></a><a href="#i671"><div class="op ok" id="i671" style="width:100;left:742;top:10720;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:36.721Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 671
+ :value [[:w 28 8] [:w 28 9] [:w 26 13] [:r 27 2]]}">6 txn [[:w 28 8] [:w 28 9] [:w 26 13] [:r 27 nil]]<br />[[:w 28 8] [:w 28 9] [:w 26 13] [:r 27 2]]</div></a><a href="#i673"><div class="op ok" id="i673" style="width:100;left:848;top:10752;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:36.882Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 673
+ :value [[:r 26 13] [:r 28 9] [:r 27 2] [:w 28 10] [:w 28 11]]}">7 txn [[:r 26 nil] [:r 28 nil] [:r 27 nil] [:w 28 10] [:w 28 11]]<br />[[:r 26 13] [:r 28 9] [:r 27 2] [:w 28 10] [:w 28 11]]</div></a><a href="#i675"><div class="op ok" id="i675" style="width:100;left:954;top:10784;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.018Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 675
+ :value [[:r 28 11] [:w 28 12] [:r 28 12]]}">8 txn [[:r 28 nil] [:w 28 12] [:r 28 nil]]<br />[[:r 28 11] [:w 28 12] [:r 28 12]]</div></a><a href="#i677"><div class="op ok" id="i677" style="width:100;left:1060;top:10816;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.182Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 677
+ :value [[:w 28 13] [:r 26 13] [:r 28 13] [:r 28 13]]}">9 txn [[:w 28 13] [:r 26 nil] [:r 28 nil] [:r 28 nil]]<br />[[:w 28 13] [:r 26 13] [:r 28 13] [:r 28 13]]</div></a><a href="#i679"><div class="op ok" id="i679" style="width:100;left:1166;top:10848;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.289Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 679
+ :value [[:r 26 13] [:r 28 13] [:r 28 13] [:w 28 14] [:w 26 14] [:r 26 14]]}">10 txn [[:r 26 nil] [:r 28 nil] [:r 28 nil] [:w 28 14] [:w 26 14] [:r 26 nil]]<br />[[:r 26 13] [:r 28 13] [:r 28 13] [:w 28 14] [:w 26 14] [:r 26 14]]</div></a><a href="#i681"><div class="op ok" id="i681" style="width:100;left:1272;top:10880;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.472Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 681
+ :value [[:w 27 3] [:w 27 4] [:w 26 15] [:r 26 15] [:r 26 15] [:r 26 15] [:r 28 14]]}">11 txn [[:w 27 3] [:w 27 4] [:w 26 15] [:r 26 nil] [:r 26 nil] [:r 26 nil] [:r 28 nil]]<br />[[:w 27 3] [:w 27 4] [:w 26 15] [:r 26 15] [:r 26 15] [:r 26 15] [:r 28 14]]</div></a><a href="#i683"><div class="op ok" id="i683" style="width:100;left:1378;top:10912;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.491Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 683
+ :value [[:r 28 14] [:w 28 15] [:w 28 16] [:w 27 5] [:w 26 16] [:r 27 5] [:r 28 16]]}">12 txn [[:r 28 nil] [:w 28 15] [:w 28 16] [:w 27 5] [:w 26 16] [:r 27 nil] [:r 28 nil]]<br />[[:r 28 14] [:w 28 15] [:w 28 16] [:w 27 5] [:w 26 16] [:r 27 5] [:r 28 16]]</div></a><a href="#i685"><div class="op ok" id="i685" style="width:100;left:1484;top:10944;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.615Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 685
+ :value [[:r 26 16] [:r 27 5]]}">13 txn [[:r 26 nil] [:r 27 nil]]<br />[[:r 26 16] [:r 27 5]]</div></a><a href="#i687"><div class="op ok" id="i687" style="width:100;left:1590;top:10976;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.619Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 687
+ :value [[:w 27 6] [:w 28 17] [:w 28 18] [:w 28 19] [:w 27 7]]}">14 txn [[:w 27 6] [:w 28 17] [:w 28 18] [:w 28 19] [:w 27 7]]</div></a><a href="#i689"><div class="op ok" id="i689" style="width:100;left:1696;top:11008;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.676Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 689
+ :value [[:r 28 19] [:r 26 16] [:r 26 16] [:w 26 17] [:r 26 17] [:r 28 19] [:w 28 20]]}">15 txn [[:r 28 nil] [:r 26 nil] [:r 26 nil] [:w 26 17] [:r 26 nil] [:r 28 nil] [:w 28 20]]<br />[[:r 28 19] [:r 26 16] [:r 26 16] [:w 26 17] [:r 26 17] [:r 28 19] [:w 28 20]]</div></a><a href="#i691"><div class="op ok" id="i691" style="width:100;left:1802;top:11040;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.709Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 691
+ :value [[:r 26 17] [:w 26 18] [:r 28 20] [:w 28 21] [:r 28 21] [:w 26 19] [:r 26 19]]}">16 txn [[:r 26 nil] [:w 26 18] [:r 28 nil] [:w 28 21] [:r 28 nil] [:w 26 19] [:r 26 nil]]<br />[[:r 26 17] [:w 26 18] [:r 28 20] [:w 28 21] [:r 28 21] [:w 26 19] [:r 26 19]]</div></a><a href="#i693"><div class="op ok" id="i693" style="width:100;left:1908;top:11072;height:16" title="Dur: 2 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.838Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 693
+ :value [[:r 28 21] [:r 28 21] [:r 26 19]]}">17 txn [[:r 28 nil] [:r 28 nil] [:r 26 nil]]<br />[[:r 28 21] [:r 28 21] [:r 26 19]]</div></a><a href="#i695"><div class="op ok" id="i695" style="width:100;left:2014;top:11104;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.973Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 695
+ :value [[:w 26 20] [:w 28 22] [:w 28 23]]}">18 txn [[:w 26 20] [:w 28 22] [:w 28 23]]</div></a><a href="#i696"><div class="op info" id="i696" style="width:100;left:0;top:11136;height:16" title="Msg: nil
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.976Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 696
+ :value }">:nemesis start </div></a><a href="#i697"><div class="op info" id="i697" style="width:100;left:0;top:11152;height:16" title="Msg: [:isolated {&quot;192.168.56.101&quot; #{}}]
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:37.978Z
+
+Op:
+{:process :nemesis
+ :type :info
+ :f :start
+ :index 697
+ :value [:isolated {&quot;192.168.56.101&quot; #{}}]}">:nemesis start <br /></div></a><a href="#i699"><div class="op ok" id="i699" style="width:100;left:106;top:11168;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.020Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 699
+ :value [[:w 28 24] [:r 28 24] [:w 28 25]]}">0 txn [[:w 28 24] [:r 28 nil] [:w 28 25]]<br />[[:w 28 24] [:r 28 24] [:w 28 25]]</div></a><a href="#i701"><div class="op ok" id="i701" style="width:100;left:212;top:11200;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.169Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 701
+ :value [[:r 28 25] [:r 27 7] [:r 27 7] [:r 28 25] [:w 28 26] [:w 26 21] [:w 28 27] [:r 28 27]]}">1 txn [[:r 28 nil] [:r 27 nil] [:r 27 nil] [:r 28 nil] [:w 28 26] [:w 26 21] [:w 28 27] [:r 28 nil]]<br />[[:r 28 25] [:r 27 7] [:r 27 7] [:r 28 25] [:w 28 26] [:w 26 21] [:w 28 27] [:r 28 27]]</div></a><a href="#i703"><div class="op ok" id="i703" style="width:100;left:318;top:11232;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.217Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 703
+ :value [[:w 28 28] [:w 28 29] [:w 28 30]]}">2 txn [[:w 28 28] [:w 28 29] [:w 28 30]]</div></a><a href="#i706"><div class="op ok" id="i706" style="width:100;left:424;top:11264;height:32" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.397Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 706
+ :value [[:r 28 30] [:r 26 21] [:w 28 31] [:w 28 32] [:w 26 22]]}">3 txn [[:r 28 nil] [:r 26 nil] [:w 28 31] [:w 28 32] [:w 26 22]]<br />[[:r 28 30] [:r 26 21] [:w 28 31] [:w 28 32] [:w 26 22]]</div></a><a href="#i707"><div class="op ok" id="i707" style="width:100;left:530;top:11280;height:32" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.404Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 707
+ :value [[:r 29 nil] [:r 29 nil] [:r 27 7] [:r 26 21] [:r 29 nil] [:r 29 nil] [:r 29 nil]]}">4 txn [[:r 29 nil] [:r 29 nil] [:r 27 nil] [:r 26 nil] [:r 29 nil] [:r 29 nil] [:r 29 nil]]<br />[[:r 29 nil] [:r 29 nil] [:r 27 7] [:r 26 21] [:r 29 nil] [:r 29 nil] [:r 29 nil]]</div></a><a href="#i709"><div class="op ok" id="i709" style="width:100;left:636;top:11328;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.543Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 709
+ :value [[:r 27 7] [:r 29 nil] [:r 29 nil] [:w 26 23] [:w 27 8] [:w 29 1] [:w 27 9]]}">5 txn [[:r 27 nil] [:r 29 nil] [:r 29 nil] [:w 26 23] [:w 27 8] [:w 29 1] [:w 27 9]]<br />[[:r 27 7] [:r 29 nil] [:r 29 nil] [:w 26 23] [:w 27 8] [:w 29 1] [:w 27 9]]</div></a><a href="#i711"><div class="op ok" id="i711" style="width:100;left:742;top:11360;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.607Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 711
+ :value [[:r 26 23] [:w 26 24] [:w 26 25] [:w 26 26] [:r 26 26] [:w 29 2] [:r 29 2]]}">6 txn [[:r 26 nil] [:w 26 24] [:w 26 25] [:w 26 26] [:r 26 nil] [:w 29 2] [:r 29 nil]]<br />[[:r 26 23] [:w 26 24] [:w 26 25] [:w 26 26] [:r 26 26] [:w 29 2] [:r 29 2]]</div></a><a href="#i713"><div class="op ok" id="i713" style="width:100;left:848;top:11392;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.772Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 713
+ :value [[:w 26 27] [:r 26 27] [:w 26 28] [:r 29 2] [:w 29 3] [:w 29 4]]}">7 txn [[:w 26 27] [:r 26 nil] [:w 26 28] [:r 29 nil] [:w 29 3] [:w 29 4]]<br />[[:w 26 27] [:r 26 27] [:w 26 28] [:r 29 2] [:w 29 3] [:w 29 4]]</div></a><a href="#i715"><div class="op ok" id="i715" style="width:100;left:954;top:11424;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:38.935Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 715
+ :value [[:r 29 4] [:r 29 4] [:r 26 28] [:w 26 29]]}">8 txn [[:r 29 nil] [:r 29 nil] [:r 26 nil] [:w 26 29]]<br />[[:r 29 4] [:r 29 4] [:r 26 28] [:w 26 29]]</div></a><a href="#i717"><div class="op ok" id="i717" style="width:100;left:1060;top:11456;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:39.124Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 717
+ :value [[:w 27 10] [:w 29 5] [:r 27 10] [:w 29 6] [:w 27 11] [:r 29 6] [:r 27 11] [:w 29 7]]}">9 txn [[:w 27 10] [:w 29 5] [:r 27 nil] [:w 29 6] [:w 27 11] [:r 29 nil] [:r 27 nil] [:w 29 7]]<br />[[:w 27 10] [:w 29 5] [:r 27 10] [:w 29 6] [:w 27 11] [:r 29 6] [:r 27 11] [:w 29 7]]</div></a><a href="#i719"><div class="op ok" id="i719" style="width:100;left:1166;top:11488;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:39.242Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 719
+ :value [[:r 29 7] [:r 29 7] [:r 27 11] [:r 29 7] [:w 27 12]]}">10 txn [[:r 29 nil] [:r 29 nil] [:r 27 nil] [:r 29 nil] [:w 27 12]]<br />[[:r 29 7] [:r 29 7] [:r 27 11] [:r 29 7] [:w 27 12]]</div></a><a href="#i721"><div class="op ok" id="i721" style="width:100;left:1272;top:11520;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:39.429Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 721
+ :value [[:r 29 7] [:r 29 7] [:r 29 7] [:w 26 30] [:r 29 7] [:w 29 8]]}">11 txn [[:r 29 nil] [:r 29 nil] [:r 29 nil] [:w 26 30] [:r 29 nil] [:w 29 8]]<br />[[:r 29 7] [:r 29 7] [:r 29 7] [:w 26 30] [:r 29 7] [:w 29 8]]</div></a><a href="#i723"><div class="op ok" id="i723" style="width:100;left:1378;top:11552;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:39.489Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 723
+ :value [[:w 26 31] [:r 26 31] [:r 29 8] [:w 26 32]]}">12 txn [[:w 26 31] [:r 26 nil] [:r 29 nil] [:w 26 32]]<br />[[:w 26 31] [:r 26 31] [:r 29 8] [:w 26 32]]</div></a><a href="#i725"><div class="op ok" id="i725" style="width:100;left:1484;top:11584;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:39.628Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 725
+ :value [[:r 29 8] [:w 29 9]]}">13 txn [[:r 29 nil] [:w 29 9]]<br />[[:r 29 8] [:w 29 9]]</div></a><a href="#i727"><div class="op ok" id="i727" style="width:100;left:1590;top:11616;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:39.822Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 727
+ :value [[:w 30 1] [:r 29 9] [:r 29 9] [:r 29 9] [:w 29 10] [:w 27 13] [:r 29 10] [:w 29 11]]}">14 txn [[:w 30 1] [:r 29 nil] [:r 29 nil] [:r 29 nil] [:w 29 10] [:w 27 13] [:r 29 nil] [:w 29 11]]<br />[[:w 30 1] [:r 29 9] [:r 29 9] [:r 29 9] [:w 29 10] [:w 27 13] [:r 29 10] [:w 29 11]]</div></a><a href="#i729"><div class="op ok" id="i729" style="width:100;left:1696;top:11648;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:39.904Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 729
+ :value [[:r 29 11] [:r 29 11] [:r 29 11]]}">15 txn [[:r 29 nil] [:r 29 nil] [:r 29 nil]]<br />[[:r 29 11] [:r 29 11] [:r 29 11]]</div></a><a href="#i731"><div class="op ok" id="i731" style="width:100;left:1802;top:11680;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:40.103Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 731
+ :value [[:w 29 12] [:w 30 2] [:r 29 12] [:w 27 14] [:w 27 15] [:r 29 12] [:w 29 13] [:r 30 2]]}">16 txn [[:w 29 12] [:w 30 2] [:r 29 nil] [:w 27 14] [:w 27 15] [:r 29 nil] [:w 29 13] [:r 30 nil]]<br />[[:w 29 12] [:w 30 2] [:r 29 12] [:w 27 14] [:w 27 15] [:r 29 12] [:w 29 13] [:r 30 2]]</div></a><a href="#i733"><div class="op ok" id="i733" style="width:100;left:1908;top:11712;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:40.187Z
+
+Op:
+{:process 17
+ :type :ok
+ :f :txn
+ :index 733
+ :value [[:r 30 2] [:r 30 2] [:w 29 14] [:r 30 2] [:w 30 3]]}">17 txn [[:r 30 nil] [:r 30 nil] [:w 29 14] [:r 30 nil] [:w 30 3]]<br />[[:r 30 2] [:r 30 2] [:w 29 14] [:r 30 2] [:w 30 3]]</div></a><a href="#i735"><div class="op ok" id="i735" style="width:100;left:2014;top:11744;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:40.265Z
+
+Op:
+{:process 18
+ :type :ok
+ :f :txn
+ :index 735
+ :value [[:w 29 15] [:r 30 3] [:w 29 16]]}">18 txn [[:w 29 15] [:r 30 nil] [:w 29 16]]<br />[[:w 29 15] [:r 30 3] [:w 29 16]]</div></a><a href="#i737"><div class="op ok" id="i737" style="width:100;left:2120;top:11776;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:40.313Z
+
+Op:
+{:process 19
+ :type :ok
+ :f :txn
+ :index 737
+ :value [[:w 29 17] [:w 29 18] [:w 29 19] [:r 29 19] [:r 29 19] [:r 29 19]]}">19 txn [[:w 29 17] [:w 29 18] [:w 29 19] [:r 29 nil] [:r 29 nil] [:r 29 nil]]<br />[[:w 29 17] [:w 29 18] [:w 29 19] [:r 29 19] [:r 29 19] [:r 29 19]]</div></a><a href="#i739"><div class="op ok" id="i739" style="width:100;left:106;top:11808;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:40.503Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 739
+ :value [[:r 29 19] [:w 29 20] [:w 29 21]]}">0 txn [[:r 29 nil] [:w 29 20] [:w 29 21]]<br />[[:r 29 19] [:w 29 20] [:w 29 21]]</div></a><a href="#i741"><div class="op ok" id="i741" style="width:100;left:106;top:11840;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:40.616Z
+
+Op:
+{:process 0
+ :type :ok
+ :f :txn
+ :index 741
+ :value [[:w 29 22] [:w 29 23] [:r 27 15]]}">0 txn [[:w 29 22] [:w 29 23] [:r 27 nil]]<br />[[:w 29 22] [:w 29 23] [:r 27 15]]</div></a><a href="#i743"><div class="op ok" id="i743" style="width:100;left:212;top:11872;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:40.811Z
+
+Op:
+{:process 1
+ :type :ok
+ :f :txn
+ :index 743
+ :value [[:w 29 24] [:r 30 3] [:w 30 4] [:r 27 15]]}">1 txn [[:w 29 24] [:r 30 nil] [:w 30 4] [:r 27 nil]]<br />[[:w 29 24] [:r 30 3] [:w 30 4] [:r 27 15]]</div></a><a href="#i745"><div class="op ok" id="i745" style="width:100;left:318;top:11904;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.002Z
+
+Op:
+{:process 2
+ :type :ok
+ :f :txn
+ :index 745
+ :value [[:w 29 25] [:r 29 25] [:r 30 4]]}">2 txn [[:w 29 25] [:r 29 nil] [:r 30 nil]]<br />[[:w 29 25] [:r 29 25] [:r 30 4]]</div></a><a href="#i747"><div class="op ok" id="i747" style="width:100;left:424;top:11936;height:16" title="Dur: 12 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.166Z
+
+Op:
+{:process 3
+ :type :ok
+ :f :txn
+ :index 747
+ :value [[:w 30 5] [:w 29 26] [:w 29 27] [:w 30 6] [:w 29 28] [:r 27 15] [:r 27 15] [:r 30 6]]}">3 txn [[:w 30 5] [:w 29 26] [:w 29 27] [:w 30 6] [:w 29 28] [:r 27 nil] [:r 27 nil] [:r 30 nil]]<br />[[:w 30 5] [:w 29 26] [:w 29 27] [:w 30 6] [:w 29 28] [:r 27 15] [:r 27 15] [:r 30 6]]</div></a><a href="#i749"><div class="op ok" id="i749" style="width:100;left:530;top:11968;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.344Z
+
+Op:
+{:process 4
+ :type :ok
+ :f :txn
+ :index 749
+ :value [[:r 29 28] [:r 29 28] [:r 29 28] [:w 30 7] [:r 29 28] [:r 29 28]]}">4 txn [[:r 29 nil] [:r 29 nil] [:r 29 nil] [:w 30 7] [:r 29 nil] [:r 29 nil]]<br />[[:r 29 28] [:r 29 28] [:r 29 28] [:w 30 7] [:r 29 28] [:r 29 28]]</div></a><a href="#i751"><div class="op ok" id="i751" style="width:100;left:636;top:12000;height:16" title="Dur: 8 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.530Z
+
+Op:
+{:process 5
+ :type :ok
+ :f :txn
+ :index 751
+ :value [[:w 29 29] [:w 29 30] [:w 29 31] [:r 27 15] [:w 29 32]]}">5 txn [[:w 29 29] [:w 29 30] [:w 29 31] [:r 27 nil] [:w 29 32]]<br />[[:w 29 29] [:w 29 30] [:w 29 31] [:r 27 15] [:w 29 32]]</div></a><a href="#i753"><div class="op ok" id="i753" style="width:100;left:742;top:12032;height:16" title="Dur: 11 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.611Z
+
+Op:
+{:process 6
+ :type :ok
+ :f :txn
+ :index 753
+ :value [[:w 27 16] [:w 27 17] [:w 30 8] [:r 29 32] [:w 27 18] [:r 31 nil]]}">6 txn [[:w 27 16] [:w 27 17] [:w 30 8] [:r 29 nil] [:w 27 18] [:r 31 nil]]<br />[[:w 27 16] [:w 27 17] [:w 30 8] [:r 29 32] [:w 27 18] [:r 31 nil]]</div></a><a href="#i755"><div class="op ok" id="i755" style="width:100;left:848;top:12064;height:16" title="Dur: 7 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.700Z
+
+Op:
+{:process 7
+ :type :ok
+ :f :txn
+ :index 755
+ :value [[:w 30 9] [:w 31 1] [:r 31 1] [:w 27 19]]}">7 txn [[:w 30 9] [:w 31 1] [:r 31 nil] [:w 27 19]]<br />[[:w 30 9] [:w 31 1] [:r 31 1] [:w 27 19]]</div></a><a href="#i757"><div class="op ok" id="i757" style="width:100;left:954;top:12096;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.783Z
+
+Op:
+{:process 8
+ :type :ok
+ :f :txn
+ :index 757
+ :value [[:w 30 10] [:r 30 10] [:w 27 20] [:r 30 10] [:w 27 21] [:r 27 21]]}">8 txn [[:w 30 10] [:r 30 nil] [:w 27 20] [:r 30 nil] [:w 27 21] [:r 27 nil]]<br />[[:w 30 10] [:r 30 10] [:w 27 20] [:r 30 10] [:w 27 21] [:r 27 21]]</div></a><a href="#i759"><div class="op ok" id="i759" style="width:100;left:1060;top:12128;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.846Z
+
+Op:
+{:process 9
+ :type :ok
+ :f :txn
+ :index 759
+ :value [[:w 31 2] [:w 31 3] [:w 31 4] [:w 30 11] [:w 30 12] [:w 31 5] [:r 31 5]]}">9 txn [[:w 31 2] [:w 31 3] [:w 31 4] [:w 30 11] [:w 30 12] [:w 31 5] [:r 31 nil]]<br />[[:w 31 2] [:w 31 3] [:w 31 4] [:w 30 11] [:w 30 12] [:w 31 5] [:r 31 5]]</div></a><a href="#i761"><div class="op ok" id="i761" style="width:100;left:1166;top:12160;height:16" title="Dur: 5 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.890Z
+
+Op:
+{:process 10
+ :type :ok
+ :f :txn
+ :index 761
+ :value [[:w 31 6] [:r 31 6] [:w 30 13] [:r 27 21] [:w 31 7]]}">10 txn [[:w 31 6] [:r 31 nil] [:w 30 13] [:r 27 nil] [:w 31 7]]<br />[[:w 31 6] [:r 31 6] [:w 30 13] [:r 27 21] [:w 31 7]]</div></a><a href="#i763"><div class="op ok" id="i763" style="width:100;left:1272;top:12192;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:41.968Z
+
+Op:
+{:process 11
+ :type :ok
+ :f :txn
+ :index 763
+ :value [[:w 31 8] [:w 27 22] [:w 31 9]]}">11 txn [[:w 31 8] [:w 27 22] [:w 31 9]]</div></a><a href="#i765"><div class="op ok" id="i765" style="width:100;left:1378;top:12224;height:16" title="Dur: 6 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:42.159Z
+
+Op:
+{:process 12
+ :type :ok
+ :f :txn
+ :index 765
+ :value [[:r 27 22] [:w 30 14] [:r 31 9] [:r 31 9] [:w 30 15]]}">12 txn [[:r 27 nil] [:w 30 14] [:r 31 nil] [:r 31 nil] [:w 30 15]]<br />[[:r 27 22] [:w 30 14] [:r 31 9] [:r 31 9] [:w 30 15]]</div></a><a href="#i767"><div class="op ok" id="i767" style="width:100;left:1484;top:12256;height:16" title="Dur: 4 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:42.318Z
+
+Op:
+{:process 13
+ :type :ok
+ :f :txn
+ :index 767
+ :value [[:r 31 9] [:w 30 16] [:r 31 9]]}">13 txn [[:r 31 nil] [:w 30 16] [:r 31 nil]]<br />[[:r 31 9] [:w 30 16] [:r 31 9]]</div></a><a href="#i769"><div class="op ok" id="i769" style="width:100;left:1590;top:12288;height:16" title="Dur: 10 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:42.500Z
+
+Op:
+{:process 14
+ :type :ok
+ :f :txn
+ :index 769
+ :value [[:r 31 9] [:w 31 10] [:w 31 11] [:w 27 23] [:w 31 12]]}">14 txn [[:r 31 nil] [:w 31 10] [:w 31 11] [:w 27 23] [:w 31 12]]<br />[[:r 31 9] [:w 31 10] [:w 31 11] [:w 27 23] [:w 31 12]]</div></a><a href="#i771"><div class="op ok" id="i771" style="width:100;left:1696;top:12320;height:16" title="Dur: 3 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:42.573Z
+
+Op:
+{:process 15
+ :type :ok
+ :f :txn
+ :index 771
+ :value [[:r 31 12] [:r 27 23]]}">15 txn [[:r 31 nil] [:r 27 nil]]<br />[[:r 31 12] [:r 27 23]]</div></a><a href="#i773"><div class="op ok" id="i773" style="width:100;left:1802;top:12352;height:16" title="Dur: 9 ms
+Err: nil
+Wall-clock Time: 2023-04-30T16:29:42.654Z
+
+Op:
+{:process 16
+ :type :ok
+ :f :txn
+ :index 773
+ :value [[:r 31 12] [:r 31 12] [:r 27 23]]}">16 txn [[:r 31 nil] [:r 31 nil] [:r 27 nil]]<br />[[:r 31 12] [:r 31 12] [:r 27 23]]</div></a></div></body></html>
