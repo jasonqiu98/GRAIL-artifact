@@ -63,6 +63,62 @@ func mustParseOp(opString string) core.Op {
 	return op
 }
 
+func TestProfilingScalability(t *testing.T) {
+	var runtime [][]int64
+	for d := 10; d <= 200; d += 10 {
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+		var cur []int64
+		{
+			avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSERV1, false)
+			avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSERV2, false)
+			avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSERV3, false)
+			avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckSERV4, false)
+			avgCheckTimePregel := Profile(db, dbConsts, nil, CheckSERPregel, false)
+			cur = append(cur, avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4, avgCheckTimePregel)
+		}
+
+		{
+			avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSIV1, false)
+			avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSIV2, false)
+			avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSIV3, false)
+			avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckSIV4, false)
+			cur = append(cur, avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
+		}
+
+		{
+			avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPSIV1, false)
+			avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPSIV2, false)
+			avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPSIV3, false)
+			avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPSIV4, false)
+			cur = append(cur, avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
+		}
+
+		{
+			avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPL2V1, false)
+			avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPL2V2, false)
+			avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPL2V3, false)
+			avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPL2V4, false)
+			cur = append(cur, avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
+		}
+
+		{
+			avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPL1V1, false)
+			avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPL1V2, false)
+			avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPL1V3, false)
+			avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPL1V4, false)
+			cur = append(cur, avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
+		}
+		runtime = append(runtime, cur)
+	}
+	for _, row := range runtime {
+		for _, col := range row {
+			fmt.Print(col)
+			fmt.Print("\t")
+		}
+		fmt.Println()
+	}
+}
+
 /*
 checking serializability:
   - v1: initial ver.
@@ -150,10 +206,72 @@ func TestProfilingPL1(t *testing.T) {
 	}
 }
 
+func TestCorrectness(t *testing.T) {
+	var res [][]bool
+	for i := 10; i <= 200; i += 10 {
+		var cur []bool
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(i), t)
+		valid, _ := CheckSERV1(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckSERV2(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckSERV3(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckSERV4(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+
+		valid, _ = CheckSIV1(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckSIV2(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckSIV3(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckSIV4(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+
+		valid, _ = CheckPSIV1(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPSIV2(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPSIV3(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPSIV4(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+
+		valid, _ = CheckPL2V1(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPL2V2(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPL2V3(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPL2V4(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+
+		valid, _ = CheckPL1V1(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPL1V2(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPL1V3(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+		valid, _ = CheckPL1V4(db, dbConsts, txnIds, false)
+		cur = append(cur, valid)
+
+		res = append(res, cur)
+	}
+
+	for _, row := range res {
+		for _, col := range row {
+			fmt.Print(col)
+			fmt.Print(" ")
+		}
+		fmt.Println()
+	}
+}
+
 // go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSER(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("170", t)
-	valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
+	db, txnIds, dbConsts, history := constructArangoGraph("20", t)
+	valid, cycle := CheckSERV1(db, dbConsts, txnIds, true)
 	if !valid {
 		log.Println("Not Serializable!")
 		PlotCycle(history, cycle, "../images", "la-ser", true)

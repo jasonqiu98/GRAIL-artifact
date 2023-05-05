@@ -31,8 +31,8 @@ func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int
 		"dep",        // TxnDepEdge
 		"evt_dep",    // EvtDepEdge
 	}
-	ednFileName := fmt.Sprintf("../histories/rw-register/%s.edn", fileName)
-	walFileName := fmt.Sprintf("../histories/rw-register/%s.log", fileName)
+	ednFileName := fmt.Sprintf("../histories/rw-register-scalability-rate/%s.edn", fileName)
+	walFileName := fmt.Sprintf("../histories/rw-register-scalability-rate/%s.log", fileName)
 	prompt := fmt.Sprintf("Checking %s...", ednFileName)
 	fmt.Println(prompt)
 
@@ -67,6 +67,49 @@ func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int
 	fmt.Printf("constructing graph: %d ms\n", constructTime)
 
 	return db, txnIds, dbConsts, history
+}
+
+func TestProfilingScalability(t *testing.T) {
+	printLine()
+	for d := 5; d <= 30; d++ {
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+
+		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSERV1, false)
+		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckSERV4, false)
+		avgCheckTimePregel := Profile(db, dbConsts, nil, CheckSERPregel, false)
+
+		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v4: %d ms\n - pregel: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV4, avgCheckTimePregel)
+		printLine()
+
+		avgCheckTimeV1 = Profile(db, dbConsts, txnIds, CheckSIV1, false)
+		avgCheckTimeV4 = Profile(db, dbConsts, txnIds, CheckSIV4, false)
+
+		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v4: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV4)
+		printLine()
+
+		avgCheckTimeV1 = Profile(db, dbConsts, txnIds, CheckPSIV1, false)
+		avgCheckTimeV4 = Profile(db, dbConsts, txnIds, CheckPSIV4, false)
+
+		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v4: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV4)
+		printLine()
+
+		avgCheckTimeV1 = Profile(db, dbConsts, txnIds, CheckPL2V1, false)
+		avgCheckTimeV4 = Profile(db, dbConsts, txnIds, CheckPL2V4, false)
+
+		fmt.Printf("checking PL-2 (on avg.):\n - v1: %d ms\n - v4: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV4)
+		printLine()
+
+		avgCheckTimeV1 = Profile(db, dbConsts, txnIds, CheckPL1V1, false)
+		avgCheckTimeV4 = Profile(db, dbConsts, txnIds, CheckPL1V4, false)
+
+		fmt.Printf("checking PL-1 (on avg.):\n - v1: %d ms\n - v4: %d ms\n",
+			avgCheckTimeV1, avgCheckTimeV4)
+		printLine()
+	}
 }
 
 /*

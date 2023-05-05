@@ -35,7 +35,6 @@ cd ~/project
 go mod tidy
 # use -v flag to see the output
 go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
-go test -v -timeout 30s -run ^TestExample$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 ```
 
 ### 3. Profiling
@@ -46,6 +45,11 @@ Use the following command to profile different approaches.
 go test -v -timeout 600s -run ^TestProfilingSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 go test -v -timeout 600s -run ^TestProfilingSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 go test -v -timeout 600s -run ^TestProfilingPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+```
+
+```shell
+go test -v -timeout 600000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-scala.log
+go test -v -timeout 600000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-scala.log
 ```
 
 ### 3. Stop and remove the containers

@@ -1,8 +1,0 @@
-G2-item #0
-Let:
-  T1 = {:type :ok, :f :txn, :value [[:r 15 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]] [:append 13 12] [:r 15 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]]], :time 38754653451, :process 19, :index 422}
-  T2 = {:type :ok, :f :txn, :value [[:r 13 [1 2 3 4 6 7 8 9 10 11]] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27]] [:append 16 30] [:append 15 17] [:append 15 18] [:r 16 [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 30]] [:append 16 31]], :time 38757667842, :process 2, :index 423}
-
-Then:
-  - T1 < T2, because T1 did not observe T2's append of 17 to 15.
-  - However, T2 < T1, because T2 did not observe T1's append of 12 to 13: a contradiction!

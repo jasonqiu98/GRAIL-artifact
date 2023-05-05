@@ -372,7 +372,7 @@ func CheckSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 			FOR vertex, edge, path IN 2..5
 			OUTBOUND start._id
 			GRAPH txn_g
-			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
+			FITLER NOT REGEX_TEST(CONCAT_SEPARATOR(" ", path.edges[*].type), "(^rw.*rw$|rw rw)") AND edge._to == start._id
 			RETURN path.edges
 	*/
 	query := fmt.Sprintf(`
@@ -380,7 +380,7 @@ func CheckSIV1(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 			FOR vertex, edge, path IN %d..%d
 			OUTBOUND start._id
 			GRAPH %s
-			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
+			FILTER NOT REGEX_TEST(CONCAT_SEPARATOR(" ", path.edges[*].type), "(^rw.*rw$|rw rw)") AND edge._to == start._id
 			LIMIT 1
 			RETURN path.edges
 		`, dbConsts.TxnNode, minStep, maxStep, dbConsts.TxnGraph)
@@ -419,7 +419,7 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 		FOR vertex, edge, path IN 2..5
 			OUTBOUND start._id
 			GRAPH txn_g
-			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == start._id
+			FILTER NOT REGEX_TEST(CONCAT_SEPARATOR(" ", path.edges[*].type), "(^rw.*rw$|rw rw)") AND edge._to == start._id
 			RETURN path.edges
 	*/
 	query := fmt.Sprintf(`
@@ -427,7 +427,7 @@ func CheckSIV2(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 				IN %d..%d
 				OUTBOUND @start
 				GRAPH %s
-				FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", path.edges[*].type), "rw rw") AND edge._to == @start
+				FILTER NOT REGEX_TEST(CONCAT_SEPARATOR(" ", path.edges[*].type), "(^rw.*rw$|rw rw)") AND edge._to == @start
 				LIMIT 1
 				RETURN path.edges
 		`, minStep, maxStep, dbConsts.TxnGraph)
@@ -557,7 +557,7 @@ func CheckSIV4(db driver.Database, dbConsts DBConsts, txnIds []int, output bool)
 		)
 		
 		FOR cycle IN cycles
-			FILTER NOT CONTAINS(CONCAT_SEPARATOR(" ", cycle.edges[*].type), "rw rw")
+			FILTER NOT REGEX_TEST(CONCAT_SEPARATOR(" ", cycle.edges[*].type), "(^rw.*rw$|rw rw)")
 			LIMIT 1
 			RETURN cycle
 		
