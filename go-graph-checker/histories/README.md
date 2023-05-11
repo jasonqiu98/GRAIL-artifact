@@ -61,7 +61,7 @@
    - `90.edn` to `118.edn`: histories with number of concurrent workers at the same increasing from 2 to 30, with collection time fixed to 100s, without any nemesis, with max transction length fixed to 8.
      - additional specs
        - r 10
-       - **time-limit 100*
+       - **time-limit 100**
        - Key-count 3
        - Min-txn-length 2
        - Max-txn-length 8

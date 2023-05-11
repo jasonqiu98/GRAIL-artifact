@@ -50,6 +50,8 @@ go test -v -timeout 600s -run ^TestProfilingPSI$ github.com/jasonqiu98/anti-patt
 ```shell
 go test -v -timeout 600000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-scala.log
 go test -v -timeout 600000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-scala.log
+
+go test -v -timeout 600000s -run ^TestCorrectness$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-correctness.log
 ```
 
 ### 3. Stop and remove the containers

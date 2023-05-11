@@ -1,0 +1,8 @@
+G-single #0
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:r 296 []] [:r 298 [1 2 3]] [:r 299 []] [:append 295 3] [:r 295 [1 2 3]]], :time 24272943316, :process 5, :index 684}
+  T2 = {:type :ok, :f :txn, :value [[:r 295 [1 2]] [:r 298 [1 2]] [:append 296 1] [:r 295 [1 2]] [:append 298 3] [:r 298 [1 2 3]] [:r 296 [1]]], :time 24262462607, :process 6, :index 682}
+
+Then:
+  - T1 < T2, because T1 observed the initial (nil) state of 296, which T2 created by appending 1.
+  - However, T2 < T1, because T1 observed T2's append of 3 to key 298: a contradiction!

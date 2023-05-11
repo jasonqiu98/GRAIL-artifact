@@ -14,6 +14,91 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestCheckExample(t *testing.T) {
+	dbConsts := DBConsts{
+		"starter",    // Host
+		8529,         // Port
+		"checker_db", // DB
+		"txn_g",      // TxnGraph
+		"evt_g",      // EvtGraph
+		"txn",        // TxnNode
+		"a_evt",      // AppendEvtNode
+		"r_evt",      // ReadEvtNode
+		"dep",        // TxnDepEdge
+		"evt_dep",    // EvtDepEdge
+	}
+	ednFileName := "../histories/anti-patterns/lost-update-2/history.edn"
+	prompt := fmt.Sprintf("Checking %s...", ednFileName)
+	log.Println(prompt)
+	content, err := os.ReadFile(ednFileName)
+	if err != nil {
+		log.Fatalf("Cannot read edn file %s", ednFileName)
+		t.Fail()
+	}
+	history, err := core.ParseHistory(string(content))
+	if err != nil {
+		log.Fatalf("Cannot parse edn file %s", ednFileName)
+		t.Fail()
+	}
+	t1 := time.Now()
+	db, txnIds, g1 := ConstructGraph(txn.Opts{}, history, dbConsts)
+	require.Equal(t, g1.G1a, false)
+	require.Equal(t, g1.G1b, false)
+	t2 := time.Now()
+	constructTime := t2.Sub(t1).Nanoseconds() / 1e6
+	fmt.Printf("constructing graph: %d ms\n", constructTime)
+
+	{
+		valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not Serializable!")
+			PlotCycle(history, cycle, "../images", "la-ser", false)
+		} else {
+			log.Println("Anti-Patterns for Serializable Not Detected.")
+		}
+	}
+
+	{
+		valid, cycle := CheckSIV3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not Snapshot Isolation!")
+			PlotCycle(history, cycle, "../images", "la-si", false)
+		} else {
+			log.Println("Anti-Patterns for Snapshot Isolation Not Detected.")
+		}
+	}
+
+	{
+		valid, cycle := CheckPSIV3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not Parallel Snapshot Isolation!")
+			PlotCycle(history, cycle, "../images", "la-psi", false)
+		} else {
+			log.Println("Anti-Patterns for Parallel Snapshot Isolation Not Detected.")
+		}
+	}
+
+	{
+		valid, cycle := CheckPL2V3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not PL-2!")
+			PlotCycle(history, cycle, "../images", "la-pl2", false)
+		} else {
+			log.Println("Anti-Patterns for PL-2 Not Detected.")
+		}
+	}
+
+	{
+		valid, cycle := CheckPL1V3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not PL-1!")
+			PlotCycle(history, cycle, "../images", "la-pl1", false)
+		} else {
+			log.Println("Anti-Patterns for PL-1 Not Detected.")
+		}
+	}
+}
+
 func printLine() {
 	log.Println("-----------------------------------")
 }
@@ -31,7 +116,7 @@ func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int
 		"dep",        // TxnDepEdge
 		"evt_dep",    // EvtDepEdge
 	}
-	ednFileName := fmt.Sprintf("../histories/list-append/%s.edn", fileName)
+	ednFileName := fmt.Sprintf("../histories/list-append-scalability-rate/%s.edn", fileName)
 	prompt := fmt.Sprintf("Checking %s...", ednFileName)
 	log.Println(prompt)
 	content, err := os.ReadFile(ednFileName)
@@ -208,7 +293,7 @@ func TestProfilingPL1(t *testing.T) {
 
 func TestCorrectness(t *testing.T) {
 	var res [][]bool
-	for i := 10; i <= 200; i += 10 {
+	for i := 1; i <= 30; i++ {
 		var cur []bool
 		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(i), t)
 		valid, _ := CheckSERV1(db, dbConsts, txnIds, false)

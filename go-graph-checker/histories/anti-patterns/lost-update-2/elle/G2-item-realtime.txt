@@ -1,0 +1,10 @@
+G2-item-realtime #0
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:r 84 []] [:r 84 []] [:append 85 1] [:r 84 []] [:r 85 [1]] [:append 85 2] [:append 85 3] [:append 85 4] [:r 78 [1]]], :time 20051097729, :process 7, :index 198}
+  T2 = {:type :ok, :f :txn, :value [[:append 84 1] [:append 79 4] [:r 84 [1]] [:r 78 [1]] [:r 84 [1]] [:append 84 2] [:r 84 [1 2]] [:r 84 [1 2]] [:r 82 []] [:append 84 3] [:append 84 4] [:r 79 [1 4]]], :time 20020311174, :process 9, :index 193}
+  T3 = {:type :ok, :f :txn, :value [[:append 83 2] [:append 82 3] [:r 78 []] [:append 83 3] [:r 82 [3]] [:append 83 4] [:append 83 5] [:r 83 [2 3 4 5]] [:append 82 4]], :time 20000048393, :process 0, :index 189}
+
+Then:
+  - T1 < T2, because T1 observed the initial (nil) state of 84, which T2 created by appending 1.
+  - T2 < T3, because T2 observed the initial (nil) state of 82, which T3 created by appending 3.
+  - However, T3 < T1, because T3 completed at index 189, 0.009 seconds before the invocation of T1, at index 192: a contradiction!

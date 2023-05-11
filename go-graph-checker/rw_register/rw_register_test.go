@@ -14,6 +14,105 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestCheckExample(t *testing.T) {
+	dbConsts := DBConsts{
+		"starter",    // Host
+		8529,         // Port
+		"checker_db", // DB
+		"txn_g",      // TxnGraph
+		"evt_g",      // EvtGraph
+		"txn",        // TxnNode
+		"w_evt",      // WriteEvtNode
+		"r_evt",      // ReadEvtNode
+		"dep",        // TxnDepEdge
+		"evt_dep",    // EvtDepEdge
+	}
+	ednFileName := fmt.Sprintf("../histories/rw-register/%s.edn", "20")
+	walFileName := fmt.Sprintf("../histories/rw-register/%s.log", "20")
+	prompt := fmt.Sprintf("Checking %s...", ednFileName)
+	fmt.Println(prompt)
+
+	historyBuffer, err := os.ReadFile(ednFileName)
+	if err != nil {
+		log.Fatalf("Cannot read edn file %s", ednFileName)
+		t.Fail()
+	}
+	history, err := core.ParseHistoryRW(string(historyBuffer))
+	if err != nil {
+		log.Fatalf("Cannot parse edn file %s", ednFileName)
+		t.Fail()
+	}
+
+	walBuffer, err := os.ReadFile(walFileName)
+	if err != nil {
+		log.Fatalf("Cannot read wal log %s", walFileName)
+		t.Fail()
+	}
+	wal, err := ParseWAL(string(walBuffer))
+	if err != nil {
+		log.Fatalf("Cannot parse wal log %s", walFileName)
+		t.Fail()
+	}
+
+	t1 := time.Now()
+	db, txnIds, g1 := ConstructGraph(txn.Opts{}, history, wal, dbConsts)
+	require.Equal(t, g1.G1a, false)
+	require.Equal(t, g1.G1b, false)
+	t2 := time.Now()
+	constructTime := t2.Sub(t1).Nanoseconds() / 1e6
+	fmt.Printf("constructing graph: %d ms\n", constructTime)
+
+	{
+		valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not Serializable!")
+			PlotCycle(history, cycle, "../images", "rw-ser", false)
+		} else {
+			log.Println("Anti-Patterns for Serializable Not Detected.")
+		}
+	}
+
+	{
+		valid, cycle := CheckSIV3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not Snapshot Isolation!")
+			PlotCycle(history, cycle, "../images", "rw-si", false)
+		} else {
+			log.Println("Anti-Patterns for Snapshot Isolation Not Detected.")
+		}
+	}
+
+	{
+		valid, cycle := CheckPSIV3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not Parallel Snapshot Isolation!")
+			PlotCycle(history, cycle, "../images", "rw-psi", false)
+		} else {
+			log.Println("Anti-Patterns for Parallel Snapshot Isolation Not Detected.")
+		}
+	}
+
+	{
+		valid, cycle := CheckPL2V3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not PL-2!")
+			PlotCycle(history, cycle, "../images", "rw-pl2", false)
+		} else {
+			log.Println("Anti-Patterns for PL-2 Not Detected.")
+		}
+	}
+
+	{
+		valid, cycle := CheckPL1V3(db, dbConsts, txnIds, true)
+		if !valid {
+			log.Println("Not PL-1!")
+			PlotCycle(history, cycle, "../images", "rw-pl1", false)
+		} else {
+			log.Println("Anti-Patterns for PL-1 Not Detected.")
+		}
+	}
+}
+
 func printLine() {
 	fmt.Println("-----------------------------------")
 }
@@ -31,8 +130,8 @@ func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int
 		"dep",        // TxnDepEdge
 		"evt_dep",    // EvtDepEdge
 	}
-	ednFileName := fmt.Sprintf("../histories/rw-register-scalability-rate/%s.edn", fileName)
-	walFileName := fmt.Sprintf("../histories/rw-register-scalability-rate/%s.log", fileName)
+	ednFileName := fmt.Sprintf("../histories/rw-register/%s.edn", fileName)
+	walFileName := fmt.Sprintf("../histories/rw-register/%s.log", fileName)
 	prompt := fmt.Sprintf("Checking %s...", ednFileName)
 	fmt.Println(prompt)
 
@@ -201,13 +300,15 @@ func TestProfilingPL1(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestRWRegisterSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestRWRegisterSER(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("170", t)
-	valid, cycle := CheckSERV1(db, dbConsts, txnIds, true)
-	if !valid {
-		fmt.Println("Not Serializable!")
-		PlotCycle(history, cycle, "../images", "rw-ser", true)
-	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
+	for i := 10; i <= 200; i += 10 {
+		db, txnIds, dbConsts, history := constructArangoGraph(strconv.Itoa(i), t)
+		valid, cycle := CheckSERV2(db, dbConsts, txnIds, true)
+		if !valid {
+			fmt.Println("Not Serializable!")
+			PlotCycle(history, cycle, "../images", "rw-ser", true)
+		} else {
+			fmt.Println("Anti-Patterns Not Detected.")
+		}
 	}
 }
 
@@ -218,13 +319,15 @@ func TestRWRegisterSERPregel(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestRWRegisterSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestRWRegisterSI(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("rw-register", t)
-	valid, cycle := CheckSIV3(db, dbConsts, txnIds, true)
-	if !valid {
-		fmt.Println("Not Snapshot Isolation!")
-		PlotCycle(history, cycle, "../images", "rw-si", true)
-	} else {
-		fmt.Println("Anti-Patterns Not Detected.")
+	for i := 10; i <= 200; i += 10 {
+		db, txnIds, dbConsts, history := constructArangoGraph(strconv.Itoa(i), t)
+		valid, cycle := CheckSIV1(db, dbConsts, txnIds, true)
+		if !valid {
+			fmt.Println("Not Snapshot Isolation!")
+			PlotCycle(history, cycle, "../images", "rw-si", true)
+		} else {
+			fmt.Println("Anti-Patterns Not Detected.")
+		}
 	}
 }
 
