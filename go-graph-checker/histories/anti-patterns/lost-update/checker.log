@@ -1,0 +1,14 @@
+2023/05/21 13:25:57 Checking ../histories/anti-patterns/lost-update/history.edn...
+2023/05/21 13:25:58 db exists already and will be dropped first...
+constructing graph: 30727 ms
+2023/05/21 13:26:30 Cycle Detected by SER V3.
+2023/05/21 13:26:30 T10168 (rw) T10169 (rw) T10168
+2023/05/21 13:26:30 Not Serializable!
+2023/05/21 13:26:33 Cycle Detected by SI V3.
+2023/05/21 13:26:33 T13379 (wr) T13381 (rw) T13379
+2023/05/21 13:26:33 Not Snapshot Isolation!
+2023/05/21 13:26:35 Cycle Detected by PSI V3.
+2023/05/21 13:26:35 T13379 (wr) T13381 (rw) T13379
+2023/05/21 13:26:35 Not Parallel Snapshot Isolation!
+2023/05/21 13:26:37 Anti-Patterns for PL-2 Not Detected.
+2023/05/21 13:26:38 Anti-Patterns for PL-1 Not Detected.

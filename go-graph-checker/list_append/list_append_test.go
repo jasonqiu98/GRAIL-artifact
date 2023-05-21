@@ -27,7 +27,7 @@ func TestCheckExample(t *testing.T) {
 		"dep",        // TxnDepEdge
 		"evt_dep",    // EvtDepEdge
 	}
-	ednFileName := "../histories/anti-patterns/lost-update-2/history.edn"
+	ednFileName := "../histories/anti-patterns/lost-update/history.edn"
 	prompt := fmt.Sprintf("Checking %s...", ednFileName)
 	log.Println(prompt)
 	content, err := os.ReadFile(ednFileName)
