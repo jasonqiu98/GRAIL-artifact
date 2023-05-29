@@ -514,7 +514,6 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 			// skip further steps
 			continue
 		}
-		numOfVals := len(longerVal)
 		longerAppended := longerVal[len(longerVal)-1]
 		longerAid, longerAidOk := objAppendMap[longerAppended]
 
@@ -595,7 +594,6 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 			// and longerVal: (i_m+1, i_m+2, ..., i_n)
 
 			if isPrefix(val, longerVal) {
-				numOfVals -= len(longerVal) - len(val)
 				// rw
 				// nextAid: the exact next append after val, i.e., i_m ->(rw) i_m+1
 				nextAppended := longerVal[len(val)]
@@ -682,6 +680,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 				} else {
 					// reaches the empty array
 					// the break clause can also be neglected
+
 					break
 				}
 
@@ -694,7 +693,7 @@ func getEvtDepEdges(db driver.Database, dbConsts DBConsts) ([]EvtDepEdge, G1Anom
 		}
 
 		// add missing "ww" edges
-		for i := numOfVals - 2; i >= 0; i-- {
+		for i := len(longerVal) - 2; i >= 0; i-- {
 			appended := longerVal[i]
 			aid, aidOk := objAppendMap[appended]
 			if !aidOk {

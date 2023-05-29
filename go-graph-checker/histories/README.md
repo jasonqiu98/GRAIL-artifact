@@ -1,70 +1,75 @@
-# Benchmarks used for Query-Based Checker
+# ArangoDB Histories with Replication and Sharding
 
-1. `list-append`: a set of histories of the Elle's list-append format with increasing collection time from 10s to 300s. Usually, only the histories from 10s to 200s are used in the tests. The `list-append.edn` is not part of the benchmark but a prepared test case to ensure correctness.
-   - additional specs
-     -  r 10
-     - concurrency 20
-     - Key-count 5
-     - Min-txn-length 4
-     - Max-txn-length 8
-     - Max-writes-per-key 3
+The following configurations apply universally for the following five sets of histories:
 
-2. `list-append-scalability-rate`: a set of histories of the Elle's list-append format with increasing opreation generation rate from 10 to 300. The files are renamed by dividing the rate by 10.
-   - additional specs
-     - time-limit 100
-     - concurrency 20
-     - Key-count 5
-     - Min-txn-length 4
-     - Max-txn-length 8
-     - Max-writes-per-key 3
+- number of threads to generate histories: 10
+- key count at the same time: 5
+- min txn length: 4
+- max txn length: 8
+- max writes per key: 8
 
+## `collection-time`
 
-3. `rw-register`: a set of histories (with the accompanying WAL logs) with increasing collection time from 10s to 300s. Usually, only the histories from 10s to 200s are used in the tests. The `rw-regsiter.edn` (with `rw-register.log`) is not part of the benchmark but a prepared test case to ensure correctness.
-   - additional specs
-     - r 10
-     - concurrency 20
-     - Key-count 5
-     - Min-txn-length 4
-     - Max-txn-length 8
-     - Max-writes-per-key 3
+20 histories with fixed rate, increasing collection time, without nemesis
 
+- time-limit: increasing from 10s to 200s with a step of 10s
+- rate: 80
+- nemesis: none
+- replication factor: 3
+- sharding factor: 2
 
-4. `rw-register-scalability`
+## `collection-time-nemesis`
 
-   - `1.edn` to `30.edn`: histories with collection time increasing from 10s to 300s, without any nemesis (same to previous settings).
-     - additional specs
-       - r 10
-       - concurrency 20
-       - Key-count 3
-       - Min-txn-length 2
-       - Max-txn-length 8
-       - Max-writes-per-key 32
+20 histories with fixed rate, increasing collection time, with nemesis
 
-   - `31.edn` to `60.edn`: histories with collection time increasing from 10s to 300s, with nemesis to partition the network into two halves.
-     - additional specs
-       - r 10
-       - concurrency 20
-       - Key-count 3
-       - Min-txn-length 2
-       - Max-txn-length 8
-       - Max-writes-per-key 32
+- time-limit: increasing from 10s to 200s with a step of 10s
+- rate: 80
+- nemesis: random partition into halves
+- replication factor: 3
+- sharding factor: 2
 
-   - `61.edn` to `89.edn`: histories with max transaction length increasing from 2 to 30, with collection time fixed to 100s, without any nemesis.
-     - additional specs
-       - r 10
-       - concurrency 20
-       - Key-count 3
-       - Min-txn-length 2
-       - **time-limit 100**
-       - Max-writes-per-key 32
+## `rate`
 
-   - `90.edn` to `118.edn`: histories with number of concurrent workers at the same increasing from 2 to 30, with collection time fixed to 100s, without any nemesis, with max transction length fixed to 8.
-     - additional specs
-       - r 10
-       - **time-limit 100**
-       - Key-count 3
-       - Min-txn-length 2
-       - Max-txn-length 8
-       - Max-writes-per-key 32
+20 histories with increasing rate, fixed collection time, without nemesis
+
+- time-limit: 100s
+- rate: increasing from 10 to 200 with a step of 10
+- nemesis: none
+- replication factor: 3
+- sharding factor: 2
+
+## `rate-nemesis`
+
+20 histories with increasing rate, fixed collection time, with nemesis
+
+- time-limit: 100s
+- rate: increasing from 10 to 200 with a step of 10
+- nemesis: random partition into halves
+- replication factor: 3
+- sharding factor: 2
+
+## `histories-30s`
+
+20 histories with fixed rate, fixed collection time, with nemesis, to demonstrate the common usage
+
+- time-limit: 30s
+- rate: 80
+- nemesis: random partition into halves
+- replication factor: 5
+- sharding factor: 3
+
+## `rw-register`
+
+`rw-register`: a set of histories (with the accompanying WAL logs) with increasing collection time from 10s to 200s.
+
+- key count at the same time: 5
+- min txn length: 4
+- max txn length: 8
+- max writes per key: 8
+
+- rate: 10
+- number of threads to generate histories: 20
+- Key-count 5
+- Max-writes-per-key 3
 
 `rw-register-test` is not a benchmark, but some prepared test cases to ensure the correctness of the checker.

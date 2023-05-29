@@ -1,6 +1,7 @@
 package rwregister
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -63,7 +64,7 @@ func TestCheckExample(t *testing.T) {
 	fmt.Printf("constructing graph: %d ms\n", constructTime)
 
 	{
-		valid, cycle := CheckSERV3(db, dbConsts, txnIds, true)
+		valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "ser", "sp")
 		if !valid {
 			log.Println("Not Serializable!")
 			PlotCycle(history, cycle, "../images", "rw-ser", false)
@@ -73,7 +74,7 @@ func TestCheckExample(t *testing.T) {
 	}
 
 	{
-		valid, cycle := CheckSIV3(db, dbConsts, txnIds, true)
+		valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "si", "sp")
 		if !valid {
 			log.Println("Not Snapshot Isolation!")
 			PlotCycle(history, cycle, "../images", "rw-si", false)
@@ -83,7 +84,7 @@ func TestCheckExample(t *testing.T) {
 	}
 
 	{
-		valid, cycle := CheckPSIV3(db, dbConsts, txnIds, true)
+		valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "psi", "sp")
 		if !valid {
 			log.Println("Not Parallel Snapshot Isolation!")
 			PlotCycle(history, cycle, "../images", "rw-psi", false)
@@ -93,7 +94,7 @@ func TestCheckExample(t *testing.T) {
 	}
 
 	{
-		valid, cycle := CheckPL2V3(db, dbConsts, txnIds, true)
+		valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "pl-2", "sp")
 		if !valid {
 			log.Println("Not PL-2!")
 			PlotCycle(history, cycle, "../images", "rw-pl2", false)
@@ -103,7 +104,7 @@ func TestCheckExample(t *testing.T) {
 	}
 
 	{
-		valid, cycle := CheckPL1V3(db, dbConsts, txnIds, true)
+		valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "pl-1", "sp")
 		if !valid {
 			log.Println("Not PL-1!")
 			PlotCycle(history, cycle, "../images", "rw-pl1", false)
@@ -169,132 +170,137 @@ func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int
 }
 
 func TestProfilingScalability(t *testing.T) {
-	printLine()
-	for d := 5; d <= 30; d++ {
+	var runtime [][]int64
+	for d := 10; d <= 200; d += 10 {
 		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+		var cur []int64
+		{
+			t1 := Profile(db, dbConsts, txnIds, CheckSERSV, false)
+			t2 := Profile(db, dbConsts, txnIds, CheckSERSVFilter, false)
+			t3 := Profile(db, dbConsts, txnIds, CheckSERSP, false)
+			tp := Profile(db, dbConsts, nil, CheckSERPregel, false)
+			cur = append(cur, t1, t2, t3, tp)
+		}
 
-		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSERV1, false)
-		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckSERV4, false)
-		avgCheckTimePregel := Profile(db, dbConsts, nil, CheckSERPregel, false)
+		{
+			t1 := Profile(db, dbConsts, txnIds, CheckSISV, false)
+			// t2 := Profile(db, dbConsts, txnIds, CheckSISVFilter, false)
+			t3 := Profile(db, dbConsts, txnIds, CheckSISP, false)
+			// cur = append(cur, t1, t2, t3)
+			cur = append(cur, t1, t3)
+		}
 
-		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v4: %d ms\n - pregel: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV4, avgCheckTimePregel)
-		printLine()
+		{
+			t1 := Profile(db, dbConsts, txnIds, CheckPSISV, false)
+			// t2 := Profile(db, dbConsts, txnIds, CheckPSISVFilter, false)
+			t3 := Profile(db, dbConsts, txnIds, CheckPSISP, false)
+			// cur = append(cur, t1, t2, t3)
+			cur = append(cur, t1, t3)
+		}
 
-		avgCheckTimeV1 = Profile(db, dbConsts, txnIds, CheckSIV1, false)
-		avgCheckTimeV4 = Profile(db, dbConsts, txnIds, CheckSIV4, false)
+		{
+			t1 := Profile(db, dbConsts, txnIds, CheckPL2SV, false)
+			// t2 := Profile(db, dbConsts, txnIds, CheckPL2SVFilter, false)
+			t3 := Profile(db, dbConsts, txnIds, CheckPL2SP, false)
+			// cur = append(cur, t1, t2, t3)
+			cur = append(cur, t1, t3)
+		}
 
-		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v4: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV4)
-		printLine()
-
-		avgCheckTimeV1 = Profile(db, dbConsts, txnIds, CheckPSIV1, false)
-		avgCheckTimeV4 = Profile(db, dbConsts, txnIds, CheckPSIV4, false)
-
-		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v4: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV4)
-		printLine()
-
-		avgCheckTimeV1 = Profile(db, dbConsts, txnIds, CheckPL2V1, false)
-		avgCheckTimeV4 = Profile(db, dbConsts, txnIds, CheckPL2V4, false)
-
-		fmt.Printf("checking PL-2 (on avg.):\n - v1: %d ms\n - v4: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV4)
-		printLine()
-
-		avgCheckTimeV1 = Profile(db, dbConsts, txnIds, CheckPL1V1, false)
-		avgCheckTimeV4 = Profile(db, dbConsts, txnIds, CheckPL1V4, false)
-
-		fmt.Printf("checking PL-1 (on avg.):\n - v1: %d ms\n - v4: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV4)
-		printLine()
+		{
+			t1 := Profile(db, dbConsts, txnIds, CheckPL1SV, false)
+			// t2 := Profile(db, dbConsts, txnIds, CheckPL1SVFilter, false)
+			t3 := Profile(db, dbConsts, txnIds, CheckPL1SP, false)
+			// cur = append(cur, t1, t2, t3)
+			cur = append(cur, t1, t3)
+		}
+		runtime = append(runtime, cur)
+	}
+	for _, row := range runtime {
+		for _, col := range row {
+			fmt.Print(col)
+			fmt.Print("\t")
+		}
+		fmt.Println()
 	}
 }
 
-/*
-checking serializability:
-  - v1: initial ver.
-  - v2: break with Golang
-  - Pregel: use Pregel SCC algorithm
-*/
+func TestCountCycles(t *testing.T) {
+	for i := 1; i <= 20; i++ {
+		db, _, _, _ := constructArangoGraph(strconv.Itoa(i*10), t)
 
-func TestProfilingSER(t *testing.T) {
-	printLine()
-	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
-		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSERV1, false)
-		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSERV2, false)
-		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSERV3, false)
-		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckSERV4, false)
-		avgCheckTimePregel := Profile(db, dbConsts, nil, CheckSERPregel, false)
+		cursor, err := db.Query(context.Background(), "RETURN LENGTH(FOR edge IN dep FOR p IN OUTBOUND K_SHORTEST_PATHS edge._to TO edge._from GRAPH txn_g RETURN {edges: UNSHIFT(p.edges, edge), vertices: UNSHIFT(p.vertices, p.vertices[LENGTH(p.vertices) - 1])})", nil)
+		// cursor, err := db.Query(context.Background(), "RETURN LENGTH(FOR edge IN dep FOR v, e IN OUTBOUND SHORTEST_PATH edge._to TO edge._from GRAPH txn_g RETURN [edge, e])", nil)
+		// cursor, err := db.Query(context.Background(), "RETURN LENGTH(FOR start IN txn FOR vertex, edge, path IN 2..5 OUTBOUND start._id GRAPH txn_g FILTER edge._to == start._id RETURN path.edges)", nil)
 
-		fmt.Printf("checking serializability (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n - pregel: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4, avgCheckTimePregel)
-		printLine()
+		if err != nil {
+			log.Fatalf("Failed to count: %v\n", err)
+		}
+
+		defer cursor.Close()
+
+		for {
+			var cycle interface{}
+			_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+			if driver.IsNoMoreDocuments(err) {
+				break
+			} else if err != nil {
+				log.Fatalf("Cannot read return values: %v\n", err)
+			} else {
+				fmt.Println(cycle)
+			}
+		}
+
 	}
 }
 
-func TestProfilingSI(t *testing.T) {
-	printLine()
-	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
+func TestCountVerticesEdges(t *testing.T) {
+	for i := 1; i <= 30; i++ {
+		db, _, _, _ := constructArangoGraph(strconv.Itoa(i), t)
 
-		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckSIV1, false)
-		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckSIV2, false)
-		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckSIV3, false)
-		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckSIV4, false)
+		cursor, err := db.Query(context.Background(), "RETURN [(RETURN LENGTH(txn)), (RETURN LENGTH(dep))]", nil)
+		if err != nil {
+			log.Fatalf("Failed to count: %v\n", err)
+		}
 
-		fmt.Printf("checking snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
-		printLine()
+		defer cursor.Close()
+
+		for {
+			var cycle interface{}
+			_, err := cursor.ReadDocument(context.Background(), &cycle)
+
+			if driver.IsNoMoreDocuments(err) {
+				break
+			} else if err != nil {
+				log.Fatalf("Cannot read return values: %v\n", err)
+			} else {
+				fmt.Println(cycle)
+			}
+		}
+
 	}
 }
 
-func TestProfilingPSI(t *testing.T) {
-	printLine()
-	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
-
-		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPSIV1, false)
-		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPSIV2, false)
-		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPSIV3, false)
-		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPSIV4, false)
-
-		fmt.Printf("checking parallel snapshot isolation (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
-		printLine()
+func TestCorrectness(t *testing.T) {
+	var res [][]bool
+	for i := 10; i <= 200; i += 10 {
+		var cur []bool
+		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(i), t)
+		for _, level := range []string{"ser", "si", "psi", "pl-2", "pl-1"} {
+			for _, mode := range []string{"sv", "sv-filter", "sp"} {
+				valid, _ := IsolationLevelChecker(db, dbConsts, txnIds, false, level, mode)
+				cur = append(cur, valid)
+			}
+		}
+		res = append(res, cur)
 	}
-}
 
-func TestProfilingPL2(t *testing.T) {
-	printLine()
-	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
-
-		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPL2V1, false)
-		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPL2V2, false)
-		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPL2V3, false)
-		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPL2V4, false)
-
-		fmt.Printf("checking PL-2 (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
-		printLine()
-	}
-}
-
-func TestProfilingPL1(t *testing.T) {
-	printLine()
-	for d := 10; d <= 200; d += 10 {
-		db, txnIds, dbConsts, _ := constructArangoGraph(strconv.Itoa(d), t)
-
-		avgCheckTimeV1 := Profile(db, dbConsts, txnIds, CheckPL1V1, false)
-		avgCheckTimeV2 := Profile(db, dbConsts, txnIds, CheckPL1V2, false)
-		avgCheckTimeV3 := Profile(db, dbConsts, txnIds, CheckPL1V3, false)
-		avgCheckTimeV4 := Profile(db, dbConsts, txnIds, CheckPL1V4, false)
-
-		fmt.Printf("checking PL-1 (on avg.):\n - v1: %d ms\n - v2: %d ms\n - v3: %d ms\n - v4: %d ms\n",
-			avgCheckTimeV1, avgCheckTimeV2, avgCheckTimeV3, avgCheckTimeV4)
-		printLine()
+	for _, row := range res {
+		for _, col := range row {
+			fmt.Print(col)
+			fmt.Print(" ")
+		}
+		fmt.Println()
 	}
 }
 
@@ -302,7 +308,7 @@ func TestProfilingPL1(t *testing.T) {
 func TestRWRegisterSER(t *testing.T) {
 	for i := 10; i <= 200; i += 10 {
 		db, txnIds, dbConsts, history := constructArangoGraph(strconv.Itoa(i), t)
-		valid, cycle := CheckSERV2(db, dbConsts, txnIds, true)
+		valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "ser", "sv")
 		if !valid {
 			fmt.Println("Not Serializable!")
 			PlotCycle(history, cycle, "../images", "rw-ser", true)
@@ -321,7 +327,7 @@ func TestRWRegisterSERPregel(t *testing.T) {
 func TestRWRegisterSI(t *testing.T) {
 	for i := 10; i <= 200; i += 10 {
 		db, txnIds, dbConsts, history := constructArangoGraph(strconv.Itoa(i), t)
-		valid, cycle := CheckSIV1(db, dbConsts, txnIds, true)
+		valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "si", "sv")
 		if !valid {
 			fmt.Println("Not Snapshot Isolation!")
 			PlotCycle(history, cycle, "../images", "rw-si", true)
@@ -334,7 +340,7 @@ func TestRWRegisterSI(t *testing.T) {
 // go test -v -timeout 30s -run ^TestRWRegisterPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestRWRegisterPSI(t *testing.T) {
 	db, txnIds, dbConsts, history := constructArangoGraph("rw-register", t)
-	valid, cycle := CheckPSIV3(db, dbConsts, txnIds, true)
+	valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "psi", "sv")
 	if !valid {
 		fmt.Println("Not Parallel Snapshot Isolation!")
 		PlotCycle(history, cycle, "../images", "rw-psi", true)
@@ -343,80 +349,43 @@ func TestRWRegisterPSI(t *testing.T) {
 	}
 }
 
-/// Tests for correctness, following TDD principles
+// Tests for correctness, following TDD principles
 
 func testPL1(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
-	valid, _ := CheckPL1V1(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPL1V2(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPL1V3(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPL1V4(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
+	for _, mode := range []string{"sv", "sv-filter", "sv-random", "sp", "sp-allcycles"} {
+		valid, _ := IsolationLevelChecker(db, dbConsts, txnIds, false, "pl-1", mode)
+		require.Equal(t, expected, valid)
+	}
 }
 
 func testPL2(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
-	valid, _ := CheckPL2V1(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPL2V2(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPL2V3(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPL2V4(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
+	for _, mode := range []string{"sv", "sv-filter", "sv-random", "sp", "sp-allcycles"} {
+		valid, _ := IsolationLevelChecker(db, dbConsts, txnIds, false, "pl-2", mode)
+		require.Equal(t, expected, valid)
+	}
 }
 
 func testPSI(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
-	valid, _ := CheckPSIV1(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPSIV2(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPSIV3(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckPSIV4(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
+	for _, mode := range []string{"sv", "sv-filter", "sv-random", "sp", "sp-allcycles"} {
+		valid, _ := IsolationLevelChecker(db, dbConsts, txnIds, false, "psi", mode)
+		require.Equal(t, expected, valid)
+	}
 }
 
 func testSI(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
-	valid, _ := CheckSIV1(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckSIV2(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckSIV3(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckSIV4(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
+	for _, mode := range []string{"sv", "sv-filter", "sv-random", "sp", "sp-allcycles"} {
+		valid, _ := IsolationLevelChecker(db, dbConsts, txnIds, false, "si", mode)
+		require.Equal(t, expected, valid)
+	}
 }
 
 func testSER(t *testing.T, h core.History, db driver.Database, dbConsts DBConsts, txnIds []int, expected bool) {
-	valid, _ := CheckSERV1(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckSERV2(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckSERV3(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckSERV4(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
-
-	valid, _ = CheckSERPregel(db, dbConsts, txnIds, false)
-	require.Equal(t, expected, valid)
+	for _, mode := range []string{"sv", "sv-filter", "sv-random", "sp", "sp-allcycles"} {
+		valid, _ := IsolationLevelChecker(db, dbConsts, txnIds, false, "ser", mode)
+		require.Equal(t, expected, valid)
+	}
 }
+
 func TestChecker(t *testing.T) {
 	{
 		// G0 (write cycles) ~ violates PL-1
