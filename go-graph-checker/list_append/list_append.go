@@ -51,7 +51,7 @@ func cycleToStr(cycle []TxnDepEdge) string {
 
 const (
 	MIN_DEPTH           = 2 // for sv, sv-filter, sv-random
-	MAX_DEPTH_SV_SIMPLE = 3 // for sv, sv-random
+	MAX_DEPTH_SV_SIMPLE = 4 // for sv, sv-random
 	MAX_DEPTH_SV        = 4 // for sv-filter
 )
 

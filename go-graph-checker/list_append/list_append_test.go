@@ -285,7 +285,7 @@ func TestListAppendSER(t *testing.T) {
 }
 
 func TestListAppendSERPregel(t *testing.T) {
-	db, _, dbConsts, _ := constructArangoGraph("list-append", t)
+	db, _, dbConsts, _ := constructArangoGraph("10", t)
 	CheckSERPregel(db, dbConsts, nil, true)
 }
 
@@ -303,7 +303,7 @@ func TestListAppendSI(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestListAppendPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendPSI(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("list-append", t)
+	db, txnIds, dbConsts, history := constructArangoGraph("10", t)
 	valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "psi", "sv")
 	if !valid {
 		log.Println("Not Parallel Snapshot Isolation!")

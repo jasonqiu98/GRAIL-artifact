@@ -2,6 +2,8 @@
 
 Artifact of GRAph-based Isolation Level checking (GRAIL): graph query-based isolation checkers
 
+Note: We present the experimental results in each HTML files listed in [`GRAIL-experiments`](./GRAIL-experiments/)
+
 - ArangoDB-Cycle, ArangoDB-SP & ArangoDB-Pregel: in this repo, under the path [`go-graph-checker`](./go-graph-checker/)
 - Neo4j-APOC & Neo4j-GDS-SCC: in the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark)
 
