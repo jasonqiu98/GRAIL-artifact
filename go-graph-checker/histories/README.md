@@ -1,4 +1,6 @@
-# ArangoDB Histories with Replication and Sharding
+# ArangoDB Histories
+
+## List Histories with Replication and Sharding
 
 The following configurations apply universally for the following five sets of histories:
 
@@ -8,7 +10,7 @@ The following configurations apply universally for the following five sets of hi
 - max txn length: 8
 - max writes per key: 8
 
-## `collection-time`
+### [DS1] `collection-time`
 
 20 histories with fixed rate, increasing collection time, without nemesis
 
@@ -18,7 +20,7 @@ The following configurations apply universally for the following five sets of hi
 - replication factor: 3
 - sharding factor: 2
 
-## `collection-time-nemesis`
+### [DS2] `collection-time-nemesis`
 
 20 histories with fixed rate, increasing collection time, with nemesis
 
@@ -28,7 +30,7 @@ The following configurations apply universally for the following five sets of hi
 - replication factor: 3
 - sharding factor: 2
 
-## `rate`
+### [DS3] `rate`
 
 20 histories with increasing rate, fixed collection time, without nemesis
 
@@ -38,7 +40,7 @@ The following configurations apply universally for the following five sets of hi
 - replication factor: 3
 - sharding factor: 2
 
-## `rate-nemesis`
+### [DS4] `rate-nemesis`
 
 20 histories with increasing rate, fixed collection time, with nemesis
 
@@ -48,7 +50,7 @@ The following configurations apply universally for the following five sets of hi
 - replication factor: 3
 - sharding factor: 2
 
-## `histories-30s`
+### [DS5] `histories-30s`
 
 20 histories with fixed rate, fixed collection time, with nemesis, to demonstrate the common usage
 
@@ -58,9 +60,11 @@ The following configurations apply universally for the following five sets of hi
 - replication factor: 5
 - sharding factor: 3
 
-## `rw-register`
+## Register Histories (without Sharding or Replication)
 
-`rw-register`: a set of histories (with the accompanying WAL logs) with increasing collection time from 10s to 200s.
+### [DS6] `rw-register`
+
+a set of histories (with the accompanying WAL logs) with increasing collection time from 10s to 200s.
 
 - key count at the same time: 5
 - min txn length: 4
@@ -72,4 +76,4 @@ The following configurations apply universally for the following five sets of hi
 - Key-count 5
 - Max-writes-per-key 3
 
-`rw-register-test` is not a benchmark, but some prepared test cases to ensure the correctness of the checker.
+N.B. `rw-register-test` is not a benchmark, but some prepared test cases for the effectiveness of the checker.

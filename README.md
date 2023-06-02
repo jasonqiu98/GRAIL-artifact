@@ -1,6 +1,6 @@
-# Anti-Pattern Graph Checker (Single Instance)
+# Anti-Pattern Graph Checker through ArangoDB
 
-A graph-based checker to detect anti-patterns of a database
+A graph query-based checker to detect anti-patterns of a database
 
 ## I. Quickstart the graph checker
 
