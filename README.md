@@ -25,8 +25,9 @@ go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-patt
 ### I. Effectiveness and Scalability of GRAIL
 
 1. Follow the instructions of [`setup.md`](./docs/setup.md) to get the results of ArangoDB-Cycle, ArangoDB-SP, and ArangoDB-Pregel
-   - Run `TestCorrectness` to get effectiveness results
-   - Run `TestProfilingScalability` to get scalability results
+   - First rename the value of variable `endFileName` in the function `constructArangoGraph`, in [`list_append_test.go`](./go-graph-checker/list_append/list_append_test.go) or [`rw_register_test.go`](./go-graph-checker/rw_register/rw_register_test.go), respectively. The value of this variable should contain the pattern of the filenames of the histories in one directory ready for tests.
+   - Run `TestCorrectness` to get effectiveness results, in `list_append_test.go` or `rw_register_test.go`, respectively.
+   - Run `TestProfilingScalability` to get scalability results, in `list_append_test.go` or `rw_register_test.go`, respectively.
 
 2. Get the results from the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f) by following the steps below.
    - Run `docker compose up` to start the Neo4j Docker container
