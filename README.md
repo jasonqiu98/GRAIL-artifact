@@ -5,33 +5,13 @@ Artifact of GRAph-based Isolation Level checking (GRAIL): graph query-based isol
 - ArangoDB-Cycle, ArangoDB-SP & ArangoDB-Pregel: in this repo, under the path [`go-graph-checker`](./go-graph-checker/)
 - Neo4j-APOC & Neo4j-GDS-SCC: in the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark)
 
-## I. Quickstart the graph checker
+## Set up the checker
 
-### 0. Specifications
+See details in [`setup.md`](./docs/setup.md). The usage is provided below.
 
-- OS: Linux Mint 21
-- Docker Engine - Community 20.10.22
-- Docker Compose version v2.14.1
-- Within `arango-test` container
-  - ArangoDB v3.9.10
-  - Go 1.19.4
-  - GCC (latest in use)
-
-### 1. Set up the Docker containers for history processing
-
-1. Make sure the Docker daemon is running on your machine.
-2. Start the orchestration by `docker compose up` (or in the backend: `docker compose up -d`), until you see some messages like the following.
-
-```
-arango-starter  | 1677539493.202554 [1] INFO [cf3f4] {general} ArangoDB (version 3.9.10 [linux]) is ready for business. Have fun!
-arango-test     | 2023-02-27T23:11:33Z [1] INFO [cf3f4] {general} ArangoDB (version 3.9.10 [linux]) is ready for business. Have fun!
-```
-
-3. Open a new terminal and enter the `arango-test` container by `docker exec -it arango-test sh`.
-
-### 2. Run the project at "~/project" within the `arango-test` Docker container
-
-Following the above instructions to set up the environment, you can run this Go project. The project path has been linked to the path `~/project` in the Docker container `arango-test`. ArangoDB, Go and GCC have been pre-installed.
+1. Make sure Docker is on. Run `make start`.
+2. Open a new terminal window. Run `docker exec -it arango-test sh`.
+3. Run the following to get a quick result.
 
 ```shell
 cd ~/project
@@ -40,80 +20,91 @@ go mod tidy
 go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 ```
 
-### 3. Profiling
+## Experiments
 
-Use the following command to profile different approaches.
+### I. Effectiveness and Scalability of GRAIL
 
-```shell
-go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-scalability.log
-go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-scalability.log
+1. Follow the instructions of [`setup.md`](./docs/setup.md) to get the results of ArangoDB-Cycle, ArangoDB-SP, and ArangoDB-Pregel
+   - Run `TestCorrectness` to get effectiveness results
+   - Run `TestProfilingScalability` to get scalability results
+
+2. Get the results from the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f) by following the steps below.
+   - Run `docker compose up` to start the Neo4j Docker container
+   - Select the benchmarking functions you want to run in `cyou.zhaojin.CypherBenchmarkTest` by commenting or uncommenting the annotation `@Benchmark`
+     - For Neo4j-APOC, uncomment the following benchmarks and comment others: [`SerTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L43), [`SITest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L50), [`PSITest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L82), [`PL2Test()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L100), [`PL1Test()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L107)
+     - For Neo4j-GDS-SCC, uncomment the following benchmarks and comment others: [`Q1SerProjTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L114), [`Q2SerSCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L122), [`Q3_SISCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L129), [`Q4PSISCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L164), [`Q5PL2ProjTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L184), [`Q6PL2SCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L192), [`Q7PL1ProjTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L199), [`Q8PL1SCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#LL207C17-L207C29)
+   - `mvn clean install compile` to install dependencies
+   - Run the test class `cyou.zhaoin.CypherBenchmarkTest` and pass in the directory of the histories
+
+### II. Comparison with Elle
+
+#### Usage
+
+1. Clone the repo [elle-cli](https://github.com/ligurio/elle-cli/tree/master).
+
+2. Replace the lines 234-237 of the code file [`cli.clj`](https://github.com/ligurio/elle-cli/blob/a36790c1973360792ce455282894fadaeb58796a/src/elle_cli/cli.clj#L234) with the following code.
+
+```clojure
+(let [read-history  (or read-history (read-fn-by-extension filepath))
+     history       (h/history (read-history filepath))
+     t             (criterium/bench (check-history model-name history options))
+     analysis      (check-history model-name history options)
+     validness     (:valid? analysis)]
+ (println (/ (first t) 1e6) "ms") ; ns to ms
 ```
 
-### 4. Results on histories
+3. Pass the directory into the command line with `elle-cli`.
 
-First rename the value of variable `endFileName` in the function `constructArangoGraph`, in [`list_append_test.go`](./go-graph-checker/list_append/list_append_test.go) or [`rw_register_test.go`](./go-graph-checker/rw_register/rw_register_test.go). Then use the following command to see the results.
+The steps above are presented in the following code.
 
-```shell
-go test -v -timeout 1000s -run ^TestCorrectness$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-correctness.log
-go test -v -timeout 1000s -run ^TestCorrectness$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-correctness.log
+```bash
+$ git clone https://github.com/ligurio/elle-cli
+$ cd elle-cli
+$ lein deps
+$ lein uberjar
+Compiling elle_cli.cli
+Created /home/sergeyb/sources/ljepsen/elle-cli/target/elle-cli-0.1.6.jar
+Created /home/sergeyb/sources/ljepsen/elle-cli/target/elle-cli-0.1.6-standalone.jar
+$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models serializable histories/collection-time/10.edn
+259.725797 ms
+histories/replication/collection-time/10.edn     false
+$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models snapshot-isolation histories/collection-time/10.edn
+264.391106 ms
+histories/replication/collection-time/10.edn     true
+$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models serializable histories/collection-time/90.edn
+887.769591 ms
+histories/replication/collection-time/80.edn     false
+$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models snapshot-isolation histories/collection-time/90.edn
+684.537614 ms
+histories/replication/collection-time/80.edn     false
 ```
 
-### 5. Stop and remove the containers
+### III. Comparison with PolySI
 
-Open a new terminal on you local machine, and run the following commands.
+1. Make directories within [`go-history-converter`](./go-history-converter) as follows.
+   - to convert list histories: `mkdir -p list-append`
+   - to convert register histories: `mkdir -p rw-register`
 
-- Stop
-  - `docker compose stop` to stop all the services
-- Remove
-  - `docker compose down -v` or `docker compose down --volumes` to remove all the containers, networks and volumes generated by the `docker-compose.yml` file
-  - `docker rmi arangodb:3.9.10` and `docker rmi anti-pattern-graph-checker-single-test:latest` to remove the relevant Docker images.
-- Clean and remove the persisting volumes
-  - Run `sudo rm -rf nodes logs` to delete relevant records/logs (if you don't need them for analysis any more)
+2. Convert the `.edn` histories to plain-text histories.
+   - by function `testConverter` in [`convert_test.go`](./go-history-converter/converter_test.go)
+     - The function takes three arguments as follows: the file name of the history `path`, a boolean variable `rw` to indicate an RW-register history (`True`) or not (`False`), and a fixed argument for Go testing `t`.
+     - Users need to modify the path, linking it to the correct file.
+   - by function `TestConvertsAll` in `convert_test.go`
+     - The function iterates over all files to convert them.
+     - Users need to define the loop, modify the path of the directory, and also toggle the `rw` boolean variable if necessary
+  
+3. Clone PolySI
 
-### 6. Q&A
+```bash
+$ sudo apt update
+$ sudo apt install g++ openjdk-11-jdk cmake libgmp-dev zlib1g-dev
+$ git clone --recurse-submodules https://github.com/amnore/PolySI
+$ cd PolySI
+$ ./gradlew jar
+```
 
-1. How do I resolve the error message like `dial tcp: lookup starter: no such host`?
+4. Run PolySI on histories in `go-history-converter`. We have provided the converted text histories from our datasets.
 
-- This may happen when you run the program on your local environment, which is not well connected to our Docker cluster. To resolve this problem, you can either
-  - open a new terminal and enter the `arango-test` container by `docker exec -it arango-test sh` (recommended), or
-  - access `http://localhost:8000` from the local environment
-
-2. How do I connect to the Web interface of ArangoDB (on local machine)?
-
-- Access `http://localhost:8000` in the browser. Also remember to choose the correct database you are trying to access.
-
-3. How do I connect to the database using `arangosh` (in `arango-test` container)?
-
-- Connect to the default database `_system` via the ArangoDB starter, by `arangosh --server.endpoint tcp://starter:8529 --server.username root --server.password ""`, and then submit any JavaScript commands.
-
-4. How do I access the logs (on local machine)?
-
-- Run `sudo chmod 777 logs/*/*.log` on the root of the project folder before accessing the log files on your local machine.
-
-5. How do I read the logs?
-
-- The logs are quite verbose. This is because (1) the logs have been set to TRACE level, meaning the log of all levels will be written to the log files, and (2) both user queries and system executions will be recorded in the logs. If you want to see a shorter log file, you can adjust the `--log.level` options in the `docker-compose.yml` file to a level that is satisfactory to you.
-- Read the logs and understand the execution of each query of your interest. Try searching code `[11160]` (meaning query begins) and code `[f5cee]` (meaning query ends) in `queries.log`.
-
-6. How do I remove the cached test results in Golang?
-
-- `go clean -testcache`: expires all test results
-
-## II. Quickstart by `Makefile` [Optional]
-
-If you have `gcc` installed on your machine, you can use the following commands to run this project.
-
-- `make start`: start the orchestration
-- `make stop`: stop the orchestration
-- `make remove`: remove the orchestration and Docker images
-- `make clean`: remove the local persisting volumes of the database
-
-It is still recommended to run the raw commands by yourself, but `Makefile` can be a help.
-
-## III. Run Elle tests (with list-append cases)
-
-Run the following command (locally or in the `arango-test` container).
-
-```shell
-go test -timeout 30s -run "^(TestWWGraph|TestWRGraph|TestGraph|TestG1aCases|TestG1bCases|TestInternalCases|TestChecker|TestRepeatableRead|TestGNonadjacent|TestCheck|TestHugeScc|TestPlotAnalysis)$" github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/list_append
+```bash
+$ java -jar build/libs/PolySI-1.0.0-SNAPSHOT.jar audit --type=text ../go-history-converter/collection-time/10.txt &> polysi.log
 ```
