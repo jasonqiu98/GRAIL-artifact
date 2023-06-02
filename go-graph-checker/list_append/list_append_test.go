@@ -152,39 +152,34 @@ func TestProfilingScalability(t *testing.T) {
 		var cur []int64
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckSERSV, false)
-			// t2 := Profile(db, dbConsts, txnIds, CheckSERSVFilter, false)
-			// t3 := Profile(db, dbConsts, txnIds, CheckSERSP, false)
-			// tp := Profile(db, dbConsts, nil, CheckSERPregel, false)
-			// cur = append(cur, t1, t2, t3, tp)
-			cur = append(cur, t1)
+			t2 := Profile(db, dbConsts, txnIds, CheckSERSVFilter, false)
+			t3 := Profile(db, dbConsts, txnIds, CheckSERSP, false)
+			tp := Profile(db, dbConsts, nil, CheckSERPregel, false)
+			cur = append(cur, t1, t2, t3, tp)
 		}
 
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckSISV, false)
-			// t3 := Profile(db, dbConsts, txnIds, CheckSISP, false)
-			// cur = append(cur, t1, t3)
-			cur = append(cur, t1)
+			t2 := Profile(db, dbConsts, txnIds, CheckSISP, false)
+			cur = append(cur, t1, t2)
 		}
 
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckPSISV, false)
-			// t3 := Profile(db, dbConsts, txnIds, CheckPSISP, false)
-			// cur = append(cur, t1, t3)
-			cur = append(cur, t1)
+			t2 := Profile(db, dbConsts, txnIds, CheckPSISP, false)
+			cur = append(cur, t1, t2)
 		}
 
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckPL2SV, false)
-			// t3 := Profile(db, dbConsts, txnIds, CheckPL2SP, false)
-			// cur = append(cur, t1, t3)
-			cur = append(cur, t1)
+			t2 := Profile(db, dbConsts, txnIds, CheckPL2SP, false)
+			cur = append(cur, t1, t2)
 		}
 
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckPL1SV, false)
-			// t3 := Profile(db, dbConsts, txnIds, CheckPL1SP, false)
-			// cur = append(cur, t1, t3)
-			cur = append(cur, t1)
+			t2 := Profile(db, dbConsts, txnIds, CheckPL1SP, false)
+			cur = append(cur, t1, t2)
 		}
 		runtime = append(runtime, cur)
 	}
@@ -279,7 +274,7 @@ func TestCorrectness(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSER(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("70", t)
+	db, txnIds, dbConsts, history := constructArangoGraph("10", t)
 	valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "ser", "sv")
 	if !valid {
 		log.Println("Not Serializable!")
@@ -296,7 +291,7 @@ func TestListAppendSERPregel(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestListAppendSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSI(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("150", t)
+	db, txnIds, dbConsts, history := constructArangoGraph("10", t)
 	valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "si", "sv")
 	if !valid {
 		log.Println("Not Snapshot Isolation!")

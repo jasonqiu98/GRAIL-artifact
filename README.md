@@ -45,19 +45,20 @@ go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-patt
 Use the following command to profile different approaches.
 
 ```shell
-go test -v -timeout 600s -run ^TestProfilingSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
-go test -v -timeout 600s -run ^TestProfilingSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
-go test -v -timeout 600s -run ^TestProfilingPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-scalability.log
+go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-scalability.log
 ```
+
+### 4. Results on histories
+
+First rename the value of variable `endFileName` in the function `constructArangoGraph`, in [`list_append_test.go`](./go-graph-checker/list_append/list_append_test.go) or [`rw_register_test.go`](./go-graph-checker/rw_register/rw_register_test.go). Then use the following command to see the results.
 
 ```shell
-go test -v -timeout 600000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-scala.log
-go test -v -timeout 600000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-scala.log
-
-go test -v -timeout 600000s -run ^TestCorrectness$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-correctness.log
+go test -v -timeout 1000s -run ^TestCorrectness$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-correctness.log
+go test -v -timeout 1000s -run ^TestCorrectness$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-correctness.log
 ```
 
-### 3. Stop and remove the containers
+### 5. Stop and remove the containers
 
 Open a new terminal on you local machine, and run the following commands.
 
@@ -69,7 +70,7 @@ Open a new terminal on you local machine, and run the following commands.
 - Clean and remove the persisting volumes
   - Run `sudo rm -rf nodes logs` to delete relevant records/logs (if you don't need them for analysis any more)
 
-### 4. Q&A
+### 6. Q&A
 
 1. How do I resolve the error message like `dial tcp: lookup starter: no such host`?
 

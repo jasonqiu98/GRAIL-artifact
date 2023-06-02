@@ -114,10 +114,6 @@ func TestCheckExample(t *testing.T) {
 	}
 }
 
-func printLine() {
-	fmt.Println("-----------------------------------")
-}
-
 func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int, DBConsts, core.History) {
 	dbConsts := DBConsts{
 		"starter",    // Host
@@ -184,34 +180,26 @@ func TestProfilingScalability(t *testing.T) {
 
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckSISV, false)
-			// t2 := Profile(db, dbConsts, txnIds, CheckSISVFilter, false)
-			t3 := Profile(db, dbConsts, txnIds, CheckSISP, false)
-			// cur = append(cur, t1, t2, t3)
-			cur = append(cur, t1, t3)
+			t2 := Profile(db, dbConsts, txnIds, CheckSISP, false)
+			cur = append(cur, t1, t2)
 		}
 
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckPSISV, false)
-			// t2 := Profile(db, dbConsts, txnIds, CheckPSISVFilter, false)
-			t3 := Profile(db, dbConsts, txnIds, CheckPSISP, false)
-			// cur = append(cur, t1, t2, t3)
-			cur = append(cur, t1, t3)
+			t2 := Profile(db, dbConsts, txnIds, CheckPSISP, false)
+			cur = append(cur, t1, t2)
 		}
 
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckPL2SV, false)
-			// t2 := Profile(db, dbConsts, txnIds, CheckPL2SVFilter, false)
-			t3 := Profile(db, dbConsts, txnIds, CheckPL2SP, false)
-			// cur = append(cur, t1, t2, t3)
-			cur = append(cur, t1, t3)
+			t2 := Profile(db, dbConsts, txnIds, CheckPL2SP, false)
+			cur = append(cur, t1, t2)
 		}
 
 		{
 			t1 := Profile(db, dbConsts, txnIds, CheckPL1SV, false)
-			// t2 := Profile(db, dbConsts, txnIds, CheckPL1SVFilter, false)
-			t3 := Profile(db, dbConsts, txnIds, CheckPL1SP, false)
-			// cur = append(cur, t1, t2, t3)
-			cur = append(cur, t1, t3)
+			t2 := Profile(db, dbConsts, txnIds, CheckPL1SP, false)
+			cur = append(cur, t1, t2)
 		}
 		runtime = append(runtime, cur)
 	}
@@ -319,7 +307,7 @@ func TestRWRegisterSER(t *testing.T) {
 }
 
 func TestRWRegisterSERPregel(t *testing.T) {
-	db, _, dbConsts, _ := constructArangoGraph("rw-register", t)
+	db, _, dbConsts, _ := constructArangoGraph("10", t)
 	CheckSERPregel(db, dbConsts, nil, true)
 }
 
@@ -339,7 +327,7 @@ func TestRWRegisterSI(t *testing.T) {
 
 // go test -v -timeout 30s -run ^TestRWRegisterPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestRWRegisterPSI(t *testing.T) {
-	db, txnIds, dbConsts, history := constructArangoGraph("rw-register", t)
+	db, txnIds, dbConsts, history := constructArangoGraph("10", t)
 	valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "psi", "sv")
 	if !valid {
 		fmt.Println("Not Parallel Snapshot Isolation!")
