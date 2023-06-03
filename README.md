@@ -2,7 +2,7 @@
 
 Artifact of GRAph-based Isolation Level checking (GRAIL): graph query-based isolation checkers
 
-Note: We present the experimental results in each HTML files listed in [`GRAIL-experiments`](./GRAIL-experiments/)
+Note: We present the experimental results in HTML files listed in [`GRAIL-experiments`](./GRAIL-experiments/)
 
 - ArangoDB-Cycle, ArangoDB-SP & ArangoDB-Pregel: in this repo, under the path [`go-graph-checker`](./go-graph-checker/)
 - Neo4j-APOC & Neo4j-GDS-SCC: in the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark)
@@ -41,45 +41,52 @@ go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-patt
 
 ### II. Comparison with Elle
 
-#### Usage
+To run `elle-cli` benchmarking on a history, follow the steps below.
 
-1. Clone the repo [elle-cli](https://github.com/ligurio/elle-cli/tree/master).
-
-2. Replace the lines 234-237 of the code file [`cli.clj`](https://github.com/ligurio/elle-cli/blob/a36790c1973360792ce455282894fadaeb58796a/src/elle_cli/cli.clj#L234) with the following code.
-
-```clojure
-(let [read-history  (or read-history (read-fn-by-extension filepath))
-     history       (h/history (read-history filepath))
-     t             (criterium/bench (check-history model-name history options))
-     analysis      (check-history model-name history options)
-     validness     (:valid? analysis)]
- (println (/ (first t) 1e6) "ms") ; ns to ms
-```
-
-3. Pass the directory into the command line with `elle-cli`.
-
-The steps above are presented in the following code.
+1. Clone project
 
 ```bash
-$ git clone https://github.com/ligurio/elle-cli
-$ cd elle-cli
+git clone https://github.com/ligurio/elle-cli
+cd elle-cli
+```
+
+2. Make the following changes on the repo.
+
+   - Insert the following code above line 236 of [`cli.clj`](https://github.com/ligurio/elle-cli/blob/a36790c1973360792ce455282894fadaeb58796a/src/elle_cli/cli.clj#L236).
+
+   ```clojure
+   t             (criterium/quick-bench (check-history model-name history options))
+   ```
+
+   - Import the namespace in line 4-23 of [`cli.clj`](https://github.com/ligurio/elle-cli/blob/a36790c1973360792ce455282894fadaeb58796a/src/elle_cli/cli.clj#L4)
+
+   ```clojure
+   [criterium.core :as criterium]
+   ```
+
+   - Add the dependency in [`project.clj`](https://github.com/ligurio/elle-cli/blob/a36790c1973360792ce455282894fadaeb58796a/project.clj).
+
+   ```clojure
+   [criterium "0.4.6"] ; for benchmarking https://github.com/hugoduncan/criterium
+   ```
+
+3. Start the checker on one history
+
+```bash
 $ lein deps
 $ lein uberjar
 Compiling elle_cli.cli
-Created /home/sergeyb/sources/ljepsen/elle-cli/target/elle-cli-0.1.6.jar
-Created /home/sergeyb/sources/ljepsen/elle-cli/target/elle-cli-0.1.6-standalone.jar
-$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models serializable histories/collection-time/10.edn
-259.725797 ms
-histories/replication/collection-time/10.edn     false
-$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models snapshot-isolation histories/collection-time/10.edn
-264.391106 ms
-histories/replication/collection-time/10.edn     true
-$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models serializable histories/collection-time/90.edn
-887.769591 ms
-histories/replication/collection-time/80.edn     false
-$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models snapshot-isolation histories/collection-time/90.edn
-684.537614 ms
-histories/replication/collection-time/80.edn     false
+Compiling elle_cli.cli
+Created /home/jasonqiu98/thesis-workspace/GRAIL-artifact/elle-cli/target/elle-cli-0.1.6.jar
+Created /home/jasonqiu98/thesis-workspace/GRAIL-artifact/elle-cli/target/elle-cli-0.1.6-standalone.jar
+$ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models serializable ../go-graph-checker/histories/collection-time/10.edn
+Evaluation count : 30 in 6 samples of 5 calls.
+             Execution time mean : 24.489192 ms
+    Execution time std-deviation : 1.962274 ms
+   Execution time lower quantile : 21.845343 ms ( 2.5%)
+   Execution time upper quantile : 26.362684 ms (97.5%)
+                   Overhead used : 2.130864 ns
+../go-graph-checker/histories/collection-time/10.edn     false
 ```
 
 ### III. Comparison with PolySI
@@ -99,15 +106,15 @@ histories/replication/collection-time/80.edn     false
 3. Clone PolySI
 
 ```bash
-$ sudo apt update
-$ sudo apt install g++ openjdk-11-jdk cmake libgmp-dev zlib1g-dev
-$ git clone --recurse-submodules https://github.com/amnore/PolySI
-$ cd PolySI
-$ ./gradlew jar
+sudo apt update
+sudo apt install g++ openjdk-11-jdk cmake libgmp-dev zlib1g-dev
+git clone --recurse-submodules https://github.com/amnore/PolySI
+cd PolySI
+./gradlew jar
 ```
 
-4. Run PolySI on histories in `go-history-converter`. We have provided the converted text histories from our datasets.
+4. Run PolySI on each history converted by `go-history-converter`. We have provided the converted text histories from our datasets.
 
 ```bash
-$ java -jar build/libs/PolySI-1.0.0-SNAPSHOT.jar audit --type=text ../go-history-converter/collection-time/10.txt &> polysi.log
+java -jar build/libs/PolySI-1.0.0-SNAPSHOT.jar audit --type=text ../go-history-converter/collection-time/10.txt &> polysi.log
 ```
