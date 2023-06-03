@@ -118,3 +118,58 @@ cd PolySI
 ```bash
 java -jar build/libs/PolySI-1.0.0-SNAPSHOT.jar audit --type=text ../go-history-converter/collection-time/10.txt &> polysi.log
 ```
+
+An example log is shown below.
+
+```
+Sessions count: 11
+Transactions count: 435
+Events count: 2827
+Known edges: 1008
+Constraints count: 1143
+Total edges in constraints: 5832
+Pruning round 1
+Before: 1008 edges
+After: 787 edges
+reachability matrix sparsity: 0.53
+solved 885 constraints
+Pruning round 2
+Before: 2785 edges
+After: 1770 edges
+reachability matrix sparsity: 0.51
+solved 65 constraints
+Pruning round 3
+Before: 2917 edges
+After: 1850 edges
+reachability matrix sparsity: 0.51
+solved 5 constraints
+Pruned 3 rounds, solved 955 constraints
+After prune: graphA: 1555, graphB: 894
+After Prune:
+Constraints count: 188
+Total edges in constraints: 593
+Before: 2919 edges
+After: 1851 edges
+Graph A edges count: 1965
+Graph B edges count: 1077
+Graph A union C edges count: 3204
+ENTIRE_EXPERIMENT: 292ms
+ONESHOT_CONS: 40ms
+SI_VERIFY_INT: 11ms
+SI_GEN_PREC_GRAPH: 16ms
+SI_GEN_CONSTRAINTS: 10ms
+SI_PRUNE: 87ms
+SI_PRUNE_POST_GRAPH_A_B: 40ms
+SI_PRUNE_POST_GRAPH_C: 3ms
+SI_PRUNE_POST_REACHABILITY: 35ms
+SI_PRUNE_POST_CHECK: 5ms
+ONESHOT_SOLVE: 139ms
+SI_SOLVER_GEN: 67ms
+SI_SOLVER_GEN_GRAPH_A_B: 7ms
+SI_SOLVER_GEN_REACHABILITY: 10ms
+SI_SOLVER_GEN_GRAPH_A_UNION_C: 27ms
+SI_SOLVER_GEN_MONO_GRAPH: 19ms
+SI_SOLVER_SOLVE: 3ms
+Max memory: 29.4MB
+[[[[ ACCEPT ]]]]
+```
