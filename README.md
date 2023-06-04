@@ -1,11 +1,12 @@
-# GRAIL: Checking Isolation Violations with Graph Queries
+# Testing Distributed Database Isolation through Anti-Pattern Detection (thesis version)
 
-Artifact of GRAph-based Isolation Level checking (GRAIL): graph query-based isolation checkers
+A graph-based isolation checker based on ArangoDB
 
-Note: We present the experimental results in HTML files listed in [`GRAIL-experiments`](./GRAIL-experiments/)
+Note: We present the experimental results in HTML files listed in [`thesis-experiments`](./thesis-experiments/). Checkers are under the path [`go-graph-checker`](./go-graph-checker/)
 
-- ArangoDB-Cycle, ArangoDB-SP & ArangoDB-Pregel: in this repo, under the path [`go-graph-checker`](./go-graph-checker/)
-- Neo4j-APOC & Neo4j-GDS-SCC: in the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark)
+## Collect histories
+
+We use [`jepsen.arangodb`](https://github.com/jasonqiu98/jepsen.arangodb) to list histories, and [`jepsen.arangodb.single`](https://github.com/jasonqiu98/jepsen.arangodb.single) to collect register histories.
 
 ## Set up the checker
 
@@ -24,20 +25,13 @@ go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-patt
 
 ## Experiments
 
-### I. Effectiveness and Scalability of GRAIL
+### I. Effectiveness and Scalability of Graph-Based Checker
 
-1. Follow the instructions of [`setup.md`](./docs/setup.md) to get the results of ArangoDB-Cycle, ArangoDB-SP, and ArangoDB-Pregel
-   - First rename the value of variable `endFileName` in the function `constructArangoGraph`, in [`list_append_test.go`](./go-graph-checker/list_append/list_append_test.go) or [`rw_register_test.go`](./go-graph-checker/rw_register/rw_register_test.go), respectively. The value of this variable should contain the pattern of the filenames of the histories in one directory ready for tests.
-   - Run `TestCorrectness` to get effectiveness results, in `list_append_test.go` or `rw_register_test.go`, respectively.
-   - Run `TestProfilingScalability` to get scalability results, in `list_append_test.go` or `rw_register_test.go`, respectively.
+Follow the instructions of [`setup.md`](./docs/setup.md) to get the results of ArangoDB-Cycle, ArangoDB-SP, and ArangoDB-Pregel
 
-2. Get the results from the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f) by following the steps below.
-   - Run `docker compose up` to start the Neo4j Docker container
-   - Select the benchmarking functions you want to run in `cyou.zhaojin.CypherBenchmarkTest` by commenting or uncommenting the annotation `@Benchmark`
-     - For Neo4j-APOC, uncomment the following benchmarks and comment others: [`SerTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L43), [`SITest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L50), [`PSITest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L82), [`PL2Test()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L100), [`PL1Test()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L107)
-     - For Neo4j-GDS-SCC, uncomment the following benchmarks and comment others: [`Q1SerProjTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L114), [`Q2SerSCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L122), [`Q3_SISCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L129), [`Q4PSISCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L164), [`Q5PL2ProjTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L184), [`Q6PL2SCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L192), [`Q7PL1ProjTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#L199), [`Q8PL1SCCTest()`](https://github.com/JINZhao2000/pbt-benchmark/blob/20a236e15e76c91ec5b7cec8b2a3359ae325154f/src/test/java/cyou/zhaojin/CypherBenchmarkTest.java#LL207C17-L207C29)
-   - `mvn clean install compile` to install dependencies
-   - Run the test class `cyou.zhaoin.CypherBenchmarkTest` and pass in the directory of the histories
+- First rename the value of variable `endFileName` in the function `constructArangoGraph`, in [`list_append_test.go`](./go-graph-checker/list_append/list_append_test.go) or [`rw_register_test.go`](./go-graph-checker/rw_register/rw_register_test.go), respectively. The value of this variable should contain the pattern of the filenames of the histories in one directory ready for tests.
+- Run `TestCorrectness` to get effectiveness results, in `list_append_test.go` or `rw_register_test.go`, respectively.
+- Run `TestProfilingScalability` to get scalability results, in `list_append_test.go` or `rw_register_test.go`, respectively.
 
 ### II. Comparison with Elle
 
