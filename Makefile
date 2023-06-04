@@ -10,7 +10,7 @@ stop:
 remove:
 	docker compose down -v
 	docker rmi arangodb:3.9.10
-	docker rmi anti-pattern-graph-checker-single-test:latest
+	docker rmi grail-artifact-test:latest
 
 # completely remove the persisting volumes
 clean:
