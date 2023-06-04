@@ -7,6 +7,10 @@ Note: We present the experimental results in HTML files listed in [`GRAIL-experi
 - ArangoDB-Cycle, ArangoDB-SP & ArangoDB-Pregel: in this repo, under the path [`go-graph-checker`](./go-graph-checker/)
 - Neo4j-APOC & Neo4j-GDS-SCC: in the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark)
 
+## Collect histories
+
+We use [`jepsen.arangodb`](https://github.com/jasonqiu98/jepsen.arangodb) to list histories, and [`jepsen.arangodb.single`](https://github.com/jasonqiu98/jepsen.arangodb.single) to collect register histories. See the two repositories for details.
+
 ## Set up the checker
 
 See details in [`setup.md`](./docs/setup.md). The usage is provided below.
