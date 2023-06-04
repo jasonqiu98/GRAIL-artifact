@@ -4,7 +4,7 @@
 
 The following configurations apply universally for the following five sets of histories:
 
-- number of threads to generate histories: 10
+- number of threads to generate histories (number of sessions): 10
 - key count at the same time: 5
 - min txn length: 4
 - max txn length: 8
@@ -69,11 +69,8 @@ a set of histories (with the accompanying WAL logs) with increasing collection t
 - key count at the same time: 5
 - min txn length: 4
 - max txn length: 8
-- max writes per key: 8
-
+- max writes per key: 3
 - rate: 10
-- number of threads to generate histories: 20
-- Key-count 5
-- Max-writes-per-key 3
+- number of threads to generate histories (number of sessions): 20
 
 N.B. `rw-register-test` is not a benchmark, but some prepared test cases for the effectiveness of the checker.
