@@ -1,0 +1,10 @@
+2023/05/21 13:24:52 Checking ../histories/anti-patterns/write-skew/history.edn...
+2023/05/21 13:24:52 db exists already and will be dropped first...
+constructing graph: 6763 ms
+2023/05/21 13:24:59 Cycle Detected by SER V3.
+2023/05/21 13:24:59 T154 (rw) T155 (rw) T154
+2023/05/21 13:24:59 Not Serializable!
+2023/05/21 13:24:59 Anti-Patterns for Snapshot Isolation Not Detected.
+2023/05/21 13:24:59 Anti-Patterns for Parallel Snapshot Isolation Not Detected.
+2023/05/21 13:25:00 Anti-Patterns for PL-2 Not Detected.
+2023/05/21 13:25:00 Anti-Patterns for PL-1 Not Detected.

@@ -28,8 +28,8 @@ func TestCheckExample(t *testing.T) {
 		"dep",        // TxnDepEdge
 		"evt_dep",    // EvtDepEdge
 	}
-	ednFileName := fmt.Sprintf("../histories/rw-register/%s.edn", "20")
-	walFileName := fmt.Sprintf("../histories/rw-register/%s.log", "20")
+	ednFileName := fmt.Sprintf("../histories/reg-collection-time/%s.edn", "20")
+	walFileName := fmt.Sprintf("../histories/reg-collection-time/%s.log", "20")
 	prompt := fmt.Sprintf("Checking %s...", ednFileName)
 	fmt.Println(prompt)
 
@@ -127,8 +127,8 @@ func constructArangoGraph(fileName string, t *testing.T) (driver.Database, []int
 		"dep",        // TxnDepEdge
 		"evt_dep",    // EvtDepEdge
 	}
-	ednFileName := fmt.Sprintf("../histories/rw-register/%s.edn", fileName)
-	walFileName := fmt.Sprintf("../histories/rw-register/%s.log", fileName)
+	ednFileName := fmt.Sprintf("../histories/reg-collection-time/%s.edn", fileName)
+	walFileName := fmt.Sprintf("../histories/reg-collection-time/%s.log", fileName)
 	prompt := fmt.Sprintf("Checking %s...", ednFileName)
 	fmt.Println(prompt)
 
