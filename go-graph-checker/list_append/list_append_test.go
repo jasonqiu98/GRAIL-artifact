@@ -192,14 +192,35 @@ func TestProfilingScalability(t *testing.T) {
 	}
 }
 
-func TestCountCycles(t *testing.T) {
+/*
+Output data chracteristics
+- #vertices
+- #edges
+- #RW edges
+- #WW edges
+- #WR edges
+- #traversals
+*/
+func TestOutputDataCharacteristics(t *testing.T) {
+	result := [][]int{}
 	for i := 1; i <= 20; i++ {
 		db, _, _, _ := constructArangoGraph(strconv.Itoa(i*10), t)
 
-		cursor, err := db.Query(context.Background(), "RETURN LENGTH(FOR edge IN dep FOR p IN OUTBOUND K_SHORTEST_PATHS edge._to TO edge._from GRAPH txn_g RETURN {edges: UNSHIFT(p.edges, edge), vertices: UNSHIFT(p.vertices, p.vertices[LENGTH(p.vertices) - 1])})", nil)
-		// cursor, err := db.Query(context.Background(), "RETURN LENGTH(FOR edge IN dep FOR v, e IN OUTBOUND SHORTEST_PATH edge._to TO edge._from GRAPH txn_g RETURN [edge, e])", nil)
-		// cursor, err := db.Query(context.Background(), "RETURN LENGTH(FOR start IN txn FOR vertex, edge, path IN 2..5 OUTBOUND start._id GRAPH txn_g FILTER edge._to == start._id RETURN path.edges)", nil)
+		query := `RETURN [
+			LENGTH(txn),
+			LENGTH(dep),
+			LENGTH(FOR e IN dep FILTER e.type == 'rw' RETURN e),
+			LENGTH(FOR e IN dep FILTER e.type == 'ww' RETURN e),
+			LENGTH(FOR e IN dep FILTER e.type == 'wr' RETURN e),
+			LENGTH(
+				FOR edge IN dep
+					FOR p IN OUTBOUND K_SHORTEST_PATHS
+					edge._to TO edge._from
+					GRAPH txn_g
+					RETURN {edges: UNSHIFT(p.edges, edge), vertices: UNSHIFT(p.vertices, p.vertices[LENGTH(p.vertices) - 1])}
+		)]`
 
+		cursor, err := db.Query(context.Background(), query, nil)
 		if err != nil {
 			log.Fatalf("Failed to count: %v\n", err)
 		}
@@ -207,45 +228,26 @@ func TestCountCycles(t *testing.T) {
 		defer cursor.Close()
 
 		for {
-			var cycle interface{}
-			_, err := cursor.ReadDocument(context.Background(), &cycle)
+			var rowResult []int
+			_, err := cursor.ReadDocument(context.Background(), &rowResult)
 
 			if driver.IsNoMoreDocuments(err) {
 				break
 			} else if err != nil {
 				log.Fatalf("Cannot read return values: %v\n", err)
 			} else {
-				fmt.Println(cycle)
+				result = append(result, rowResult)
+				fmt.Println(rowResult)
 			}
 		}
-
 	}
-}
 
-func TestCountVerticesEdges(t *testing.T) {
-	for i := 1; i <= 30; i++ {
-		db, _, _, _ := constructArangoGraph(strconv.Itoa(i), t)
-
-		cursor, err := db.Query(context.Background(), "RETURN [(RETURN LENGTH(txn)), (RETURN LENGTH(dep))]", nil)
-		if err != nil {
-			log.Fatalf("Failed to count: %v\n", err)
+	for _, rowResult := range result {
+		for _, r := range rowResult {
+			fmt.Printf("%d", r)
+			fmt.Print(" ")
 		}
-
-		defer cursor.Close()
-
-		for {
-			var cycle interface{}
-			_, err := cursor.ReadDocument(context.Background(), &cycle)
-
-			if driver.IsNoMoreDocuments(err) {
-				break
-			} else if err != nil {
-				log.Fatalf("Cannot read return values: %v\n", err)
-			} else {
-				fmt.Println(cycle)
-			}
-		}
-
+		fmt.Println()
 	}
 }
 

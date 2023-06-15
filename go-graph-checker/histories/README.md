@@ -4,7 +4,7 @@
 
 The following configurations apply universally for all list histories.
 
-- number of sessions (number of threads to generate historiess): 10
+- number of sessions (number of threads to generate histories): 10
 - key count at the same time: 5
 - min txn length: 4
 - max txn length: 8
@@ -74,7 +74,7 @@ a set of histories (with the accompanying WAL logs) with increasing collection t
 
 - time-limit: increasing from 10s to 200s with a step of 10s
 - rate: 20
-- number of sessions (number of threads to generate historiess): 10
+- number of sessions (number of threads to generate histories): 10
 - max writes per key: 8
 
 ### [Reg2] `reg-rate`
@@ -83,7 +83,7 @@ a set of histories (with the accompanying WAL logs) with increasing rate from 10
 
 - time-limit: 30s
 - rate: increasing from 10 to 200 with a step of 10
-- number of sessions (number of threads to generate historiess): 10
+- number of sessions (number of threads to generate histories): 10
 - max writes per key: 8
 
 ### [Reg3] `reg-session`
@@ -92,17 +92,17 @@ a set of histories (with the accompanying WAL logs) with increasing number of se
 
 - time-limit: 30s
 - rate: 20
-- number of sessions (number of threads to generate historiess): increasing from 10 to 200 with a step of 10
+- number of sessions (number of threads to generate histories): increasing from 10 to 200 with a step of 10
 - max writes per key: 8
 
-### [Reg4] `rw-register`
+### [Reg4] `reg-max-write`
 
 a set of histories (with the accompanying WAL logs) with increasing max writes per key from 1 to 20
 
 - time-limit: 30s
 - rate: 20
-- number of sessions (number of threads to generate historiess): 10
-- max writes per key: increasing from 10 to 200 with a step of 1
+- number of sessions (number of threads to generate histories): 10
+- max writes per key: increasing from 1 to 20 with a step of 1
 
 ## Not part of benchmarks
 
