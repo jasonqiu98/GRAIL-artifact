@@ -9,7 +9,7 @@ Note: We present the experimental results in HTML files listed in [`GRAIL-experi
 
 ## Collect histories
 
-We use [`jepsen.arangodb`](https://github.com/jasonqiu98/jepsen.arangodb) to list histories, and [`jepsen.arangodb.single`](https://github.com/jasonqiu98/jepsen.arangodb.single) to collect register histories. See the two repositories for details.
+We use [`jepsen.arangodb`](https://github.com/grail/jepsen.arangodb) to list histories, and [`jepsen.arangodb.single`](https://github.com/grail/jepsen.arangodb.single) to collect register histories. See the two repositories for details.
 
 ## Set up the checker
 
@@ -23,7 +23,7 @@ See details in [`setup.md`](./docs/setup.md). The usage is provided below.
 cd ~/project
 go mod tidy
 # use -v flag to see the output
-go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+go test -v -timeout 30s -run ^TestListAppendSER$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/list_append
 ```
 
 ## Experiments
@@ -81,8 +81,8 @@ $ lein deps
 $ lein uberjar
 Compiling elle_cli.cli
 Compiling elle_cli.cli
-Created /home/jasonqiu98/thesis-workspace/GRAIL-artifact/elle-cli/target/elle-cli-0.1.6.jar
-Created /home/jasonqiu98/thesis-workspace/GRAIL-artifact/elle-cli/target/elle-cli-0.1.6-standalone.jar
+Created /home/grail/thesis-workspace/GRAIL-artifact/elle-cli/target/elle-cli-0.1.6.jar
+Created /home/grail/thesis-workspace/GRAIL-artifact/elle-cli/target/elle-cli-0.1.6-standalone.jar
 $ java -jar target/elle-cli-0.1.6-standalone.jar --model list-append --consistency-models serializable ../go-graph-checker/histories/collection-time/10.edn
 Evaluation count : 30 in 6 samples of 5 calls.
              Execution time mean : 24.489192 ms

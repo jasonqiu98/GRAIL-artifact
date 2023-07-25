@@ -5,8 +5,8 @@ import (
 
 	"github.com/ngaut/log"
 
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/txn"
 )
 
 const unknownPrefixMagicNumber = -114514

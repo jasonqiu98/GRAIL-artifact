@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
 )
 
 func testConverter(path string, rw bool, t *testing.T) {

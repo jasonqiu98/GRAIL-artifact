@@ -10,8 +10,8 @@ import (
 	"time"
 
 	driver "github.com/arangodb/go-driver"
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/txn"
 	"github.com/stretchr/testify/require"
 )
 
@@ -272,7 +272,7 @@ func TestCorrectness(t *testing.T) {
 	}
 }
 
-// go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+// go test -v -timeout 30s -run ^TestListAppendSER$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSER(t *testing.T) {
 	db, txnIds, dbConsts, history := constructArangoGraph("10", t)
 	valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "ser", "sv")
@@ -289,7 +289,7 @@ func TestListAppendSERPregel(t *testing.T) {
 	CheckSERPregel(db, dbConsts, nil, true)
 }
 
-// go test -v -timeout 30s -run ^TestListAppendSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+// go test -v -timeout 30s -run ^TestListAppendSI$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendSI(t *testing.T) {
 	db, txnIds, dbConsts, history := constructArangoGraph("10", t)
 	valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "si", "sv")
@@ -301,7 +301,7 @@ func TestListAppendSI(t *testing.T) {
 	}
 }
 
-// go test -v -timeout 30s -run ^TestListAppendPSI$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+// go test -v -timeout 30s -run ^TestListAppendPSI$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/list_append
 func TestListAppendPSI(t *testing.T) {
 	db, txnIds, dbConsts, history := constructArangoGraph("10", t)
 	valid, cycle := IsolationLevelChecker(db, dbConsts, txnIds, true, "psi", "sv")

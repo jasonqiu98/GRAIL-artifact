@@ -5,7 +5,7 @@ import (
 
 	"k8s.io/apimachinery/pkg/util/rand"
 
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
 )
 
 // DistMode contains uniform or exponential distribution

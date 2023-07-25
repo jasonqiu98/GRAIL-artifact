@@ -1,7 +1,7 @@
 # Query-Based Checker
 
 1. Collect history
-   1. list-append case: from the GitHub repository [`jepsen.arangodb`](https://github.com/jasonqiu98/jepsen.arangodb).
+   1. list-append case: from the GitHub repository [`jepsen.arangodb`](https://github.com/grail/jepsen.arangodb).
       - For example
         - ```bash
           #!/bin/bash
@@ -10,7 +10,7 @@
             /bin/bash ./run.sh --skip-vagrant --test-type la --time-limit ${t} -r 10 --concurrency 20 --key-count 5 --min-txn-length 4 --max-txn-length 8 --max-writes-per-key 3 --nemesis-type noop
           done
           ```
-   2. rw-register case: from the GitHub repository [`jepsen.arangodb.single`](https://github.com/jasonqiu98/jepsen.arangodb.single).
+   2. rw-register case: from the GitHub repository [`jepsen.arangodb.single`](https://github.com/grail/jepsen.arangodb.single).
       - For example
         - ```bash
           #!/bin/bash
@@ -30,5 +30,5 @@ go mod tidy
 4. Run any test (including functionality, profiling or benchmark) with command line or VS Code Golang plugins. For example, the following command tests the correctness of the checker, following the TDD principles.
 
 ```bash
-go test -v -timeout 120s -run ^TestChecker$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+go test -v -timeout 120s -run ^TestChecker$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/list_append
 ```

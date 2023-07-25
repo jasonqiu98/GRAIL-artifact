@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// go test -v -timeout 30s -run ^TestParseWAL$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register
+// go test -v -timeout 30s -run ^TestParseWAL$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/rw_register
 func TestParseWAL(t *testing.T) {
 	fileName := "../histories/rw-register.log"
 	prompt := fmt.Sprintf("Checking %s...", fileName)
@@ -24,7 +24,7 @@ func TestParseWAL(t *testing.T) {
 	_ = wal
 }
 
-// go test -v -timeout 30s -run ^TestFilterWALWrite$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register
+// go test -v -timeout 30s -run ^TestFilterWALWrite$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/rw_register
 func TestWALWriteMap(t *testing.T) {
 	fileName := "../histories/rw-register.log"
 	prompt := fmt.Sprintf("Checking %s...", fileName)

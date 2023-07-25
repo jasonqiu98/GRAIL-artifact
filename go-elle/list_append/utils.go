@@ -5,8 +5,8 @@ import (
 	"log"
 	"sort"
 
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/txn"
 )
 
 // Note: it will check if all mops are :append and :r

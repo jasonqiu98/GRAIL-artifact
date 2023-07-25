@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/txn"
 )
 
 func TestInternalCase(t *testing.T) {

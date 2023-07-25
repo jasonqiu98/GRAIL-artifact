@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/arangodb/go-driver"
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/txn"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/txn"
 	"github.com/stretchr/testify/require"
 )
 

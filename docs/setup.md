@@ -32,7 +32,7 @@ Following the above instructions to set up the environment, you can run this Go 
 cd ~/project
 go mod tidy
 # use -v flag to see the output
-go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append
+go test -v -timeout 30s -run ^TestListAppendSER$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/list_append
 ```
 
 ### 3. Profiling
@@ -40,8 +40,8 @@ go test -v -timeout 30s -run ^TestListAppendSER$ github.com/jasonqiu98/anti-patt
 Use the following command to profile different approaches.
 
 ```shell
-go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-scalability.log
-go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-scalability.log
+go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-scalability.log
+go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-scalability.log
 ```
 
 ### 4. Results on histories
@@ -49,8 +49,8 @@ go test -v -timeout 10000s -run ^TestProfilingScalability$ github.com/jasonqiu98
 First rename the value of variable `endFileName` in the function `constructArangoGraph`, in [`list_append_test.go`](./go-graph-checker/list_append/list_append_test.go) or [`rw_register_test.go`](./go-graph-checker/rw_register/rw_register_test.go). Then use the following command to see the results.
 
 ```shell
-go test -v -timeout 1000s -run ^TestCorrectness$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-correctness.log
-go test -v -timeout 1000s -run ^TestCorrectness$ github.com/jasonqiu98/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-correctness.log
+go test -v -timeout 1000s -run ^TestCorrectness$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/list_append > la-correctness.log
+go test -v -timeout 1000s -run ^TestCorrectness$ github.com/grail/anti-pattern-graph-checker-single/go-graph-checker/rw_register > rw-correctness.log
 ```
 
 ### 5. Stop and remove the containers
@@ -110,5 +110,5 @@ It is still recommended to run the raw commands by yourself, but `Makefile` can 
 Run the following command (locally or in the `arango-test` container).
 
 ```shell
-go test -timeout 30s -run "^(TestWWGraph|TestWRGraph|TestGraph|TestG1aCases|TestG1bCases|TestInternalCases|TestChecker|TestRepeatableRead|TestGNonadjacent|TestCheck|TestHugeScc|TestPlotAnalysis)$" github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/list_append
+go test -timeout 30s -run "^(TestWWGraph|TestWRGraph|TestGraph|TestG1aCases|TestG1bCases|TestInternalCases|TestChecker|TestRepeatableRead|TestGNonadjacent|TestCheck|TestHugeScc|TestPlotAnalysis)$" github.com/grail/anti-pattern-graph-checker-single/go-elle/list_append
 ```

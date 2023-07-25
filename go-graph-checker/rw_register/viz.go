@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/goccy/go-graphviz"
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
 )
 
 type record struct {

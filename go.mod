@@ -1,4 +1,4 @@
-module github.com/jasonqiu98/anti-pattern-graph-checker-single
+module github.com/grail/anti-pattern-graph-checker-single
 
 go 1.19
 

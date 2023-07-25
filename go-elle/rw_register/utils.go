@@ -3,7 +3,7 @@ package rwregister
 import (
 	"strings"
 
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
 )
 
 func extReadKeys(op core.Op) map[string]Int {

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/jasonqiu98/anti-pattern-graph-checker-single/go-elle/core"
+	"github.com/grail/anti-pattern-graph-checker-single/go-elle/core"
 )
 
 // Opts contains consistencyModels, Anomalies and AdditionalGraphs etc
