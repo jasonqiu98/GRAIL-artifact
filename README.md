@@ -5,11 +5,11 @@ Artifact of GRAph-based Isolation Level checking (GRAIL): graph query-based isol
 Note: We present the experimental results in HTML files listed in [`GRAIL-experiments`](./GRAIL-experiments/)
 
 - ArangoDB-Cycle, ArangoDB-SP & ArangoDB-Pregel: in this repo, under the path [`go-graph-checker`](./go-graph-checker/)
-- Neo4j-APOC & Neo4j-GDS-SCC: in the repo [`pbt-benchmark`](https://github.com/JINZhao2000/pbt-benchmark)
+- Neo4j-APOC & Neo4j-GDS-SCC: in this repo, under the path [`neo4j-graph-checker`](./neo4j-graph-checker/)
 
 ## Collect histories
 
-We use [`jepsen.arangodb`](https://github.com/grail/jepsen.arangodb) to list histories, and [`jepsen.arangodb.single`](https://github.com/grail/jepsen.arangodb.single) to collect register histories. See the two repositories for details.
+We use [`jepsen.arangodb`](./jepsen.arangodb) to collect list histories, and [`jepsen.arangodb.single`](./jepsen.arangodb.single) to collect register histories. See the two repositories for details.
 
 ## Set up the checker
 
