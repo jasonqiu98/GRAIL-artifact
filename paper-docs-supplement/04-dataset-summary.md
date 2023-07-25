@@ -1,5 +1,3 @@
-Add a paragraph into the paper that summarizes the datasets (To fit in the page limits, we will replace Section 6.1 with that new paragraph and point to dataset.md for more details.)
-
 # Dataset Summary
 
 We used Jepsen framework to collect six datasets in total [DS1-DS6], each involving 20 randomly generated histories, to form our workload to evaluate the performance of GRAIL. The first five datasets [DS1-DS5] were generated on lists while the last one [DS6] was on registers. The datasets differ in the progress of two main factors, collection time and the rate of transaction generation. Also, each dataset includes progress of only one main factor: [DS1/DS2] increases collection time, while [DS3/DS4] increases rate of transaction generation. In addition, DS1 and DS2 follow the same configuration except that DS2 are with network partitions, while DS1 are not. This is also true of the pair DS3 and DS4. DS5 is a special dataset to observe the effectiveness of GRAIL, which does not vary any main factor but have network partitions.
