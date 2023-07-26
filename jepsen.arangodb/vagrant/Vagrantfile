@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "debian/bullseye64"
+    # sync local data to Vagrant VMs
+    config.vm.synced_folder "./shared", "/vagrant"
+  
+    # Jepsen can use this key to connect to our nodes
+    config.vm.provision "shell" do |s|
+      ssh_pub_key = File.readlines("./shared/vagrant_ssh_key.pub").first.strip
+      s.inline = <<-SHELL
+        echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+        cp /vagrant/jwtSecret /home/vagrant/arangodb.secret
+        chmod 777 /home/vagrant/arangodb.secret
+      SHELL
+    end
+  
+    nodes = 5
+  
+    (1..nodes).each do |n|
+      nid = "n#{n}"
+      config.vm.define nid do |node|
+        node.vm.hostname = nid
+        node.vm.network "private_network", ip: "192.168.56.#{100 + n}"
+      end
+    end
+  
+  end
+  
